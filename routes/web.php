@@ -23,8 +23,18 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function (
               return redirect('/dashboard');
     });
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard')->middleware('auth');
+
     Route::get('/manageAgent', 'Admin\ManageAgentController@index')->name('manageAgent')->middleware('auth');
-    Route::POST('/manageAgent', 'Admin\ManageAgentController@create')->name('manageAgent.create')->middleware('auth');
+    Route::POST('/manageAgent/create', 'Admin\ManageAgentController@create')->name('manageAgent.create')->middleware('auth');
+    Route::POST('/manageAgent/update', 'Admin\ManageAgentController@update')->name('manageAgent.update')->middleware('auth');
+    Route::get('/manageAgent/{role}/{id}', 'Admin\ManageAgentController@changeRole')->middleware('auth');
+
+    Route::get('/manageProduct', 'Admin\ManageProductController@index')->name('manageProduct')->middleware('auth');
+    Route::POST('/manageProduct/create', 'Admin\ManageProductController@create')->name('manageProduct.create')->middleware('auth');
+    // Route::POST('/manageProduct/update', 'Admin\ManageProductController@update')->name('manageAgent.update')->middleware('auth');
+    // Route::get('/manageProduct/{role}/{id}', 'Admin\ManageProductController@changeRole')->middleware('auth');
+
+
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\ShogunMiddleware'], function () {
@@ -35,8 +45,8 @@ Route::group(['middleware' => 'App\Http\Middleware\ShogunMiddleware'], function 
     Route::get('/ShogunDashboard', 'Shogun\DashboardController@index')->name('dashboard')->middleware('auth');
 });
 
-Route::group(['middleware' => 'App\Http\Middleware\DamyuMiddleware'], function () {
-    Route::get('/DamyuDashboard', 'Damyu\DashboardController@index')->name('dashboard')->middleware('auth');
+Route::group(['middleware' => 'App\Http\Middleware\DamioMiddleware'], function () {
+    Route::get('/DamioDashboard', 'Damyu\DashboardController@index')->name('dashboard')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\MerchantMiddleware'], function () {

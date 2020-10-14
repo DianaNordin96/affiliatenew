@@ -92,7 +92,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar elevation-4 sidebar-light-lightblue">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link navbar-white">
+            <a href="/" class="brand-link navbar-white">
                 <img src="../dist/img/AdminLTELogo.png" alt="Affiliate" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Affiliate System</span>
@@ -116,8 +116,8 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview menu-open">
-                            <a href="#" class="nav-link active">
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Manage Stocks
@@ -178,10 +178,19 @@
                         </li> -->
 
                         <li class="nav-item">
-                            <a href="{{ route('manageAgent') }}" class="nav-link">
+                            <a id='customerDetails' href="{{ route('manageAgent') }}" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>
                                     Customers Details
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id='manageProduct' href="{{ route('manageProduct') }}" class="nav-link">
+                                <i class="nav-icon fab fa-product-hunt"></i>
+                                <p>
+                                    Manage Product
                                 </p>
                             </a>
                         </li>

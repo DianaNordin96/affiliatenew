@@ -30,8 +30,6 @@ class ManageAgentController extends Controller
         //     'user' => $id,
         // ]);
 
-        
-
         return view(
             'admin/manageAgent',
             [
@@ -56,66 +54,79 @@ class ManageAgentController extends Controller
             'phone' => 'required',
         ];
 
-        $validator = Validator::make($req->all(),$validatedData);
-		if ($validator->fails()) {
-            toast('Please fill in all the box before creating new user','error');
-			return redirect('/manageAgent');
-			}else{
+        $validator = Validator::make($req->all(), $validatedData);
+        if ($validator->fails()) {
+            toast('Please fill in all the box before creating new user', 'error');
+            return redirect('/manageAgent');
+        } else {
             $data = $req->input();
-            try{
-				$user = new User;
+            try {
+                $user = new User;
                 $user->name = $data['name'];
                 $user->email = $data['email'];
-				$user->phone = $data['phone'];
+                $user->phone = $data['phone'];
                 $user->address = $data['address'];
                 $user->password = Hash::make('12345678');
                 $user->role = 'shogun';
                 $user->save();
-                toast('User has been created','success');
-				return redirect('/manageAgent');
-			}
-			catch(Exception $e){
-				return redirect('insert')->with('failed',"operation failed");
+                toast('User has been created', 'success');
+                return redirect('/manageAgent');
+            } catch (Exception $e) {
+                return redirect('insert')->with('failed', "operation failed");
             }
         }
     }
 
+    public function update(Request $req)
+    {
+        $validatedData = [
+            'idEdit' => '',
+            'nameEdit' => 'required',
+            'emailEdit' => 'required|email',
+            'addressEdit' => 'required',
+            'phoneEdit' => 'required',
+        ];
+
+        $validator = Validator::make($req->all(), $validatedData);
+        if ($validator->fails()) {
+            toast('Please dont leave any boxes empty', 'error');
+            return redirect('/manageAgent');
+        } else {
+            $data = $req->input();
+            try {
+                DB::table('users')
+                    ->where('id', $data['idEdit'])
+                    ->update([
+                        'name' => $data['nameEdit'],
+                        'email' => $data['emailEdit'],
+                        'phone' => $data['phoneEdit'],
+                        'address' => $data['addressEdit'],
+                    ]);
+
+                toast('User has been updated', 'success');
+                return redirect('/manageAgent');
+            } catch (Exception $e) {
+                toast('Something went wrong', 'error');
+                return redirect('/manageAgent');
+            }
+        }
+    }
+
+    public function changeRole($role, $id)
+    {
+
+        DB::table('users')
+            ->where('id', $id)
+            ->update([
+                'role' => $role
+            ]);
+
+        toast('User role has been changed', 'success');
+        return redirect('/manageAgent');
+    }
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }
-//         if ($validatedData) {
-//             $name = $req->input('name');
-//             $email = $req->input('email');
-//             $address = $req->input('address');
-//             $phone = $req->input('phone');
-
-//             return User::create([
-//                 'name' => $name,
-//                 'email' => $email,
-//                 'password' => Hash::make('12345678'),
-//                 'address' => $address,
-//                 'phone' => $phone,
-//                 'role' => 'admin'
-//             ]);
-
-//             $user = new User();
-
-//             $user -> $name;
-//             $
-
-//             Alert::success('Success Title', 'Success Message');
-//             return redirect('/manageAgent')->with('success', 'Data inserted');
-//         } else {
-            
-//             Alert::success('Success Title', 'Success Message');
-//             return view('admin/manageAgent');
-//         }
-//     }
-
-//     public function edit()
-//     {
-//     }
-
-//     public function __construct()
-//     {
-//         $this->middleware('auth');
-//     }
-// }

@@ -26,15 +26,12 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-6 col-6">
+                <div class="col-lg-6 col-sm-6 col-6">
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-
-
-                            <h3>$35,210.43</h3>
+                            <h4>$35,210.43</h4>
                             <p>Total Sales <span class="text-success"> &nbsp; &nbsp; <i class="fas fa-caret-up"></i> 17%</span></p>
-
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -49,7 +46,7 @@
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h4>44</h4>
 
                             <p>Total Customer</p>
                         </div>

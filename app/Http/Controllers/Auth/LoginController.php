@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -29,21 +31,31 @@ class LoginController extends Controller
 
     protected $redirectTo = '/profile';
 
-    public function redirectTo(){
-        
+    public function redirectTo()
+    {
+
         // User role
-        $role = Auth::user()->role; 
-        
+        $role = Auth::user()->role;
+
         // Check user role
         switch ($role) {
             case 'admin':
-                    return '/dashboard';
+                return '/dashboard';
                 break;
             case 'shogun':
-                    return '/ShogunDashboard';
-                break; 
+                return '/ShogunDashboard';
+                break;
+            case 'damio':
+                return '/DamioDashboard';
+                break;
+            case 'merchant':
+                return '/MerchantDashboard';
+                break;
+            case 'dropship':
+                return '/DropshipDashboard';
+                break;
             default:
-                    return '/login'; 
+                return '/login';
                 break;
         }
     }
@@ -56,6 +68,5 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        
     }
 }

@@ -1,12 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 
-    @if (session('success_message'))
-        <div class="alert alert-success">
-            {{ session('success_message') }}
-        </div>
-    @endif
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -14,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Manage User</h1>
+                        <h1 class="m-0 text-dark">Manage Product</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -38,41 +32,32 @@
                                 <!-- <h3 class="card-title">View Employee</h3> -->
                                 <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
                                     data-target="#modal-lg">
-                                    <i class="fas fa-plus"></i> &nbsp Add Users
+                                    <i class="fas fa-plus"></i> &nbsp Add Products
                                 </button>
                                 <br />
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone Number</th>
+                                            <th>Image</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $user)
+                                        @foreach ($product as $product)
                                             <tr>
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
+                                                <td>{{ $product->id }}</td>
+                                                <td><img src="/imageUploaded/{{ $product->product_image }}"/></td>
+                                                <td>{{ $product->product_name }}</td>
+                                                <td>{{ $product->product_price }}</td>
                                                 <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                        onclick="openModalEdit('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
-                                                        data-target="#modalEdit" class="btn btn-warning"><i
-                                                            class="fas fa-edit"></i></button> &nbsp;
+                                                        onclick="openModalEdit()" data-target="#modalEdit"
+                                                        class="btn btn-warning"><i class="fas fa-edit"></i></button> &nbsp;
                                                     <button type="button" title="View" data-toggle="modal"
-                                                        onclick="openModalView('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
-                                                        data-target="#modalView" class="btn btn-success"><i
-                                                            class="far fa-eye"></i></button> &nbsp;
-                                                    <select onchange="location = this.value;" class="btn btn-default">
-                                                        <option value="/manageAgent/admin/{{$user->id}}" @if($user->role == 'admin'){ selected }  @endif>Admin</option>
-                                                        <option value="/manageAgent/shogun/{{$user->id}}" @if($user->role == 'shogun'){ selected   @endif}>Shogun</option>
-                                                        <option value="/manageAgent/damio/{{$user->id}}" @if($user->role == 'damio'){ selected }  @endif>Damio</option>
-                                                        <option value="/manageAgent/merchant/{{$user->id}}" @if($user->role == 'merchant'){ selected }  @endif>Merchant</option>
-                                                    <option value="/manageAgent/dropship/{{$user->id}}" @if($user->role == 'dropship'){ selected }  @endif>Dropship</option>
-                                                    </select>
+                                                        onclick="openModalView()" data-target="#modalView"
+                                                        class="btn btn-success"><i class="far fa-eye"></i></button> &nbsp;
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -89,40 +74,30 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add User</h4>
+                            <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('manageAgent.create') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('manageProduct.create') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Name </label>
-                                            <input type="text" id="name" class="form-control" name="name"
+                                            <label> Product Name </label>
+                                            <input type="text" id="productName" class="form-control" name="productName"
                                                 placeholder="Name" />
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Email </label>
-                                            <input type="text" id="email" class="form-control" name="email"
-                                                placeholder="Email" />
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            <label> Product Price </label>
+                                            <input type="text" id="productPrice" class="form-control" name="productPrice"
+                                                placeholder="Price" />
                                         </div>
                                     </div>
                                 </div>
@@ -130,35 +105,30 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <!-- text input -->
+
+                                        <!-- text input -->
                                         <div class="form-group">
-                                            <label> Phone Number </label>
-                                            <input type="text" id="phoneNum" class="form-control" name="phone"
-                                                placeholder="Phone Number" />
-                                            @error('phone')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            <label>Product Description</label>
+                                            <textarea class="form-control" name="productDesc" id="productDesc" rows="3"
+                                                placeholder="Address"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <!-- text input -->
                                         <div class="form-group">
-                                            <label>Address</label>
-                                            <textarea class="form-control" name="address" id="address" rows="3"
-                                                placeholder="Address"></textarea>
-                                            @error('address')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            <label for="exampleInputFile">Photo</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" id="image" name="image">
+                                                    <!-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> -->
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Add Users</button>
+                                    <button type="submit" class="btn btn-primary">Add Products</button>
                                 </div>
                             </form>
                         </div>
@@ -305,7 +275,7 @@
             });
         });
 
-        document.getElementById("customerDetails").className = "nav-link active";
+        document.getElementById("manageProduct").className = "nav-link active";
 
         function openModalEdit(id, name, email, phone, address) {
 

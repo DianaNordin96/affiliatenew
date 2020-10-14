@@ -15,7 +15,7 @@ class DamyuMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->role != 'damyu')
+        if ($request->user() && $request->user()->role != 'damio')
         {
         return redirect('/unauthorized');
         }
