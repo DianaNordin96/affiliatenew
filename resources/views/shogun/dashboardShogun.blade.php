@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.shogun')
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">

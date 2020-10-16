@@ -50,6 +50,7 @@ class ManageProductController extends Controller
                     'product_price' => $data['productPrice'],
                     'product_description' => $data['productDesc'],
                     'product_image' => $req->file('image')->getClientOriginalName(),
+                    'payment_link' => 'wtv',
                 ]);
 
                 $image = $req->file('image');

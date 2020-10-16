@@ -67,6 +67,7 @@ class ManageAgentController extends Controller
                 $user->phone = $data['phone'];
                 $user->address = $data['address'];
                 $user->password = Hash::make('12345678');
+                $user->image = NULL;
                 $user->role = 'shogun';
                 $user->save();
                 toast('User has been created', 'success');

@@ -23,6 +23,6 @@ class DashboardController extends Controller
         // return view('dashboard',[
         //     'user' => $id,
         // ]);
-        return view('shogun/dashboard')->with('userId',$id);
+        return view('shogun/dashboardShogun')->with('userId',$id);
     }
 }

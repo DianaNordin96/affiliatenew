@@ -40,10 +40,14 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function (
 
 Route::group(['middleware' => 'App\Http\Middleware\ShogunMiddleware'], function () {
     Route::get('/', function () {
-        
         return redirect('/ShogunDashboard');
     });
     Route::get('/ShogunDashboard', 'Shogun\DashboardController@index')->name('dashboard')->middleware('auth');
+    Route::get('/manageStock', 'Shogun\ManageStockController@index')->name('manageStock')->middleware('auth');
+    Route::get('/manageDownline', 'Shogun\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
+    Route::get('/manageDownline/{role}/{id}', 'Shogun\ManageDownlineController@changeRole')->middleware('auth');
+    Route::get('/profileShogun', 'Shogun\ProfileController@index')->middleware('auth');
+
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\DamioMiddleware'], function () {
