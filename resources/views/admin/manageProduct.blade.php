@@ -49,7 +49,7 @@
                                         @foreach ($product as $product)
                                             <tr>
                                                 <td>{{ $product->id }}</td>
-                                                <td><img src="/imageUploaded/{{ $product->product_image }}"/></td>
+                                                <td><img src="/imageUploaded/{{ $product->product_image }}" /></td>
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>{{ $product->product_price }}</td>
                                                 <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
@@ -58,6 +58,21 @@
                                                     <button type="button" title="View" data-toggle="modal"
                                                         onclick="openModalView()" data-target="#modalView"
                                                         class="btn btn-success"><i class="far fa-eye"></i></button> &nbsp;
+                                                    <a class="btn btn-primary" href="#"
+                                                        onclick="event.preventDefault();
+                                                                          document.getElementById('newbill-form{{ $product->id }}').submit();">
+                                                        Buy RM {{ $product->product_price }}
+                                                    </a>
+                                                    <form id="newbill-form{{ $product->id }}"
+                                                        action="{{ route('purchase.store') }}" method="POST"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        <input type="hidden" name="product" value="{{ $product->id }}">
+                                                        <input type="hidden" name="price"
+                                                            value="{{ $product->product_price }}">
+                                                        <input type="hidden" name="link"
+                                                            value="{{ $product->payment_link }}">
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach

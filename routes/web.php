@@ -31,6 +31,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function (
 
     Route::get('/manageProduct', 'Admin\ManageProductController@index')->name('manageProduct')->middleware('auth');
     Route::POST('/manageProduct/create', 'Admin\ManageProductController@create')->name('manageProduct.create')->middleware('auth');
+    Route::POST('/manageProduct/store', 'Admin\ManageProductController@store')->name('purchase.store')->middleware('auth');
     // Route::POST('/manageProduct/update', 'Admin\ManageProductController@update')->name('manageAgent.update')->middleware('auth');
     // Route::get('/manageProduct/{role}/{id}', 'Admin\ManageProductController@changeRole')->middleware('auth');
 
