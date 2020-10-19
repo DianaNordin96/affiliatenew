@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use \Illuminate\Http\Response;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class ShogunMiddleware
 {
@@ -15,9 +16,9 @@ class ShogunMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->role != 'shogun')
+        if (Auth::user()->role != 'shogun')
         {
-        return redirect('/unauthorized');
+            return redirect('/login');
         }
         return $next($request);
     }

@@ -9,20 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+  
 
     public function index()
     {
-        $id = Auth::user()->id;
-        $email = Auth::user()->email;
-        $pass = Auth::user()->password;
-        // dd($id,$email,$pass);
-        // return view('dashboard',[
-        //     'user' => $id,
-        // ]);
-        return view('shogun/dashboardShogun')->with('userId',$id);
+        return view('shogun/dashboardShogun');
+    }  
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use \Illuminate\Http\Response;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class DropshipMiddleware
 {
@@ -15,9 +16,9 @@ class DropshipMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->role != 'dropship')
+        if (Auth::user()->role != 'dropship')
         {
-        return redirect('/unauthorized');
+            return redirect('/login');
         }
         return $next($request);
     }

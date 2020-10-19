@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchasesTable extends Migration
+class CreateOrdersDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,14 @@ class CreatePurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
-            $table->id();
-            $table->string('bill_id');
+        Schema::create('orders_details', function (Blueprint $table) {
+            $table->integer('quantity');
             $table->timestamps();
+            $table->string('order_id')->nullable();
         });
 
-        Schema::table('purchases', function (Blueprint $table) {
-            $table->biginteger('user_id')->unsigned();
+        Schema::table('orders_details', function (Blueprint $table) {
             $table->biginteger('product_id')->unsigned();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
@@ -40,12 +35,10 @@ class CreatePurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::table('purchases', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+        Schema::table('orders_details', function (Blueprint $table) {
             $table->dropForeign(['product_id']);
             $table->dropColumn('product_id');
         });
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('orders_details');
     }
 }

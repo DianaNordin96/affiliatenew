@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Illuminate\Support\Facades\Auth;
 use Closure;
 
 class MerchantMiddleware
@@ -15,9 +15,9 @@ class MerchantMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->role != 'merchant')
+        if (Auth::user()->role != 'merchant')
         {
-        return redirect('/unauthorized');
+            return redirect('/login');
         }
         return $next($request);
     }

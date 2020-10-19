@@ -53,10 +53,12 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->phone }}</td>
-                                            <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
+                                            <td>
+                                                {{-- <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
                                                     onclick="openModalEdit('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
                                                     data-target="#modalEdit" class="btn btn-warning"><i
-                                                        class="fas fa-edit"></i></button> &nbsp;
+                                                        class="fas fa-edit"></i></button> &nbsp; --}}
+
                                                 <button type="button" title="View" data-toggle="modal"
                                                     onclick="openModalView('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
                                                     data-target="#modalView" class="btn btn-success"><i
@@ -173,9 +175,9 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Employee Details</h4>
 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </button> --}}
                     </div>
 
                     <div class="modal-body">

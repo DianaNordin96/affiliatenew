@@ -70,7 +70,7 @@
 
                                         <div class="col-12">
                                             <br />
-                                            <button class="btn btn-block btn-outline-info"> Add to cart</button>
+                                            <button type="button" class="btn btn-block btn-outline-info" onclick="window.location='{{ url('addToCartShogun/'.$product->id) }}'"> Add to cart</button>
                                         </div>
                                     </div>
                                 </div>

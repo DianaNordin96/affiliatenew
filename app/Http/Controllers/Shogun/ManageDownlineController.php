@@ -36,7 +36,7 @@ class ManageDownlineController extends Controller
             ]);
 
         toast('User role has been changed', 'success');
-        return redirect('/manageAgent');
+        return redirect('/manageDownlineShogun');
     }
 
 }

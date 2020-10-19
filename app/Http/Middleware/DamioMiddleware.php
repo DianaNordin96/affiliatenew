@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use \Illuminate\Http\Response;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
-class DamyuMiddleware
+class DamioMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,9 +16,9 @@ class DamyuMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->role != 'damio')
+        if (Auth::user()->role != 'damio')
         {
-        return redirect('/unauthorized');
+            return redirect('/login');
         }
         return $next($request);
     }

@@ -13,7 +13,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Manage User</li>
+                            <li class="breadcrumb-item active">Manage Product</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -41,7 +41,7 @@
                                             <th>ID</th>
                                             <th>Image</th>
                                             <th>Product Name</th>
-                                            <th>Price</th>
+                                            <th>Price (RM)</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -53,26 +53,13 @@
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>{{ $product->product_price }}</td>
                                                 <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                        onclick="openModalEdit()" data-target="#modalEdit"
-                                                        class="btn btn-warning"><i class="fas fa-edit"></i></button> &nbsp;
+                                                        onclick="openModalEdit('{{ $product->product_name }}','{{ $product->product_price }}','{{ $product->product_description }}')"
+                                                        data-target="#modalEdit" class="btn btn-warning"><i
+                                                            class="fas fa-edit"></i></button> &nbsp;
                                                     <button type="button" title="View" data-toggle="modal"
-                                                        onclick="openModalView()" data-target="#modalView"
-                                                        class="btn btn-success"><i class="far fa-eye"></i></button> &nbsp;
-                                                    <a class="btn btn-primary" href="#"
-                                                        onclick="event.preventDefault();
-                                                                          document.getElementById('newbill-form{{ $product->id }}').submit();">
-                                                        Buy RM {{ $product->product_price }}
-                                                    </a>
-                                                    <form id="newbill-form{{ $product->id }}"
-                                                        action="{{ route('purchase.store') }}" method="POST"
-                                                        style="display: none;">
-                                                        @csrf
-                                                        <input type="hidden" name="product" value="{{ $product->id }}">
-                                                        <input type="hidden" name="price"
-                                                            value="{{ $product->product_price }}">
-                                                        <input type="hidden" name="link"
-                                                            value="{{ $product->payment_link }}">
-                                                    </form>
+                                                        onclick="openModalView('{{ $product->product_name }}','{{ $product->product_price }}','{{ $product->product_description }}')"
+                                                        data-target="#modalView" class="btn btn-success"><i
+                                                            class="far fa-eye"></i></button> &nbsp;
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -125,7 +112,7 @@
                                         <div class="form-group">
                                             <label>Product Description</label>
                                             <textarea class="form-control" name="productDesc" id="productDesc" rows="3"
-                                                placeholder="Address"></textarea>
+                                                placeholder="Description"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -166,36 +153,24 @@
                         </div>
 
                         <div class="modal-body">
-                            <form action="{{ route('manageAgent.update') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('manageProduct.update') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <input type="text" id="idEdit" class="form-control" name="idEdit"
-                                                placeholder="Name" hidden />
-                                            <label> Name </label>
-                                            <input type="text" id="nameEdit" class="form-control" name="nameEdit"
-                                                placeholder="Name" />
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            <label> Product Name </label>
+                                            <input type="text" id="productNameEdit" class="form-control"
+                                                name="productNameEdit" placeholder="Name" />
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Email </label>
-                                            <input type="text" id="emailEdit" class="form-control" name="emailEdit"
-                                                placeholder="Email" />
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            <label> Product Price </label>
+                                            <input type="text" id="productPriceEdit" class="form-control"
+                                                name="productPriceEdit" placeholder="Price" />
                                         </div>
                                     </div>
                                 </div>
@@ -203,39 +178,22 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <!-- text input -->
-                                        <div class="form-group">
-                                            <label> Phone Number </label>
-                                            <input type="text" id="phoneEdit" class="form-control" name="phoneEdit"
-                                                placeholder="Phone Number" />
-                                            @error('phone')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label>Address</label>
-                                            <textarea class="form-control" name="addressEdit" id="addressEdit" rows="3"
-                                                placeholder="Address"></textarea>
-                                            @error('address')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            <label>Product Description</label>
+                                            <textarea class="form-control" name="productDescEdit" id="productDescEdit" rows="3"
+                                                placeholder="Description"></textarea>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     <button type="submit" id="saveChanges" class="btn btn-primary">Save changes</button>
                                 </div>
                             </form>
                         </div>
-
-
                         <!-- /.modal-content -->
                     </div>
                     <!-- /.modal-dialog -->
@@ -274,6 +232,8 @@
 
 @section('script')
     <script>
+
+        
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
@@ -292,26 +252,24 @@
 
         document.getElementById("manageProduct").className = "nav-link active";
 
-        function openModalEdit(id, name, email, phone, address) {
+        function openModalEdit(name,price,desc) {
 
-            document.getElementById("idEdit").value = id;
-            document.getElementById("nameEdit").value = name;
-            document.getElementById("emailEdit").value = email;
-            document.getElementById("phoneEdit").value = phone;
-            document.getElementById("addressEdit").value = address;
+            document.getElementById("productNameEdit").value = name;
+            document.getElementById("productPriceEdit").value = price;
+            document.getElementById("productDescEdit").value = desc;
 
         }
 
-        function openModalView(id, name, email, phone, address) {
+        function openModalView(name,price,desc) {
 
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
                 "<br/>" +
                 "<div class='col-sm-6'>" +
-                "<b>Name  </b>" + "<br/>" + name + "<br/>" +
-                "<b>Email  </b>" + "<br/>" + email + "<br/>" +
-                "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
-                "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+                "<b>Price: RM  </b>" + price + "<br/>" +
+                "<b>Product Name:  </b>" + name + "<br/>" +
+                "<b>Description: </b>" + desc + "<br/>" +
+                "</div>";
                 "</div>";
         }
 

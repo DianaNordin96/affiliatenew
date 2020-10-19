@@ -43,6 +43,8 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 
+
+
     @section('headScript')
 
     @endsection
@@ -67,9 +69,18 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" >
+                    <a class="nav-link" href="shogun-cart">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        <span class="badge badge-danger navbar-badge">
+
+                            @if (session('cart') != null)
+                                {{ count(session('cart')) }}
+                                
+                            @else
+                                0
+                            @endif
+
+                        </span>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
@@ -136,7 +147,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/manageStock" class="nav-link active">
+                                    <a href="/manageStockShogun" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Restock</p>
                                     </a>
@@ -188,7 +199,16 @@
                         </li> -->
 
                         <li class="nav-item">
-                            <a href="/manageDownline" class="nav-link">
+                            <a href="purchase-historyShogun" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Purchase History
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/manageDownlineShogun" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Downline
@@ -204,7 +224,7 @@
                                 </p>
                             </a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
@@ -282,6 +302,7 @@
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Toastr -->
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+
 
     {{-- @if (Session::has('alert.config'))
         <script>
