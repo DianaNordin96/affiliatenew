@@ -14,14 +14,17 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+   });
+});
 
 Auth::routes();
 
 
 Route::group(['middleware' => 'admin'], function () {
-    Route::get('/', function () {
-        return redirect('/dashboard');
-    });
+    
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard')->middleware('auth', 'admin');
 
     Route::get('/manageAgent', 'Admin\ManageAgentController@index')->name('manageAgent')->middleware('auth');
@@ -36,11 +39,9 @@ Route::group(['middleware' => 'admin'], function () {
 });
 
 Route::group(['middleware' => 'shogun'], function () {
-    Route::get('/', function () {
-        return redirect('/ShogunDashboard');
-    });
+   
     Route::get('/ShogunDashboard', 'Shogun\DashboardController@index')->name('ShogunDashboard')->middleware('auth');
-    Route::get('/manageStockShogun', 'Shogun\ManageStockController@index')->name('manageStock')->middleware('auth','shogun');
+    Route::get('/manageStockShogun', 'Shogun\ManageStockController@index')->name('manageStock')->middleware('auth', 'shogun');
     Route::get('/manageDownlineShogun', 'Shogun\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
     Route::get('/manageDownlineShogun/{role}/{id}', 'Shogun\ManageDownlineController@changeRole')->middleware('auth');
     Route::get('/profileShogun', 'Shogun\ProfileController@index')->middleware('auth');
@@ -57,9 +58,7 @@ Route::group(['middleware' => 'shogun'], function () {
 });
 
 Route::group(['middleware' => 'damio'], function () {
-    Route::get('/', function () {
-        return redirect('/DamioDashboard');
-    });
+   
     Route::get('/DamioDashboard', 'Damio\DashboardController@index')->name('dashboard')->middleware('auth');
     Route::get('/manageStockDamio', 'Damio\ManageStockController@index')->name('manageStock')->middleware('auth');
     Route::get('/manageDownlineDamio', 'Damio\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
@@ -78,9 +77,7 @@ Route::group(['middleware' => 'damio'], function () {
 });
 
 Route::group(['middleware' => 'merchant'], function () {
-    Route::get('/', function () {
-        return redirect('/MerchantDashboard');
-    });
+   
     Route::get('/MerchantDashboard', 'Merchant\DashboardController@index')->name('dashboard')->middleware('auth');
     Route::get('/manageStockMerchant', 'Merchant\ManageStockController@index')->name('manageStock')->middleware('auth');
     Route::get('/manageDownlineMerchant', 'Merchant\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
