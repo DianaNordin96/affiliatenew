@@ -14,14 +14,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return view('welcome');
-   });
-});
-
 Auth::routes();
 
+Route::get('/logout', 'Auth\LogoutController@getSignOut')->name('logout')->middleware('auth', 'admin');
 
 Route::group(['middleware' => 'admin'], function () {
     
