@@ -31,10 +31,10 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- <h3 class="card-title">View Employee</h3> -->
-                            <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
+                            {{-- <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
                                 data-target="#modal-lg">
                                 <i class="fas fa-plus"></i> &nbsp Add Users
-                            </button>
+                            </button> --}}
                             <br />
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>

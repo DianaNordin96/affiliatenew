@@ -50,7 +50,6 @@ class ManageProductController extends Controller
                     'product_price' => $data['productPrice'],
                     'product_description' => $data['productDesc'],
                     'product_image' => $req->file('image')->getClientOriginalName(),
-                    'payment_link' => 'wtv',
                 ]);
 
                 $image = $req->file('image');
@@ -68,7 +67,7 @@ class ManageProductController extends Controller
     public function store(Request $req)
     {
 
-        
+
 
 
         // Store the bill into our purchases
@@ -80,17 +79,14 @@ class ManageProductController extends Controller
         // $billcode = $response[0]['id'];
 
 
-        
+
     }
 
     public function paymentStatus()
     {
-
     }
 
     public function callback()
     {
-
     }
-
 }

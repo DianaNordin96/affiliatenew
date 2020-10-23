@@ -54,10 +54,10 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <br />
-                                            <img style="display: block;margin-left: auto;margin-right: auto;width: 50%;"
-                                                class="img-square img-fluid" width="60%" height="80%"
-                                                src="/imageUploaded/{{ $product->product_image }}" />
-                                            <br />
+                                            <img style="display: block;margin-left: auto;margin-right: auto;"
+                                            class="img-square img-fluid" width="100px" height="100px"
+                                            src="/imageUploaded/{{ $product->product_image }}" />
+                                        <br />
 
                                             <div style="text-align:center">
                                                 {{ $product->product_name }}
@@ -85,6 +85,7 @@
                                     </div>
                                 </div> --}} 
                             </div>
+                            &nbsp;&nbsp;&nbsp;
                         @endforeach
                     </div>
                 </div>
