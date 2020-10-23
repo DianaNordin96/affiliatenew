@@ -75,12 +75,12 @@
                             <i class="fas fa-key mr-2"></i> Change Password
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        <a href="{{ url('/logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#modal-sm"
                             class="dropdown-item">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </div>

@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/', 'RedirectController@redirect');
+
 Auth::routes();
 
-Route::get('/logout', 'Auth\LogoutController@getSignOut')->name('logout')->middleware('auth', 'admin');
 
 Route::group(['middleware' => 'admin'], function () {
     
-    Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard')->middleware('auth', 'admin');
-
+    Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard')->middleware('auth');
     Route::get('/manageAgent', 'Admin\ManageAgentController@index')->name('manageAgent')->middleware('auth');
     Route::POST('/manageAgent/create', 'Admin\ManageAgentController@create')->name('manageAgent.create')->middleware('auth');
     Route::POST('/manageAgent/update', 'Admin\ManageAgentController@update')->name('manageAgent.update')->middleware('auth');
