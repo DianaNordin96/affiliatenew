@@ -56,7 +56,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="dashboard.php" class="nav-link">Home</a>
+                    <a href="dashboard" class="nav-link">Home</a>
                 </li>
             </ul>
 
@@ -71,7 +71,7 @@
                             <i class="fas fa-users mr-2"></i> Account
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
+                        <a href="change-password" class="dropdown-item">
                             <i class="fas fa-key mr-2"></i> Change Password
                         </a>
                         <div class="dropdown-divider"></div>
@@ -92,7 +92,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar elevation-4 sidebar-light-lightblue">
             <!-- Brand Logo -->
-            <a href="/" class="brand-link navbar-white">
+            <a href="dashboard" class="brand-link navbar-white">
                 <img src="../dist/img/AdminLTELogo.png" alt="Affiliate" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Affiliate System</span>
@@ -116,7 +116,7 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
+                        {{-- <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -131,20 +131,8 @@
                                         <p>View Orders</p>
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
-                                    <a href="./index2.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Bulk Orders</p>
-                                    </a>
-                                </li> --}}
-                                <!-- <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>#Option1</p>
-                                    </a>
-                                </li> -->
                             </ul>
-                        </li>
+                        </li> --}}
 
 
                         <!-- <li class="nav-item has-treeview">
@@ -178,28 +166,55 @@
                         </li> -->
 
                         <li class="nav-item">
-                            <a id='customerDetails' href="{{ route('manageAgent') }}" class="nav-link">
+                            <a id='customerDetails' href="manageAgent" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>
-                                    Agent Details
+                                    Agents
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a id='manageProduct' href="{{ route('manageProduct') }}" class="nav-link">
+                            <a id='view-order' href="view-order" class="nav-link">
+                                <i class="nav-icon far fa-user"></i>
+                                <p>
+                                    Orders
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id='customers' href="customers" class="nav-link">
                                 <i class="nav-icon fab fa-product-hunt"></i>
                                 <p>
-                                    Manage Product
+                                    Customers
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="manageProduct" href="manageProduct" class="nav-link">
+                                <i class="nav-icon fab fa-product-hunt"></i>
+                                <p>
+                                    Products
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="support" href="support" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="guidelines" href="guidelines" class="nav-link">
+                                <i class="nav-icon far fa-question-circle"></i>
+                                <p>
+                                   User Guidelines
                                 </p>
                             </a>
                         </li>
@@ -213,7 +228,7 @@
         @yield('content')
 
         <footer class="main-footer">
-            <strong>Copyright &copy; 2020 <a>Affeliate</a>.</strong>
+            <strong>Copyright &copy; 2020 <a>Affiliate</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.0.0

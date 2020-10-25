@@ -82,8 +82,8 @@ class CartController extends Controller
             $total += $details['price'] * $details['quantity'];
         }
         $option = array(
-            'userSecretKey' => '7jjvcrsb-h3ro-1zsh-wrrs-7j47nubg36v2',
-            'categoryCode' => 'p5cfhstp',
+            'userSecretKey' => 'ky1g673m-az9v-dwde-6nyk-24r0x9g83msb',
+            'categoryCode' => 'g2lwd3s7',
             'billName' => 'Purchase for Stock',
             'billDescription' => 'Buy stock',
             'billPriceSetting' => 1,
@@ -123,12 +123,12 @@ class CartController extends Controller
 
         // from the guide
 
-        $url = 'https://toyyibpay.com/index.php/api/createBill';
+        $url = 'https://dev.toyyibpay.com/index.php/api/createBill';
 
         $response = Http::asForm()->post($url, $option);
         $billCode = $response[0]['BillCode'];
 
-        return redirect('https://toyyibpay.com/' .  $billCode);
+        return redirect('https://dev.toyyibpay.com/' .  $billCode);
     }
 
     public function paymentStatus(Request $request)
@@ -146,7 +146,8 @@ class CartController extends Controller
                 'bill_code' => $request->billcode,
                 'user_id' => Auth::user()->id,
                 'amount' => $total,
-                'created_at' => NOW()
+                'created_at' => NOW(),
+                'customer_id' => 1
             ],
         ]);
 
@@ -155,7 +156,7 @@ class CartController extends Controller
             DB::table('orders_details')->insert([
                 [
                     'product_id' => $id,
-                    'order_id' => $request->order_id,
+                    'referenceNo' => $request->order_id,
                     'quantity' => $details['quantity'],
                 ],
             ]);

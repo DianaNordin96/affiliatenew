@@ -38,7 +38,7 @@
                                 <!-- <h3 class="card-title">View Employee</h3> -->
                                 <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
                                     data-target="#modal-lg">
-                                    <i class="fas fa-plus"></i> &nbsp Add Users
+                                    <i class="fas fa-plus"></i> &nbsp Add Agents
                                 </button>
                                 <br />
                                 <table id="example1" class="table table-bordered table-striped">
@@ -59,23 +59,50 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->phone }}</td>
                                                 <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                        onclick="openModalEdit('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
+                                                        onclick="openModalEdit(
+                                                            '{{ $user->id }}',
+                                                            '{{ $user->name }}',
+                                                            '{{ $user->email }}',
+                                                            '{{ $user->phone }}',
+                                                            '{{ $user->address }}',
+                                                            '{{ $user->icnumber }}',
+                                                            '{{ $user->dob }}',
+                                                            '{{ $user->image }}'
+                                                        )"
                                                         data-target="#modalEdit" class="btn btn-warning"><i
                                                             class="fas fa-edit"></i></button> &nbsp;
                                                     <button type="button" title="View" data-toggle="modal"
-                                                        onclick="openModalView('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
+                                                        onclick="openModalView(
+                                                            '{{ $user->id }}',
+                                                            '{{ $user->name }}',
+                                                            '{{ $user->email }}',
+                                                            '{{ $user->phone }}',
+                                                            '{{ $user->address }}',
+                                                            '{{ $user->icnumber }}',
+                                                            '{{ $user->dob }}',
+                                                            '{{ $user->image }}'
+                                                            )"
                                                         data-target="#modalView" class="btn btn-success"><i
                                                             class="far fa-eye"></i></button> &nbsp;
+                                                    <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
+                                                        onclick="window.location.href='manageAgent/delete/{{ $user->id }}'"
+                                                        class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
+                                                    &nbsp;
                                                     <select onchange="location = this.value;" class="btn btn-default">
-                                                        <option value="/manageAgent/admin/{{$user->id}}" @if($user->role == 'admin'){ selected }  @endif>Admin</option>
-                                                        <option value="/manageAgent/shogun/{{$user->id}}" @if($user->role == 'shogun'){ selected   @endif}>Shogun</option>
-                                                        <option value="/manageAgent/damio/{{$user->id}}" @if($user->role == 'damio'){ selected }  @endif>Damio</option>
-                                                        <option value="/manageAgent/merchant/{{$user->id}}" @if($user->role == 'merchant'){ selected }  @endif>Merchant</option>
-                                                    <option value="/manageAgent/dropship/{{$user->id}}" @if($user->role == 'dropship'){ selected }  @endif>Dropship</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
+                                                        <option value="/manageAgent/admin/{{ $user->id }}" @if ($user->role == 'admin'){ selected }
+                                        @endif>Admin</option>
+                                        <option value="/manageAgent/shogun/{{ $user->id }}" @if ($user->role == 'shogun'){ selected @endif}>Shogun
+                                        </option>
+                                        <option value="/manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif>Damio
+                                        </option>
+                                        <option value="/manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif
+                                            >Merchant</option>
+                                        <option value="/manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif
+                                            >Dropship</option>
+                                        </select>
+                                        </td>
                                         @endforeach
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -99,6 +126,19 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Photo</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" id="image" name="image">
+                                                    <!-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Name </label>
@@ -112,7 +152,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> IC </label>
+                                            <input type="text" id="ic" class="form-control" name="ic"
+                                                placeholder="IC Number" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Email </label>
@@ -128,7 +177,15 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Date Of Birth </label>
+                                            <input type="date" id="dob" class="form-control" name="dob"
+                                                placeholder="Date Of Birth" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Phone Number </label>
@@ -141,7 +198,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Address</label>
@@ -158,7 +215,7 @@
 
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Add Users</button>
+                                    <button type="submit" class="btn btn-primary">Add Agent</button>
                                 </div>
                             </form>
                         </div>
@@ -183,12 +240,24 @@
                         <div class="modal-body">
                             <form action="{{ route('manageAgent.update') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+                                <input type="text" name="userID" id="userID" hidden/>
                                 <div class="row">
                                     <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Photo</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" id="imageEdit" name="imageEdit">
+                                                    <!-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <input type="text" id="idEdit" class="form-control" name="idEdit"
-                                                placeholder="Name" hidden />
                                             <label> Name </label>
                                             <input type="text" id="nameEdit" class="form-control" name="nameEdit"
                                                 placeholder="Name" />
@@ -200,7 +269,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> IC </label>
+                                            <input type="text" id="icEdit" class="form-control" name="icEdit"
+                                                placeholder="IC Number" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Email </label>
@@ -216,7 +294,15 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Date Of Birth </label>
+                                            <input type="date" id="dobEdit" class="form-control" name="dobEdit"
+                                                placeholder="Date Of Birth" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Phone Number </label>
@@ -229,7 +315,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Address</label>
@@ -307,26 +393,33 @@
 
         document.getElementById("customerDetails").className = "nav-link active";
 
-        function openModalEdit(id, name, email, phone, address) {
+        function openModalEdit(id, name, email, phone, address, ic, dob,image) {
 
-            document.getElementById("idEdit").value = id;
+            document.getElementById("userID").value = id;
             document.getElementById("nameEdit").value = name;
             document.getElementById("emailEdit").value = email;
             document.getElementById("phoneEdit").value = phone;
             document.getElementById("addressEdit").value = address;
+            document.getElementById("icEdit").value = ic;
+            document.getElementById("dobEdit").value = dob;
 
         }
 
-        function openModalView(id, name, email, phone, address) {
+        function openModalView(id, name, email, phone, address,ic, dob,image) {
 
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
                 "<br/>" +
                 "<div class='col-sm-6'>" +
+                "<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='/imageUploaded/profile/"+ image +"'/>"+
+                "</div>"+
+                "<div class='col-sm-6'>" +
                 "<b>Name  </b>" + "<br/>" + name + "<br/>" +
                 "<b>Email  </b>" + "<br/>" + email + "<br/>" +
                 "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
+                "<b>IC Number </b>" + "<br/>" + ic + "<br/>" +
                 "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+                "</div>"+
                 "</div>";
         }
 

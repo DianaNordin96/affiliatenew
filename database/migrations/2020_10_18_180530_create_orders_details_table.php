@@ -16,7 +16,8 @@ class CreateOrdersDetailsTable extends Migration
         Schema::create('orders_details', function (Blueprint $table) {
             $table->integer('quantity');
             $table->timestamps();
-            $table->string('order_id')->nullable();
+            $table->string('referenceNo')->nullable();
+            $table->string('status')->nullable();
         });
 
         Schema::table('orders_details', function (Blueprint $table) {

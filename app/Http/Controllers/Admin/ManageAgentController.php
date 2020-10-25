@@ -52,6 +52,9 @@ class ManageAgentController extends Controller
             'email' => 'required|email',
             'address' => 'required',
             'phone' => 'required',
+            'dob' => 'required',
+            'ic' => 'required',
+            'image' => '',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
@@ -61,17 +64,48 @@ class ManageAgentController extends Controller
         } else {
             $data = $req->input();
             try {
+
+                if ($req->file('image') != null){
                 $user = new User;
                 $user->name = $data['name'];
                 $user->email = $data['email'];
                 $user->phone = $data['phone'];
                 $user->address = $data['address'];
                 $user->password = Hash::make('12345678');
-                $user->image = NULL;
+                $user->image = $req->file('image')->getClientOriginalName();
+                $user->icnumber = $data['ic'];
+                $user->dob = $data['dob'];
+                $user->downlineTo = null;
+                $user->belongsToAdmin = Auth::user()->id;
                 $user->role = 'shogun';
                 $user->save();
+
+                $image = $req->file('image');
+
+                $image->move(base_path('public\imageUploaded\profile'), $image->getClientOriginalName());
+
                 toast('User has been created', 'success');
                 return redirect('/manageAgent');
+                }else{
+                    $user = new User;
+                    $user->name = $data['name'];
+                    $user->email = $data['email'];
+                    $user->phone = $data['phone'];
+                    $user->address = $data['address'];
+                    $user->password = Hash::make('12345678');
+                    $user->image = null;
+                    $user->icnumber = $data['ic'];
+                    $user->dob = $data['dob'];
+                    $user->downlineTo = null;
+                    $user->belongsToAdmin = Auth::user()->id;
+                    $user->role = 'shogun';
+                    $user->save();
+    
+                    toast('User has been created', 'success');
+                    return redirect('/manageAgent');
+                }
+
+
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -81,11 +115,13 @@ class ManageAgentController extends Controller
     public function update(Request $req)
     {
         $validatedData = [
-            'idEdit' => '',
+            'userID' => '',
             'nameEdit' => 'required',
             'emailEdit' => 'required|email',
             'addressEdit' => 'required',
             'phoneEdit' => 'required',
+            'icEdit' => 'required',
+            'dobEdit' => 'required',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
@@ -95,17 +131,40 @@ class ManageAgentController extends Controller
         } else {
             $data = $req->input();
             try {
-                DB::table('users')
-                    ->where('id', $data['idEdit'])
-                    ->update([
-                        'name' => $data['nameEdit'],
-                        'email' => $data['emailEdit'],
-                        'phone' => $data['phoneEdit'],
-                        'address' => $data['addressEdit'],
-                    ]);
+                if ($req->file('imageEdit') == null) {
+                    DB::table('users')
+                        ->where('id', $data['userID'])
+                        ->update([
+                            'name' => $data['nameEdit'],
+                            'email' => $data['emailEdit'],
+                            'phone' => $data['phoneEdit'],
+                            'address' => $data['addressEdit'],
+                            'dob' => $data['dobEdit'],
+                            'icnumber' => $data['icEdit']
+                        ]);
 
-                toast('User has been updated', 'success');
-                return redirect('/manageAgent');
+                    toast('Agent has been updated', 'success');
+                    return redirect('/manageAgent');
+                } else if ($req->file('imageEdit') != null) {
+                    DB::table('users')
+                        ->where('id', $data['userID'])
+                        ->update([
+                            'name' => $data['nameEdit'],
+                            'email' => $data['emailEdit'],
+                            'phone' => $data['phoneEdit'],
+                            'address' => $data['addressEdit'],
+                            'image' => $req->file('imageEdit')->getClientOriginalName(),
+                            'dob' => $data['dobEdit'],
+                            'icnumber' => $data['icEdit']
+                        ]);
+
+                    $image = $req->file('imageEdit');
+
+                    $image->move(base_path('public\imageUploaded\profile'), $image->getClientOriginalName());
+
+                    toast('Agent has been updated', 'success');
+                    return redirect('/manageAgent');
+                }
             } catch (Exception $e) {
                 toast('Something went wrong', 'error');
                 return redirect('/manageAgent');
@@ -123,6 +182,15 @@ class ManageAgentController extends Controller
             ]);
 
         toast('User role has been changed', 'success');
+        return redirect('/manageAgent');
+    }
+
+    public function delete($id)
+    {
+        DB::table('users')
+            ->delete($id);
+
+        toast('Agent has been removed', 'success');
         return redirect('/manageAgent');
     }
 

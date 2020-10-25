@@ -30,8 +30,8 @@
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h4>$35,210.43</h4>
-                            <p>Total Sales <span class="text-success"> &nbsp; &nbsp; <i class="fas fa-caret-up"></i> 17%</span></p>
+                        <h4>RM {{number_format($allSales,2)}}</h4>
+                            <p>Total Sales <span class="text-success"> &nbsp; &nbsp; <i class="fas fa-caret-up"></i></p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -46,9 +46,9 @@
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h4>44</h4>
+                        <h4>{{$downline}}</h4>
 
-                            <p>Total Customer</p>
+                            <p>Total Agents</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person"></i>
@@ -62,13 +62,13 @@
             <!-- Main row -->
             <div class="row">
                 <!-- Left col -->
+                
                 <section class="col-lg-6 connectedSortable">
-
                     <div class="card">
                         <div class="card-header bg-gradient-lightblue">
                             <h3 class="card-title">
                                 <i class="fas fa-chart-pie mr-1"></i>
-                                CUSTOMER SALES
+                                SHOGUN SALES
                             </h3>
 
                         </div><!-- /.card-header -->
@@ -82,7 +82,7 @@
                                                 <h6>TODAY</h6>
                                             </span>
                                             <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
+                                            <h6>RM {{number_format($shogunSales,2)}}</h6>
                                             </span>
                                         </div>
                                         <!-- /.info-box-content -->
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-lg-4 ">
                                     <div class="info-box bg-navy">
                                         <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
@@ -165,114 +165,7 @@
                                         <!-- /.info-box-content -->
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div><!-- /.card-body -->
-
-                </section>
-                <section class="col-lg-6 connectedSortable">
-                    <div class="card">
-                        <div class="card-header bg-gradient-lightblue">
-                            <h3 class="card-title">
-                                <i class="fas fa-chart-pie mr-1"></i>
-                                DOWNLINE (BULK ORDER) SALES
-                            </h3>
-
-                        </div><!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-4 ">
-                                    <div class="info-box bg-lightblue">
-                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                        <div class="info-box-content">
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>TODAY</h6>
-                                            </span>
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
-                                            </span>
-                                        </div>
-                                        <!-- /.info-box-content -->
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 ">
-                                    <div class="info-box bg-lightblue">
-                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                        <div class="info-box-content">
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>THIS WEEK</h6>
-                                            </span>
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
-                                            </span>
-                                        </div>
-                                        <!-- /.info-box-content -->
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 ">
-                                    <div class="info-box bg-lightblue">
-                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                        <div class="info-box-content">
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>THIS MONTH</h6>
-                                            </span>
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
-                                            </span>
-                                        </div>
-                                        <!-- /.info-box-content -->
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-4 ">
-                                    <div class="info-box bg-navy">
-                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                        <div class="info-box-content">
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>YESTERDAY</h6>
-                                            </span>
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
-                                            </span>
-                                        </div>
-                                        <!-- /.info-box-content -->
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 ">
-                                    <div class="info-box bg-navy">
-                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                        <div class="info-box-content">
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>LAST WEEK</h6>
-                                            </span>
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
-                                            </span>
-                                        </div>
-                                        <!-- /.info-box-content -->
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 ">
-                                    <div class="info-box bg-navy">
-                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                        <div class="info-box-content">
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>LAST MONTH</h6>
-                                            </span>
-                                            <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
-                                            </span>
-                                        </div>
-                                        <!-- /.info-box-content -->
-                                    </div>
-                                </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div><!-- /.card-body -->
                 </section>
@@ -282,7 +175,7 @@
                         <div class="card-header bg-gradient-lightblue">
                             <h3 class="card-title">
                                 <i class="fas fa-chart-pie mr-1"></i>
-                                TOTAL SALES (CUSTOMER + DOWNLINE)
+                                DAMIO SALES
                             </h3>
 
                         </div><!-- /.card-header -->
@@ -296,7 +189,7 @@
                                                 <h6>TODAY</h6>
                                             </span>
                                             <span style="text-align : center" class="info-box-text">
-                                                <h6>RM 0.00</h6>
+                                                <h6>RM {{number_format($damioSales,2)}}</h6>
                                             </span>
                                         </div>
                                         <!-- /.info-box-content -->
@@ -334,7 +227,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-lg-4 ">
                                     <div class="info-box bg-navy">
                                         <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
@@ -379,7 +272,221 @@
                                         <!-- /.info-box-content -->
                                     </div>
                                 </div>
+                            </div> --}}
+                        </div>
+                    </div><!-- /.card-body -->
+                </section>
+
+                <section class="col-lg-6 connectedSortable">
+                    <div class="card">
+                        <div class="card-header bg-gradient-lightblue">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                MERCHANT SALES
+                            </h3>
+
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>TODAY</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM RM {{number_format($merchantSales,2)}}</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>THIS WEEK</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>THIS MONTH</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM {{number_format($damioSales,2)}}</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
                             </div>
+
+                            {{-- <div class="row">
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-navy">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>YESTERDAY</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-navy">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>LAST WEEK</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-navy">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>LAST MONTH</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div><!-- /.card-body -->
+                </section>
+
+                <section class="col-lg-6 connectedSortable">
+                    <div class="card">
+                        <div class="card-header bg-gradient-lightblue">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                DROPSHIP SALES
+                            </h3>
+
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>TODAY</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM {{number_format($dropshipSales,2)}}</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>THIS WEEK</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>THIS MONTH</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- <div class="row">
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-navy">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>YESTERDAY</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-navy">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>LAST WEEK</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 ">
+                                    <div class="info-box bg-navy">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>LAST MONTH</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM 0.00</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                            </div> --}}
                         </div>
                     </div><!-- /.card-body -->
                 </section>

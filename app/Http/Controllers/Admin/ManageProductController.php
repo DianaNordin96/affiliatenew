@@ -29,12 +29,56 @@ class ManageProductController extends Controller
         );
     }
 
+    public function update(Request $req)
+    {
+
+        $validatedData = [
+            'productNameEdit' => 'required',
+            'productPriceEdit' => 'required',
+            'productDescEdit' => 'required',
+            'shogunPriceEdit' => 'required',
+            'dropshipPriceEdit' => 'required',
+            'damioPriceEdit' => 'required',
+            'merchantPriceEdit' => 'required'
+        ];
+
+        $validator = Validator::make($req->all(), $validatedData);
+        if ($validator->fails()) {
+            toast('Please fill in all the box before creating new products', 'error');
+            return redirect('/manageProduct');
+        } else {
+            $data = $req->input();
+            try {
+                DB::table('products')
+                    ->where('id', $data['productIDEdit'])
+                    ->update([
+                        'product_name' => $data['productNameEdit'],
+                        'product_price' => $data['productPriceEdit'],
+                        'product_description' => $data['productDescEdit'],
+                        'price_shogun' => $data['shogunPriceEdit'],
+                        'price_damio' => $data['damioPriceEdit'],
+                        'price_merchant' => $data['merchantPriceEdit'],
+                        'price_dropship' => $data['dropshipPriceEdit']
+                    ]);
+
+                toast('Product has been updated', 'success');
+                return redirect('/manageProduct');
+            } catch (Exception $e) {
+                return redirect('manageProduct')->with('error', "Data cannot be updated");
+            }
+        }
+    }
+
     public function create(Request $req)
     {
         $validatedData = [
             'productName' => 'required',
             'productPrice' => 'required',
             'productDesc' => 'required',
+            'shogunPrice' => 'required',
+            'dropshipPrice' => 'required',
+            'damioPrice' => 'required',
+            'merchantPrice' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif'
         ];
 
@@ -50,6 +94,10 @@ class ManageProductController extends Controller
                     'product_price' => $data['productPrice'],
                     'product_description' => $data['productDesc'],
                     'product_image' => $req->file('image')->getClientOriginalName(),
+                    'price_shogun' => $data['shogunPrice'],
+                    'price_damio' => $data['damioPrice'],
+                    'price_merchant' => $data['merchantPrice'],
+                    'price_dropship' => $data['dropshipPrice']
                 ]);
 
                 $image = $req->file('image');
@@ -64,29 +112,12 @@ class ManageProductController extends Controller
         }
     }
 
-    public function store(Request $req)
+    public function delete($id)
     {
+        DB::table('products')
+            ->delete($id);
 
-
-
-
-        // Store the bill into our purchases
-        // $purchase = new Purchase;
-        // $purchase->user_id = Auth::user()->id;
-        // $purchase->product_id = $product->id;
-        // $purchase->bill_id = '0';
-        // $purchase->save();
-        // $billcode = $response[0]['id'];
-
-
-
-    }
-
-    public function paymentStatus()
-    {
-    }
-
-    public function callback()
-    {
+        toast('Product has been removed', 'success');
+        return redirect('/manageProduct');
     }
 }

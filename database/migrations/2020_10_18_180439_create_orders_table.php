@@ -18,6 +18,8 @@ class CreateOrdersTable extends Migration
             $table->string('orders_id')->nullable();
             $table->string('bill_code')->nullable();
             $table->string('amount')->nullable();
+            $table->string('referenceNo')->nullable();
+            $table->biginteger('customer_id')->unsigned();
             $table->timestamps();
         });
 
@@ -37,10 +39,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
-        });
         Schema::dropIfExists('orders');
     }
 }

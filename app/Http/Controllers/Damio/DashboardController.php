@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Damio;
 
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

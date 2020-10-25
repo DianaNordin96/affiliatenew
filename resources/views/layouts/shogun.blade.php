@@ -62,7 +62,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/ShogunDashboard" class="nav-link">Home</a>
+                    <a href="ShogunDashboard" class="nav-link">Home</a>
                 </li>
             </ul>
 
@@ -75,7 +75,7 @@
 
                             @if (session('cart') != null)
                                 {{ count(session('cart')) }}
-                                
+
                             @else
                                 0
                             @endif
@@ -88,11 +88,11 @@
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
+                        <a href="profile-shogun" class="dropdown-item">
                             <i class="fas fa-users mr-2"></i> Account
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
+                        <a href="change-password-shogun" class="dropdown-item">
                             <i class="fas fa-key mr-2"></i> Change Password
                         </a>
                         <div class="dropdown-divider"></div>
@@ -113,7 +113,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar elevation-4 sidebar-light-lightblue">
             <!-- Brand Logo -->
-            <a href="/ShogunDashboard" class="brand-link navbar-white">
+            <a href="ShogunDashboard" class="brand-link navbar-white">
                 <img src="../dist/img/AdminLTELogo.png" alt="Affiliate" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Affiliate System</span>
@@ -137,7 +137,7 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
+                        {{-- <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -165,7 +165,7 @@
                                     </a>
                                 </li> -->
                             </ul>
-                        </li>
+                        </li> --}}
 
 
                         <!-- <li class="nav-item has-treeview">
@@ -199,7 +199,35 @@
                         </li> -->
 
                         <li class="nav-item">
-                            <a href="purchase-historyShogun" class="nav-link">
+                            <a href="downline-shogun" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Downline Agent
+                                </p>
+                            </a>
+                        </li>
+                        
+
+                        <li class="nav-item">
+                            <a href="customers-shogun" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Customers
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="product-shogun" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Buy Product
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="purchase-history-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Purchase History
@@ -208,28 +236,28 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/manageDownlineShogun" class="nav-link">
-                                <i class="nav-icon fas fa-users-cog"></i>
-                                <p>
-                                    Downline
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="comission-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
-                                    Redeem Point
+                                    Commission
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="support-shogun" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="guideline-shogun" class="nav-link">
+                                <i class="nav-icon far fa-question-circle"></i>
+                                <p>
+                                    Guidelines
                                 </p>
                             </a>
                         </li>
