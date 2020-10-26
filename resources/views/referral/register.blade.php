@@ -25,24 +25,37 @@
 
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="login-box-msg">REGISTER AS DOWNLINE</p>
+                <p class="login-box-msg">REGISTER AS DOWNLINE {{ $userID }}</p>
 
-                <form action="registerDownline" method="post" enctype="multipart/form-data">
-                    <input type="text" name="id" hidden />
+                <form action="{{ url('registerDownline') }} " method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="text" name="id" value="{{ $userID }}" hidden />
                     <div class="row">
+                        @if (Session::get('failed') != null)
+                            <a style="text-decoration: none;color:red">{{ Session::get('failed') }}</a>
+
+                        @endif
                         <div class="col-12">
                             Name <br />
                             <input type="text" class="form-control" name="name" placeholder="Full name">
                         </div>
                         <br /><br />
+
                         <div class="col-12">
                             IC Number <br />
                             <input type="text" class="form-control" name="ic" placeholder="IC Number">
                         </div>
                         <br /><br />
+
                         <div class="col-12">
                             Date Of Birth <br />
                             <input type="date" class="form-control" name="dob">
+                        </div>
+                        <br /><br />
+
+                        <div class="col-12">
+                            Phone Number <br />
+                            <input type="text" class="form-control" name="phone">
                         </div>
                         <br /><br />
 
@@ -70,6 +83,11 @@
                             <input type="password" class="form-control" name="password2">
                         </div>
                         <br /><br />
+
+                        @if (Session::get('error') != null){
+                            <a style="text-decoration: none;color:red">{{ Session::get('error') }}</a>
+                            }
+                        @endif
 
                         <div class="col-12">
                             <div class="form-group">

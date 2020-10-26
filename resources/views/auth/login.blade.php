@@ -29,7 +29,11 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-
+                @if (isset($error))
+                    <div class="input-group mb-3">
+                        <a style="text-align:center;text-decoration: none;color:red">{{ $error }}</a>
+                    </div>
+                @endif
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="input-group mb-3">
@@ -76,7 +80,7 @@
     <!-- /.login-box -->
 
     <!-- jQuery -->
-    <script src="{{ asset ('plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
