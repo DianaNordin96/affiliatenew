@@ -13,8 +13,8 @@ class RedirectController extends Controller
             // Check user role
             $role = Auth::user()->role;
             switch ($role) {
-                case 'superadmin':
-                    return redirect('/SuperAdminDashboard');
+                case 'masteradmin':
+                    return redirect('/MasterDashboard');
                     break;
                 case 'admin':
                     return redirect('/dashboard');

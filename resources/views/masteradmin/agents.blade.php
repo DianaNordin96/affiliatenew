@@ -1,4 +1,4 @@
-@extends('layouts.superadmin')
+@extends('layouts.masteradmin')
 @section('content')
 
     @if (session('success_message'))
@@ -18,7 +18,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('SuperAdminDashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('MasterDashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Agents</li>
                         </ol>
                     </div><!-- /.col -->

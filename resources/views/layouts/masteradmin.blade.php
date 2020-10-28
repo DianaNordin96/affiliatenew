@@ -62,27 +62,12 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/DamioDashboard" class="nav-link">Home</a>
+                    <a href="/MasterDashboard" class="nav-link">Home</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="merchant-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="badge badge-danger navbar-badge">
-
-                            @if (session('cart') != null)
-                                {{ count(session('cart')) }}
-                                
-                            @else
-                                0
-                            @endif
-
-                        </span>
-                    </a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="">
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
@@ -113,7 +98,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar elevation-4 sidebar-light-lightblue">
             <!-- Brand Logo -->
-            <a href="/DamioDashboard" class="brand-link navbar-white">
+            <a href="/MasterDashboard" class="brand-link navbar-white">
                 <img src="../dist/img/AdminLTELogo.png" alt="Affiliate" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Affiliate System</span>
@@ -127,7 +112,7 @@
                         <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="/profileMerchant" class="d-block"> {{ Auth::user()->name }}</a>
+                        <a href="/profileMaster" class="d-block"> {{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -139,7 +124,7 @@
                with font-awesome or any other icon font library -->
                         
                         <li class="nav-item">
-                            <a href="superadmin-viewAgent" class="nav-link">
+                            <a href="master-viewAgent" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     View Agents
@@ -148,7 +133,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="superadmin-commission" class="nav-link">
+                            <a href="master-commission" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Downline
@@ -157,7 +142,16 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="superadmin-support" class="nav-link">
+                            <a href="master-commission" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Downline
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="master-support" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support

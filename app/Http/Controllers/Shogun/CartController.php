@@ -14,7 +14,14 @@ class CartController extends Controller
 {
     public function cart()
     {
-        return view('shogun/cart');
+        $customer = DB::table('customers')
+            ->where('user_id', '=', Auth::user()->id)
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('shogun/cart')->with([
+            'customers' => $customer
+        ]);
     }
     public function addToCart($id)
     {
@@ -74,9 +81,9 @@ class CartController extends Controller
         }
     }
 
-    public function checkout()
+    public function checkout(Request $req)
     {
-
+        session()->put('customer', $req->customerID);
         $total = 0;
         foreach (session('cart') as $id => $details) {
             $total += $details['price'] * $details['quantity'];
@@ -133,38 +140,82 @@ class CartController extends Controller
 
     public function paymentStatus(Request $request)
     {
-
-        $total=0;
+        $custID = session('customer');
+        $total = 0;
         foreach (session('cart') as $id => $details) {
             $total += $details['price'] * $details['quantity'];
         }
 
         $response = request()->all(['status_id', 'billcode', 'order_id']);
-        DB::table('orders')->insert([
-            [
-                'orders_id' => $request->order_id,
-                'bill_code' => $request->billcode,
-                'user_id' => Auth::user()->id,
-                'amount' => $total,
-                'created_at' => NOW(),
-                'customer_id' => 1
-            ],
-        ]);
 
-
-        foreach (session('cart') as $id => $details) {
-            DB::table('orders_details')->insert([
+        //if payment success
+        if ($request->status_id == 1) {
+            //insert orders
+            DB::table('orders')->insert([
                 [
-                    'product_id' => $id,
-                    'referenceNo' => $request->order_id,
-                    'quantity' => $details['quantity'],
+                    'orders_id' => $request->order_id,
+                    'bill_code' => $request->billcode,
+                    'user_id' => Auth::user()->id,
+                    'amount' => $total,
+                    'created_at' => NOW(),
+                    'customer_id' => $custID
                 ],
             ]);
-        }
 
-        $request->session()->forget('cart');
-        toast('Payment Successful', 'success');
-        return redirect('purchase-historyShogun');
+            //insert product orders
+            foreach (session('cart') as $id => $details) {
+                DB::table('orders_details')->insert([
+                    [
+                        'product_id' => $id,
+                        'referenceNo' => $request->order_id,
+                        'quantity' => $details['quantity'],
+                    ],
+                ]);
+            }
+
+            $totalCommission=0;
+            //update commision
+            foreach (session('cart') as $id => $details) {
+                $prod = DB::table('products')
+                    ->where('id', $id)
+                    ->get();
+                foreach ($prod as $product) {
+                    $productPrice = $product->product_price;
+                    $shogunPrice = $product->price_shogun;
+                    $commisionPerProduct = $productPrice - $shogunPrice;
+                    $commisionPerProduct = $commisionPerProduct * $details['quantity'];
+                    $totalCommission = $totalCommission + $commisionPerProduct;
+                }
+            }
+
+            //addToCommision
+            $userCommission = DB::table('users')->where('id', Auth::user()->id)->get();
+
+            foreach ($userCommission as $user) {
+                $commissionPoint= $user->commissionPoint;
+                if ($commissionPoint == null) {
+                    DB::table('users')
+                        ->where('id', Auth::user()->id)
+                        ->update([
+                            'commissionPoint' => $totalCommission
+                        ]);
+                } else {
+                    $totalCommission += $commissionPoint;
+                    DB::table('users')
+                        ->where('id', Auth::user()->id)
+                        ->update([
+                            'commissionPoint' => $totalCommission
+                        ]);
+                }
+            }
+
+            $request->session()->forget('cart');
+            toast('Payment Successful', 'success');
+            return redirect('purchase-history-shogun');
+        } else { //if payment unsuccessful
+            toast('Payment Unsuccessful', 'error');
+            return redirect('purchase-history-shogun');
+        }
     }
 
     public function callback()

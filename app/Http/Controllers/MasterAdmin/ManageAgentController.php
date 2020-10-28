@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\SuperAdmin;
+namespace App\Http\Controllers\MasterAdmin;
 
 use DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ManageAgent extends Controller
+class ManageAgentController extends Controller
 {
     public function index()
     {
@@ -15,7 +15,7 @@ class ManageAgent extends Controller
             ->where('id', '<>', Auth::user()->id)
             ->get();
 
-        return redirect('superadmin/agent')->with([
+        return redirect('masteradmin/agent')->with([
             'agentList' => $agentList
         ]);
     }

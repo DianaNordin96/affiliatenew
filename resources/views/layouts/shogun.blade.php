@@ -127,7 +127,7 @@
                         <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="/profileShogun" class="d-block"> {{ Auth::user()->name }}</a>
+                        <a href="/profile-shogun" class="d-block"> {{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -227,7 +227,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="purchase-history-shogun" class="nav-link">
+                            <a href="/purchase-history-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Purchase History
@@ -236,7 +236,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="comission-shogun" class="nav-link">
+                            <a href="/commission-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
                                     Commission
@@ -245,7 +245,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="support-shogun" class="nav-link">
+                            <a href="/support-shogun" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
@@ -254,7 +254,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="guideline-shogun" class="nav-link">
+                            <a href="/guideline-shogun" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Guidelines

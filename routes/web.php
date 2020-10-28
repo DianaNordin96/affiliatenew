@@ -32,6 +32,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('manageProduct/delete/{id}', 'Admin\ManageProductController@delete')->name('manageProduct.delete')->middleware('auth');
     Route::POST('manageProduct/update', 'Admin\ManageProductController@update')->name('manageProduct.update')->middleware('auth');
     Route::get('view-order', 'Admin\ManageOrderController@index')->name('view-order')->middleware('auth');
+    Route::get('customers', 'Admin\CustomerController@index')->middleware('auth');
 //change-password
 //profile
 //customers
@@ -42,23 +43,28 @@ Route::group(['middleware' => 'admin'], function () {
 
 Route::group(['middleware' => 'shogun'], function () {
    
-    Route::get('ShogunDashboard', 'Shogun\DashboardController@index')->name('ShogunDashboard')->middleware('auth');
-    Route::get('product-shogun', 'Shogun\ManageStockController@index')->name('manageStock')->middleware('auth', 'shogun');
-    Route::get('downline-shogun', 'Shogun\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
-    Route::get('manageDownlineShogun/{role}/{id}', 'Shogun\ManageDownlineController@changeRole')->middleware('auth');
-    Route::get('profile-shogun', 'Shogun\ProfileController@index')->middleware('auth');
-    Route::POST('profileShogun-update', 'Shogun\ProfileController@update')->name('profile.update.shogun')->middleware('auth');
-    Route::get('shogun-cart', 'Shogun\CartController@cart')->middleware('auth');
-    Route::get('addToCartShogun/{id}', 'Shogun\CartController@addToCart')->middleware('auth');
-    Route::patch('update-cartShogun', 'Shogun\CartController@update')->middleware('auth');
-    Route::delete('remove-from-cartShogun', 'Shogun\CartController@remove')->middleware('auth');
-    Route::get('checkout', 'Shogun\CartController@checkout')->middleware('auth');
-    Route::get('statusShogun', 'Shogun\CartController@paymentStatus')->name('statusShogun')->middleware('auth');
-    Route::POST('callbackShogun', 'Shogun\CartController@callback')->name('callbackShogun')->middleware('auth');
-    Route::get('purchase-history-shogun', 'Shogun\PurchaseController@index')->name('purchase-history')->middleware('auth');
-    Route::get('view-purchased-product/{orderID}', 'Shogun\PurchaseController@viewPurchase')->middleware('auth');
+    Route::get('/ShogunDashboard', 'Shogun\DashboardController@index')->name('ShogunDashboard')->middleware('auth');
+    Route::get('/product-shogun', 'Shogun\ManageStockController@index')->name('manageStock')->middleware('auth', 'shogun');
+    Route::get('/downline-shogun', 'Shogun\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
+    Route::get('/manageDownlineShogun/{role}/{id}', 'Shogun\ManageDownlineController@changeRole')->middleware('auth');
+    Route::get('/profile-shogun', 'Shogun\ProfileController@index')->middleware('auth');
+    Route::POST('/profileShogun-update', 'Shogun\ProfileController@update')->name('profile.update.shogun')->middleware('auth');
+    Route::get('/shogun-cart', 'Shogun\CartController@cart')->middleware('auth');
+    Route::get('/addToCartShogun/{id}', 'Shogun\CartController@addToCart')->middleware('auth');
+    Route::patch('/update-cartShogun', 'Shogun\CartController@update')->middleware('auth');
+    Route::delete('/remove-from-cartShogun', 'Shogun\CartController@remove')->middleware('auth');
+    Route::POST('/checkout', 'Shogun\CartController@checkout')->middleware('auth');
+    Route::get('/statusShogun', 'Shogun\CartController@paymentStatus')->name('statusShogun')->middleware('auth');
+    Route::POST('/callbackShogun', 'Shogun\CartController@callback')->name('callbackShogun')->middleware('auth');
+    Route::get('/purchase-history-shogun', 'Shogun\PurchaseController@index')->name('purchase-history')->middleware('auth');
+    Route::get('/view-purchased-product/{orderID}', 'Shogun\PurchaseController@viewPurchase')->middleware('auth');
+    Route::get('/customers-shogun', 'Shogun\CustomerController@index')->middleware('auth');
+    Route::POST('/customers-shogun-add', 'Shogun\CustomerController@create')->middleware('auth');
+    Route::POST('/customers-shogun-update', 'Shogun\CustomerController@update')->middleware('auth');
+    Route::get('/customers-shogun-delete/{id}', 'Shogun\CustomerController@delete')->middleware('auth');
+    Route::get('/commission-shogun', 'Shogun\CommissionController@index')->middleware('auth');
+    Route::POST('/commission-shogun-withdrawal', 'Shogun\CommissionController@withdraw')->middleware('auth');
 //change-password-shogun
-//customers-shogun
 //guideline-shogun
 //support-shogun
 });
@@ -105,12 +111,12 @@ Route::group(['middleware' => 'App\Http\Middleware\DropshipMiddleware'], functio
     Route::get('/DropshipDashboard', 'Dropship\DashboardController@index')->name('dashboard')->middleware('auth');
 });
 
-Route::group(['middleware' => 'App\Http\Middleware\SuperAdminMiddleware'], function () {
-    Route::get('/SuperAdminDashboard', 'Dropship\DashboardController@index')->middleware('auth');
-    Route::get('/superadmin-agent', 'SuperAdmin\ManageAgentController@index')->middleware('auth');
-    Route::get('/superadmin-commission', 'SuperAdmin\ManageCommissionController@index')->middleware('auth');
-    Route::get('/superadmin-commission-approve/{id}', 'SuperAdmin\ManageCommissionController@approve')->middleware('auth');
-    Route::get('/superadmin-commission-decline/{id}', 'SuperAdmin\ManageCommissionController@decline')->middleware('auth');
+Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], function () {
+    Route::get('/MasterDashboard', 'MasterAdmin\DashboardController@index')->middleware('auth');
+    Route::get('/master-viewAgent', 'MasterAdmin\ManageAgentController@index')->middleware('auth');
+    Route::get('/master-commission', 'MasterAdmin\ManageCommissionController@index')->middleware('auth');
+    Route::get('/master-commission-approve/{id}', 'MasterAdmin\ManageCommissionController@approve')->middleware('auth');
+    Route::get('/master-commission-decline/{id}', 'MasterAdmin\ManageCommissionController@decline')->middleware('auth');
 });
 
 
