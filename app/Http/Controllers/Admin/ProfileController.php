@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Damio;
+namespace App\Http\Controllers\Admin;
 
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-       
-        return view('damio/profile');
+
+        return view('admin/profile');
     }
 
     public function update(Request $req)
     {
-
         $validatedData = [
             'name' => 'required',
             'email' => 'required|email',
@@ -29,7 +29,7 @@ class ProfileController extends Controller
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
             toast('Please dont leave any boxes empty', 'error');
-            return redirect('/profile-damio');
+            return redirect('/profile-admin');
         } else {
             $data = $req->input();
             try {
@@ -43,10 +43,10 @@ class ProfileController extends Controller
                     ]);
 
                 toast('User has been updated', 'success');
-                return redirect('/profile-damio');
+                return redirect('/profile-admin');
             } catch (Exception $e) {
                 toast('Something went wrong', 'error');
-                return redirect('/profile-damio');
+                return redirect('/profile-admin');
             }
         }
     }
@@ -73,16 +73,15 @@ class ProfileController extends Controller
                         ]);
 
                     toast('Your password has been updated', 'success');
-                    return redirect('/profile-damio');
+                    return redirect('/profile-admin');
                 } else {
                     toast('Your created password do not match. Please enter again.', 'error');
                     return redirect()->back();
                 }
             } catch (Exception $e) {
                 toast('Something went wrong', 'error');
-                return redirect('/profile-damio');
+                return redirect('/profile-admin');
             }
         }
     }
-
 }

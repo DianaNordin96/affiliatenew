@@ -75,7 +75,7 @@
 
                             @if (session('cart') != null)
                                 {{ count(session('cart')) }}
-                                
+
                             @else
                                 0
                             @endif
@@ -88,13 +88,6 @@
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> Account
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-key mr-2"></i> Change Password
-                        </a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#modal-sm"
@@ -127,7 +120,7 @@
                         <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="/profileDamio" class="d-block"> {{ Auth::user()->name }}</a>
+                        <a href="/profile-damio" class="d-block"> {{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -137,7 +130,7 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
+                        {{-- <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -147,7 +140,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/manageStockDamio" class="nav-link active">
+                                    <a href="/manageStockdamio" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Restock</p>
                                     </a>
@@ -165,7 +158,7 @@
                                     </a>
                                 </li> -->
                             </ul>
-                        </li>
+                        </li> --}}
 
 
                         <!-- <li class="nav-item has-treeview">
@@ -199,7 +192,35 @@
                         </li> -->
 
                         <li class="nav-item">
-                            <a href="purchase-historyDamio" class="nav-link">
+                            <a id="agents" href="/downline-damio" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Downline Agent
+                                </p>
+                            </a>
+                        </li>
+                        
+
+                        <li class="nav-item">
+                            <a id="customers" href="/customers-damio" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Customers
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="products" href="/product-damio" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Buy Product
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="history" href="/purchase-history-damio" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Purchase History
@@ -208,28 +229,28 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/manageDownlineDamio" class="nav-link">
-                                <i class="nav-icon fas fa-users-cog"></i>
-                                <p>
-                                    Downline
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="commission" href="/commission-damio" class="nav-link">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
-                                    Redeem Point
+                                    Commission
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="support" href="/support-damio" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="guide" href="/guideline-damio" class="nav-link">
+                                <i class="nav-icon far fa-question-circle"></i>
+                                <p>
+                                    Guidelines
                                 </p>
                             </a>
                         </li>

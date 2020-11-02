@@ -15,7 +15,7 @@ class ManageAgentController extends Controller
             ->where('id', '<>', Auth::user()->id)
             ->get();
 
-        return redirect('masteradmin/agent')->with([
+        return view('masteradmin/agents')->with([
             'agentList' => $agentList
         ]);
     }

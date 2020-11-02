@@ -26,4 +26,5 @@ class ManageStockController extends Controller
             ]
         );
     }
+    
 }

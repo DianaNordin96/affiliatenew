@@ -1,4 +1,4 @@
-@extends('layouts.shogun')
+@extends('layouts.damio')
 @section('headScript')
 @endsection
 
@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('ShogunDashboard') }}">Dashboard</a>
+                            <li class="breadcrumb-item"><a href="{{ url('DamioDashboard') }}">Dashboard</a>
                             <li class="breadcrumb-item active">Commission</li>
                         </ol>
                     </div>
@@ -63,7 +63,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ url('commission-shogun-withdrawal') }}" method="post"
+                                <form action="{{ url('commission-damio-withdrawal') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">

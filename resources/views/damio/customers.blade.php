@@ -1,4 +1,4 @@
-@extends('layouts.shogun')
+@extends('layouts.damio')
 @section('content')
 
 <!-- Content Wrapper. Contains page content -->
@@ -12,7 +12,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('ShogunDashboard') }}">Dashboard</a>
+                        <li class="breadcrumb-item"><a href="{{ url('DamioDashboard') }}">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active">Manage Product</li>
                     </ol>
@@ -70,7 +70,7 @@
                                                     class="btn btn-success"><i class="far fa-eye"></i></button> &nbsp;
 
                                                 <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                    onclick="window.location.href='customers-shogun-delete/{{ $customer->id }}'"
+                                                    onclick="window.location.href='customers-damio-delete/{{ $customer->id }}'"
                                                     class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
                                             </td>
                                         </tr>
@@ -94,7 +94,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ url('customers-shogun-add') }}" method="post"
+                        <form action="{{ url('customers-damio-add') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -158,7 +158,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <form action="{{ url('customers-shogun-update') }}" method="post"
+                        <form action="{{ url('customers-damio-update') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <input type="text" name="customerID" id="customerID" hidden />

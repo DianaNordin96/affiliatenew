@@ -89,6 +89,9 @@
                                                         class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
                                                     &nbsp;
                                                     <select onchange="location = this.value;" class="btn btn-default">
+                                                        @if($user->role == '')
+                                                        <option value="" selected >Not Yet Assign</option>
+                                                        @endif
                                                         <option value="/manageAgent/admin/{{ $user->id }}" @if ($user->role == 'admin'){ selected }
                                         @endif>Admin</option>
                                         <option value="/manageAgent/shogun/{{ $user->id }}" @if ($user->role == 'shogun'){ selected @endif}>Shogun
@@ -391,7 +394,7 @@
             });
         });
 
-        document.getElementById("customerDetails").className = "nav-link active";
+        document.getElementById("agents").className = "nav-link active";
 
         function openModalEdit(id, name, email, phone, address, ic, dob,image) {
 

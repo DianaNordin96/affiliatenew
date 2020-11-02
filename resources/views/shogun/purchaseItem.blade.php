@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('ShogunDashboard') }}">Home</a></li>
                             <li class="breadcrumb-item active">Purchase History</li>
                         </ol>
                     </div>
@@ -27,11 +27,38 @@
             <div class="container-fluid">
 
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-5">
+                        <div class="card card-warning">
+                            <div class="card-header">
+                                <h3 class="card-title">Customer Details</h3>
+    
+                                {{-- <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                  <i class="fas fa-times"></i>
+                                </button>
+                              </div> --}}
+                            </div>
+                            <div class="card-body">
+                               @foreach($customerDetails as $customer)
+                                   <p><b>Name : {{$customer->name}}</b></p>
+                                   <p><b>Phone : {{$customer->phone}}</b></p>
+                                   <p><b>Address #1 : {{$customer->address}}</b></p>
+                                   <p><b>Address #2 : {{$customer->address_two}}</b></p>
+                                   <p><b>Address #3 : {{$customer->address_three}}</b></p>
+                               @endforeach
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
                         <div class="card">
                             <div class="card-body">
                                 <!-- <h3 class="card-title">View Employee</h3> -->
-                                <a href="{{ url('/purchase-history') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+                                <a href="{{ url('/purchase-history-shogun') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
                                     Go Back</a>
                                     <br/><br/>
                                 <table id="example1" class="table table-bordered table-striped">
@@ -51,7 +78,7 @@
                                                     src="/imageUploaded/{{ $product->product_image }}" width="100"
                                                     height="100" class="img-responsive" /></div></td>
                                                 <td>{{ $product->product_name }}</td>
-                                                <td>{{ $product->product_price }}</td>
+                                                <td>{{ $product->price_shogun }}</td>
                                                 <td>{{ $product->quantity }}</td>
                                                 {{-- <td>
                                                 <a class="btn btn-warning" href="view-purchased-product/{{$orderDetail->orders_id}}"><i class="far fa-eye"></i>&nbsp; View item</a> &nbsp;
@@ -288,7 +315,7 @@
             });
         });
 
-        document.getElementById("customerDetails").className = "nav-link active";
+        document.getElementById("history").className = "nav-link active";
 
     </script>
 @endsection

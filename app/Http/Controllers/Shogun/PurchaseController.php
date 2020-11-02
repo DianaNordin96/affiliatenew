@@ -20,13 +20,20 @@ class PurchaseController extends Controller
 
     public function viewPurchase ($id){
 
+        $customerDetails = DB::table('orders')
+        ->JOIN('customers','orders.customer_id','=','customers.id')
+        ->WHERE('orders.orders_id',$id)
+        ->get();
+
         $product = DB::table('orders_details')
         -> JOIN('products','orders_details.product_id','=','products.id')
+        ->where('referenceNo',$id)
         -> select('products.*', 'orders_details.quantity')
         ->get();
 
         return view('shogun/purchaseItem',[
-            'products' => $product
+            'products' => $product,
+            'customerDetails' => $customerDetails
         ]);
 
     }

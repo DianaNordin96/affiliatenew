@@ -136,16 +136,7 @@
                             <a href="master-commission" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
-                                    Downline
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="master-commission" class="nav-link">
-                                <i class="nav-icon fas fa-users-cog"></i>
-                                <p>
-                                    Downline
+                                    Manage Commission
                                 </p>
                             </a>
                         </li>

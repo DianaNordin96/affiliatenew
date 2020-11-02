@@ -62,7 +62,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="ShogunDashboard" class="nav-link">Home</a>
+                    <a href="/ShogunDashboard" class="nav-link">Home</a>
                 </li>
             </ul>
 
@@ -88,13 +88,6 @@
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="profile-shogun" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> Account
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="change-password-shogun" class="dropdown-item">
-                            <i class="fas fa-key mr-2"></i> Change Password
-                        </a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#modal-sm"
@@ -199,7 +192,7 @@
                         </li> -->
 
                         <li class="nav-item">
-                            <a href="downline-shogun" class="nav-link">
+                            <a id="agents" href="/downline-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Downline Agent
@@ -209,7 +202,7 @@
                         
 
                         <li class="nav-item">
-                            <a href="customers-shogun" class="nav-link">
+                            <a id="customers" href="/customers-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Customers
@@ -218,7 +211,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="product-shogun" class="nav-link">
+                            <a id="products" href="/product-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Buy Product
@@ -227,7 +220,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/purchase-history-shogun" class="nav-link">
+                            <a id="history" href="/purchase-history-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Purchase History
@@ -236,7 +229,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/commission-shogun" class="nav-link">
+                            <a id="commission" href="/commission-shogun" class="nav-link">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
                                     Commission
@@ -245,7 +238,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/support-shogun" class="nav-link">
+                            <a id="support" href="/support-shogun" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
@@ -254,7 +247,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/guideline-shogun" class="nav-link">
+                            <a id="guide" href="/guideline-shogun" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Guidelines

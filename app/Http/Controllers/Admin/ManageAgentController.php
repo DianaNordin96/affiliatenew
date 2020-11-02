@@ -20,7 +20,12 @@ class ManageAgentController extends Controller
 
     public function index()
     {
-        $users = DB::table('users')->get();
+        $users = DB::table('users')
+        ->where('id','<>',Auth::user()->id)
+        ->where('role','<>','masteradmin')
+        ->orWhere('role',NULL)
+        ->where('belongsToAdmin',Auth::user()->id)
+        ->get();
 
         $id = Auth::user()->id;
         $email = Auth::user()->email;

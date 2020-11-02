@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Shogun;
+namespace App\Http\Controllers\Damio;
 
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,7 @@ class CustomerController extends Controller
         ->where('user_id',Auth::user()->id)
         ->get();
         
-        return view('shogun/customers')->with([
+        return view('damio/customers')->with([
             'customers' => $customers
         ]);
     }
@@ -32,7 +32,7 @@ class CustomerController extends Controller
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
             toast('Please fill in all the box before creating new customer', 'error');
-            return redirect('customers-shogun');
+            return redirect('customers-damio');
         } else {
             $data = $req->input();
             try {
@@ -46,7 +46,7 @@ class CustomerController extends Controller
                     ]);
 
                 toast('Customer has been created', 'success');
-                return redirect('customers-shogun');
+                return redirect('customers-damio');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -64,7 +64,7 @@ class CustomerController extends Controller
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
             toast('Please fill in all the box before updating customer', 'error');
-            return redirect('customers-shogun');
+            return redirect('customers-damio');
         } else {
             $data = $req->input();
             try {
@@ -79,7 +79,7 @@ class CustomerController extends Controller
 
 
                 toast('Customer has been updated', 'success');
-                return redirect('customers-shogun');
+                return redirect('customers-damio');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -93,6 +93,6 @@ class CustomerController extends Controller
         ->delete();
 
         toast('Customer has been removed', 'success');
-        return redirect('customers-shogun');
+        return redirect('customers-damio');
     }
 }

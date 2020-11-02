@@ -32,23 +32,25 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('manageProduct/delete/{id}', 'Admin\ManageProductController@delete')->name('manageProduct.delete')->middleware('auth');
     Route::POST('manageProduct/update', 'Admin\ManageProductController@update')->name('manageProduct.update')->middleware('auth');
     Route::get('view-order', 'Admin\ManageOrderController@index')->name('view-order')->middleware('auth');
+    Route::get('view-order-item/{id}', 'Admin\ManageOrderController@viewItem')->middleware('auth');
     Route::get('customers', 'Admin\CustomerController@index')->middleware('auth');
+    Route::get('profile-admin', 'Admin\ProfileController@index')->middleware('auth');
+    Route::POST('profile-update-admin', 'Admin\ProfileController@update')->middleware('auth');
+    Route::POST('change-password-admin', 'Admin\ProfileController@changePassword')->middleware('auth');
 //change-password
-//profile
-//customers
 //guidelines
 //support
 
 });
 
 Route::group(['middleware' => 'shogun'], function () {
-   
     Route::get('/ShogunDashboard', 'Shogun\DashboardController@index')->name('ShogunDashboard')->middleware('auth');
     Route::get('/product-shogun', 'Shogun\ManageStockController@index')->name('manageStock')->middleware('auth', 'shogun');
     Route::get('/downline-shogun', 'Shogun\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
     Route::get('/manageDownlineShogun/{role}/{id}', 'Shogun\ManageDownlineController@changeRole')->middleware('auth');
     Route::get('/profile-shogun', 'Shogun\ProfileController@index')->middleware('auth');
     Route::POST('/profileShogun-update', 'Shogun\ProfileController@update')->name('profile.update.shogun')->middleware('auth');
+    Route::POST('/change-password-shogun', 'Shogun\ProfileController@changePassword')->middleware('auth');
     Route::get('/shogun-cart', 'Shogun\CartController@cart')->middleware('auth');
     Route::get('/addToCartShogun/{id}', 'Shogun\CartController@addToCart')->middleware('auth');
     Route::patch('/update-cartShogun', 'Shogun\CartController@update')->middleware('auth');
@@ -64,28 +66,38 @@ Route::group(['middleware' => 'shogun'], function () {
     Route::get('/customers-shogun-delete/{id}', 'Shogun\CustomerController@delete')->middleware('auth');
     Route::get('/commission-shogun', 'Shogun\CommissionController@index')->middleware('auth');
     Route::POST('/commission-shogun-withdrawal', 'Shogun\CommissionController@withdraw')->middleware('auth');
-//change-password-shogun
+    Route::get('/approveDownline-shogun/{id}', 'Shogun\ManageDownlineController@approve')->middleware('auth');
+    Route::get('/declineDownline-shogun/{id}', 'Shogun\ManageDownlineController@decline')->middleware('auth');
 //guideline-shogun
 //support-shogun
 });
 
 Route::group(['middleware' => 'damio'], function () {
-   
-    Route::get('/DamioDashboard', 'Damio\DashboardController@index')->name('dashboard')->middleware('auth');
-    Route::get('/manageStockDamio', 'Damio\ManageStockController@index')->name('manageStock')->middleware('auth');
-    Route::get('/manageDownlineDamio', 'Damio\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
+    
+    Route::get('/DamioDashboard', 'Damio\DashboardController@index')->middleware('auth');
+    Route::get('/product-damio', 'Damio\ManageStockController@index')->middleware('auth');
+    Route::get('/downline-damio', 'Damio\ManageDownlineController@index')->middleware('auth');
     Route::get('/manageDownlineDamio/{role}/{id}', 'Damio\ManageDownlineController@changeRole')->middleware('auth');
-    Route::get('/profileDamio', 'Damio\ProfileController@index')->middleware('auth');
-    Route::POST('/profileDamio-update', 'Damio\ProfileController@update')->name('profile.update.damio')->middleware('auth');
-    Route::get('damio-cart', 'Damio\CartController@cart')->middleware('auth');
-    Route::get('addToCartDamio/{id}', 'Damio\CartController@addToCart')->middleware('auth');
-    Route::patch('update-cartDamio', 'Damio\CartController@update')->middleware('auth');
-    Route::delete('remove-from-cartDamio', 'Damio\CartController@remove')->middleware('auth');
-    Route::get('checkoutDamio', 'Damio\CartController@checkout')->middleware('auth');
-    Route::get('statusDamio', 'Damio\CartController@paymentStatus')->name('statusDamio')->middleware('auth');
-    Route::POST('callbackDamio', 'Damio\CartController@callback')->name('callbackDamio')->middleware('auth');
-    Route::get('purchase-historyDamio', 'Damio\PurchaseController@index')->name('purchase-history')->middleware('auth');
-    Route::get('view-purchased-productDamio/{orderID}', 'Damio\PurchaseController@viewPurchase')->middleware('auth');
+    Route::get('/profile-damio', 'Damio\ProfileController@index')->middleware('auth');
+    Route::POST('/profileDamio-update', 'Damio\ProfileController@update')->middleware('auth');
+    Route::POST('/change-password-damio', 'Damio\ProfileController@changePassword')->middleware('auth');
+    Route::get('/damio-cart', 'Damio\CartController@cart')->middleware('auth');
+    Route::get('/addToCartDamio/{id}', 'Damio\CartController@addToCart')->middleware('auth');
+    Route::patch('/update-cartDamio', 'Damio\CartController@update')->middleware('auth');
+    Route::delete('/remove-from-cartDamio', 'Damio\CartController@remove')->middleware('auth');
+    Route::POST('/checkout-damio', 'Damio\CartController@checkout')->middleware('auth');
+    Route::get('/statusDamio', 'Damio\CartController@paymentStatus')->middleware('auth');
+    Route::POST('/callbackDamio', 'Damio\CartController@callback')->middleware('auth');
+    Route::get('/purchase-history-damio', 'Damio\PurchaseController@index')->middleware('auth');
+    Route::get('/view-purchased-product-damio/{orderID}', 'Damio\PurchaseController@viewPurchase')->middleware('auth');
+    Route::get('/customers-damio', 'Damio\CustomerController@index')->middleware('auth');
+    Route::POST('/customers-damio-add', 'Damio\CustomerController@create')->middleware('auth');
+    Route::POST('/customers-damio-update', 'Damio\CustomerController@update')->middleware('auth');
+    Route::get('/customers-damio-delete/{id}', 'Damio\CustomerController@delete')->middleware('auth');
+    Route::get('/commission-damio', 'Damio\CommissionController@index')->middleware('auth');
+    Route::POST('/commission-damio-withdrawal', 'Damio\CommissionController@withdraw')->middleware('auth');
+    Route::get('/approveDownline-damio/{id}', 'Damio\ManageDownlineController@approve')->middleware('auth');
+    Route::get('/declineDownline-damio/{id}', 'Damio\ManageDownlineController@decline')->middleware('auth');
 });
 
 Route::group(['middleware' => 'merchant'], function () {

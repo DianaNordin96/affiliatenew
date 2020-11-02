@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Damio;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Http\Controllers\Controller;
@@ -16,15 +17,22 @@ class ManageDownlineController extends Controller
         $pass = Auth::user()->password;
 
         $user = DB::table('users')
-        ->where('role','<>','admin')
-        ->where('role','<>','shogun')
+        ->where('id','<>',Auth::user()->id)
+        ->where('downlineTo',Auth::user()->id)
+        ->where('statusDownline','approve')
         ->get();
+
+        $pendingUser = DB::table('users')
+            ->where('statusDownline', 'pending')
+            ->where('downlineTo', Auth::user()->id)
+            ->get();
 
         return view(
             'damio/manageDownline',
             [
                 'userId' => $id,
                 'users' => $user,
+                'pendingUser' => $pendingUser,
             ]
         );
     }
@@ -39,7 +47,31 @@ class ManageDownlineController extends Controller
             ]);
 
         toast('User role has been changed', 'success');
-        return redirect('manageDownlineDamio');
+        return redirect('/downline-damio');
     }
 
+    public function approve($id){
+
+        DB::table('users')
+        ->where('id',$id)
+        ->update([
+            'statusDownline' => 'approve',
+            'password' => Hash::make('12345678'),
+            'belongsToAdmin' => Auth::user()->belongsToAdmin
+        ]);
+
+        toast('Agent has been approved', 'success');
+        return redirect('/downline-damio');
+    }
+
+    public function decline($id){
+        DB::table('users')
+        ->where('id',$id)
+        ->update([
+            'statusDownline' => 'decline',
+        ]);
+
+        toast('Agent has been declined', 'success');
+        return redirect('/downline-damio');
+    }
 }

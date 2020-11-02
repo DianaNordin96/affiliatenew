@@ -20,13 +20,15 @@
     <link rel="stylesheet"
         href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
     <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
@@ -36,10 +38,13 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 </head>
@@ -67,20 +72,18 @@
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> Account
-                        </a>
                         <div class="dropdown-divider"></div>
-                        <a href="change-password" class="dropdown-item">
+                        {{-- <a href="/change-password" class="dropdown-item">
                             <i class="fas fa-key mr-2"></i> Change Password
-                        </a>
+                        </a> --}}
                         <div class="dropdown-divider"></div>
                         <a href="{{ url('/logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#modal-sm"
                             class="dropdown-item">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                            class="d-none">
                             @csrf
                         </form>
                     </div>
@@ -106,7 +109,7 @@
                         <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="/profile" class="d-block"> {{ Auth::user()->name }}</a>
+                        <a href="/profile-admin" class="d-block"> {{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -166,7 +169,7 @@
                         </li> -->
 
                         <li class="nav-item">
-                            <a id='customerDetails' href="manageAgent" class="nav-link">
+                            <a id='agents' href="/manageAgent" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>
                                     Agents
@@ -175,7 +178,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a id='view-order' href="view-order" class="nav-link">
+                            <a id='view-order' href="/view-order" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>
                                     Orders
@@ -184,7 +187,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a id='customers' href="customers" class="nav-link">
+                            <a id='customers' href="/customers" class="nav-link">
                                 <i class="nav-icon fab fa-product-hunt"></i>
                                 <p>
                                     Customers
@@ -193,7 +196,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a id="manageProduct" href="manageProduct" class="nav-link">
+                            <a id="manageProduct" href="/manageProduct" class="nav-link">
                                 <i class="nav-icon fab fa-product-hunt"></i>
                                 <p>
                                     Products
@@ -202,7 +205,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a id="support" href="support" class="nav-link">
+                            <a id="support" href="/support" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
@@ -211,10 +214,10 @@
                         </li>
 
                         <li class="nav-item">
-                            <a id="guidelines" href="guidelines" class="nav-link">
+                            <a id="guidelines" href="/guidelines" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
-                                   User Guidelines
+                                    User Guidelines
                                 </p>
                             </a>
                         </li>
@@ -267,11 +270,14 @@
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+    <script
+        src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
+    </script>
     <!-- Summernote -->
     <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
-    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}">
+    </script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -280,9 +286,12 @@
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <!-- DataTables -->
     <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}">
+    </script>
+    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}">
+    </script>
+    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}">
+    </script>
     <!-- SweetAlert2 -->
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Toastr -->
@@ -296,8 +305,8 @@
 
         </script>
 
-    @endif --}}
-    @include('sweetalert::alert')
+@endif--}}
+@include('sweetalert::alert')
 
 </body>
 

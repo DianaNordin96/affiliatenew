@@ -72,7 +72,7 @@
                         </div>
                         <br /><br />
 
-                        <div class="col-12">
+                        {{-- <div class="col-12">
                             Password <br />
                             <input type="password" class="form-control" name="password1">
                         </div>
@@ -82,7 +82,7 @@
                             Re-enter Password <br />
                             <input type="password" class="form-control" name="password2">
                         </div>
-                        <br /><br />
+                        <br /><br /> --}}
 
                         @if (Session::get('error') != null){
                             <a style="text-decoration: none;color:red">{{ Session::get('error') }}</a>

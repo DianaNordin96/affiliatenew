@@ -9,11 +9,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-
+                        <h1>Cart</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('ShogunDashboard') }}">Dashboard</a>
                             <li class="breadcrumb-item active">Cart</li>
                         </ol>
                     </div><!-- /.col -->
@@ -25,28 +25,109 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-
+                <form action="{{ url('checkout') }}" method="POST">
+                    @csrf
                 <div class="row">
-                    <div class="col-lg-12">
+                    
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card card-warning">
+                            <div class="card-header">
+                                <h3 class="card-title">Customer Details</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.card-tools -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                {{-- <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>Choose existing cutomer :
+                                            <select class="form-control" name="customerID">
+                                                <option value="" hidden> Choose Customer </option>
+                                                @foreach ($customers as $customer)
+                                                    <option value="{{ $customer->id }}" >{{ $customer->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div style="text-align:center" class="col-lg-12">
+                                        <h3>OR</h3>
+                                    </div>
+                                </div> --}}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label> Customer Name </label>
+                                                    <input type="text" id="name" class="form-control" name="name"
+                                                        placeholder="Name" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label> Phone Number </label>
+                                                    <input type="text" id="phone" class="form-control" name="phone"
+                                                        placeholder="Phone Number" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+            
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>Address #1</label>
+                                                    <input type="text" id="address1" class="form-control" name="address1"
+                                                    placeholder="" required />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>Address #2 (Optional) </label>
+                                                    <input type="text" id="address2" class="form-control" name="address2"
+                                                    placeholder="" required />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Address #3 (Optional) </label>
+                                                    <input type="text" id="address3" class="form-control" name="address3"
+                                                    placeholder="" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8">
                         <div class="card">
-                            
-                                @csrf
                                 <div class="card-body">
                                     <!-- <h3 class="card-title">View Employee</h3> -->
                                     <div style="text-align:center">
                                         <h3>Shopping Cart</h3>
                                     </div>
-                                <form action="{{ url('checkout') }}" method="POST">
-                                    @csrf
-                                    <div style="text-align:center">
-                                        <select style=" margin-left: auto;margin-right: auto;width: 50%"
-                                            class="form-control" name="customerID">
-                                            <option value="" hidden> Choose Customer </option>
-                                            @foreach ($customers as $customer)
-                                                <option value="{{ $customer->id }}" >{{ $customer->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    
                                     <br />
                                     <a href="{{ url('') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
                                         Continue Shopping</a>
@@ -54,10 +135,11 @@
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="width:50%">Product</th>
+                                                <th style="width:20%"></th>
+                                                <th style="width:20%">Product</th>
                                                 <th style="width:10%">Price</th>
                                                 <th style="width:8%">Quantity</th>
-                                                <th style="width:22%" class="text-center">Subtotal</th>
+                                                <th style="width:10%" class="text-center">Subtotal</th>
                                                 <th style="width:10%"></th>
                                             </tr>
                                         </thead>
@@ -70,14 +152,10 @@
 
                                                 <tr>
                                                     <td data-th="Product">
-                                                        <div class="row">
-                                                            <div class="col-sm-3 hidden-xs"><img
-                                                                    src="/imageUploaded/{{ $details['photo'] }}" width="100"
-                                                                    height="100" class="img-responsive" /></div>
-                                                            <div class="col-sm-9">
-                                                                <h4 class="nomargin">{{ $details['name'] }}</h4>
-                                                            </div>
-                                                        </div>
+                                                       <img style="display: block;margin-left: auto;margin-right: auto;" src="/imageUploaded/{{ $details['photo'] }}" width="80" height="80" class="img-responsive" /></div>
+                                                    </td>
+                                                    <td>
+                                                        {{ $details['name'] }}
                                                     </td>
                                                     <td data-th="Price">RM {{ $details['price'] }}</td>
                                                     <td data-th="Quantity">
@@ -104,17 +182,19 @@
                                         <div style="float:center" class="col-lg-12 col-md-12 col-xs-12">
                                             <strong>
                                                 <h3>Total RM {{ number_format($total, 2) }} &nbsp; &nbsp;
-                                                    <button type="submit" class="btn btn-info"> Checkout <i
-                                                            class="fa fa-angle-right"></i></button></h3>
+                                                    @if(session()->get('cart') != null)
+                                                    <button type="submit" id="checkout" class="btn btn-info"> Checkout <i
+                                                        class="fa fa-angle-right"></i></button>
+                                                    @endif
+                                                   </h3>
                                             </strong>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                           </div>
                     </div>
-
                 </div>
+            </form>
             </div><!-- /.container-fluid -->
 
         </section>
@@ -127,6 +207,7 @@
 @section('script')
 
     <script>
+       
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
@@ -144,8 +225,6 @@
                 "responsive": true,
             });
         });
-
-        document.getElementById("customerDetails").className = "nav-link active";
 
     </script>
     <script type="text/javascript">
@@ -175,7 +254,7 @@
 
             if (confirm("Are you sure")) {
                 $.ajax({
-                    url: '{{ url('remove-from-cartShogun ') }}',
+                    url: '{{ url('remove-from-cartShogun') }}',
                     method: "DELETE",
                     data: {
                         _token: '{{csrf_token()}}',
