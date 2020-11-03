@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('MerchantDashboard') }}">Home</a></li>
                         <li class="breadcrumb-item active">Products</li>
                     </ol>
                 </div>
@@ -46,25 +46,24 @@
         <!-- Default box -->
         <div class="card card-solid">
             <div class="card-body pb-0">
-                <div class="row d-flex align-items-stretch">
-                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
-                        @foreach ($products as $product)
+                <div class="row">
+                    @foreach ($products as $product)
+                    <div class="col-lg-3 col-sm-6 col-md-4">  
                             <div class="card bg-light">
                                 <div class="card-body pt-0">
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-lg-12">
                                             <br />
-                                            <img style="display: block;margin-left: auto;margin-right: auto;"
-                                            class="img-square img-fluid" width="100px" height="100px"
-                                            src="/imageUploaded/{{ $product->product_image }}" />
+                                            <img class="img-fluid" style="display: block;margin-left: auto;margin-right: auto; height:100px" src="/imageUploaded/{{ $product->product_image }}" />
                                         <br />
-
                                             <div style="text-align:center">
                                                 {{ $product->product_name }}
                                                 <br />
                                                 {{ $product->product_description }}
                                                 <br />
-                                                <b>RM {{ $product->product_price }}</b>
+                                                <b>RM {{ $product->price_merchant }}</b>
+                                                <br />
+                                                <b style="color : blue">Commission : RM {{ $product->product_price - $product->price_merchant }} /each</b>
                                             </div>
                                         </div>
 
@@ -86,8 +85,9 @@
                                 </div> --}} 
                             </div>
                             &nbsp;&nbsp;&nbsp;
-                        @endforeach
+                       
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@
         });
     });
 
-    document.getElementById("customerDetails").className = "nav-link active";
+    document.getElementById("products").className = "nav-link active";
 
 </script>
 @endsection

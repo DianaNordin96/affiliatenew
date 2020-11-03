@@ -9,13 +9,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
     public function cart()
     {
-        return view('merchant/cart');
+        $customer = DB::table('customers')
+            ->where('user_id', '=', Auth::user()->id)
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('merchant/cart')->with([
+            'customers' => $customer
+        ]);
     }
     public function addToCart($id)
     {
@@ -30,7 +37,7 @@ class CartController extends Controller
                 $id => [
                     "name" => $product->product_name,
                     "quantity" => 1,
-                    "price" => $product->product_price,
+                    "price" => $product->price_merchant,
                     "photo" => $product->product_image
                 ]
             ];
@@ -47,7 +54,7 @@ class CartController extends Controller
         $cart[$id] = [
             "name" => $product->product_name,
             "quantity" => 1,
-            "price" => $product->product_price,
+            "price" => $product->price_merchant,
             "photo" => $product->product_image
         ];
         session()->put('cart', $cart);
@@ -75,96 +82,149 @@ class CartController extends Controller
         }
     }
 
-    public function checkout()
+    public function checkout(Request $req)
     {
+        $validatedData = [
+            'name' => 'required',
+            'phone' => 'required',
+            'address1' => 'required'
+        ];
+        $validator = Validator::make($req->all(), $validatedData);
+        if ($validator->fails()) {
+            toast('Please fill in all the box before checkout', 'error');
+            return redirect()->back();
+        } else {
+            $data = $req->input();
 
-        $total = 0;
-        foreach (session('cart') as $id => $details) {
-            $total += $details['price'] * $details['quantity'];
+            $customerDetails = DB::table('customers')->insertGetId([
+                'name' => $data['name'],
+                'address' => $data['address1'],
+                'address_two' => $data['address2'],
+                'address_three' => $data['address3'],
+                'phone' => $data['phone'],
+                'user_id' => Auth::user()->id
+            ]);
+
+            date_default_timezone_set("Asia/Kuala_Lumpur");
+            
+            $orderID = date("Ymd") . date("hi") . Auth::user()->id;
+            
+            session()->put('customer', $customerDetails);
+            
+            $total = 0;
+            
+            foreach (session('cart') as $id => $details) {
+                $total += $details['price'] * $details['quantity'];
+            }
+            $option = array(
+                'userSecretKey' => 'ky1g673m-az9v-dwde-6nyk-24r0x9g83msb',
+                'categoryCode' => 'g2lwd3s7',
+                'billName' => 'Purchase for Stock',
+                'billDescription' => 'Buy stock',
+                'billPriceSetting' => 1,
+                'billPayorInfo' => 1,
+                'billAmount' => $total * 100,
+                'billReturnUrl' => url('statusMerchant'),
+                'billCallbackUrl' => url('callbackMerchant'),
+                'billExternalReferenceNo' => $orderID,
+                'billTo' => Auth::user()->name,
+                'billEmail' => Auth::user()->email,
+                'billPhone' => Auth::user()->phone,
+                'billSplitPayment' => 0,
+                'billSplitPaymentArgs' => '',
+                'billMultiPayment' => 1,
+                'billPaymentChannel' => 0,
+                'billDisplayMerchant' => 1,
+                'billContentEmail' => 'Email content'
+            );
+
+            $url = 'https://dev.toyyibpay.com/index.php/api/createBill';
+
+            $response = Http::asForm()->post($url, $option);
+            $billCode = $response[0]['BillCode'];
+
+            return redirect('https://dev.toyyibpay.com/' .  $billCode);
         }
-        $option = array(
-            'userSecretKey' => '7jjvcrsb-h3ro-1zsh-wrrs-7j47nubg36v2',
-            'categoryCode' => 'p5cfhstp',
-            'billName' => 'Purchase for Stock',
-            'billDescription' => 'Buy stock',
-            'billPriceSetting' => 1,
-            'billPayorInfo' => 1,
-            'billAmount' => $total * 100,
-            'billReturnUrl' => route('statusMerchant'),
-            'billCallbackUrl' => route('callbackMerchant'),
-            'billExternalReferenceNo' => 'AFR341DFI',
-            'billTo' => Auth::user()->name,
-            'billEmail' => Auth::user()->email,
-            'billPhone' => Auth::user()->phone,
-            'billSplitPayment' => 0,
-            'billSplitPaymentArgs' => '',
-            'billMultiPayment' => 1,
-            'billPaymentChannel' => 0,
-            'billDisplayMerchant' => 1,
-            'billContentEmail' => 'Email content'
-        );
-
-        // $curl = curl_init();
-        // curl_setopt($curl, CURLOPT_POST, 1);
-        // curl_setopt($curl, CURLOPT_URL, 'https://toyyibpay.com/index.php/api/createBill');
-        // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($curl, CURLOPT_POSTFIELDS, $option);
-
-        // $result = curl_exec($curl);
-        // $info = curl_getinfo($curl);
-        // curl_close($curl);
-        // $obj = json_decode($result);
-        // echo $obj[0]->BillCode;
-
-        // return redirect('https://toyyibpay.com/' .  $obj[0]->BillCode);
-        // foreach ($obj['items'] as $value){
-        //     echo $value;
-        // };
-
-
-        // from the guide
-
-        $url = 'https://dev.toyyibpay.com/index.php/api/createBill';
-
-        $response = Http::asForm()->post($url, $option);
-        $billCode = $response[0]['BillCode'];
-
-        return redirect('https://dev.toyyibpay.com/' .  $billCode);
     }
-
+    
     public function paymentStatus(Request $request)
     {
-
-        $total=0;
+        $custID = session('customer');
+        $total = 0;
         foreach (session('cart') as $id => $details) {
             $total += $details['price'] * $details['quantity'];
         }
 
         $response = request()->all(['status_id', 'billcode', 'order_id']);
-        DB::table('orders')->insert([
-            [
-                'orders_id' => $request->order_id,
-                'bill_code' => $request->billcode,
-                'user_id' => Auth::user()->id,
-                'amount' => $total,
-                'created_at' => NOW()
-            ],
-        ]);
 
-
-        foreach (session('cart') as $id => $details) {
-            DB::table('orders_details')->insert([
+        //if payment success
+        if ($request->status_id == 1) {
+            //insert orders
+            DB::table('orders')->insert([
                 [
-                    'product_id' => $id,
-                    'order_id' => $request->order_id,
-                    'quantity' => $details['quantity'],
+                    'orders_id' => $request->order_id,
+                    'bill_code' => $request->billcode,
+                    'user_id' => Auth::user()->id,
+                    'amount' => $total,
+                    'created_at' => NOW(),
+                    'customer_id' => $custID
                 ],
             ]);
-        }
 
-        $request->session()->forget('cart');
-        toast('Payment Successful', 'success');
-        return redirect('purchase-historyMerchant');
+            //insert product orders
+            foreach (session('cart') as $id => $details) {
+                DB::table('orders_details')->insert([
+                    [
+                        'product_id' => $id,
+                        'referenceNo' => $request->order_id,
+                        'quantity' => $details['quantity'],
+                    ],
+                ]);
+            }
+
+            $totalCommission = 0;
+            //update commision
+            foreach (session('cart') as $id => $details) {
+                $prod = DB::table('products')
+                    ->where('id', $id)
+                    ->get();
+                foreach ($prod as $product) {
+                    $productPrice = $product->product_price;
+                    $merchantPrice = $product->price_merchant;
+                    $commisionPerProduct = $productPrice - $merchantPrice;
+                    $commisionPerProduct = $commisionPerProduct * $details['quantity'];
+                    $totalCommission = $totalCommission + $commisionPerProduct;
+                }
+            }
+
+            //addToCommision
+            $userCommission = DB::table('users')->where('id', Auth::user()->id)->get();
+
+            foreach ($userCommission as $user) {
+                $commissionPoint = $user->commissionPoint;
+                if ($commissionPoint == null) {
+                    DB::table('users')
+                        ->where('id', Auth::user()->id)
+                        ->update([
+                            'commissionPoint' => $totalCommission
+                        ]);
+                } else {
+                    $totalCommission += $commissionPoint;
+                    DB::table('users')
+                        ->where('id', Auth::user()->id)
+                        ->update([
+                            'commissionPoint' => $totalCommission
+                        ]);
+                }
+            }
+
+            $request->session()->forget('cart');
+            toast('Payment Successful', 'success');
+            return redirect('purchase-history-merchant');
+        } else { //if payment unsuccessful
+            toast('Payment Unsuccessful', 'error');
+            return redirect('purchase-history-merchant');
+        }
     }
 
     public function callback()

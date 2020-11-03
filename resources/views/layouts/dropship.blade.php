@@ -43,6 +43,8 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 
+
+
     @section('headScript')
 
     @endsection
@@ -60,30 +62,32 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="dashboard.php" class="nav-link">Home</a>
+                    <a href="/DropshipDashboard" class="nav-link">Home</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" >
+                    <a class="nav-link" href="dropship-cart">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        <span class="badge badge-danger navbar-badge">
+
+                            @if (session('cart') != null)
+                                {{ count(session('cart')) }}
+
+                            @else
+                                0
+                            @endif
+
+                        </span>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link" data-toggle="dropdown" href="">
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> Account
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-key mr-2"></i> Change Password
-                        </a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#modal-sm"
@@ -102,7 +106,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar elevation-4 sidebar-light-lightblue">
             <!-- Brand Logo -->
-            <a href="/" class="brand-link navbar-white">
+            <a href="/DropshipDashboard" class="brand-link navbar-white">
                 <img src="../dist/img/AdminLTELogo.png" alt="Affiliate" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">Affiliate System</span>
@@ -116,7 +120,7 @@
                         <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block"> {{ Auth::user()->name }}</a>
+                        <a href="/profile-dropship" class="d-block"> {{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -126,7 +130,7 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
+                        {{-- <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -136,7 +140,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/manageStock" class="nav-link active">
+                                    <a href="/manageStockdropship" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Restock</p>
                                     </a>
@@ -154,7 +158,7 @@
                                     </a>
                                 </li> -->
                             </ul>
-                        </li>
+                        </li> --}}
 
 
                         <!-- <li class="nav-item has-treeview">
@@ -186,30 +190,56 @@
                                 </li>
                             </ul>
                         </li> -->
-
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="customers" href="/customers-dropship" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
-                                    Downline
+                                    Customers
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-donate"></i>
+                            <a id="products" href="/product-dropship" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
-                                    Redeem Point
+                                    Buy Product
                                 </p>
                             </a>
                         </li>
-                        
+
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="history" href="/purchase-history-dropship" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Purchase History
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="commission" href="/commission-dropship" class="nav-link">
+                                <i class="nav-icon fas fa-donate"></i>
+                                <p>
+                                    Commission
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="support" href="/support-dropship" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="guide" href="/guideline-dropship" class="nav-link">
+                                <i class="nav-icon far fa-question-circle"></i>
+                                <p>
+                                    Guidelines
                                 </p>
                             </a>
                         </li>
@@ -282,6 +312,7 @@
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Toastr -->
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+
 
     {{-- @if (Session::has('alert.config'))
         <script>

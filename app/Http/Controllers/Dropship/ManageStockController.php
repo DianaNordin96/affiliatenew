@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Merchant;
+namespace App\Http\Controllers\Dropship;
 
 use DB;
 use App\Http\Controllers\Controller;
@@ -19,7 +19,7 @@ class ManageStockController extends Controller
         $product = DB::table('products')->get();
 
         return view(
-            'merchant/restock',
+            'dropship/restock',
             [
                 'userId' => $id,
                 'products' => $product,

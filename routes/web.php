@@ -102,25 +102,54 @@ Route::group(['middleware' => 'damio'], function () {
 
 Route::group(['middleware' => 'merchant'], function () {
    
-    Route::get('/MerchantDashboard', 'Merchant\DashboardController@index')->name('dashboard')->middleware('auth');
-    Route::get('/manageStockMerchant', 'Merchant\ManageStockController@index')->name('manageStock')->middleware('auth');
-    Route::get('/manageDownlineMerchant', 'Merchant\ManageDownlineController@index')->name('manageDownline')->middleware('auth');
+    Route::get('/MerchantDashboard', 'Merchant\DashboardController@index')->middleware('auth');
+    Route::get('/product-merchant', 'Merchant\ManageStockController@index')->middleware('auth');
+    Route::get('/downline-merchant', 'Merchant\ManageDownlineController@index')->middleware('auth');
     Route::get('/manageDownlineMerchant/{role}/{id}', 'Merchant\ManageDownlineController@changeRole')->middleware('auth');
-    Route::get('/profileMerchant', 'Merchant\ProfileController@index')->middleware('auth');
-    Route::POST('/profileMerchant-update', 'Merchant\ProfileController@update')->name('profile.update.merchant')->middleware('auth');
-    Route::get('merchant-cart', 'Merchant\CartController@cart')->middleware('auth');
-    Route::get('addToCartMerchant/{id}', 'Merchant\CartController@addToCart')->middleware('auth');
-    Route::patch('update-cartMerchant', 'Merchant\CartController@update')->middleware('auth');
-    Route::delete('remove-from-cartMerchant', 'Merchant\CartController@remove')->middleware('auth');
-    Route::get('checkoutMerchant', 'Merchant\CartController@checkout')->middleware('auth');
-    Route::get('statusMerchant', 'Merchant\CartController@paymentStatus')->name('statusMerchant')->middleware('auth');
-    Route::POST('callbackMerchant', 'Merchant\CartController@callback')->name('callbackMerchant')->middleware('auth');
-    Route::get('purchase-historyMerchant', 'Merchant\PurchaseController@index')->middleware('auth');
-    Route::get('view-purchased-productMerchant/{orderID}', 'Merchant\PurchaseController@viewPurchase')->middleware('auth');
+    Route::get('/profile-merchant', 'Merchant\ProfileController@index')->middleware('auth');
+    Route::POST('/profileMerchant-update', 'Merchant\ProfileController@update')->middleware('auth');
+    Route::POST('/change-password-merchant', 'Merchant\ProfileController@changePassword')->middleware('auth');
+    Route::get('/merchant-cart', 'Merchant\CartController@cart')->middleware('auth');
+    Route::get('/addToCartMerchant/{id}', 'Merchant\CartController@addToCart')->middleware('auth');
+    Route::patch('/update-cartMerchant', 'Merchant\CartController@update')->middleware('auth');
+    Route::delete('/remove-from-cartMerchant', 'Merchant\CartController@remove')->middleware('auth');
+    Route::POST('/checkout-merchant', 'Merchant\CartController@checkout')->middleware('auth');
+    Route::get('/statusMerchant', 'Merchant\CartController@paymentStatus')->middleware('auth');
+    Route::POST('/callbackMerchant', 'Merchant\CartController@callback')->middleware('auth');
+    Route::get('/purchase-history-merchant', 'Merchant\PurchaseController@index')->middleware('auth');
+    Route::get('/view-purchased-product-merchant/{orderID}', 'Merchant\PurchaseController@viewPurchase')->middleware('auth');
+    Route::get('/customers-merchant', 'Merchant\CustomerController@index')->middleware('auth');
+    Route::POST('/customers-merchant-add', 'Merchant\CustomerController@create')->middleware('auth');
+    Route::POST('/customers-merchant-update', 'Merchant\CustomerController@update')->middleware('auth');
+    Route::get('/customers-merchant-delete/{id}', 'Merchant\CustomerController@delete')->middleware('auth');
+    Route::get('/commission-merchant', 'Merchant\CommissionController@index')->middleware('auth');
+    Route::POST('/commission-merchant-withdrawal', 'Merchant\CommissionController@withdraw')->middleware('auth');
+    Route::get('/approveDownline-merchant/{id}', 'Damio\ManageDownlineController@approve')->middleware('auth');
+    Route::get('/declineDownline-merchant/{id}', 'Damio\ManageDownlineController@decline')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\DropshipMiddleware'], function () {
-    Route::get('/DropshipDashboard', 'Dropship\DashboardController@index')->name('dashboard')->middleware('auth');
+    Route::get('/DropshipDashboard', 'Dropship\DashboardController@index')->middleware('auth');
+    Route::get('/product-dropship', 'Dropship\ManageStockController@index')->middleware('auth');
+    Route::get('/profile-dropship', 'Dropship\ProfileController@index')->middleware('auth');
+    Route::POST('/profileDropship-update', 'Dropship\ProfileController@update')->middleware('auth');
+    Route::POST('/change-password-dropship', 'Dropship\ProfileController@changePassword')->middleware('auth');
+    Route::get('/dropship-cart', 'Dropship\CartController@cart')->middleware('auth');
+    Route::get('/addToCartDropship/{id}', 'Dropship\CartController@addToCart')->middleware('auth');
+    Route::patch('/update-cartDropship', 'Dropship\CartController@update')->middleware('auth');
+    Route::delete('/remove-from-cartDropship', 'Dropship\CartController@remove')->middleware('auth');
+    Route::POST('/checkout-dropship', 'Dropship\CartController@checkout')->middleware('auth');
+    Route::get('/statusDropship', 'Dropship\CartController@paymentStatus')->middleware('auth');
+    Route::POST('/callbackDropship', 'Dropship\CartController@callback')->middleware('auth');
+    Route::get('/purchase-history-dropship', 'Dropship\PurchaseController@index')->middleware('auth');
+    Route::get('/view-purchased-product-dropship/{orderID}', 'Dropship\PurchaseController@viewPurchase')->middleware('auth');
+    Route::get('/customers-dropship', 'Dropship\CustomerController@index')->middleware('auth');
+    Route::POST('/customers-dropship-add', 'Dropship\CustomerController@create')->middleware('auth');
+    Route::POST('/customers-dropship-update', 'Dropship\CustomerController@update')->middleware('auth');
+    Route::get('/customers-dropship-delete/{id}', 'Dropship\CustomerController@delete')->middleware('auth');
+    Route::get('/commission-dropship', 'Dropship\CommissionController@index')->middleware('auth');
+    Route::POST('/commission-dropship-withdrawal', 'Dropship\CommissionController@withdraw')->middleware('auth');
+
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], function () {
