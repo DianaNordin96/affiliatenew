@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', 'RedirectController@redirect');
+Route::get('redirected','RedirectController@redirect');
 
 Auth::routes();
 
@@ -37,6 +37,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('profile-admin', 'Admin\ProfileController@index')->middleware('auth');
     Route::POST('profile-update-admin', 'Admin\ProfileController@update')->middleware('auth');
     Route::POST('change-password-admin', 'Admin\ProfileController@changePassword')->middleware('auth');
+    Route::get('blastMessage', 'Admin\BlastMessageController@index')->middleware('auth');
+    Route::get('bulksms-send', 'Admin\BlastMessageController@bulkSMS')->middleware('auth');
+    Route::POST('singlesms-send', 'Admin\BlastMessageController@singleSMS')->middleware('auth');
+    
 //change-password
 //guidelines
 //support

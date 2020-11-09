@@ -81,6 +81,7 @@ class ManageAgentController extends Controller
                 $user->icnumber = $data['ic'];
                 $user->dob = $data['dob'];
                 $user->downlineTo = null;
+                $user->commissionPoint = 0 ;
                 $user->belongsToAdmin = Auth::user()->id;
                 $user->role = 'shogun';
                 $user->save();

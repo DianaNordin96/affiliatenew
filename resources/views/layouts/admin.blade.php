@@ -205,6 +205,15 @@
                         </li>
 
                         <li class="nav-item">
+                            <a id="blastMessage" href="/blastMessage" class="nav-link">
+                                <i class="nav-icon far fa-question-circle"></i>
+                                <p>
+                                    Blast Message
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a id="support" href="/support" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>

@@ -14,7 +14,7 @@ class ManageOrderController extends Controller
         $order_details = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('users.belongsToAdmin', Auth::user()->id)
-            ->select('orders.orders_id', 'orders.created_at', 'users.name')
+            ->select('orders.orders_id', 'orders.created_at', 'users.name','orders.amount')
             ->get();
 
         return view('admin/view-order', [

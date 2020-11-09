@@ -35,14 +35,15 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <!-- <h3 class="card-title">View Employee</h3> -->
-                               
-                                <br />
+                                <button class="btn btn-warning" onclick="exportTableToExcel()">Export Order List to
+                                    Excel</button>
+                                <br /><br />
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>Order ID</th>
                                             <th>Created At</th>
+                                            <th>Amount</th>
                                             <th>Agent Name</th>
                                             <th>Item</th>
                                             {{-- <th>Actions</th> --}}
@@ -53,6 +54,7 @@
                                             <tr>
                                                 <td>{{ $order->orders_id }}</td>
                                                 <td>{{ $order->created_at }}</td>
+                                                <td>RM {{ number_format($order->amount,2) }}</td>
                                                 <td>{{ $order->name }}</td>
                                                 <td>
                                                     <a class="btn btn-warning"
@@ -77,7 +79,18 @@
 @endsection
 
 @section('script')
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"> </script>
     <script>
+        function exportTableToExcel() {
+        $(document).ready(function () {
+            $("#example1").table2excel({
+                exclude: ".noExport",
+                filename: "Order List"
+            });
+        });
+
+    }
+
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
