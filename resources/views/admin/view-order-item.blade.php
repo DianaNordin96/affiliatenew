@@ -114,6 +114,7 @@
                             @else
                             <?php $trackingStatus = $tracking->getTrackingStatus($trackingNum,$courierCode); ?>
                                 @foreach($trackingStatus->data as $value)
+                                    Tracking Number : {{$value->tracking_number}}<br/>
                                     Parcel Status : {{$value->status}}<br/>
                                     Last Activity : {{$value->lastEvent}}
                                 @endforeach
