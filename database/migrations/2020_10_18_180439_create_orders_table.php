@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->string('bill_code')->nullable();
             $table->string('amount')->nullable();
             $table->string('referenceNo')->nullable();
+            $table->string('tracking_number')->nullable();
+            $table->string('courier_code')->nullable();
             $table->biginteger('customer_id')->unsigned();
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class ManageOrderController extends Controller
 {
@@ -24,6 +25,8 @@ class ManageOrderController extends Controller
 
     public function viewItem($id)
     {
+        $courierList = $this->getCourierList();
+        // dd($courierList);
         $customerDetails = DB::table('orders')
         ->JOIN('customers','orders.customer_id','=','customers.id')
         ->WHERE('orders.orders_id',$id)
@@ -38,7 +41,20 @@ class ManageOrderController extends Controller
         return view('admin/view-order-item', [
             'products' => $product,
             'customerDetails' => $customerDetails,
-            'referenceNo' => $id
+            'referenceNo' => $id,
+            'courierList' => $courierList
         ]);
+    }
+
+    public function getCourierList(){
+        $url = 'https://api.tracktry.com/v1/carriers';
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Tracktry-Api-Key' => '3cbee946-e06e-4315-bcda-ae18ed79be07',
+        ])->get($url);
+        $result= json_decode($response);
+        // dd($response);
+        return $result;
     }
 }

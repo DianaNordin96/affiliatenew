@@ -40,6 +40,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('blastMessage', 'Admin\BlastMessageController@index')->middleware('auth');
     Route::get('bulksms-send', 'Admin\BlastMessageController@bulkSMS')->middleware('auth');
     Route::POST('singlesms-send', 'Admin\BlastMessageController@singleSMS')->middleware('auth');
+    Route::POST('tracking-create', 'Admin\TrackingController@createTracking')->middleware('auth');
     
 //change-password
 //guidelines

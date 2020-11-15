@@ -1,3 +1,4 @@
+@inject('tracking', 'App\Http\Controllers\Admin\TrackingController')
 @extends('layouts.admin')
 @section('headScript')
 @endsection
@@ -32,34 +33,104 @@
                         <div class="card-header">
                             <h3 class="card-title">Customer Details</h3>
 
-                            {{-- <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                              <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                              <i class="fas fa-times"></i>
-                            </button>
-                          </div> --}}
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+
+                            </div>
                         </div>
                         <div class="card-body">
-                           @foreach($customerDetails as $customer)
-                               <p><b>Name : {{$customer->name}}</b></p>
-                               <p><b>Phone : {{$customer->phone}}</b></p>
-                               <p><b>Address #1 : {{$customer->address}}</b></p>
-                               <p><b>Address #2 : {{$customer->address_two}}</b></p>
-                               <p><b>Address #3 : {{$customer->address_three}}</b></p>
-                           @endforeach
+                            @foreach($customerDetails as $customer)
+                                <p><b>Name : {{ $customer->name }}</b></p>
+                                <p><b>Phone : {{ $customer->phone }}</b></p>
+                                <p><b>Address #1 : {{ $customer->address }}</b></p>
+                                <p><b>Address #2 : {{ $customer->address_two }}</b></p>
+                                <p><b>Address #3 : {{ $customer->address_three }}</b></p>
+                            @endforeach
                         </div>
                         <!-- /.card-body -->
                     </div>
+
+                    <div class="card card-warning collapsed-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Parcel Tracking</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <?php
+                            foreach($customerDetails as $customer){
+                                $trackingNum = $customer->tracking_number;
+                                $courierCode = $customer->courier_code;
+                            }
+                            ?>
+
+                            @if($trackingNum == '')
+                                <h6 style="color: red">*only create tracking once orders has been packed</h6>
+                            <form action="{{ url('tracking-create') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Courier Name </label>
+                                            <select style="height: 40%" name="courier" class="form-control">
+                                                @foreach($courierList->data as $value)
+                                                    <option value="{{ $value->code }}">{{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Tracking Number </label>
+                                            <input type="text" class="form-control" name="tracking_number" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Order ID </label>
+                                        <input type="text" class="form-control" name="order_id" value="{{$referenceNo}}" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-block bg-danger">Create Tracking</button>
+                                    </div>
+                                </div>
+                            </form>
+                            @else
+                            <?php $trackingStatus = $tracking->getTrackingStatus($trackingNum,$courierCode); ?>
+                                @foreach($trackingStatus->data as $value)
+                                    Parcel Status : {{$value->status}}<br/>
+                                    Last Activity : {{$value->lastEvent}}
+                                @endforeach
+                            @endif
+                            
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
                 </div>
 
                 <div class="col-lg-7">
                     <div class="card">
                         <div class="card-body">
                             <!-- <h3 class="card-title">View Employee</h3> -->
-                            <a href="{{ url('/view-order') }}"
-                                class="btn btn-warning"><i class="fa fa-angle-left"></i>
+                            <a href="{{ url('/view-order') }}" class="btn btn-warning"><i
+                                    class="fa fa-angle-left"></i>
                                 Go Back</a>
                             <br /><br />
 
