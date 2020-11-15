@@ -180,6 +180,8 @@
 @endsection
 
 @section('script')
+<!-- Bootstrap Switch -->
+<script src="{{asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
 <script>
     $(function () {
         $("#example1").DataTable({
@@ -194,6 +196,9 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
+        });
+        $("input[data-bootstrap-switch]").each(function(){
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
         });
     });
 

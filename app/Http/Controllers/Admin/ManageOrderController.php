@@ -12,14 +12,23 @@ class ManageOrderController extends Controller
 {
     public function index()
     {
-        $order_details = DB::table('orders')
+        $order_details_pending = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('users.belongsToAdmin', Auth::user()->id)
-            ->select('orders.orders_id', 'orders.created_at', 'users.name','orders.amount')
+            ->where('orders.tracking_number', '=', NULL)
+            ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+            ->get();
+
+        $order_details_complete = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('users.belongsToAdmin', Auth::user()->id)
+            ->where('orders.tracking_number', '<>', NULL)
+            ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
             ->get();
 
         return view('admin/view-order', [
-            'orders_details' => $order_details,
+            'orders_details_pending' => $order_details_pending,
+            'orders_details_complete' => $order_details_complete,
         ]);
     }
 
@@ -28,9 +37,9 @@ class ManageOrderController extends Controller
         $courierList = $this->getCourierList();
         // dd($courierList);
         $customerDetails = DB::table('orders')
-        ->JOIN('customers','orders.customer_id','=','customers.id')
-        ->WHERE('orders.orders_id',$id)
-        ->get();
+            ->JOIN('customers', 'orders.customer_id', '=', 'customers.id')
+            ->WHERE('orders.orders_id', $id)
+            ->get();
 
         $product = DB::table('orders_details')
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
@@ -46,14 +55,15 @@ class ManageOrderController extends Controller
         ]);
     }
 
-    public function getCourierList(){
+    public function getCourierList()
+    {
         $url = 'https://api.tracktry.com/v1/carriers';
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Tracktry-Api-Key' => '3cbee946-e06e-4315-bcda-ae18ed79be07',
         ])->get($url);
-        $result= json_decode($response);
+        $result = json_decode($response);
         // dd($response);
         return $result;
     }
