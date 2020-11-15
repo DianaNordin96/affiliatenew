@@ -196,7 +196,7 @@
         });
     });
 
-    document.getElementById("commission").className = "nav-link active";
+    document.getElementById("blastMessage").className = "nav-link active";
 
 </script>
 @endsection

@@ -206,7 +206,7 @@
 
                         <li class="nav-item">
                             <a id="blastMessage" href="/blastMessage" class="nav-link">
-                                <i class="nav-icon far fa-question-circle"></i>
+                                <i class="nav-icon fas fa-sms"></i>
                                 <p>
                                     Blast Message
                                 </p>

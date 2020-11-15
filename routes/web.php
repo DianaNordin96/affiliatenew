@@ -38,8 +38,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::POST('profile-update-admin', 'Admin\ProfileController@update')->middleware('auth');
     Route::POST('change-password-admin', 'Admin\ProfileController@changePassword')->middleware('auth');
     Route::get('blastMessage', 'Admin\BlastMessageController@index')->middleware('auth');
-    Route::get('bulksms-send', 'Admin\BlastMessageController@bulkSMS')->middleware('auth');
+    Route::POST('bulksms-send-agent', 'Admin\BlastMessageController@bulkSMSagent')->middleware('auth');
     Route::POST('singlesms-send', 'Admin\BlastMessageController@singleSMS')->middleware('auth');
+    Route::POST('bulksms-send-customer', 'Admin\BlastMessageController@bulkSMScustomer')->middleware('auth');
     Route::POST('tracking-create', 'Admin\TrackingController@createTracking')->middleware('auth');
     
 //change-password

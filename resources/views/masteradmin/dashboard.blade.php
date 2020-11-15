@@ -30,8 +30,8 @@
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h4>$35,210.43</h4>
-                            <p>Total Sales <span class="text-success"> &nbsp; &nbsp; <i class="fas fa-caret-up"></i> 17%</span></p>
+                            <h4>RM {{$totalSales}}</h4>
+                            <p>Total Sales <span class="text-success"> &nbsp; &nbsp;
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
