@@ -111,7 +111,7 @@
                                                 <h6>Merchant</h6>
                                             </span>
                                             <span style="text-align : center" class="info-box-text">
-                                                <h6>RM RM {{ number_format($merchantSales,2) }}</h6>
+                                                <h6>RM {{ number_format($merchantSales,2) }}</h6>
                                             </span>
                                         </div>
                                         <!-- /.info-box-content -->

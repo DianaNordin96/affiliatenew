@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('price_damio')->nullable();
             $table->string('price_merchant')->nullable();
             $table->string('price_dropship')->nullable();
+            $table->string('price_hq')->nullable();
             $table->timestamps();
         });
     }

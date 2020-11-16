@@ -133,6 +133,9 @@
                             <a href="{{ url('/view-order') }}" class="btn btn-warning"><i
                                     class="fa fa-angle-left"></i>
                                 Go Back</a>
+
+                            <a href="{{ url('/consignment-note') }}" class="btn btn-warning">Create Consignment Note<i
+                                class="fa fa-angle-right"></i></a>
                             <br /><br />
 
 

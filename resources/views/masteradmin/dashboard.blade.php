@@ -26,11 +26,11 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-6 col-sm-6 col-6">
+                <div class="col-lg-3 col-sm-3 col-3">
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h4>RM {{$totalSales}}</h4>
+                            <h4>RM {{number_format($totalSales,2)}}</h4>
                             <p>Total Sales <span class="text-success"> &nbsp; &nbsp;
                         </div>
                         <div class="icon">
@@ -40,6 +40,79 @@
                     </div>
                 </div>
                 <!-- ./col -->
+
+                <section class="col-lg-9 connectedSortable">
+                    <div class="card">
+                        <div class="card-header bg-gradient-lightblue">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                DOWNLINE SALES THIS MONTH
+                            </h3>
+
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>Shogun</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM {{ number_format($shogunSales,2) }}</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>Damio</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM {{ number_format($damioSales,2) }}</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>Merchant</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM {{ number_format($merchantSales,2) }}</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 ">
+                                    <div class="info-box bg-lightblue">
+                                        <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
+                                        <div class="info-box-content">
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>Dropship</h6>
+                                            </span>
+                                            <span style="text-align : center" class="info-box-text">
+                                                <h6>RM {{ number_format($dropshipSales,2) }}</h6>
+                                            </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card-body -->
+                </section>
+
             </div>
             <!-- /.row -->
             

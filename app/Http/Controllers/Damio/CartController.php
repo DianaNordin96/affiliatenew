@@ -37,7 +37,7 @@ class CartController extends Controller
                 $id => [
                     "name" => $product->product_name,
                     "quantity" => 1,
-                    "price" => $product->price_damio,
+                    "price" => $product->product_price,
                     "photo" => $product->product_image
                 ]
             ];
@@ -54,7 +54,7 @@ class CartController extends Controller
         $cart[$id] = [
             "name" => $product->product_name,
             "quantity" => 1,
-            "price" => $product->price_damio,
+            "price" => $product->product_price,
             "photo" => $product->product_image
         ];
         session()->put('cart', $cart);
@@ -106,13 +106,13 @@ class CartController extends Controller
             ]);
 
             date_default_timezone_set("Asia/Kuala_Lumpur");
-            
+
             $orderID = date("Ymd") . date("hi") . Auth::user()->id;
-            
+
             session()->put('customer', $customerDetails);
-            
+
             $total = 0;
-            
+
             foreach (session('cart') as $id => $details) {
                 $total += $details['price'] * $details['quantity'];
             }
@@ -146,7 +146,7 @@ class CartController extends Controller
             return redirect('https://dev.toyyibpay.com/' .  $billCode);
         }
     }
-    
+
     public function paymentStatus(Request $request)
     {
         $custID = session('customer');
@@ -189,11 +189,55 @@ class CartController extends Controller
                     ->where('id', $id)
                     ->get();
                 foreach ($prod as $product) {
-                    $productPrice = $product->product_price;
-                    $damioPrice = $product->price_damio;
-                    $commisionPerProduct = $productPrice - $damioPrice;
+                    $commisionPerProduct = $product->price_damio;
                     $commisionPerProduct = $commisionPerProduct * $details['quantity'];
                     $totalCommission = $totalCommission + $commisionPerProduct;
+
+                    //check downline
+                    $status = true;
+                    // $statusCheck = false;
+                    $id = Auth::user()->downlineTo;
+                    $commissionPoint = 0;
+
+
+                    while ($status) {
+                        $check = DB::table('users')
+                            ->where('id', $id)
+                            ->get();
+                        // dd($check);
+                        foreach ($check as $checking) {
+                            if ($checking->id != '') {
+                                $id = $checking->downlineTo;
+                                $role = $checking->role;
+                                // dd($product->price_shogun);
+                                switch ($role) {
+                                    case 'shogun':
+                                        $commissionPoint = ($product->price_shogun * $details['quantity']) + $checking->commissionPoint;
+                                        break;
+                                    case 'merchant':
+                                        $commissionPoint = ($product->price_merchant * $details['quantity']) + $checking->commissionPoint;
+                                        break;
+                                    case 'damio':
+                                        $commissionPoint = ($product->price_damio * $details['quantity']) + $checking->commissionPoint;
+                                        break;
+                                    case 'dropship':
+                                        $commissionPoint = ($product->price_dropship * $details['quantity']) + $checking->commissionPoint;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                DB::table('users')
+                                    ->where('id', $checking->id)
+                                    ->update([
+                                        'commissionPoint' => $commissionPoint
+                                    ]);
+
+                                if ($checking->downlineTo == null) {
+                                    $status = false;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

@@ -30,7 +30,7 @@
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h3>RM {{ number_format($totalSale, 2) }}</h3>
+                            <h4>RM {{ number_format($totalSale, 2) }}</h4>
                             <p>Total Sales <span class="text-success"> &nbsp; &nbsp; <i class="fas fa-caret-up"></i></p>
                         </div>
                         <div class="icon">
@@ -46,7 +46,7 @@
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h3>{{ $downline }}</h3>
+                            <h4>{{ $downline }}</h4>
 
                             <p>Total Agent Downline</p>
                         </div>

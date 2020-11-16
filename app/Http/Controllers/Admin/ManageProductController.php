@@ -79,6 +79,7 @@ class ManageProductController extends Controller
             'dropshipPrice' => 'required',
             'damioPrice' => 'required',
             'merchantPrice' => 'required',
+            'hqPrice' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif'
         ];
 
@@ -93,6 +94,7 @@ class ManageProductController extends Controller
                     'product_name' => $data['productName'],
                     'product_price' => $data['productPrice'],
                     'product_description' => $data['productDesc'],
+                    'price_hq' => $data['hqPrice'],
                     'product_image' => $req->file('image')->getClientOriginalName(),
                     'price_shogun' => $data['shogunPrice'],
                     'price_damio' => $data['damioPrice'],

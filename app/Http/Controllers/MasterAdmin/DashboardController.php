@@ -16,12 +16,62 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $totalSale = DB::table('orders')
+        //get the date
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $month = date('m');
+        $year = date('Y');
+
+        //totalSales this month
+        $totalSales = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('orders.created_at', '>=', $year . $month . '01')
+            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->select('amount')
+            ->sum('amount');
+
+        //total sales downline today
+        $shogun = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('orders.created_at', '>=', $year . $month . '01')
+            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->where('users.role', 'shogun')
+            ->select('amount')
+            ->sum('amount');
+
+
+        //total sales downline today
+        $damio = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('orders.created_at', '>=', $year . $month . '01')
+            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->where('users.role', 'damio')
+            ->select('amount')
+            ->sum('amount');
+
+        //total sales downline today
+        $merchant = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('orders.created_at', '>=', $year . $month . '01')
+            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->where('users.role', 'merchant')
+            ->select('amount')
+            ->sum('amount');
+
+        //total sales downline today
+        $dropship = DB::table('orders')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('orders.created_at', '>=', $year . $month . '01')
+            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->where('users.role', 'dropship')
             ->select('amount')
             ->sum('amount');
 
         return view('masteradmin/dashboard')->with([
-            'totalSales' => $totalSale
+            'shogunSales' => $shogun,
+            'damioSales' => $damio,
+            'merchantSales' => $merchant,
+            'dropshipSales' => $dropship,
+            'totalSales' => $totalSales
         ]);
     }
 }

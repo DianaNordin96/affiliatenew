@@ -149,7 +149,15 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Actual Price </label>
+                                            <label> HQ Price </label>
+                                            <input type="text" id="hqPrice" class="form-control" name="hqPrice"
+                                                placeholder="HQ Price" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Price </label>
                                             <input type="text" id="productPrice" class="form-control" name="productPrice"
                                                 placeholder="Price" />
                                         </div>

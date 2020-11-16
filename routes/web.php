@@ -42,7 +42,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::POST('singlesms-send', 'Admin\BlastMessageController@singleSMS')->middleware('auth');
     Route::POST('bulksms-send-customer', 'Admin\BlastMessageController@bulkSMScustomer')->middleware('auth');
     Route::POST('tracking-create', 'Admin\TrackingController@createTracking')->middleware('auth');
-    
+    Route::GET('consignment-note', 'Admin\ConsignmentController@index')->middleware('auth');
 //change-password
 //guidelines
 //support
@@ -164,6 +164,10 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::get('/master-commission', 'MasterAdmin\ManageCommissionController@index')->middleware('auth');
     Route::get('/master-commission-approve/{id}', 'MasterAdmin\ManageCommissionController@approve')->middleware('auth');
     Route::get('/master-commission-decline/{id}', 'MasterAdmin\ManageCommissionController@decline')->middleware('auth');
+    Route::get('/profile-masteradmin', 'MasterAdmin\ProfileController@index')->middleware('auth');
+    Route::POST('profile-update-masteradmin', 'MasterAdmin\ProfileController@update')->middleware('auth');
+    Route::POST('change-password-masteradmin', 'MasterAdmin\ProfileController@changePassword')->middleware('auth');
+    
 });
 
 

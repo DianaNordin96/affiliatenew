@@ -25,11 +25,72 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <form action="{{ url('checkout') }}" method="POST">
-                    @csrf
+                
+                 <form action="{{ url('checkout') }}" method="POST">
+                        @csrf
                 <div class="row">
-                    
-                    <div class="col-lg-4 col-md-4">
+
+                    <div class="col-lg-5 col-md-5">
+                        <div class="card">
+                                <div class="card-body">
+                                    <!-- <h3 class="card-title">View Employee</h3> -->
+                                    <a href="{{ url('') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+                                        Continue Shopping</a><br/><br/>
+                                    <div style="text-align:center">
+                                        <h3>Shopping Cart</h3>
+                                    </div>
+                                    
+                                    <table class="example1">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th width="50%"></th>
+                                                <th width="50%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $total = 0; 
+                                            $no = 1;
+                                            ?>
+
+                                            @if (session('cart'))
+                                                @foreach (session('cart') as $id => $details)
+                                                    <?php $total += $details['price'] * $details['quantity']; ?>
+
+                                                    <tr style="border-bottom: lightgrey  1px solid">
+                                                        <td style="padding-left:10px;text-align: right">
+                                                            #{{$no}}
+                                                        </td>
+                                                        <td>
+                                                            <br/>
+                                                        <img style="display: block;margin-left: auto;margin-right: auto;" src="/imageUploaded/{{ $details['photo'] }}" width="80" height="80" class="img-responsive" /></div><br/>
+                                                        <div style="text-align: center">
+                                                                {{$details['name'] }}<br/>
+                                                                RM {{ $details['price'] }}/each
+                                                        </div>
+                                                        <br/>
+                                                        </td>
+                                                        <td style="padding-left: 10%">
+                                                            <div style="float: right">
+                                                                Subtotal: RM {{ $details['price'] * $details['quantity'] }}<br/><br/>
+                                                                <input type="number" value="{{ $details['quantity'] }}" style="width:60%" class="form-control quantity"/><br/>
+                                                                <button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fas fa-sync-alt"></i></button> &nbsp;&nbsp;
+                                                                <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fas fa-trash"></i></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <?php $no++ ?>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                           </div>
+                    </div>
+
+                    <div class="col-lg-5 col-md-5">
                         <div class="card card-warning">
                             <div class="card-header">
                                 <h3 class="card-title">Customer Details</h3>
@@ -60,6 +121,7 @@
                                         <h3>OR</h3>
                                     </div>
                                 </div> --}}
+                                
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row">
@@ -115,86 +177,26 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div style="float:center" class="col-lg-12 col-md-12 col-xs-12">
+                                        <strong>
+                                            <h4>Total RM {{ number_format($total, 2) }} &nbsp; &nbsp;
+                                                @if(session()->get('cart') != null)
+                                                <button type="submit" id="checkout" class="btn btn-info"> Checkout <i
+                                                    class="fa fa-angle-right"></i></button>
+                                                @endif
+                                               </h4>
+                                        </strong>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                         </div>
                     </div>
 
-                    <div class="col-lg-8 col-md-8">
-                        <div class="card">
-                                <div class="card-body">
-                                    <!-- <h3 class="card-title">View Employee</h3> -->
-                                    <div style="text-align:center">
-                                        <h3>Shopping Cart</h3>
-                                    </div>
-                                    
-                                    <br />
-                                    <a href="{{ url('') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
-                                        Continue Shopping</a>
-                                    <br>
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th style="width:20%"></th>
-                                                <th style="width:20%">Product</th>
-                                                <th style="width:10%">Price</th>
-                                                <th style="width:8%">Quantity</th>
-                                                <th style="width:10%" class="text-center">Subtotal</th>
-                                                <th style="width:10%"></th>
-                                            </tr>
-                                        </thead>
-                                        <?php $total = 0; ?>
-
-                                        @if (session('cart'))
-                                            @foreach (session('cart') as $id => $details)
-
-                                                <?php $total += $details['price'] * $details['quantity']; ?>
-
-                                                <tr>
-                                                    <td data-th="Product">
-                                                       <img style="display: block;margin-left: auto;margin-right: auto;" src="/imageUploaded/{{ $details['photo'] }}" width="80" height="80" class="img-responsive" /></div>
-                                                    </td>
-                                                    <td>
-                                                        {{ $details['name'] }}
-                                                    </td>
-                                                    <td data-th="Price">RM {{ $details['price'] }}</td>
-                                                    <td data-th="Quantity">
-                                                        <input type="number" value="{{ $details['quantity'] }}"
-                                                            class="form-control quantity" />
-                                                    </td>
-                                                    <td data-th="Subtotal" class="text-center">
-                                                        RM {{ $details['price'] * $details['quantity'] }}</td>
-                                                    <td class="actions" data-th="">
-                                                        <button class="btn btn-info btn-sm update-cart"
-                                                            data-id="{{ $id }}"><i class="fas fa-sync-alt"></i></button>
-                                                        <button class="btn btn-danger btn-sm remove-from-cart"
-                                                            data-id="{{ $id }}"><i class="fas fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @endif
-
-                                    </table>
-                                    <br />
-                                    <br />
-                                    <div class="row">
-
-                                        <div style="float:center" class="col-lg-12 col-md-12 col-xs-12">
-                                            <strong>
-                                                <h3>Total RM {{ number_format($total, 2) }} &nbsp; &nbsp;
-                                                    @if(session()->get('cart') != null)
-                                                    <button type="submit" id="checkout" class="btn btn-info"> Checkout <i
-                                                        class="fa fa-angle-right"></i></button>
-                                                    @endif
-                                                   </h3>
-                                            </strong>
-                                        </div>
-                                    </div>
-                                </div>
-                           </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
             </div><!-- /.container-fluid -->
 
         </section>
