@@ -23,7 +23,8 @@ class BlastMessageController extends Controller
         // dd(json_decode($response));
         $creditBalance = $response['balance'];
 
-
+        //rateChecking
+        
         return view('admin/blastmessage')->with([
             'creditBalance' => $creditBalance
         ]);

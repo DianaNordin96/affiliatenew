@@ -189,7 +189,7 @@ class CartController extends Controller
                     ->where('id', $id)
                     ->get();
                 foreach ($prod as $product) {
-                    $commisionPerProduct = $product->price_shogun;
+                    $commisionPerProduct = $product->product_price - $product->price_hq -$product->price_shogun;
                     $commisionPerProduct = $commisionPerProduct * $details['quantity'];
                     $totalCommission = $totalCommission + $commisionPerProduct;
 

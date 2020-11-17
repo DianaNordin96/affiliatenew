@@ -214,6 +214,15 @@
                         </li>
 
                         <li class="nav-item">
+                            <a id="blastMessage" href="/parcel" class="nav-link">
+                                <i class="nav-icon fas fa-sms"></i>
+                                <p>
+                                    Parcel
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a id="support" href="/support" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>

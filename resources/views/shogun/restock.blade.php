@@ -63,7 +63,7 @@
                                                 <br />
                                                 <b>RM {{ $product->product_price }}</b>
                                                 <br />
-                                                <b style="color : blue">Commission : RM {{ $product->price_shogun }} /each</b>
+                                                <b style="color : blue">Commission : RM {{ $product->product_price - $product->price_shogun - $product->price_hq }} /each</b>
                                             </div>
                                         </div>
 

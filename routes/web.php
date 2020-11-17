@@ -43,6 +43,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::POST('bulksms-send-customer', 'Admin\BlastMessageController@bulkSMScustomer')->middleware('auth');
     Route::POST('tracking-create', 'Admin\TrackingController@createTracking')->middleware('auth');
     Route::GET('consignment-note', 'Admin\ConsignmentController@index')->middleware('auth');
+    Route::GET('parcel', 'Admin\ParcelController@index')->middleware('auth');
 //change-password
 //guidelines
 //support
