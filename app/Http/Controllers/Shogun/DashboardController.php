@@ -72,9 +72,53 @@ class DashboardController extends Controller
             ->select('amount')
             ->sum('amount');
 
+        //getAllDownline
+        $allDownline = array();
+        $statusLoop = true;
+        $id = Auth::user()->id;
+        $downlineList = array(2,10);
+        $statusForLoop = array();
+
+        // dd($allDownline);
+
+        //get downline 
+
+        while ($statusLoop) {
+            $statusForLoop = array();
+            foreach ($downlineList as $value) {
+
+                $userDownlineL1 = DB::table('users')
+                    ->where('downlineTo', $value)
+                    ->select('id')
+                    ->get();
+
+                foreach ($userDownlineL1 as $valueL2) {
+                    array_push($downlineList, $valueL2->id);
+                    array_push($allDownline, $valueL2->id);
+
+                    if ($valueL2->id != '') {
+                        array_push($statusForLoop, 'true');
+                    } else {
+                        array_push($statusForLoop, 'false');
+                    }
+                }
+                $key = array_search($value,$downlineList);
+                unset($downlineList[$key]);
+            }
+
+            if (in_array('true',$statusForLoop,true)){
+                $statusLoop =true;
+            }else{
+                $statusLoop =false;
+            }
+            
+        }
+        // dd($allDownline);
+
+
         return view('shogun/dashboardShogun')->with([
             'totalSale' => $totalSale,
-            'downline' => $countDownline,
+            'downline' => count($allDownline),
             'damio' => $damio,
             'merchant' => $merchant,
             'dropship' => $dropship,
