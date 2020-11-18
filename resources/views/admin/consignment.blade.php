@@ -28,6 +28,7 @@
 
                 <div class="row">
                     <div class="col-md-8">
+                       
                         <div class="card card-warning shadow">
                             <div class="card-header">
                                 <h3 class="card-title">Rate Checking</h3>
@@ -50,7 +51,7 @@
                                             <tr>
                                                 <td>1.</td>
                                                 <td>
-                                                    <img style="width:20%;height:50%" class="img-responsive" src="{{ $value->courier_logo }}" /><br>
+                                                    <img style="width:30%;height:50%" class="img-responsive" src="{{ $value->courier_logo }}" /><br>
                                                     {{$value->courier_name}} <br>
                                                 </td>
                                                 <td>{{$value->service_detail}}</td>
@@ -61,7 +62,7 @@
                                                     {{$value->pickup_date}}
                                                 </td>
                                                 <td>
-                                                <button class="btn btn-block bg-danger" href="{{$value->service_id}}">Choose</button>
+                                                <a class="btn btn-block bg-danger" href="add-to-cart-parcel/Shipping Price/{{$value->service_id}}/{{$value->shipment_price}}">Choose</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -138,7 +139,12 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                The body of the card
+                                @if (session('cart'))
+                                @foreach (session('parcelCart') as $details)
+                                    {{$details->desc}}<br/>
+                                    {{$details->price}}
+                                @endforeach
+                                @endif
                             </div>
                             <!-- /.card-body -->
                         </div>

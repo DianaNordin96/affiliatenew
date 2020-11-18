@@ -20,6 +20,10 @@ class ParcelController extends Controller
         ]);
     }
 
+    public function consignmentPage(){
+        return view('admin/consignmentCustDetails');
+    }
+
     public function checkRate($weight, $referenceNo)
     {
         $cust = DB::table('orders')
@@ -150,4 +154,45 @@ class ParcelController extends Controller
             'ratesList' => $result
         ]);
     }
+
+    public function addToCartParcel($desc, $serv_id, $price)
+    {
+        $parcelCart = session()->get('parcelCart');
+
+        // if cart is empty then this the first product
+        if (!$parcelCart) {
+            $parcelCart = [
+                'shipping' => [
+                    "desc" => $desc,
+                    "serv_id" => $serv_id,
+                    "price" => $price,
+                ]
+            ];
+            session()->put('parcelCart', $parcelCart);
+            // dd(session()->get('parcelCart'));
+            return redirect('/consignment-details');
+        } else {
+            $parcelCart['sms'] = [
+                "desc" => $desc,
+                "serv_id" => $serv_id,
+                "price" => $price,
+            ];
+            session()->put('parcelCart', $parcelCart);
+            return redirect('/consignment-details');
+        }
+    }
+
+    // public function update($description, $serv_id, $price)
+    // {
+    //     $cart = session()->get('cart');
+    //     $parcelCart = [
+    //         array(
+    //             "desc" => $description,
+    //             "serv_id" => $serv_id,
+    //             "price" => $price,
+    //         )
+    //     ];
+    //     session()->put('parcelCart', $parcelCart);
+    //     session()->flash('success', 'Cart updated successfully');
+    // }
 }
