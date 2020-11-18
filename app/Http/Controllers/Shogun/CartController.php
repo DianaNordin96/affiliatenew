@@ -88,7 +88,12 @@ class CartController extends Controller
         $validatedData = [
             'name' => 'required',
             'phone' => 'required',
-            'address1' => 'required'
+            'address1' => 'required',
+            'address2' => '',
+            'address3' => '',
+            'city' => 'required',
+            'state' => 'required',
+            'postcode' => 'required'
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
@@ -103,6 +108,9 @@ class CartController extends Controller
                 'address_two' => $data['address2'],
                 'address_three' => $data['address3'],
                 'phone' => $data['phone'],
+                'state' => $data['state'],
+                'city' => $data['city'],
+                'postcode' => $data['postcode'],
                 'user_id' => Auth::user()->id
             ]);
 

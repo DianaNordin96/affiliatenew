@@ -77,7 +77,7 @@
         });
     });
 
-    document.getElementById("blastMessage").className = "nav-link active";
+    document.getElementById("parcel").className = "nav-link active";
 
 </script>
 @endsection

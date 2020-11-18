@@ -1,4 +1,5 @@
 @inject('tracking', 'App\Http\Controllers\Admin\TrackingController')
+@inject('checkRate', 'App\Http\Controllers\Admin\ParcelController')
 @extends('layouts.admin')
 @section('headScript')
 @endsection
@@ -124,6 +125,32 @@
                         <!-- /.card-body -->
                     </div>
 
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Rate Checking</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{url('parcel-create')}}" method="POST">
+                                @csrf
+                                <div class="input-group input-group-sm">
+                                    <input type="text" name="refNo" value="{{$referenceNo}}" hidden/>
+                                    <input style="width:50%" type="text" id="weight" class="form-control"
+                                            name="weight" placeholder="Parcel Weight" />
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-info btn-flat">Check!</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
                 </div>
 
                 <div class="col-lg-7">
@@ -133,9 +160,8 @@
                             <a href="{{ url('/view-order') }}" class="btn btn-warning"><i
                                     class="fa fa-angle-left"></i>
                                 Go Back</a>
-
-                            <a href="{{ url('/consignment-note') }}" class="btn btn-warning">Create Consignment Note<i
-                                class="fa fa-angle-right"></i></a>
+                            
+                                
                             <br /><br />
 
 

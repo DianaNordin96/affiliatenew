@@ -44,6 +44,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::POST('tracking-create', 'Admin\TrackingController@createTracking')->middleware('auth');
     Route::GET('consignment-note', 'Admin\ConsignmentController@index')->middleware('auth');
     Route::GET('parcel', 'Admin\ParcelController@index')->middleware('auth');
+    Route::POST('parcel-create', 'Admin\ParcelController@create')->middleware('auth');
 //change-password
 //guidelines
 //support

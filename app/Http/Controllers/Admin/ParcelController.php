@@ -12,32 +12,39 @@ class ParcelController extends Controller
     public function index()
     {
         $balance = $this->checkBalance();
-        $checkRate = $this->checkRate();
+        // $checkRate = $this->checkRate();
         $expressOrder = $this->expressOrder();
         return view('admin/parcel')->with([
             'balance' => $balance,
-            'rate' => $checkRate
+            // 'rate' => $checkRate
         ]);
     }
 
-    public function checkRate()
+    public function checkRate($weight, $referenceNo)
     {
+        $cust = DB::table('orders')
+            ->join('customers', 'orders.customer_id', '=', 'customers.id')
+            ->where('orders.orders_id', $referenceNo)
+            ->select('customers.*')
+            ->get();
+        $custDetails = json_decode($cust, true);
+        // dd(json_decode($custDetails));
 
         $option = array(
             'api'    => 'EP-Ro51LDZu9',
             'bulk'    => array(
                 array(
-                    'pick_code'    => '48000',
-                    'pick_state'    => 'sgr',
+                    'pick_code'    => '53100',
+                    'pick_state'    => 'kul',
                     'pick_country'    => 'MY',
-                    'send_code'    => '11950',
-                    'send_state'    => 'png',
+                    'send_code'    => $custDetails[0]['postcode'],
+                    'send_state'    => $custDetails[0]['state'],
                     'send_country'    => 'MY',
-                    'weight'    => '5',
+                    'weight'    => $weight,
                     'width'    => '0',
                     'length'    => '0',
                     'height'    => '0',
-                    'date_coll'    => '2020-11-19',
+                    'date_coll'    => '',
                 )
             ),
             'exclude_fields'    => array(
@@ -47,11 +54,11 @@ class ParcelController extends Controller
 
         $url = "http://connect.easyparcel.my/?ac=EPRateCheckingBulk";
         $response = Http::asForm()->post($url, $option);
-        $result = json_decode($response, true);
+        $result = json_decode($response);
         // dd(json_decode($response));
-        $price = $result['result'][0]['rates']['0']['price'];
+        // $price = $result['result'][0]['rates']['0']['price'];
 
-        return $price;
+        return $result;
     }
 
     public function checkBalance()
@@ -61,7 +68,7 @@ class ParcelController extends Controller
             'api'    => 'EP-Ro51LDZu9',
         );
 
-        $url = "http://connect.easyparcel.my/?ac=EPCheckCreditBalance";
+        $url = "http://demo.connect.easyparcel.my/?ac=EPCheckCreditBalance";
         $response = Http::asForm()->post($url, $option);
         $result = json_decode($response, true);
         $balance = $result['result'];
@@ -129,5 +136,18 @@ class ParcelController extends Controller
 
         $json = json_decode($return);
         dd($json);
+    }
+
+    public function create(Request $req)
+    {
+
+        $ratesList = $this->checkRate($req->input('weight'), $req->input('refNo'));
+        // dd($ratesList);
+        $result = $ratesList->result[0]->rates;
+        // dd($result);
+        // dd($ratesList['result'][0]['rates']);
+        return view('admin/consignment')->with([
+            'ratesList' => $result
+        ]);
     }
 }
