@@ -30,9 +30,10 @@
 
             <div class="row">
                 <div class="col-lg-5">
+
                     <div class="card card-warning">
                         <div class="card-header">
-                            <h3 class="card-title">Customer Details</h3>
+                            <h3 class="card-title">Rate Checking</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -42,12 +43,73 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            <form action="{{url('parcel-create')}}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>State</label>
+                                            <select id="state" class="form-control select2bs4" name="state" >
+                                                <option value="jhr" >Johor</option>
+                                                <option value="kdh" >Kedah</option>
+                                                <option value="ktn" >Kelantan</option>
+                                                <option value="mlk" >Melaka</option>
+                                                <option value="nsn" >Negeri Sembilan </option>
+                                                <option value="phg" >Pahang</option>
+                                                <option value="prk" >Perak</option>
+                                                <option value="pls" >Perlis</option>
+                                                <option value="png" >Pulau Pinang</option>
+                                                <option value="sgr" >Selangor</option>
+                                                <option value="trg" >Terengganu</option>
+                                                <option value="kul" >Kuala Lumpur</option>
+                                                <option value="pjy" >Putra Jaya</option>
+                                                <option value="srw" >Sarawak</option>
+                                                <option value="sbh" >Sabah</option>
+                                                <option value="lbn" >Labuan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Postcode</label>
+                                            <input type="text" name="senderPostcode" maxlength="5" placeholder="Sender Postcode" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group input-group-sm">
+                                    <input type="text" name="refNo" value="{{$referenceNo}}" hidden/>
+                                    <input style="width:50%" type="text" id="weight" class="form-control"
+                                            name="weight" placeholder="Parcel Weight in KG" />
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-info btn-flat">Check!</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+                    <div class="card card-warning collapsed-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Customer Details</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
                             @foreach($customerDetails as $customer)
-                                <p><b>Name : {{ $customer->name }}</b></p>
-                                <p><b>Phone : {{ $customer->phone }}</b></p>
-                                <p><b>Address #1 : {{ $customer->address }}</b></p>
-                                <p><b>Address #2 : {{ $customer->address_two }}</b></p>
-                                <p><b>Address #3 : {{ $customer->address_three }}</b></p>
+                                <b>Name : {{ $customer->name }}</b><br/>
+                                <b>Phone : {{ $customer->phone }}</b><br/>
+                                <b>Address #1 : {{ $customer->address }}</b><br/>
+                                <b>Address #2 : {{ $customer->address_two }}</b><br/>
+                                <b>Address #3 : {{ $customer->address_three }}</b><br/>
+                                <b>City : {{ $customer->city }}</b><br/>
+                                <b>State : {{ $customer->state }}</b><br/>
+                                <b>Postcode : {{ $customer->postcode }}</b><br/>
                             @endforeach
                         </div>
                         <!-- /.card-body -->
@@ -125,32 +187,7 @@
                         <!-- /.card-body -->
                     </div>
 
-                    <div class="card card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">Rate Checking</h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{url('parcel-create')}}" method="POST">
-                                @csrf
-                                <div class="input-group input-group-sm">
-                                    <input type="text" name="refNo" value="{{$referenceNo}}" hidden/>
-                                    <input style="width:50%" type="text" id="weight" class="form-control"
-                                            name="weight" placeholder="Parcel Weight" />
-                                    <span class="input-group-append">
-                                        <button type="submit" class="btn btn-info btn-flat">Check!</button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
+                   
                 </div>
 
                 <div class="col-lg-7">
@@ -213,6 +250,16 @@
 <!-- Bootstrap Switch -->
 <script src="{{asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
 <script>
+    $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+    
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        });
+        
     $(function () {
         $("#example1").DataTable({
             "responsive": true,

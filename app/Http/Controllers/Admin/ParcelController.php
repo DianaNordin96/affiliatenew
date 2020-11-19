@@ -24,7 +24,7 @@ class ParcelController extends Controller
         return view('admin/consignmentCustDetails');
     }
 
-    public function checkRate($weight, $referenceNo)
+    public function checkRate($weight, $referenceNo, $senderPostcode,$state)
     {
         $cust = DB::table('orders')
             ->join('customers', 'orders.customer_id', '=', 'customers.id')
@@ -38,8 +38,8 @@ class ParcelController extends Controller
             'api'    => 'EP-Ro51LDZu9',
             'bulk'    => array(
                 array(
-                    'pick_code'    => '53100',
-                    'pick_state'    => 'kul',
+                    'pick_code'    => $senderPostcode,
+                    'pick_state'    => $state,
                     'pick_country'    => 'MY',
                     'send_code'    => $custDetails[0]['postcode'],
                     'send_state'    => $custDetails[0]['state'],
@@ -62,6 +62,7 @@ class ParcelController extends Controller
         // dd(json_decode($response));
         // $price = $result['result'][0]['rates']['0']['price'];
 
+        session()->put('rateList', $result);
         return $result;
     }
 
@@ -144,14 +145,21 @@ class ParcelController extends Controller
 
     public function create(Request $req)
     {
+        session()->put('senderDetails',([
+            'postcode' => $req->input('senderPostcode'),
+            'state' => $req->input('state')
+        ]));
+        session()->put('refNo', $req->input('refNo'));
+        session()->put('weight', $req->input('weight'));
 
-        $ratesList = $this->checkRate($req->input('weight'), $req->input('refNo'));
+        $ratesList = $this->checkRate($req->input('weight'), $req->input('refNo'),$req->input('senderPostcode'),$req->input('state'));
         // dd($ratesList);
         $result = $ratesList->result[0]->rates;
         // dd($result);
         // dd($ratesList['result'][0]['rates']);
         return view('admin/consignment')->with([
-            'ratesList' => $result
+            'ratesList' => $result,
+            'refNo' => $req->input('refNo')
         ]);
     }
 
@@ -162,7 +170,7 @@ class ParcelController extends Controller
         // if cart is empty then this the first product
         if (!$parcelCart) {
             $parcelCart = [
-                'shipping' => [
+                $desc => [
                     "desc" => $desc,
                     "serv_id" => $serv_id,
                     "price" => $price,
@@ -172,27 +180,38 @@ class ParcelController extends Controller
             // dd(session()->get('parcelCart'));
             return redirect('/consignment-details');
         } else {
-            $parcelCart['sms'] = [
-                "desc" => $desc,
-                "serv_id" => $serv_id,
-                "price" => $price,
-            ];
-            session()->put('parcelCart', $parcelCart);
-            return redirect('/consignment-details');
+
+            if ($parcelCart[$desc]){
+                toast('Shipping Cost already in cart', 'error');
+                return redirect('/consignment-details');
+            }else{
+                $desc = [
+                    "desc" => $desc,
+                    "serv_id" => $serv_id,
+                    "price" => $price,
+                ];
+                session()->put('parcelCart', $parcelCart);
+                return redirect('/consignment-details');
+            }
         }
     }
 
-    // public function update($description, $serv_id, $price)
-    // {
-    //     $cart = session()->get('cart');
-    //     $parcelCart = [
-    //         array(
-    //             "desc" => $description,
-    //             "serv_id" => $serv_id,
-    //             "price" => $price,
-    //         )
-    //     ];
-    //     session()->put('parcelCart', $parcelCart);
-    //     session()->flash('success', 'Cart updated successfully');
-    // }
+    public function updateParcelCart()
+    {
+        $parcelCart = session()->get('parcelCart');
+        $parcelCart['sms'] = [
+                "desc" => 'SMS Tracking',
+                "serv_id" => '',
+                "price" => number_format(0.20,2)
+        ];
+        session()->put('parcelCart', $parcelCart);
+        session()->flash('success', 'Added RM 0.20 to parcel bill.');
+    }
+
+    public function removeParcelCart(){
+        $parcelCart = session()->get('parcelCart');
+        unset($parcelCart['sms']);
+        session()->put('parcelCart', $parcelCart);
+        session()->flash('success', 'Remove RM 0.20');
+    }
 }

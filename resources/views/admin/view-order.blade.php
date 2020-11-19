@@ -71,7 +71,6 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
                                                     @foreach($orders_details_pending as $order)
                                                         <tr>
                                                             <td>{{ $order->orders_id }}</td>
@@ -112,16 +111,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
                                                     @foreach($orders_details_complete as $order)
                                                         <tr>
                                                             <td>{{ $order->orders_id }}</td>
                                                             <td>{{ $order->created_at }}</td>
-                                                            <td>RM {{ number_format($order->amount,2) }}
-                                                            </td>
+                                                            <td>RM {{ number_format($order->amount,2) }}</td>
                                                             <td>{{ $order->name }}</td>
-                                                            <td>{{ $tracking->getTrackingStatusSingle($order->tracking_number,$order->courier_code) }}
-                                                            </td>
+                                                            <td>{{ $tracking->getTrackingStatusSingle($order->tracking_number,$order->courier_code) }}</td>
                                                             <td>
                                                                 <a class="btn btn-warning"
                                                                     href="/view-order-item/{{ $order->orders_id }}"><i
@@ -175,6 +171,10 @@
             "responsive": true,
             "autoWidth": false,
         });
+        $("#example3").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -183,10 +183,6 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
-        });
-        $("#example3").DataTable({
-            "responsive": true,
-            "autoWidth": false,
         });
     });
 

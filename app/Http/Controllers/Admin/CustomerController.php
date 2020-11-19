@@ -15,4 +15,16 @@ class CustomerController extends Controller
             'customers' => $customers
         ]);
     }
+
+    public static function getCustomer($refNo){
+
+        $customer = DB::table('orders')
+        ->join('customers','orders.customer_id','=','customers.id')
+        ->where('orders.orders_id',$refNo)
+        ->select('customers.*')
+        ->get();
+
+        return $customer;
+
+    }
 }
