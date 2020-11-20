@@ -69,7 +69,8 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <select class="form-control select2bs4" style="width: 100%;" id="dropoff_point" name="dropoff_point" required>
-                                                <option value="" hidden disabled selected> Choose dropoff point </option>
+                                                <option value="" hidden selected> Choose dropoff point </option>
+                                                <option value=""> Pickup (Select this for pickup service) </option>
                                                 @foreach($rateList->result[0]->rates as $key=>$value)
                                                     @if($cart['shipping']['serv_id'] == $value->service_id)
                                                         @foreach($rateList->result[0]->rates[$key]->dropoff_point as $dropPoint)

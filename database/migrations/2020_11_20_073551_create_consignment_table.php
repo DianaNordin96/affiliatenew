@@ -26,6 +26,8 @@ class CreateConsignmentTable extends Migration
             $table->string('collect_date')->nullable();
             $table->string('messagenow')->nullable();
             $table->string('awb')->nullable();
+            $table->string('awb_id_link')->nullable();
+            $table->string('tracking_url')->nullable();
             $table->timestamps();
         });
     }
