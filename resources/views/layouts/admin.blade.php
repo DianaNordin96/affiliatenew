@@ -65,6 +65,21 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge badge-danger navbar-badge">
+
+                            @if (session('cart') != null)
+                                {{ count(session('cart')) }}
+
+                            @else
+                                0
+                            @endif
+
+                        </span>
+                    </a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}

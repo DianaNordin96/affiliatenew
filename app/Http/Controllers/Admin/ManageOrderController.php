@@ -34,9 +34,17 @@ class ManageOrderController extends Controller
 
     public function viewItem($id)
     {
-        session()->forget('parcelCart');
-        session()->forget('refNo');
-        session()->forget('weight');
+        if (session()->get('parcelCart')) {
+            session()->forget('parcelCart');
+        }
+
+        if (session()->get('parcelDetails')) {
+            session()->forget('parcelDetails');
+        }
+
+        if (session()->get('rateList')) {
+            session()->forget('rateList');
+        }
 
         $courierList = $this->getCourierList();
         // dd($courierList);

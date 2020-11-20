@@ -49,7 +49,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::GET('consignment-details', 'Admin\ParcelController@consignmentPage')->middleware('auth');
     Route::patch('update-cart', 'Admin\ParcelController@updateParcelCart')->middleware('auth');
     Route::patch('remove-cart', 'Admin\ParcelController@removeParcelCart')->middleware('auth');
-    
+    Route::POST('checkout-consignment', 'Admin\ParcelController@checkout')->middleware('auth');
+
 //change-password
 //guidelines
 //support
