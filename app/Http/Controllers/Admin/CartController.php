@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -55,9 +56,10 @@ class CartController extends Controller
             'bulk'    => $cartArray
         );
 
-        $url = "http://demo.connect.easyparcel.my/?ac=EPPayOrderBulk";
+        $url = "http://connect.easyparcel.my/?ac=EPPayOrderBulk";
         $response = Http::asForm()->post($url, $postparam);
         $result = json_decode($response,true);
+        // dd($result);
         //get number of orders
         $numOfOrder = $result['result'];
         $arrayPaymentStatus = array();
@@ -72,10 +74,20 @@ class CartController extends Controller
         if (!in_array('Fully Paid',$arrayPaymentStatus,TRUE)){
             toast('Insufficient Credit','error');
         }else{
+
+            foreach($result['result'][0]['parcel'] as $value){
+            DB::table('consignment')
+            ->where('parcel_number',$value['parcelno'])
+            ->update([
+                'awb' => $value['awb'],
+                'awb_id_link' => $value['awb_id_link'],
+                'tracking_url' => $value['tracking_url']
+            ]);
+            
             toast('Payment Successful','success'); 
             return redirect('/parcel');
             // $array = Excel::toArray(new UsersImport, 'users.xlsx');
-
+            }
         }
         return redirect('/parcel');
     }

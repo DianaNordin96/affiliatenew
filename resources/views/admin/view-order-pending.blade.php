@@ -75,6 +75,7 @@
                                                 <th hidden>Receiver Address*</th>
                                                 <th hidden>Receiver Postcode*</th>
                                                 <th hidden>Receiver City*</th>
+                                                <th hidden>Courier Company List</th>
                                                 <th hidden>Courier Company</th>
                                                 <th hidden>Alternative Courier Company</th>
                                                 <th hidden>Tracking SMS (RM0.20)</th>
@@ -122,8 +123,8 @@
                                                     <td hidden>{{ $order->postcode }}</td>
                                                     <td hidden>{{ $order->city }}</td>
                                                     <td hidden>
-                                                        <select name="courier">
-                                                            <option value="Pgeon Delivery">Pgeon Delivery</option>
+                                                        <select>
+                                                            <option value="Pgeon Delivery" selected>Pgeon Delivery</option>
                                                             <option value="Pgeon Prime">Pgeon Prime</option>
                                                             <option value="Skynet">Skynet</option>
                                                             <option value="Poslaju">Poslaju</option>
@@ -141,9 +142,10 @@
                                                             <option value="J&T Express">J&T Express</option>
                                                         </select>
                                                     </td>
+                                                    <td hidden></td>
                                                     <td hidden>
-                                                        <select name="alt_courier">
-                                                            <option value="Pgeon Delivery">Pgeon Delivery</option>
+                                                        <select>
+                                                            <option value="Pgeon Delivery" selected>Pgeon Delivery</option>
                                                             <option value="Pgeon Prime">Pgeon Prime</option>
                                                             <option value="Skynet">Skynet</option>
                                                             <option value="Poslaju">Poslaju</option>
@@ -162,14 +164,14 @@
                                                         </select>
                                                     </td>
                                                     <td hidden>
-                                                        <select name="sms">
-                                                            <option value="Yes">Yes</option>
+                                                        <select>
+                                                            <option value="Yes" selected>Yes</option>
                                                             <option value="No">No</option>
                                                         </select>
                                                     </td>
                                                     <td hidden>
-                                                        <select name="dropoff">
-                                                        <option value="Yes">Yes</option>
+                                                        <select>
+                                                        <option value="Yes" selected>Yes</option>
                                                         <option value="No">No</option>
                                                         </select>
                                                     </td>

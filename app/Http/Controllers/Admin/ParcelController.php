@@ -77,7 +77,7 @@ class ParcelController extends Controller
             'api'    => 'EP-Ro51LDZu9',
         );
 
-        $url = "http://demo.connect.easyparcel.my/?ac=EPCheckCreditBalance";
+        $url = "http://connect.easyparcel.my/?ac=EPCheckCreditBalance";
         $response = Http::asForm()->post($url, $option);
         $result = json_decode($response, true);
         $balance = $result['result'];
@@ -248,9 +248,6 @@ class ParcelController extends Controller
             $dropoff = '';
         }
 
-        $domain = "http://demo.connect.easyparcel.my/?ac=";
-
-        $action = "EPSubmitOrderBulk";
         $postparam = array(
             'api'    => 'EP-Ro51LDZu9',
             'bulk'    => array(
@@ -298,7 +295,7 @@ class ParcelController extends Controller
             ),
         );
 
-        $url = "http://demo.connect.easyparcel.my/?ac=EPSubmitOrderBulk";
+        $url = "http://connect.easyparcel.my/?ac=EPSubmitOrderBulk";
         $response = Http::asForm()->post($url, $postparam);
         $result = json_decode($response, true);
         // dd($result['result'][0]);
@@ -318,7 +315,6 @@ class ParcelController extends Controller
                     'created_at' => now()
                 ]);
         }
-
         return redirect('/parcel');
     }
 }

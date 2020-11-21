@@ -49,7 +49,7 @@
                                                 <th>Created At</th>
                                                 <th>Amount</th>
                                                 <th>Agent Name</th>
-                                                <th>Tracking Status</th>
+                                                {{-- <th>Tracking Status</th> --}}
                                                 <th>Item</th>
                                                 {{-- <th>Actions</th> --}}
                                             </tr>
@@ -61,7 +61,7 @@
                                                     <td>{{ $order->created_at }}</td>
                                                     <td>RM {{ number_format($order->amount,2) }}</td>
                                                     <td>{{ $order->name }}</td>
-                                                    <td>{{ $tracking->getTrackingStatusSingle($order->tracking_number,$order->courier_code) }}</td>
+                                                    {{-- <td>{{ $tracking->getTrackingStatusSingle($order->tracking_number,$order->courier_code) }}</td> --}}
                                                     <td>
                                                         <a class="btn btn-warning"
                                                             href="/view-order-item/{{ $order->orders_id }}"><i
