@@ -1,5 +1,5 @@
 @inject('tracking', 'App\Http\Controllers\Admin\TrackingController')
-@inject('checkRate', 'App\Http\Controllers\Admin\ParcelController')
+@inject('order', 'App\Http\Controllers\Admin\ManageOrderController')
 @extends('layouts.admin')
 @section('headScript')
 @endsection
@@ -30,7 +30,7 @@
 
             <div class="row">
                 <div class="col-lg-5">
-
+                    <?php $consignmentArray = $order->checkOrderExistConsignment($referenceNo); ?>
                     <div class="card card-warning">
                         <div class="card-header">
                             <h3 class="card-title">Rate Checking</h3>
@@ -43,6 +43,7 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            @if(count($consignmentArray) == 0)
                             <form action="{{url('parcel-create')}}" method="POST">
                                 @csrf
                                 <div class="row">
@@ -85,9 +86,13 @@
                                     </span>
                                 </div>
                             </form>
+                            @elseif(count($consignmentArray) != 0 && $consignmentArray[0]->awb == NULL)
+                            <h6 style="color: red">Parcel already recorded in <a href="/parcel">Unpaid Consignment</a></h6>
+                            @endif
                         </div>
                         <!-- /.card-body -->
                     </div>
+                   
 
                     <div class="card card-warning collapsed-card">
                         <div class="card-header">
@@ -128,59 +133,17 @@
                         </div>
                         <div class="card-body">
                             <?php
-                            foreach($customerDetails as $customer){
-                                $trackingNum = $customer->tracking_number;
-                                $courierCode = $customer->courier_code;
-                            }
+                            // dd($consignmentArray);
                             ?>
-
-                            @if($trackingNum == '')
-                                <h6 style="color: red">*only create tracking once orders has been packed</h6>
-                            <form action="{{ url('tracking-create') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label> Courier Name </label>
-                                            <select style="height: 40%" name="courier" class="form-control">
-                                                @foreach($courierList->data as $value)
-                                                    <option value="{{ $value->code }}">{{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label> Tracking Number </label>
-                                            <input type="text" class="form-control" name="tracking_number" required />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                   <div class="col-sm-6">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label> Order ID </label>
-                                        <input type="text" class="form-control" name="order_id" value="{{$referenceNo}}" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-block bg-danger">Create Tracking</button>
-                                    </div>
-                                </div>
-                            </form>
-                            @else
-                            <?php $trackingStatus = $tracking->getTrackingStatus($trackingNum,$courierCode); ?>
+                            @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL )
+                                <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray['awb']); ?>
                                 @foreach($trackingStatus->data as $value)
                                     Tracking Number : {{$value->tracking_number}}<br/>
                                     Parcel Status : {{$value->status}}<br/>
                                     Last Activity : {{$value->lastEvent}}
                                 @endforeach
+                            @else
+                            <h6 style="color: red">Order not yet packed.</h6>
                             @endif
                             
                         </div>
@@ -193,12 +156,11 @@
                 <div class="col-lg-7">
                     <div class="card">
                         <div class="card-body">
-                            <!-- <h3 class="card-title">View Employee</h3> -->
-                            <a href="{{ url('/view-order') }}" class="btn btn-warning"><i
+                            
+                            <a onclick="goBack()" class="btn btn-warning"><i
                                     class="fa fa-angle-left"></i>
                                 Go Back</a>
                             
-                                
                             <br /><br />
 
 
@@ -281,5 +243,10 @@
 
     document.getElementById("view-order").className = "nav-link active";
 
+    function goBack() {
+    window.history.back();
+    }
+
 </script>
+
 @endsection

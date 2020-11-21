@@ -20,13 +20,15 @@
     <link rel="stylesheet"
         href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
     <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
@@ -36,15 +38,21 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
 </head>
 
 
@@ -80,7 +88,8 @@
                             class="dropdown-item">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                            class="d-none">
                             @csrf
                         </form>
                     </div>
@@ -167,25 +176,49 @@
 
                         <li class="nav-item">
                             <a id='agents' href="/manageAgent" class="nav-link">
-                                <i class="nav-icon far fa-user"></i>
+                                <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Agents
                                 </p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a id='view-order' href="/view-order" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>
                                     Orders
                                 </p>
                             </a>
+                        </li> --}}
+
+                        <li id="menuOrders" class="nav-item has-treeview">
+                            <a id="menuOrder" href="#" class="nav-link">
+                                <i class="nav-icon fas fa-list-ol"></i>
+                                <p>
+                                    Orders
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a id="pendingOrder" href="/view-order/pending" class="nav-link">
+                                        <i class="fas fa-clipboard-list nav-icon"></i>
+                                        <p>Pending Orders</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="completedOrder" href="/view-order/completed" class="nav-link">
+                                        <i class="fas fa-clipboard-list nav-icon"></i>
+                                        <p>Completed Orders</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="nav-item">
                             <a id='customers' href="/customers" class="nav-link">
-                                <i class="nav-icon fab fa-product-hunt"></i>
+                                <i class="nav-icon fas fa-user-friends"></i>
                                 <p>
                                     Customers
                                 </p>
@@ -210,13 +243,36 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a id="parcel" href="/parcel" class="nav-link">
                                 <i class="nav-icon fas fa-box-open"></i>
                                 <p>
                                     Parcel
                                 </p>
                             </a>
+                        </li> --}}
+                        <li id="menuParcels" class="nav-item has-treeview">
+                            <a id="menuParcel" href="#" class="nav-link">
+                                <i class="nav-icon fas fa-box-open"></i>
+                                <p>
+                                    Parcel
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a id="parcel" href="/parcel" class="nav-link">
+                                        <i class="fas fa-money-check-alt nav-icon"></i>
+                                        <p>Parcel Payment</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="bulk-parcel" href="/bulk-parcel" class="nav-link">
+                                        <i class="fas fa-boxes nav-icon"></i>
+                                        <p>Bulk Parcel</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="nav-item">
@@ -285,7 +341,8 @@
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
+    <script
+        src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
     </script>
     <!-- Select2 -->
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
@@ -312,6 +369,8 @@
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Toastr -->
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="{{ asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
 
     {{-- @if (Session::has('alert.config'))
         <script>
@@ -321,8 +380,8 @@
 
         </script>
 
-    @endif--}}
-    @include('sweetalert::alert')
+@endif--}}
+@include('sweetalert::alert')
 
 </body>
 

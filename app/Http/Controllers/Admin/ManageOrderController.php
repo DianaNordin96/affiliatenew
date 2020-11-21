@@ -10,26 +10,33 @@ use Illuminate\Support\Facades\Http;
 
 class ManageOrderController extends Controller
 {
-    public function index()
+    public function index($status)
     {
-        $order_details_pending = DB::table('orders')
-            ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('users.belongsToAdmin', Auth::user()->id)
-            ->where('orders.tracking_number', '=', NULL)
-            ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
-            ->get();
+        if ($status == 'pending') {
+            $order_details_pending = DB::table('orders')
+                ->join('users', 'orders.user_id', '=', 'users.id')
+                ->join('customers','orders.customer_id','=','customers.id')
+                ->where('users.belongsToAdmin', Auth::user()->id)
+                ->where('orders.tracking_number', '=', NULL)
+                ->select('customers.name AS cust_name','customers.*','orders.orders_id', 'orders.user_id','orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->get();
 
-        $order_details_complete = DB::table('orders')
-            ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('users.belongsToAdmin', Auth::user()->id)
-            ->where('orders.tracking_number', '<>', NULL)
-            ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
-            ->get();
+            return view('admin/view-order-pending', [
+                'orders_details_pending' => $order_details_pending,
+            ]);
 
-        return view('admin/view-order', [
-            'orders_details_pending' => $order_details_pending,
-            'orders_details_complete' => $order_details_complete,
-        ]);
+        } else if ($status == 'completed') {
+            $order_details_complete = DB::table('orders')
+                ->join('users', 'orders.user_id', '=', 'users.id')
+                ->where('users.belongsToAdmin', Auth::user()->id)
+                ->where('orders.tracking_number', '<>', NULL)
+                ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->get();
+
+            return view('admin/view-order-completed', [
+                'orders_details_complete' => $order_details_complete,
+            ]);
+        }
     }
 
     public function viewItem($id)
@@ -78,5 +85,14 @@ class ManageOrderController extends Controller
         $result = json_decode($response);
         // dd($response);
         return $result;
+    }
+
+    public function checkOrderExistConsignment($refNo)
+    {
+        $parcel = DB::table('consignment')
+            ->where('refNo', $refNo)
+            ->get();
+
+        return $parcel;
     }
 }

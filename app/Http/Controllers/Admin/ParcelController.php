@@ -314,7 +314,8 @@ class ParcelController extends Controller
                     'status' => $value['status'],
                     'remarks' => $value['remarks'],
                     'courier' => $value['courier'],
-                    'collect_date' => $value['collect_date']
+                    'collect_date' => $value['collect_date'],
+                    'created_at' => now()
                 ]);
         }
 

@@ -31,7 +31,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::POST('manageProduct/create', 'Admin\ManageProductController@create')->name('manageProduct.create')->middleware('auth');
     Route::get('manageProduct/delete/{id}', 'Admin\ManageProductController@delete')->name('manageProduct.delete')->middleware('auth');
     Route::POST('manageProduct/update', 'Admin\ManageProductController@update')->name('manageProduct.update')->middleware('auth');
-    Route::get('view-order', 'Admin\ManageOrderController@index')->name('view-order')->middleware('auth');
+    Route::get('view-order/{page}', 'Admin\ManageOrderController@index')->name('view-order')->middleware('auth');
     Route::get('view-order-item/{id}', 'Admin\ManageOrderController@viewItem')->middleware('auth');
     Route::get('customers', 'Admin\CustomerController@index')->middleware('auth');
     Route::get('profile-admin', 'Admin\ProfileController@index')->middleware('auth');
@@ -53,6 +53,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::GET('add-cart-admin/{refNo}/{price}', 'Admin\CartController@addToCart')->middleware('auth');
     Route::GET('remove-cart-admin/{refNo}', 'Admin\CartController@removeFromCart')->middleware('auth');
     Route::GET('checkout-admin', 'Admin\CartController@checkout')->middleware('auth');
+    Route::GET('bulk-parcel', 'Admin\BulkParcelController@index')->middleware('auth');
+    Route::POST('bulk-parcel-import', 'Admin\BulkParcelController@getExcelToArray')->middleware('auth');
 //change-password
 //guidelines
 //support

@@ -74,6 +74,8 @@ class CartController extends Controller
         }else{
             toast('Payment Successful','success'); 
             return redirect('/parcel');
+            // $array = Excel::toArray(new UsersImport, 'users.xlsx');
+
         }
         return redirect('/parcel');
     }

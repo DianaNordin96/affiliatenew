@@ -178,6 +178,8 @@
     });
 
     document.getElementById("parcel").className = "nav-link active";
-
+    document.getElementById("menuParcel").className = "nav-link active";
+    document.getElementById("menuParcels").className = "nav-item menu-open has-treeview";
+    
 </script>
 @endsection

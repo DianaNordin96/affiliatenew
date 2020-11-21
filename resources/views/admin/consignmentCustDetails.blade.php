@@ -345,7 +345,7 @@
                             </div>
                             <!-- /.card -->
                         </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title"><b>Payment Details</b></h3>
@@ -384,7 +384,7 @@
                                         <strong>
                                             <h4 style="color:red;float:left">Total : RM {{ number_format($total, 2) }}</h4>&nbsp;
                                                 @if(session()->get('parcelCart') != null)
-                                                <button style="float:right" type="submit" onclick="checkout()" id="checkout" class="btn btn-info"> Checkout <i
+                                                <button style="float:right" type="submit" onclick="checkout()" id="checkout" class="btn btn-info"> Add to Unpaid Consignment  <i
                                                     class="fa fa-angle-right"></i></button>
                                                 @endif
                                             
