@@ -93,7 +93,8 @@ class CartController extends Controller
             'address3' => '',
             'city' => 'required',
             'state' => 'required',
-            'postcode' => 'required'
+            'postcode' => 'required',
+            'email' => ''
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
@@ -111,7 +112,8 @@ class CartController extends Controller
                 'state' => $data['state'],
                 'city' => $data['city'],
                 'postcode' => $data['postcode'],
-                'user_id' => Auth::user()->id
+                'user_id' => Auth::user()->id,
+                'email' => $data['email']
             ]);
 
             date_default_timezone_set("Asia/Kuala_Lumpur");

@@ -137,6 +137,17 @@
 
                                             <div class="row">
                                                 <div class="col-12">
+                                                    <!-- text input -->
+                                                    <div class="form-group">
+                                                        <label> Email </label>
+                                                        <input type="text" id="email" class="form-control" name="email"
+                                                            placeholder="Email" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
                                                     <div class="form-group">
                                                         <label>Address #1</label>
                                                         <input type="text" id="address1" class="form-control"

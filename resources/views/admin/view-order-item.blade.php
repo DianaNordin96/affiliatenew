@@ -88,6 +88,8 @@
                             </form>
                             @elseif(count($consignmentArray) != 0 && $consignmentArray[0]->awb == NULL)
                             <h6 style="color: red">Parcel already recorded in <a href="/parcel">Unpaid Consignment</a></h6>
+                            @elseif(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL)
+                            <h6 style="color: red">Parcel has been posted.</a></h6>
                             @endif
                         </div>
                         <!-- /.card-body -->
@@ -136,11 +138,11 @@
                             // dd($consignmentArray);
                             ?>
                             @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL )
-                                <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray['awb']); ?>
-                                @foreach($trackingStatus->data as $value)
-                                    Tracking Number : {{$value->tracking_number}}<br/>
-                                    Parcel Status : {{$value->status}}<br/>
-                                    Last Activity : {{$value->lastEvent}}
+                                <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray[0]->awb); 
+                            
+                                ?>
+                                @foreach($trackingStatus->result as $value)
+                                    Latest Status : {{$value->latest_status}}<br/>
                                 @endforeach
                             @else
                             <h6 style="color: red">Order not yet packed.</h6>

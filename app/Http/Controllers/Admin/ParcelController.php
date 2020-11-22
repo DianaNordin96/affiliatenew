@@ -15,7 +15,7 @@ class ParcelController extends Controller
         $parcelList = DB::table('consignment')
             ->join('orders', 'consignment.refNo', '=', 'orders.orders_id')
             ->join('customers', 'orders.customer_id', '=', 'customers.id')
-            ->where('messagenow', '=', null)
+            ->where('awb', '=', null)
             ->get();
         // dd($parcelList);
         return view('admin/parcel')->with([
@@ -24,6 +24,15 @@ class ParcelController extends Controller
         ]);
     }
 
+    public function paidParcel(){
+        $parcelList = DB::table('consignment')
+            ->where('awb', '<>', null)
+            ->get();
+        // dd($parcelList);
+        return view('admin/paidParcel')->with([
+            'consignment' => $parcelList
+        ]);
+    }
     public function consignmentPage()
     {
         return view('admin/consignmentCustDetails');

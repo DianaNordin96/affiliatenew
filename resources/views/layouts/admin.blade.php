@@ -272,6 +272,12 @@
                                         <p>Bulk Parcel</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a id="paid-parcel" href="/paid-parcel" class="nav-link">
+                                        <i class="fas fa-receipt nav-icon"></i>
+                                        <p>Paid Parcel</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
