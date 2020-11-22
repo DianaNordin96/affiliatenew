@@ -44,6 +44,7 @@ class CartController extends Controller
 
     public function checkout()
     {
+        date_default_timezone_set('Asia/Kuala_Lumpur');
         $cart = session()->get('cart');
         $cartArray = array();
         $creditBalance = ParcelController::checkBalance();
@@ -82,7 +83,8 @@ class CartController extends Controller
                     ->update([
                         'awb' => $value['parcel'][0]['awb'],
                         'awb_id_link' => $value['parcel'][0]['awb_id_link'],
-                        'tracking_url' => $value['parcel'][0]['tracking_url']
+                        'tracking_url' => $value['parcel'][0]['tracking_url'],
+                        'updated_at' => date("Y-m-d H:i:s")
                     ]);
             }
 

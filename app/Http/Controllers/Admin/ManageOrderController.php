@@ -15,21 +15,22 @@ class ManageOrderController extends Controller
         if ($status == 'pending') {
             $order_details_pending = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
-                ->join('customers','orders.customer_id','=','customers.id')
+                ->join('customers', 'orders.customer_id', '=', 'customers.id')
+                ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
                 ->where('users.belongsToAdmin', Auth::user()->id)
-                ->where('orders.tracking_number', '=', NULL)
-                ->select('customers.name AS cust_name','customers.*','orders.orders_id', 'orders.user_id','orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->where('awb', '=', NULL)
+                ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
                 ->get();
 
             return view('admin/view-order-pending', [
                 'orders_details_pending' => $order_details_pending,
             ]);
-
         } else if ($status == 'completed') {
             $order_details_complete = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->where('users.belongsToAdmin', Auth::user()->id)
-                ->where('orders.tracking_number', '<>', NULL)
+                ->where('awb', '<>', NULL)
+                ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
                 ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
                 ->get();
 
@@ -94,5 +95,40 @@ class ManageOrderController extends Controller
             ->get();
 
         return $parcel;
+    }
+
+    public function updateOrderPage()
+    {
+        $getAllPendingOrders = DB::table('orders')
+            ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('users.belongsToAdmin', Auth::user()->id)
+            ->where('awb', '=', NULL)
+            ->get();
+
+        // dd($getAllPendingOrders);
+        return view('admin/updateOrder')->with([
+            'pendingOrders' => $getAllPendingOrders
+        ]);
+    }
+
+    public function updateOrder(Request $req)
+    {
+        date_default_timezone_set('Asia/Kuala_Lumpur');
+
+        DB::table('consignment')
+        ->insert([
+            'created_at' =>  date("Y-m-d H:i:s"),
+            'updated_at' =>  date("Y-m-d H:i:s"),
+            'price' => $req->input('price'),
+            'awb' => $req->input('trackingNo'),
+            'refNo' => $req->input('refNo'),
+            'courier' => $req->input('courier'),
+            'order_number' => $req->input('orderno'),
+            'status' => 'Success'
+        ]);
+
+        toast('Order has been updated.','success');
+        return redirect('update-order');
     }
 }

@@ -26,7 +26,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
+                <div style="margin: auto;" class="col-lg-8">
                     <div class="card card-warning">
                         <div class="card-header">
                             <h3 class="card-title">Update Bulk Orders Records</h3>
@@ -46,8 +46,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a
-                                        href="https://easyparcel.com/application/source/Malaysia/Template/EasyParcel_Bulk_Template[MY_9.2].xls">
+                                    <a href="https://easyparcel.com/application/source/Malaysia/Template/EasyParcel_Bulk_Template[MY_9.2].xls">
                                         <button class="btn btn-block bg-warning">Download Bulk Template</button>
                                     </a>
                                 </div>
@@ -58,8 +57,15 @@
                             </div>
 <br/>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                  <h3>Steps for Bulk Parcels</h3>
+                                 <p><b>1. </b> Download the official template by clicking on 'Download Bulk Template'.</p>
+                                 <p><b>2. </b> Export pending orders from <a target="_blank" href="view-order/pending">Pending Orders</a> by clicking on 'Export Order List to Excel.</p>
+                                 <p><b>3. </b> Open the Order List that were downloaded in Step 2.</p>
+                                 <p><b>4. </b> Copy all the row details and paste in it the downloaded template from Step 1.</p>
+                                 <p><b>5. </b> Fill in all the details and make sure do not leave any empty fields especially on (*) fields.</p>
+                                 <p><b>6. </b> After complete with all details, upload the Excel file (Excel file with completed details) <a target="_blank" href="https://easyparcel.com/my/en/bulk/">here</a>. </p>
+                                 <p><b>7. </b> Final step, after complete all of these steps and parcels has been paid, make sure to update the all the orders' parcel details <a href="/update-order">here</a>.</p>
                                 </div>
                             </div>
                             

@@ -213,6 +213,12 @@
                                         <p>Completed Orders</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a id="updateOrder" href="/update-order" class="nav-link">
+                                        <i class="fas fa-clipboard-list nav-icon"></i>
+                                        <p>Update Order<br/>(For Bulk Parcels)</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
@@ -278,6 +284,7 @@
                                         <p>Paid Parcel</p>
                                     </a>
                                 </li>
+                                
                             </ul>
                         </li>
 

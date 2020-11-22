@@ -56,6 +56,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::GET('bulk-parcel', 'Admin\BulkParcelController@index')->middleware('auth');
     Route::GET('paid-parcel', 'Admin\ParcelController@paidParcel')->middleware('auth');
     Route::POST('bulk-parcel-import', 'Admin\BulkParcelController@getExcelToArray')->middleware('auth');
+    Route::GET('update-order', 'Admin\ManageOrderController@updateOrderPage')->middleware('auth');
+    Route::POST('update-order-awb', 'Admin\ManageOrderController@updateOrder')->middleware('auth');
 //change-password
 //guidelines
 //support

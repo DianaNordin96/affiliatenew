@@ -38,16 +38,17 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <button class="btn btn-warning" onclick="exportTableToExcelPending()">Export Order
+                                    {{-- <button class="btn btn-warning" onclick="exportTableToExcelPending()">Export Order
                                         List to
-                                        Excel</button>
+                                        Excel</button> --}}
                                 <br /><br />
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Created At</th>
+                                                <th>Paid At</th>
                                                 <th>Ref No</th>
                                                 <th>AirwayBill No</th>
+                                                <th>Courier</th>
                                                 <th>AirwayBill Consignment Note</th>
                                                 <th>Tracking Url</th>
                                             </tr>
@@ -59,12 +60,21 @@
                                             @foreach($consignment as $order)
                                                 <tr>
                                                     <td>
-                                                        <?php $date=date_create($order->created_at); ?> 
+                                                        <?php $date=date_create($order->updated_at); ?> 
                                                         {{date_format($date,"d/m/Y h:i A")}}</td>
                                                     <td><a href="/view-order-item/{{$order->refNo}}">{{$order->refNo}}</a></td>
                                                     <td>{{$order->awb}}</td>
-                                                    <td><a target="_blank" href="{{$order->awb_id_link}}" download>Consignment note</a></td>
-                                                    <td><a target="_blank" href="{{$order->tracking_url}}">Click here to track parcel</a></td>
+                                                    <td>{{$order->courier}}</td>
+                                                    <td>
+                                                        @if($order->awb_id_link == '')
+                                                        <a target="_blank" href="{{$order->awb_id_link}}" download>Consignment note</a>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($order->tracking_url == '')
+                                                        <a target="_blank" href="{{$order->tracking_url}}">Click here to track parcel</a>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                                 <?php $no++;?>
                                             @endforeach
