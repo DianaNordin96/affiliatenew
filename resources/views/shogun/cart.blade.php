@@ -33,7 +33,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <!-- <h3 class="card-title">View Employee</h3> -->
-                                    <a href="{{ url('') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+                                    <a href="{{ url('product-shogun') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
                                         Continue Shopping</a><br /><br />
                                     <div style="text-align:center">
                                         <h3>Shopping Cart</h3>
@@ -65,7 +65,7 @@
                                                         <td>
                                                             <br />
                                                             <img style="display: block;margin-left: auto;margin-right: auto;"
-                                                                src="/imageUploaded/{{ $details['photo'] }}" width="80"
+                                                                src="../imageUploaded/products/{{ $details['photo'] }}" width="80"
                                                                 height="80" class="img-responsive" />
                                                             <br />
                                                             <div style="text-align: center">
@@ -141,7 +141,7 @@
                                                     <div class="form-group">
                                                         <label> Email </label>
                                                         <input type="text" id="email" class="form-control" name="email"
-                                                            placeholder="Email" required />
+                                                            placeholder="Email" />
                                                     </div>
                                                 </div>
                                             </div>

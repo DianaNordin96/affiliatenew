@@ -326,4 +326,23 @@ class ParcelController extends Controller
         }
         return redirect('/parcel');
     }
+
+    public function removeConsignment(Request $request){
+        $arrayConsignment = $request->orderNoList;
+
+        // dd($arrayConsignment);
+        
+        foreach($arrayConsignment as $value){
+            DB::table('consignment')
+            ->where('order_number',$value)
+            ->delete();
+
+            //check if in cart
+            $cart = session()->get('cart');
+            unset($cart[$value]);
+            session()->put('cart', $cart);
+        }
+
+        session()->flash('success', 'List updated.');
+    }
 }

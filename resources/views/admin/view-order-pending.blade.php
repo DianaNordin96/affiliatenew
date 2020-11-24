@@ -1,4 +1,5 @@
 @inject('tracking', 'App\Http\Controllers\Admin\TrackingController')
+@inject('orders', 'App\Http\Controllers\Admin\ManageOrderController')
 @extends('layouts.admin')
 @section('content')
 
@@ -49,7 +50,8 @@
                                                 <th class="noExport">Created At</th>
                                                 <th class="noExport">Amount</th>
                                                 <th class="noExport">Agent Name</th>
-                                                <th class="noExport">Item</th>
+                                                <th class="noExport"></th>
+                                                <th class="noExport"></th>
                                                 {{-- <th>Actions</th> --}}
 
                                                 {{-- table for export --}}
@@ -96,10 +98,16 @@
                                                     <td class="noExport">{{ $order->name }}</td>
                                                     <td class="noExport">
                                                         <a class="btn btn-warning"
-                                                            href="/view-order-item/{{ $order->orders_id }}"><i
-                                                                class="far fa-eye"></i></a> &nbsp;
+                                                            href="/view-order-item/{{ $order->orders_id }}"></i>View Order</a> &nbsp;
                                                     </td>
-
+                                                    <td class="noExport">
+                                                        <?php $consignmentArray = $orders->checkOrderExistConsignment($order->orders_id); ?>
+                                                        @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb == NULL)
+                                                            <h6 style="color: red">Parcel already recorded in <a href="/parcel">Unpaid Consignment</a></h6>
+                                                        @else
+                                                            <h6 style="color: red">No consignment created yet</a></h6>
+                                                        @endif
+                                                    </td>
                                                     <td hidden>{{ $no }}</td>
                                                     <td hidden></td>
                                                     <td hidden></td>

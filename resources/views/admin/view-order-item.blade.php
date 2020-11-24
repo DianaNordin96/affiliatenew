@@ -88,6 +88,7 @@
                             </form>
                             @elseif(count($consignmentArray) != 0 && $consignmentArray[0]->awb == NULL)
                             <h6 style="color: red">Parcel already recorded in <a href="/parcel">Unpaid Consignment</a></h6>
+                            <h6 style="color: red">Delete the existed consignment created <a target="_blank" href="/parcel">here</a> to create new consignment for this order.</h6>
                             @elseif(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL)
                             <h6 style="color: red">Parcel has been posted.</a></h6>
                             @endif
@@ -181,7 +182,7 @@
                                         <tr>
                                             <td>
                                                 <div class="col-sm-3 hidden-xs"><img
-                                                        src="/imageUploaded/{{ $product->product_image }}" width="100"
+                                                        src="../imageUploaded/products/{{ $product->product_image }}" width="100"
                                                         height="100" class="img-responsive" /></div>
                                             </td>
                                             <td>{{ $product->product_name }}</td>

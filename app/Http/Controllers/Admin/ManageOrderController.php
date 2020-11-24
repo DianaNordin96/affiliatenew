@@ -88,7 +88,7 @@ class ManageOrderController extends Controller
         return $result;
     }
 
-    public function checkOrderExistConsignment($refNo)
+    public static function checkOrderExistConsignment($refNo)
     {
         $parcel = DB::table('consignment')
             ->where('refNo', $refNo)

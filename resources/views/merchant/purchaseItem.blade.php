@@ -75,7 +75,7 @@
                                         @foreach ($products as $product)
                                             <tr>
                                                 <td><div class="col-sm-3 hidden-xs"><img
-                                                    src="/imageUploaded/{{ $product->product_image }}" width="100"
+                                                    src="../imageUploaded/products/{{ $product->product_image }}" width="100"
                                                     height="100" class="img-responsive" /></div></td>
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>{{ $product->price_merchant }}</td>

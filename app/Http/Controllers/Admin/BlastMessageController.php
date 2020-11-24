@@ -11,6 +11,11 @@ class BlastMessageController extends Controller
 {
     public function index()
     {
+        $getAllAgents = DB::table('users')
+        ->get();
+
+        $getAllCustomers = DB::table('customers')
+        ->get();
 
         $option = array(
             'apiKey' => '9e8611e27e899012d28f215859462bdf',
@@ -26,22 +31,29 @@ class BlastMessageController extends Controller
         //rateChecking
         
         return view('admin/blastmessage')->with([
-            'creditBalance' => $creditBalance
+            'creditBalance' => $creditBalance,
+            'customerList' => $getAllCustomers,
+            'agentList' => $getAllAgents
         ]);
     }
 
     public function bulkSMSagent(Request $req)
     {
-        $agentPhoneList = DB::table('users')
-        ->select('phone')
-        ->get();
+        if($req->input('agents') == ''){
+            toast('Please choose agent from list.', 'error');
+            return redirect('blastMessage');
 
-        $phoneList= array();
-        foreach($agentPhoneList as $value){
-            array_push($phoneList,$value->phone);
         }
+        // $agentPhoneList = DB::table('users')
+        // ->select('phone')
+        // ->get();
 
-        $phoneList = implode(';',$phoneList);
+        // $phoneList= array();
+        // foreach($agentPhoneList as $value){
+        //     array_push($phoneList,$value->phone);
+        // }
+
+        $phoneList = implode(';',$req->input('agents'));
         $todayDate = date("Y-m-d h:i:sa");
 
         $option = array(
@@ -60,7 +72,7 @@ class BlastMessageController extends Controller
 
         switch ($msgCode) {
             case 'E00001':
-                toast('Completed successfully.', 'success');
+                toast('Message has been sent.', 'success');
                 break;
             case 'E00242':
                 toast('Invalid recipient(s).', 'error');
@@ -82,15 +94,21 @@ class BlastMessageController extends Controller
 
     public function bulkSMScustomer(Request $req)
     {
-        $customerPhoneList = DB::table('customers')
-        ->select('phone')
-        ->get();
-        $phoneList= array();
-        foreach($customerPhoneList as $value){
-            array_push($phoneList,$value->phone);
-        }
+        if($req->input('customers') == ''){
+            toast('Please choose customer from list.', 'error');
+            return redirect('blastMessage');
 
-        $phoneList = implode(';',$phoneList);
+        }
+        
+        // $customerPhoneList = DB::table('customers')
+        // ->select('phone')
+        // ->get();
+        // $phoneList= array();
+        // foreach($customerPhoneList as $value){
+        //     array_push($phoneList,$value->phone);
+        // }
+
+        $phoneList = implode(';',$req->input('customers'));
         $todayDate = date("Y-m-d h:i:sa");
 
         $option = array(
@@ -109,7 +127,7 @@ class BlastMessageController extends Controller
 
         switch ($msgCode) {
             case 'E00001':
-                toast('Completed successfully.', 'success');
+                toast('Message has been sent.', 'success');
                 break;
             case 'E00242':
                 toast('Invalid recipient(s).', 'error');
@@ -131,6 +149,7 @@ class BlastMessageController extends Controller
 
     public function singleSMS(Request $req)
     {
+       
         $todayDate = date("Y-m-d h:i:sa");
         $option = array(
             'apiKey' => '9e8611e27e899012d28f215859462bdf',
@@ -148,7 +167,7 @@ class BlastMessageController extends Controller
 
         switch ($msgCode) {
             case 'E00001':
-                toast('Completed successfully.', 'success');
+                toast('Message has been sent.', 'success');
                 break;
             case 'E00242':
                 toast('Invalid recipient(s).', 'error');

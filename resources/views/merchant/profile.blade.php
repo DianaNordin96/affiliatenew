@@ -98,7 +98,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <input type="text"
-                                    value="http://127.0.0.1:8000/registerDownline/{{ Auth::user()->id }}" id="link"
+                                    value="http://tryitgo.com/registerDownline/{{ Auth::user()->id }}" id="link"
                                     readonly>
                                 <button class="btn btn-primary" onclick="myFunction()">Copy text</button>
                             </div>

@@ -27,38 +27,15 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="card card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">Credit Balance</h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i>
-                                </button>
-                            </div>
-                            <!-- /.card-tools -->
-                        </div>
-                        <!-- /.card-header -->
-                        <div style="text-align: center" class="card-body">
-                            <h3>CR {{ $creditBalance }} </h3>
-
-                            <a target="_blank" href=" https://www.sms123.net/login.php"
-                                class="btn btn-block bg-danger">Top Up</a>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                </div>
-            </div>
-            <div class="row">
+           
                 <div class="col-lg-6">
-                    <div class="card card-warning">
+                    <div class="card card-warning collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">Single SMS</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i>
+                                        class="fas fa-plus"></i>
                                 </button>
                             </div>
                             <!-- /.card-tools -->
@@ -95,16 +72,14 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                </div>
-            
-                <div class="col-lg-3">
-                    <div class="card card-warning">
+                
+                    <div class="card card-warning collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">Bulk SMS to all agent</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i>
+                                        class="fas fa-plus"></i>
                                 </button>
                             </div>
                             <!-- /.card-tools -->
@@ -114,6 +89,18 @@
                             <form action="{{ url('bulksms-send-agent') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Agent's List</label>
+                                            <select class="duallistbox" name="agents[]" multiple="multiple" required>
+                                                @foreach($agentList as $value)
+                                                    <option value="{{$value->phone}}">{{$value->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <!-- text input -->
@@ -131,16 +118,14 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="card card-warning">
+                
+                    <div class="card card-warning collapsed-card">
                         <div class="card-header">
                             <h3 class="card-title">Bulk SMS to all customers</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i>
+                                        class="fas fa-plus"></i>
                                 </button>
                             </div>
                             <!-- /.card-tools -->
@@ -151,19 +136,52 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <!-- text input -->
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label> Message </label>
-                                            <textarea class="form-control" name="messageCustomer" rows="3"
-                                                placeholder="Message" required></textarea>
+                                            <label>Customer's List</label>
+                                            <select class="duallistbox" name="customers[]" multiple="multiple" required>
+                                                @foreach($customerList as $value)
+                                                    <option value="{{$value->phone}}">{{$value->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- /.form-group -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                         <textarea class="form-control" name="messageCustomer" rows="3" placeholder="Message" required></textarea>
+                                    </div>
+                                </div>
+
+                                <br/>
+
                                 <div class="row">
                                     <button type="submit" class="btn btn-block bg-danger">Send Message</button>
                                 </div>
                             </form>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Credit Balance</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <div style="text-align: center" class="card-body">
+                            <h3>CR {{ $creditBalance }} </h3>
+
+                            <a target="_blank" href=" https://www.sms123.net/login.php"
+                                class="btn btn-block bg-danger">Top Up</a>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -180,6 +198,9 @@
 
 @section('script')
 <script>
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
+
     $(function () {
         $("#example1").DataTable({
             "responsive": true,

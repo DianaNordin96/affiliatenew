@@ -29,8 +29,8 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">Unpaid Created Consignment</h3>
+                        {{-- <div class="card-header">
+                            
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -38,15 +38,16 @@
                                 </button>
                             </div>
                             <!-- /.card-tools -->
-                        </div>
+                        </div> --}}
                         <div class="card-body">
-                            {{-- <button class="btn btn-warning" onclick="exportTableToExcelComplete()">Export Order
-                                List to
-                                Excel</button>
-                            <br /><br /> --}}
+                            <h3 style="float:left">Unpaid Created Consignment</h3>
+                            <button style="float:right" id="delete-button" class="btn btn-warning">Delete</button>
+                            <br /><br />
                             <table id="example2" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th><input id="checkAll" type="checkbox"/></th>
+                                        <th hidden></th>
                                         <th width="20%">Order No</th>
                                         <th>Customer Name</th>
                                         <th>Amount</th>
@@ -59,7 +60,9 @@
                                     <?php $cart = session()->get('cart');?>
                                     @foreach($consignment as $parcel)
                                         <tr>
-                                            <td><a href="/view-order-item/{{$parcel->refNo}}">{{$parcel->refNo}}</a> <br/> {{ $parcel->order_number }}</td>
+                                            <td><input type="checkbox" name="delete"/></td>
+                                            <td hidden>{{$parcel->order_number}}</td>
+                                            <td aria-valuetext="{{$parcel->refNo}}"><a href="/view-order-item/{{$parcel->refNo}}">{{$parcel->refNo}}</a> <br/> {{ $parcel->order_number }}</td>
                                             <td>{{ $parcel->name }}</td>
                                             <td>RM {{ number_format($parcel->price,2) }}</td>
                                             <td>{{ $parcel->courier }}</td>
@@ -160,7 +163,47 @@
 @endsection
 
 @section('script')
+
+
 <script>
+
+    $("#checkAll").on("click", function () {
+        if ($(this).is(':checked')) {
+            $("#example2 tr").each( function() {
+                    $(this).find("input").attr('checked', true);             
+            });
+        }else{
+            $("#example2 tr").each( function() {
+                    $(this).find("input").attr('checked', false);             
+            });
+        }
+    });
+
+    $("#delete-button").on("click", function(e) {
+        // $("#example2 tr:has(td > input[type=checkbox]:checked)").remove();
+    e.preventDefault();
+        // var message = "Id Name                  Country\n";
+        var array = [];
+        $("#example2 input[type=checkbox]:checked").each(function () {
+                var row = $(this).closest("tr")[0];
+                var orderNo = row.cells[1].innerHTML;
+                array.push(orderNo);
+        });
+        
+        // alert(array);
+        $.ajax({
+            url: '{{ url('remove-consignment') }}',
+            method: "patch",
+            data: {
+                _token: '{{csrf_token()}}',
+                orderNoList: array
+            },
+            success: function(response) {
+                window.location.reload();
+            }
+        });
+    });
+
     $(function () {
         $("#example1").DataTable({
             "responsive": true,

@@ -12,15 +12,56 @@ class ManageDownlineController extends Controller
 {
     public function index()
     {
+    
+        $allDownline = array();
+        $statusLoop = true;
         $id = Auth::user()->id;
-        $email = Auth::user()->email;
-        $pass = Auth::user()->password;
+        $downlineList = array($id);
+        $statusForLoop = array();
 
-        $user = DB::table('users')
-        ->where('id','<>',Auth::user()->id)
-        ->where('downlineTo',Auth::user()->id)
-        ->where('statusDownline','approve')
-        ->get();
+        while ($statusLoop) {
+            $statusForLoop = array();
+            foreach ($downlineList as $value) {
+
+                $userDownlineL1 = DB::table('users')
+                    ->where('downlineTo', $value)
+                    ->where(function($query) {
+                        $query->whereNull('statusDownline')
+                            ->orWhere('statusDownline','!=', 'decline');
+                    })
+                    ->select('id')
+                    ->get();
+
+                foreach ($userDownlineL1 as $valueL2) {
+                    array_push($downlineList, $valueL2->id);
+                    array_push($allDownline, $valueL2->id);
+
+                    if ($valueL2->id != '') {
+                        array_push($statusForLoop, 'true');
+                    } else {
+                        array_push($statusForLoop, 'false');
+                    }
+                }
+                $key = array_search($value, $downlineList);
+                unset($downlineList[$key]);
+            }
+
+            if (in_array('true', $statusForLoop, true)) {
+                $statusLoop = true;
+            } else {
+                $statusLoop = false;
+            }
+        }
+
+        $users = array();
+        
+        for($i=0;$i<count($allDownline);$i++){
+            $getUser= DB::table('users')
+            ->where('id',$allDownline[$i])
+            ->get();
+
+            array_push($users,$getUser);
+        }
 
         $pendingUser = DB::table('users')
             ->where('statusDownline', 'pending')
@@ -30,8 +71,7 @@ class ManageDownlineController extends Controller
         return view(
             'damio/manageDownline',
             [
-                'userId' => $id,
-                'users' => $user,
+                'users' => $users,
                 'pendingUser' => $pendingUser,
             ]
         );

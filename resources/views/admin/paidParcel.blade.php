@@ -66,12 +66,12 @@
                                                     <td>{{$order->awb}}</td>
                                                     <td>{{$order->courier}}</td>
                                                     <td>
-                                                        @if($order->awb_id_link == '')
+                                                        @if($order->awb_id_link != '')
                                                         <a target="_blank" href="{{$order->awb_id_link}}" download>Consignment note</a>
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($order->tracking_url == '')
+                                                        @if($order->tracking_url != '')
                                                         <a target="_blank" href="{{$order->tracking_url}}">Click here to track parcel</a>
                                                         @endif
                                                     </td>

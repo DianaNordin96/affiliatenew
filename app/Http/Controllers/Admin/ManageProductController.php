@@ -104,7 +104,7 @@ class ManageProductController extends Controller
 
                 $image = $req->file('image');
 
-                $image->move(base_path('public\imageUploaded'), $image->getClientOriginalName());
+                $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
 
                 toast('Product has been created', 'success');
                 return redirect('/manageProduct');

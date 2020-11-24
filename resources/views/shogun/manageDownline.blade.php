@@ -45,13 +45,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($users as $user)
+                                    
+                                    @foreach($users as $key=>$user)
                                         <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->phone }}</td>
-                                            <td hidden>{{ $user->role }}</td>
+                                            <td>{{ $user[0]->id }}</td>
+                                            <td>{{ $user[0]->name }}</td>
+                                            <td>{{ $user[0]->email }}</td>
+                                            <td>{{ $user[0]->phone }}</td>
+                                            <td hidden>{{ $user[0]->role }}</td>
                                             <td>
                                                 {{-- <button type="button" id="buttonEdit"
                                                         title="Edit" data-toggle="modal"
@@ -61,23 +62,23 @@
                                                 --}}
 
                                                 <button type="button" title="View" data-toggle="modal"
-                                                    onclick="openModalView('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
+                                                    onclick="openModalView('{{ $user[0]->id }}','{{ $user[0]->name }}','{{ $user[0]->email }}','{{ $user[0]->phone }}','{{ $user[0]->address }}')"
                                                     data-target="#modalView" class="btn btn-success"><i
                                                         class="far fa-eye"></i></button> &nbsp;
                                                 <select onchange="location = this.value;" class="btn btn-default">
-                                                    @if($user->role == '')
+                                                    @if($user[0]->role == '')
                                                         <option value="" selected>Not Yet Assign</option>
                                                     @endif
-                                                    <option value="/manageDownlineShogun/shogun/{{ $user->id }}" 
-                                                        @if($user->role == 'shogun'){ selected }
+                                                    <option value="/manageDownlineShogun/shogun/{{ $user[0]->id }}" 
+                                                        @if($user[0]->role == 'shogun'){ selected }
                                                     @endif>Shogun</option>
-                                                    <option value="/manageDownlineShogun/damio/{{ $user->id }}" @if ($user->role ==
+                                                    <option value="/manageDownlineShogun/damio/{{ $user[0]->id }}" @if ($user[0]->role ==
                                                         'damio'){ selected } @endif>Damio
                                                     </option>
-                                                    <option value="/manageDownlineShogun/merchant/{{ $user->id }}" @if ($user->role ==
+                                                    <option value="/manageDownlineShogun/merchant/{{ $user[0]->id }}" @if ($user[0]->role ==
                                                         'merchant'){ selected } @endif
                                                         >Merchant</option>
-                                                    <option value="/manageDownlineShogun/dropship/{{ $user->id }}" @if ($user->role ==
+                                                    <option value="/manageDownlineShogun/dropship/{{ $user[0]->id }}" @if ($user[0]->role ==
                                                         'dropship'){ selected } @endif
                                                         >Dropship</option>
                                                 </select>

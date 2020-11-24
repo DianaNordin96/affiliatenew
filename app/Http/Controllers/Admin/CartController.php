@@ -77,22 +77,31 @@ class CartController extends Controller
 
             // // dd($arrayPaymentStatus);
 
-            foreach ($result['result'] as $key=>$value) {
-                DB::table('consignment')
-                    ->where('parcel_number', $value['parcel'][0]['parcelno'])
-                    ->update([
-                        'awb' => $value['parcel'][0]['awb'],
-                        'awb_id_link' => $value['parcel'][0]['awb_id_link'],
-                        'tracking_url' => $value['parcel'][0]['tracking_url'],
-                        'updated_at' => date("Y-m-d H:i:s")
-                    ]);
+            // dd($result['result'][0]['messagenow']);
+
+            if ($result['result'][0]['messagenow'] != 'Invalid order number') {
+                foreach ($result['result'] as $key => $value) {
+                    DB::table('consignment')
+                        ->where('parcel_number', $value['parcel'][0]['parcelno'])
+                        ->update([
+                            'awb' => $value['parcel'][0]['awb'],
+                            'awb_id_link' => $value['parcel'][0]['awb_id_link'],
+                            'tracking_url' => $value['parcel'][0]['tracking_url'],
+                            'updated_at' => date("Y-m-d H:i:s")
+                        ]);
+                }
+
+                toast($result['result'][0]['messagenow'], 'success');
+                session()->forget('cart');
+                // $array = Excel::toArray(new UsersImport, 'users.xlsx');
+                return redirect('/parcel');
+            }else{
+                toast($result['result'][0]['messagenow'], 'error');
+                // $array = Excel::toArray(new UsersImport, 'users.xlsx');
+                return redirect('/parcel');
             }
 
-            toast('Payment Successful', 'success');
-            session()->forget('cart');
-            // $array = Excel::toArray(new UsersImport, 'users.xlsx');
-            return redirect('/parcel');
-
+            
         } else {
             toast('Insufficient Credit', 'error');
             return redirect('/parcel');

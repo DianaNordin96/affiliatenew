@@ -14,27 +14,29 @@ class RedirectController extends Controller
             $role = Auth::user()->role;
             switch ($role) {
                 case 'masteradmin':
-                    return redirect('/MasterDashboard');
+                    $url = '/MasterDashboard';
                     break;
                 case 'admin':
-                    return redirect('/dashboard');
+                    $url = '/dashboard';
                     break;
                 case 'shogun':
-                    return redirect('/ShogunDashboard');
+                    $url = '/ShogunDashboard';
                     break;
                 case 'damio':
-                    return redirect('/DamioDashboard');
+                    $url = '/DamioDashboard';
                     break;
                 case 'merchant':
-                    return redirect('/MerchantDashboard');
+                    $url = '/MerchantDashboard';
                     break;
                 case 'dropship':
-                    return redirect('/DropshipDashboard');
+                    $url = '/DropshipDashboard';
                     break;
                 default:
-                    return redirect('/login');
+                    $url = '/login';
                     break;
             }
+
+            return redirect($url);
         } else {
             return redirect('/login');
         }

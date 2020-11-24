@@ -50,7 +50,7 @@
                                             <select class="form-control select2bs4" name="refNo">
                                                 <option value="" hidden disabled selected> Choose order </option>
                                                 @foreach($pendingOrders as $order)
-                                                    <option value="{{$order->ordphers_id}}" >{{$order->orders_id}}</option>
+                                                    <option value="{{$order->orders_id}}" >{{$order->orders_id}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -66,7 +66,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Order No *from parcel</label>
+                                            <label>Order No</label>
                                             <input class="form-control" type="text" name="orderno" required/>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Courier</label>
-                                            <select class="form-control" name="courier" required>
+                                            <select class="form-control select2bs4" name="courier" required>
                                                 <option value="Pgeon Delivery" selected>Pgeon Delivery</option>
                                                 <option value="Pgeon Prime">Pgeon Prime</option>
                                                 <option value="Skynet">Skynet</option>
@@ -149,9 +149,9 @@
         });
     });
 
-    document.getElementById("bulk-parcel").className = "nav-link active";
-    document.getElementById("menuParcel").className = "nav-link active";
-    document.getElementById("menuParcels").className = "nav-item menu-open has-treeview";
+    document.getElementById("updateOrder").className = "nav-link active";
+    document.getElementById("menuOrder").className = "nav-link active";
+    document.getElementById("menuOrders").className = "nav-item menu-open has-treeview";
     //Bootstrap Duallistbox
     $('.duallistbox').bootstrapDualListbox()
 

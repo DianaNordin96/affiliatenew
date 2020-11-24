@@ -73,14 +73,6 @@
                         <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> Account
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-key mr-2"></i> Change Password
-                        </a>
-                        <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#modal-sm"
                             class="dropdown-item">

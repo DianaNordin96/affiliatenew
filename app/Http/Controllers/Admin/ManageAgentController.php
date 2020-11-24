@@ -88,7 +88,7 @@ class ManageAgentController extends Controller
 
                 $image = $req->file('image');
 
-                $image->move(base_path('public\imageUploaded\profile'), $image->getClientOriginalName());
+                $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
 
                 toast('User has been created', 'success');
                 return redirect('/manageAgent');
@@ -166,7 +166,7 @@ class ManageAgentController extends Controller
 
                     $image = $req->file('imageEdit');
 
-                    $image->move(base_path('public\imageUploaded\profile'), $image->getClientOriginalName());
+                    $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
 
                     toast('Agent has been updated', 'success');
                     return redirect('/manageAgent');

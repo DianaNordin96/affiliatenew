@@ -26,7 +26,7 @@ class ReferralController extends Controller
             'phone' => 'required',
             'dob' => 'required',
             'ic' => 'required',
-            'image' => '',
+            'image' => ''
         ];
 
         $validator = Validator::make($req->all(), $validatedData);

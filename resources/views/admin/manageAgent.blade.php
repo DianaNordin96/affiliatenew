@@ -414,7 +414,7 @@
                 "<div class='row'>" +
                 "<br/>" +
                 "<div class='col-sm-6'>" +
-                "<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='/imageUploaded/profile/"+ image +"'/>"+
+                "<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../imageUploaded/profile/"+ image +"'/>"+
                 "</div>"+
                 "<div class='col-sm-6'>" +
                 "<b>Name  </b>" + "<br/>" + name + "<br/>" +

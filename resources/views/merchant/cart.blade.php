@@ -34,7 +34,7 @@
                         <div class="card">
                                 <div class="card-body">
                                     <!-- <h3 class="card-title">View Employee</h3> -->
-                                    <a href="{{ url('') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+                                    <a href="{{ url('product-merchant') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
                                         Continue Shopping</a><br/><br/>
                                     <div style="text-align:center">
                                         <h3>Shopping Cart</h3>
@@ -64,7 +64,7 @@
                                                         </td>
                                                         <td>
                                                             <br/>
-                                                        <img style="display: block;margin-left: auto;margin-right: auto;" src="/imageUploaded/{{ $details['photo'] }}" width="80" height="80" class="img-responsive" /></div><br/>
+                                                        <img style="display: block;margin-left: auto;margin-right: auto;" src="../imageUploaded/products{{ $details['photo'] }}" width="80" height="80" class="img-responsive" /></div><br/>
                                                         <div style="text-align: center">
                                                                 {{$details['name'] }}<br/>
                                                                 RM {{ $details['price'] }}/each
@@ -148,6 +148,17 @@
             
                                         <div class="row">
                                             <div class="col-12">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label> Email </label>
+                                                    <input type="text" id="email" class="form-control" name="email"
+                                                        placeholder="Email" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
                                                 <div class="form-group">
                                                     <label>Address #1</label>
                                                     <input type="text" id="address1" class="form-control" name="address1"
@@ -161,7 +172,7 @@
                                                 <div class="form-group">
                                                     <label>Address #2 (Optional) </label>
                                                     <input type="text" id="address2" class="form-control" name="address2"
-                                                    placeholder="" required />
+                                                    placeholder="" />
                                                 </div>
                                             </div>
                                         </div>
@@ -171,13 +182,53 @@
                                                 <div class="form-group">
                                                     <label>Address #3 (Optional) </label>
                                                     <input type="text" id="address3" class="form-control" name="address3"
-                                                    placeholder="" required />
+                                                    placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>City</label>
+                                                    <input type="text" id="city" class="form-control" name="city"
+                                                        placeholder="" required />
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>State</label>
+                                                    <select class="form-control select2bs4"  name="state">
+                                                        <option value="jhr">Johor</option>
+                                                        <option value="kdh">Kedah</option>
+                                                        <option value="ktn">Kelantan</option>
+                                                        <option value="mlk">Melaka</option>
+                                                        <option value="nsn">Negeri Sembilan </option>
+                                                        <option value="phg">Pahang</option>
+                                                        <option value="prk">Perak</option>
+                                                        <option value="pls">Perlis</option>
+                                                        <option value="png">Pulau Pinang</option>
+                                                        <option value="sgr">Selangor</option>
+                                                        <option value="trg">Terengganu</option>
+                                                        <option value="kul">Kuala Lumpur</option>
+                                                        <option value="pjy">Putra Jaya</option>
+                                                        <option value="srw">Sarawak</option>
+                                                        <option value="sbh">Sabah</option>
+                                                        <option value="lbn">Labuan</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Postcode</label>
+                                                    <input type="text" id="postcode" class="form-control" name="postcode"
+                                                        placeholder="" required />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div style="float:center" class="col-lg-12 col-md-12 col-xs-12">
                                         <strong>
@@ -211,6 +262,15 @@
     <script>
        
         $(function() {
+
+            //Initialize Select2 Elements
+            $('.select2').select2()
+    
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+            
             $("#example1").DataTable({
                 "responsive": true,
                 "autoWidth": false,

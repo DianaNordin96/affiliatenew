@@ -54,16 +54,16 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <br />
-                                            <img class="img-fluid" style="display: block;margin-left: auto;margin-right: auto; height:100px" src="/imageUploaded/{{ $product->product_image }}" />
+                                            <img class="img-fluid" style="display: block;margin-left: auto;margin-right: auto; height:100px" src="../imageUploaded/products/{{ $product->product_image }}" />
                                         <br />
                                             <div style="text-align:center">
                                                 {{ $product->product_name }}
                                                 <br />
                                                 {{ $product->product_description }}
                                                 <br />
-                                                <b>RM {{ $product->product_price }}</b>
+                                                <b>RM {{ number_format($product->price_hq + $product->price_shogun + $product->price_damio + $product->price_merchant,2)}}</b>
                                                 <br />
-                                                <b style="color : blue">Commission : RM {{ $product->price_dropship }} /each</b>
+                                                <b style="color : blue">Commission : RM {{  $product->product_price - $product->price_shogun - $product->price_hq - $product->price_damio - $product->price_merchant }} /each</b>
                                             </div>
                                         </div>
 

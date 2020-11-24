@@ -50,7 +50,7 @@
                                             <tr>
                                                 <td>{{ $product->id }}</td>
                                                 <td><img height="150px" width="150px"
-                                                        src="/imageUploaded/{{ $product->product_image }}" /></td>
+                                                        src="../imageUploaded/products/{{ $product->product_image }}" /></td>
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>Actual Price: RM {{ number_format($product->product_price,2) }}<br/>
                                                     Shogun Price: RM {{ number_format($product->price_shogun,2) }}<br/>
@@ -213,7 +213,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Employee Details</h4>
+                            <h4 class="modal-title">Product Details</h4>
 
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>

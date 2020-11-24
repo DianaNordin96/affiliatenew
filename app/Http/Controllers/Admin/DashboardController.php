@@ -26,6 +26,10 @@ class DashboardController extends Controller
         //total downline
         $numberDownline = DB::table('users')
             ->where('belongsToAdmin', '=', Auth::user()->id)
+            ->where(function($query) {
+                $query->whereNull('statusDownline')
+                    ->orWhere('statusDownline','!=', 'decline');
+            })
             ->get();
         $countDownline = count($numberDownline);
 

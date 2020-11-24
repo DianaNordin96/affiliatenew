@@ -128,8 +128,8 @@ class CartController extends Controller
                 $total += $details['price'] * $details['quantity'];
             }
             $option = array(
-                'userSecretKey' => 'ky1g673m-az9v-dwde-6nyk-24r0x9g83msb',
-                'categoryCode' => 'g2lwd3s7',
+                'userSecretKey' => '7jjvcrsb-h3ro-1zsh-wrrs-7j47nubg36v2',
+                'categoryCode' => 'p5cfhstp',
                 'billName' => 'Purchase for Stock',
                 'billDescription' => 'Buy stock',
                 'billPriceSetting' => 1,
@@ -149,12 +149,12 @@ class CartController extends Controller
                 'billContentEmail' => 'Email content'
             );
 
-            $url = 'https://dev.toyyibpay.com/index.php/api/createBill';
+            $url = 'https://toyyibpay.com/index.php/api/createBill';
 
             $response = Http::asForm()->post($url, $option);
             $billCode = $response[0]['BillCode'];
 
-            return redirect('https://dev.toyyibpay.com/' .  $billCode);
+            return redirect('https://toyyibpay.com/' .  $billCode);
         }
     }
     public function paymentStatus(Request $request)

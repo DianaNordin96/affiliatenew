@@ -23,13 +23,16 @@ class DashboardController extends Controller
         // dd($allDownline);
 
         //get downline 
-
         while ($statusLoop) {
             $statusForLoop = array();
             foreach ($downlineList as $value) {
 
                 $userDownlineL1 = DB::table('users')
                     ->where('downlineTo', $value)
+                    ->where(function($query) {
+                        $query->whereNull('statusDownline')
+                            ->orWhere('statusDownline','!=', 'decline');
+                    })
                     ->select('id')
                     ->get();
 

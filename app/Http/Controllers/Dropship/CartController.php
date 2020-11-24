@@ -37,7 +37,7 @@ class CartController extends Controller
                 $id => [
                     "name" => $product->product_name,
                     "quantity" => 1,
-                    "price" => $product->product_price,
+                    "price" => $product->price_hq + $product->price_shogun + $product->price_damio + $product->price_merchant,
                     "photo" => $product->product_image
                 ]
             ];
@@ -54,7 +54,7 @@ class CartController extends Controller
         $cart[$id] = [
             "name" => $product->product_name,
             "quantity" => 1,
-            "price" => $product->product_price,
+            "price" => $product->price_hq + $product->price_shogun + $product->price_damio + $product->price_merchant,
             "photo" => $product->product_image
         ];
         session()->put('cart', $cart);
@@ -87,7 +87,13 @@ class CartController extends Controller
         $validatedData = [
             'name' => 'required',
             'phone' => 'required',
-            'address1' => 'required'
+            'address1' => 'required',
+            'address2' => '',
+            'address3' => '',
+            'city' => 'required',
+            'state' => 'required',
+            'postcode' => 'required',
+            'email' => ''
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
@@ -102,7 +108,11 @@ class CartController extends Controller
                 'address_two' => $data['address2'],
                 'address_three' => $data['address3'],
                 'phone' => $data['phone'],
-                'user_id' => Auth::user()->id
+                'state' => $data['state'],
+                'city' => $data['city'],
+                'postcode' => $data['postcode'],
+                'user_id' => Auth::user()->id,
+                'email' => $data['email']
             ]);
 
             date_default_timezone_set("Asia/Kuala_Lumpur");
@@ -117,8 +127,8 @@ class CartController extends Controller
                 $total += $details['price'] * $details['quantity'];
             }
             $option = array(
-                'userSecretKey' => 'ky1g673m-az9v-dwde-6nyk-24r0x9g83msb',
-                'categoryCode' => 'g2lwd3s7',
+                'userSecretKey' => '7jjvcrsb-h3ro-1zsh-wrrs-7j47nubg36v2',
+                'categoryCode' => 'p5cfhstp',
                 'billName' => 'Purchase for Stock',
                 'billDescription' => 'Buy stock',
                 'billPriceSetting' => 1,
@@ -138,12 +148,12 @@ class CartController extends Controller
                 'billContentEmail' => 'Email content'
             );
 
-            $url = 'https://dev.toyyibpay.com/index.php/api/createBill';
+            $url = 'https://toyyibpay.com/index.php/api/createBill';
 
             $response = Http::asForm()->post($url, $option);
             $billCode = $response[0]['BillCode'];
 
-            return redirect('https://dev.toyyibpay.com/' .  $billCode);
+            return redirect('https://toyyibpay.com/' .  $billCode);
         }
     }
 

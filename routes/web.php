@@ -58,6 +58,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::POST('bulk-parcel-import', 'Admin\BulkParcelController@getExcelToArray')->middleware('auth');
     Route::GET('update-order', 'Admin\ManageOrderController@updateOrderPage')->middleware('auth');
     Route::POST('update-order-awb', 'Admin\ManageOrderController@updateOrder')->middleware('auth');
+    Route::patch('remove-consignment', 'Admin\ParcelController@removeConsignment')->middleware('auth');
 //change-password
 //guidelines
 //support
@@ -145,8 +146,8 @@ Route::group(['middleware' => 'merchant'], function () {
     Route::get('/customers-merchant-delete/{id}', 'Merchant\CustomerController@delete')->middleware('auth');
     Route::get('/commission-merchant', 'Merchant\CommissionController@index')->middleware('auth');
     Route::POST('/commission-merchant-withdrawal', 'Merchant\CommissionController@withdraw')->middleware('auth');
-    Route::get('/approveDownline-merchant/{id}', 'Damio\ManageDownlineController@approve')->middleware('auth');
-    Route::get('/declineDownline-merchant/{id}', 'Damio\ManageDownlineController@decline')->middleware('auth');
+    Route::get('/approveDownline-merchant/{id}', 'Merchant\ManageDownlineController@approve')->middleware('auth');
+    Route::get('/declineDownline-merchant/{id}', 'Merchant\ManageDownlineController@decline')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\DropshipMiddleware'], function () {
