@@ -37,7 +37,7 @@ class CartController extends Controller
                 $id => [
                     "name" => $product->product_name,
                     "quantity" => 1,
-                    "price" => $product->product_price,
+                    "price" => $product->price_shogun - $product->price_hq,
                     "photo" => $product->product_image
                 ]
             ];
@@ -54,7 +54,7 @@ class CartController extends Controller
         $cart[$id] = [
             "name" => $product->product_name,
             "quantity" => 1,
-            "price" => $product->product_price,
+            "price" => $product->price_shogun - $product->price_hq,
             "photo" => $product->product_image
         ];
         session()->put('cart', $cart);
@@ -252,25 +252,25 @@ class CartController extends Controller
             }
 
             //addToCommision
-            $userCommission = DB::table('users')->where('id', Auth::user()->id)->get();
+            // $userCommission = DB::table('users')->where('id', Auth::user()->id)->get();
 
-            foreach ($userCommission as $user) {
-                $commissionPoint = $user->commissionPoint;
-                if ($commissionPoint == null) {
-                    DB::table('users')
-                        ->where('id', Auth::user()->id)
-                        ->update([
-                            'commissionPoint' => $totalCommission
-                        ]);
-                } else {
-                    $totalCommission += $commissionPoint;
-                    DB::table('users')
-                        ->where('id', Auth::user()->id)
-                        ->update([
-                            'commissionPoint' => $totalCommission
-                        ]);
-                }
-            }
+            // foreach ($userCommission as $user) {
+            //     $commissionPoint = $user->commissionPoint;
+            //     if ($commissionPoint == null) {
+            //         DB::table('users')
+            //             ->where('id', Auth::user()->id)
+            //             ->update([
+            //                 'commissionPoint' => $totalCommission
+            //             ]);
+            //     } else {
+            //         $totalCommission += $commissionPoint;
+            //         DB::table('users')
+            //             ->where('id', Auth::user()->id)
+            //             ->update([
+            //                 'commissionPoint' => $totalCommission
+            //             ]);
+            //     }
+            // }
 
             $request->session()->forget('cart');
             toast('Payment Successful', 'success');

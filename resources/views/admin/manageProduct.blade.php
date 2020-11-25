@@ -53,6 +53,7 @@
                                                         src="../imageUploaded/products/{{ $product->product_image }}" /></td>
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>Actual Price: RM {{ number_format($product->product_price,2) }}<br/>
+                                                    HQ Price: RM {{ number_format($product->price_hq,2) }}<br/>
                                                     Shogun Price: RM {{ number_format($product->price_shogun,2) }}<br/>
                                                     Damio Price: RM {{ number_format($product->price_damio,2) }}<br/>
                                                     Merchant Price: RM {{ number_format($product->price_merchant,2) }}<br/>
@@ -62,6 +63,7 @@
                                                         onclick="openModalEdit(
                                                                     '{{ $product->id }}',
                                                                     '{{ $product->product_name }}',
+                                                                    '{{ $product->price_hq }}',
                                                                     '{{ $product->product_price }}',
                                                                     '{{ $product->product_description }}',
                                                                     '{{ $product->price_shogun }}',
@@ -73,6 +75,7 @@
                                                     <button type="button" title="View" data-toggle="modal" onclick="openModalView(
                                                                     '{{ $product->id}}',
                                                                     '{{ $product->product_name }}',
+                                                                    '{{ $product->price_hq }}',
                                                                     '{{ $product->product_price }}',
                                                                     '{{ $product->product_description }}',
                                                                     '{{ $product->price_shogun }}',
@@ -149,17 +152,17 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> HQ Price </label>
-                                            <input type="text" id="hqPrice" class="form-control" name="hqPrice"
-                                                placeholder="HQ Price" />
+                                            <label> Actual Price </label>
+                                            <input type="text" id="productPrice" class="form-control" name="productPrice"
+                                                placeholder="Price" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Price </label>
-                                            <input type="text" id="productPrice" class="form-control" name="productPrice"
-                                                placeholder="Price" />
+                                            <label> HQ Price </label>
+                                            <input type="text" id="hqPrice" class="form-control" name="hqPrice"
+                                                placeholder="HQ Price" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -254,40 +257,48 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Actual Price </label>
-                                            <input type="text" id="productPriceEdit" class="form-control"
-                                                name="productPriceEdit" placeholder="Price" />
+                                            <input type="text" id="productPriceEdit" class="form-control" name="productPriceEdit"
+                                                placeholder="Price" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> HQ Price </label>
+                                            <input type="text" id="hqPriceEdit" class="form-control" name="hqPriceEdit"
+                                                placeholder="HQ Price" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Shogun Price </label>
-                                            <input type="text" id="shogunPriceEdit" class="form-control"
-                                                name="shogunPriceEdit" placeholder="Shogun Price" />
+                                            <input type="text" id="shogunPriceEdit" class="form-control" name="shogunPriceEdit"
+                                                placeholder="Shogun Price" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Damio Price </label>
-                                            <input type="text" id="damioPriceEdit" class="form-control"
-                                                name="damioPriceEdit" placeholder="Price" />
+                                            <input type="text" id="damioPriceEdit" class="form-control" name="damioPriceEdit"
+                                                placeholder="Price" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Merchant Price </label>
-                                            <input type="text" id="merchantPriceEdit" class="form-control"
-                                                name="merchantPriceEdit" placeholder="Shogun Price" />
+                                            <input type="text" id="merchantPriceEdit" class="form-control" name="merchantPriceEdit"
+                                                placeholder="Shogun Price" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Dropship Price </label>
-                                            <input type="text" id="dropshipPriceEdit" class="form-control"
-                                                name="dropshipPriceEdit" placeholder="Shogun Price" />
+                                            <input type="text" id="dropshipPriceEdit" class="form-control" name="dropshipPriceEdit"
+                                                placeholder="Shogun Price" />
                                         </div>
                                     </div>
                                 </div>
@@ -354,10 +365,11 @@
 
         document.getElementById("manageProduct").className = "nav-link active";
 
-        function openModalEdit(prodID,name, price, desc , shogun, damio, merchant, dropship) {
+        function openModalEdit(prodID,name,hq,price, desc , shogun, damio, merchant, dropship) {
 
             document.getElementById("productIDEdit").value = prodID;
             document.getElementById("productNameEdit").value = name;
+            document.getElementById("hqPriceEdit").value = hq;
             document.getElementById("productPriceEdit").value = price;
             document.getElementById("productDescEdit").value = desc;
             document.getElementById("shogunPriceEdit").value = shogun;
@@ -367,7 +379,7 @@
 
         }
 
-        function openModalView(prodID,name, price, desc  , shogun, damio, merchant, dropship) {
+        function openModalView(prodID,name, hq, price, desc , shogun, damio, merchant, dropship) {
 
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
@@ -376,6 +388,7 @@
                 "<b>Actual Price: RM  </b>" + price + "<br/>" +
                 "<b>Product Name:  </b>" + name + "<br/>" +
                 "<b>Description: </b>" + desc + "<br/>" +
+                "<b>Price HQ: </b> RM " + hq + "<br/>" +
                 "<b>Price Shogun: </b> RM " + shogun + "<br/>" +
                 "<b>Price Damio: </b> RM " + damio + "<br/>" +
                 "<b>Price Merchant: </b> RM " + merchant + "<br/>" +

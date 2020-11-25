@@ -36,6 +36,7 @@ class ManageProductController extends Controller
             'productNameEdit' => 'required',
             'productPriceEdit' => 'required',
             'productDescEdit' => 'required',
+            'hqPriceEdit' => 'required',
             'shogunPriceEdit' => 'required',
             'dropshipPriceEdit' => 'required',
             'damioPriceEdit' => 'required',
@@ -58,7 +59,8 @@ class ManageProductController extends Controller
                         'price_shogun' => $data['shogunPriceEdit'],
                         'price_damio' => $data['damioPriceEdit'],
                         'price_merchant' => $data['merchantPriceEdit'],
-                        'price_dropship' => $data['dropshipPriceEdit']
+                        'price_dropship' => $data['dropshipPriceEdit'],
+                        'price_hq' => $data['hqPriceEdit']
                     ]);
 
                 toast('Product has been updated', 'success');

@@ -66,12 +66,17 @@ class DashboardController extends Controller
             ->select('amount')
             ->sum('amount');
 
+        $totalAgent = DB::table('users')
+        ->where('id','<>',Auth::user()->id)
+        ->get();
+
         return view('masteradmin/dashboard')->with([
             'shogunSales' => $shogun,
             'damioSales' => $damio,
             'merchantSales' => $merchant,
             'dropshipSales' => $dropship,
-            'totalSales' => $totalSales
+            'totalSales' => $totalSales,
+            'totalAgent' => count($totalAgent)
         ]);
     }
 }
