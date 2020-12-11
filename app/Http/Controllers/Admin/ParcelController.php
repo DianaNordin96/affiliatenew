@@ -33,6 +33,7 @@ class ParcelController extends Controller
             'consignment' => $parcelList
         ]);
     }
+    
     public function consignmentPage()
     {
         return view('admin/consignmentCustDetails');

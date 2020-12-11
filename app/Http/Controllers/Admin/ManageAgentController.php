@@ -22,9 +22,15 @@ class ManageAgentController extends Controller
     {
         $users = DB::table('users')
         ->where('id','<>',Auth::user()->id)
-        ->where('role','<>','masteradmin')
-        ->orWhere('role',NULL)
         ->where('belongsToAdmin',Auth::user()->id)
+        ->where(function($query) {
+            $query->whereNull('statusDownline')
+                ->orWhere('statusDownline','!=', 'decline');
+        })
+        ->where(function($query) {
+            $query->whereNull('statusDownline')
+                ->orWhere('statusDownline','!=', 'pending');
+        })
         ->get();
 
         $id = Auth::user()->id;

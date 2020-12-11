@@ -75,8 +75,8 @@
                         <i class="fas fa-shopping-cart"></i>
                         <span class="badge badge-danger navbar-badge">
 
-                            @if (session('cart') != null)
-                                {{ count(session('cart')) }}
+                            @if (session('cartPayment') != null)
+                                {{ count(session('cartPayment')) }}
 
                             @else
                                 0

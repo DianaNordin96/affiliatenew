@@ -90,6 +90,9 @@ Route::group(['middleware' => 'shogun'], function () {
     Route::POST('/commission-shogun-withdrawal', 'Shogun\CommissionController@withdraw')->middleware('auth');
     Route::get('/approveDownline-shogun/{id}', 'Shogun\ManageDownlineController@approve')->middleware('auth');
     Route::get('/declineDownline-shogun/{id}', 'Shogun\ManageDownlineController@decline')->middleware('auth');
+    Route::post('addToPaymentCart-shogun', 'Shogun\CartController@addToPaymentCart')->middleware('auth');
+    Route::delete('/remove-from-cart-payment-Shogun', 'Shogun\CartController@removeFromCartPayment')->middleware('auth');
+    
 //guideline-shogun
 //support-shogun
 });

@@ -1,6 +1,6 @@
 @extends('layouts.shogun')
 @section('content')
-
+@inject('customer', 'App\Http\Controllers\Shogun\CustomerController')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -29,75 +29,91 @@
                 <form action="{{ url('checkout') }}" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div style="margin: auto;" class="col-lg-5">
                             <div class="card">
                                 <div class="card-body">
                                     <!-- <h3 class="card-title">View Employee</h3> -->
                                     <a href="{{ url('product-shogun') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
                                         Continue Shopping</a><br /><br />
                                     <div style="text-align:center">
-                                        <h3>Shopping Cart</h3>
+                                        <h3>Payment Cart</h3>
                                     </div>
 
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th></th>
                                                 <th width="50%"></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $total = 0;
                                             $no = 1;
+                                            
+                                            $cartPayment = session('cartPayment');
                                             ?>
 
-                                            @if (session('cart'))
-                                                @foreach (session('cart') as $id => $details)
-                                                    <?php $total += $details['price'] * $details['quantity'];
-                                                    ?>
-
+                                            @if (session('cartPayment'))
+                                                @foreach ( $cartPayment as $key=>$value)
+                                                <?php $getCustomer = $customer->getCustomer($key); ?>
                                                     <tr style="border-bottom: lightgrey  1px solid">
+                                                        
                                                         <td style="padding-left:10px;text-align: right">
                                                             #{{ $no }}
                                                         </td>
                                                         <td>
-                                                            <br />
-                                                            <img style="display: block;margin-left: auto;margin-right: auto;"
-                                                                src="../imageUploaded/products/{{ $details['photo'] }}" width="80"
-                                                                height="80" class="img-responsive" />
-                                                            <br />
-                                                            <div style="text-align: center">
-                                                                {{ $details['name'] }}<br />
-                                                                RM {{ $details['price'] }}/each
-                                                            </div>
-                                                            <br />
+                                                            Name: {{$getCustomer[0]->name}}<br/>
+                                                        @foreach($cartPayment[$key][0] as $id => $details)
+                                                            <?php $total += $details['price'] * $details['quantity']; ?>
+                                                        
+                                                                <div style="text-align: left">
+                                                                    {{ $details['name'] }}<br />
+                                                                    RM {{ $details['price'] }}<br/>
+                                                                    Qty : {{$details['quantity']}}<br/>
+                                                                    Subtotal = RM{{ number_format($details['price'] * $details['quantity'],2) }}
+                                                                </div>
+                                                                <br />
+                                                        @endforeach
                                                         </td>
                                                         <td style="padding-left: 10%">
-                                                            <div style="float: right">
-                                                                Subtotal: RM
+                                                            <div style="float: left">
+                                                                {{-- Subtotal: RM
                                                                 {{ $details['price'] * $details['quantity'] }}<br /><br />
                                                                 <input type="number" value="{{ $details['quantity'] }}"
                                                                     style="width:60%" class="form-control quantity" /><br />
                                                                 <a class="btn btn-info btn-sm update-cart"
                                                                     data-id="{{ $id }}"><i
-                                                                        class="fas fa-sync-alt"></i></a> &nbsp;&nbsp;
+                                                                        class="fas fa-sync-alt"></i></a> &nbsp;&nbsp; --}}
                                                                 <a class="btn btn-danger btn-sm remove-from-cart"
-                                                                    data-id="{{ $id }}"><i
-                                                                        class="fas fa-trash"></i></a>
+                                                                    data-id="{{ $key }}"><i class="fas fa-trash"></i></a>
                                                             </div>
-                                                        </td>
+                                                        </td>  
                                                     </tr>
                                                     <?php $no++; ?>
                                                 @endforeach
                                             @endif
                                         </tbody>
                                     </table>
+                                    <div class="row">
+                                        <div style="float:center" class="col-lg-12 col-md-12 col-xs-12">
+                                            <br>
+                                            <strong>
+                                                <h4>Total RM {{ number_format($total, 2) }} &nbsp; &nbsp;
+                                                    @if (session()->get('cartPayment') != null)
+                                                        <button type="submit" id="checkout" class="btn btn-info">
+                                                            Checkout
+                                                            <i class="fa fa-angle-right"></i></button>
+                                                    @endif
+                                                </h4>
+                                            </strong>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5">
+                        {{-- <div class="col-lg-5">
                             <div class="card card-warning">
                                 <div class="card-header">
                                     <h3 class="card-title">Customer Details</h3>
@@ -236,7 +252,7 @@
                                 </div>
                                 <!-- /.card-body -->
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </form>
             </div>
@@ -413,7 +429,7 @@
 
             if (confirm("Are you sure")) {
                 $.ajax({
-                    url: '{{ url('remove-from-cartShogun')}}',
+                    url: '{{ url('remove-from-cart-payment-Shogun')}}',
                     method: "DELETE",
                     data: {
                         _token: '{{csrf_token()}}',

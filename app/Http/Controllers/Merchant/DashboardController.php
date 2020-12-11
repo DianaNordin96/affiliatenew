@@ -33,6 +33,10 @@ class DashboardController extends Controller
                         $query->whereNull('statusDownline')
                             ->orWhere('statusDownline','!=', 'decline');
                     })
+                    ->where(function($query) {
+                        $query->whereNull('statusDownline')
+                            ->orWhere('statusDownline','!=', 'pending');
+                    })
                      ->select('id')
                      ->get();
  

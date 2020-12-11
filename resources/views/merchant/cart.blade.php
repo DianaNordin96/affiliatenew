@@ -64,7 +64,7 @@
                                                         </td>
                                                         <td>
                                                             <br/>
-                                                        <img style="display: block;margin-left: auto;margin-right: auto;" src="../imageUploaded/products{{ $details['photo'] }}" width="80" height="80" class="img-responsive" /></div><br/>
+                                                        <img style="display: block;margin-left: auto;margin-right: auto;" src="../imageUploaded/products/{{ $details['photo'] }}" width="80" height="80" class="img-responsive" /></div><br/>
                                                         <div style="text-align: center">
                                                                 {{$details['name'] }}<br/>
                                                                 RM {{ $details['price'] }}/each

@@ -13,6 +13,14 @@ class ManageAgentController extends Controller
     {
         $agentList = DB::table('users')
             ->where('id', '<>', Auth::user()->id)
+            ->where(function($query) {
+                $query->whereNull('statusDownline')
+                    ->orWhere('statusDownline','!=', 'decline');
+            })
+            ->where(function($query) {
+                $query->whereNull('statusDownline')
+                    ->orWhere('statusDownline','!=', 'pending');
+            })
             ->get();
 
         return view('masteradmin/agents')->with([
