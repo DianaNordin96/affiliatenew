@@ -116,7 +116,7 @@
                with font-awesome or any other icon font library -->
                         
                         <li class="nav-item">
-                            <a href="master-viewAgent" class="nav-link">
+                            <a href="/master-viewAgent" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     View Agents
@@ -125,7 +125,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="master-commission" class="nav-link">
+                            <a href="/master-commission" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>
                                     Manage Commission
@@ -134,7 +134,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="master-support" class="nav-link">
+                            <a href="/master-support" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Support
@@ -143,7 +143,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="superadmin-guidelines" class="nav-link">
+                            <a href="/superadmin-guidelines" class="nav-link">
                                 <i class="nav-icon far fa-question-circle"></i>
                                 <p>
                                     Guidelines

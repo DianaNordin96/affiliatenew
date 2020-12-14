@@ -21,17 +21,17 @@ class ManageAgentController extends Controller
     public function index()
     {
         $users = DB::table('users')
-        ->where('id','<>',Auth::user()->id)
-        ->where('belongsToAdmin',Auth::user()->id)
-        ->where(function($query) {
-            $query->whereNull('statusDownline')
-                ->orWhere('statusDownline','!=', 'decline');
-        })
-        ->where(function($query) {
-            $query->whereNull('statusDownline')
-                ->orWhere('statusDownline','!=', 'pending');
-        })
-        ->get();
+            ->where('id', '<>', Auth::user()->id)
+            ->where('belongsToAdmin', Auth::user()->id)
+            ->where(function ($query) {
+                $query->whereNull('statusDownline')
+                    ->orWhere('statusDownline', '!=', 'decline');
+            })
+            ->where(function ($query) {
+                $query->whereNull('statusDownline')
+                    ->orWhere('statusDownline', '!=', 'pending');
+            })
+            ->get();
 
         $id = Auth::user()->id;
         $email = Auth::user()->email;
@@ -76,48 +76,56 @@ class ManageAgentController extends Controller
             $data = $req->input();
             try {
 
-                if ($req->file('image') != null){
-                $user = new User;
-                $user->name = $data['name'];
-                $user->email = $data['email'];
-                $user->phone = $data['phone'];
-                $user->address = $data['address'];
-                $user->password = Hash::make('12345678');
-                $user->image = $req->file('image')->getClientOriginalName();
-                $user->icnumber = $data['ic'];
-                $user->dob = $data['dob'];
-                $user->downlineTo = null;
-                $user->commissionPoint = 0 ;
-                $user->belongsToAdmin = Auth::user()->id;
-                $user->role = 'shogun';
-                $user->save();
+                //check IC exist
+                $icStatus = DB::table('users')->where('icnumber', $data['ic'])->get();
 
-                $image = $req->file('image');
+                $countIC = count($icStatus);
+                if ($countIC == 0){
+                    if ($req->file('image') != null) {
+                        $user = new User;
+                        $user->name = $data['name'];
+                        $user->email = $data['email'];
+                        $user->phone = $data['phone'];
+                        $user->address = $data['address'];
+                        $user->password = Hash::make('12345678');
+                        $user->image = $req->file('image')->getClientOriginalName();
+                        $user->icnumber = $data['ic'];
+                        $user->dob = $data['dob'];
+                        $user->downlineTo = null;
+                        $user->commissionPoint = 0;
+                        $user->belongsToAdmin = Auth::user()->id;
+                        $user->role = 'shogun';
+                        $user->save();
 
-                $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                        $image = $req->file('image');
 
-                toast('User has been created', 'success');
-                return redirect('/manageAgent');
-                }else{
-                    $user = new User;
-                    $user->name = $data['name'];
-                    $user->email = $data['email'];
-                    $user->phone = $data['phone'];
-                    $user->address = $data['address'];
-                    $user->password = Hash::make('12345678');
-                    $user->image = null;
-                    $user->icnumber = $data['ic'];
-                    $user->dob = $data['dob'];
-                    $user->downlineTo = null;
-                    $user->belongsToAdmin = Auth::user()->id;
-                    $user->role = 'shogun';
-                    $user->save();
-    
-                    toast('User has been created', 'success');
+                        $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+
+                        toast('User has been created', 'success');
+                        return redirect('/manageAgent');
+                    } else {
+                        $user = new User;
+                        $user->name = $data['name'];
+                        $user->email = $data['email'];
+                        $user->phone = $data['phone'];
+                        $user->address = $data['address'];
+                        $user->password = Hash::make('12345678');
+                        $user->image = null;
+                        $user->icnumber = $data['ic'];
+                        $user->dob = $data['dob'];
+                        $user->downlineTo = null;
+                        $user->belongsToAdmin = Auth::user()->id;
+                        $user->role = 'shogun';
+                        $user->save();
+
+                        toast('User has been created', 'success');
+                        return redirect('/manageAgent');
+                    }
+                }
+                else {
+                    toast('User with the same IC number has existed in the system.', 'error');
                     return redirect('/manageAgent');
                 }
-
-
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }

@@ -6,6 +6,7 @@ use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class PurchaseController extends Controller
 {
@@ -33,8 +34,36 @@ class PurchaseController extends Controller
 
         return view('shogun/purchaseItem',[
             'products' => $product,
-            'customerDetails' => $customerDetails
+            'customerDetails' => $customerDetails,
+            'referenceNo' => $id
         ]);
 
+    }
+
+    public static function getTrackingStatus($awb)
+    {
+        $postparam = array(
+            'api'    => 'EP-Ro51LDZu9',
+            'bulk'    => array(
+                array(
+                    'awb_no'    => $awb,
+                ),
+            ),
+        );
+
+        $url = 'http://demo.connect.easyparcel.my/?ac=EPTrackingBulk';
+        $response = Http::asForm()->post($url, $postparam);
+        $result = json_decode($response);
+        // $result = $result['result']['latest_status'];
+        return $result;
+    }
+
+    public static function checkOrderExistConsignment($refNo)
+    {
+        $parcel = DB::table('consignment')
+            ->where('refNo', $refNo)
+            ->get();
+
+        return $parcel;
     }
 }

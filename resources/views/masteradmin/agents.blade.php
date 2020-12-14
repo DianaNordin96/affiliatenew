@@ -32,7 +32,7 @@
             <div class="container-fluid">
 
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div style="margin: auto;" class="col-lg-9">
                         <div class="card">
                             <div class="card-body">
                                 <!-- <h3 class="card-title">View Employee</h3> -->
@@ -73,6 +73,8 @@
                                                         <option value="/manageAgent/merchant/{{$user->id}}" @if($user->role == 'merchant'){ selected }  @endif>Merchant</option>
                                                     <option value="/manageAgent/dropship/{{$user->id}}" @if($user->role == 'dropship'){ selected }  @endif>Dropship</option>
                                                     </select>
+                                                &nbsp;<a href="/master-viewAgent-one/{{$user->id}}" class="btn btn-warning"> View Profile & Downline </a>
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -259,7 +261,7 @@
             </div>
 
             <div class="modal fade" id="modalView">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="viewEmpName"></h4>

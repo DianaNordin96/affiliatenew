@@ -1,3 +1,5 @@
+@inject('tracking', 'App\Http\Controllers\Shogun\PurchaseController')
+@inject('order', 'App\Http\Controllers\Shogun\PurchaseController')
 @extends('layouts.shogun')
 @section('headScript')
 @endsection
@@ -39,6 +41,7 @@
                                             <th>Bill Code</th>
                                             <th>Amount (RM)</th>
                                             <th>Purchased At</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                             {{-- <th>View Receipt</th>
                                             --}}
@@ -51,6 +54,19 @@
                                                 <td>{{ $orderDetail->bill_code }}</td>
                                                 <td>{{ number_format($orderDetail->amount, 2) }}</td>
                                                 <td>{{ $orderDetail->created_at }}</td>
+                                                <td>
+
+                                                    <?php $consignmentArray = $order->checkOrderExistConsignment($orderDetail->orders_id); ?>
+                                                    @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL )
+                                                    <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray[0]->awb);?>
+                                                    @foreach($trackingStatus->result as $value)
+                                                        Latest Status : {{$value->latest_status}}<br/>
+                                                    @endforeach
+                                                    @else
+                                                    <h6 style="color: red">Order not yet packed.</h6>
+                                                    @endif
+
+                                                </td>
                                                 <td>
                                                     <a class="btn btn-warning"
                                                         href="/view-purchased-product/{{ $orderDetail->orders_id }}"><i

@@ -186,6 +186,7 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::get('/profile-masteradmin', 'MasterAdmin\ProfileController@index')->middleware('auth');
     Route::POST('profile-update-masteradmin', 'MasterAdmin\ProfileController@update')->middleware('auth');
     Route::POST('change-password-masteradmin', 'MasterAdmin\ProfileController@changePassword')->middleware('auth');
+    Route::get('/master-viewAgent-one/{id}', 'MasterAdmin\ManageAgentController@viewAgentProfile')->middleware('auth');
     
 });
 

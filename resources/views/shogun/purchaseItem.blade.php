@@ -1,3 +1,5 @@
+@inject('tracking', 'App\Http\Controllers\Shogun\PurchaseController')
+@inject('order', 'App\Http\Controllers\Shogun\PurchaseController')
 @extends('layouts.shogun')
 @section('headScript')
 @endsection
@@ -10,7 +12,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Purchase History</h1>
+                        <h1>Purchase Item For {{ $referenceNo }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -49,6 +51,37 @@
                                    <p><b>Address #2 : {{$customer->address_two}}</b></p>
                                    <p><b>Address #3 : {{$customer->address_three}}</b></p>
                                @endforeach
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        
+                        <div class="card card-warning collapsed-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Parcel Tracking</h3>
+    
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+    
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <?php
+                                // dd($consignmentArray);
+                                ?>
+                                <?php $consignmentArray = $order->checkOrderExistConsignment($referenceNo); ?>
+                                @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL )
+                                <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray[0]->awb); 
+                            
+                                ?>
+                                @foreach($trackingStatus->result as $value)
+                                    Latest Status : {{$value->latest_status}}<br/>
+                                @endforeach
+                            @else
+                            <h6 style="color: red">Order not yet packed.</h6>
+                            @endif
+                                
                             </div>
                             <!-- /.card-body -->
                         </div>
