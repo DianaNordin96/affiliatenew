@@ -151,16 +151,16 @@ class CartController extends Controller
 
         $response = request()->all(['status_id', 'billcode', 'order_id']);
 
-        
-            //if payment success
-            if ($request->status_id == 1) {
-                //insert orders
-                foreach ($cart as $key => $value) {
-                    $total = 0;
+
+        //if payment success
+        if ($request->status_id == 1) {
+            //insert orders
+            foreach ($cart as $key => $value) {
+                $total = 0;
                 foreach ($cart[$key][0] as $details) {
                     $total += $details['price'] * $details['quantity'];
                 }
-        
+
                 $orderID = date("Ymd") . date("hi") . Auth::user()->id . $key;
 
                 DB::table('orders')->insert([
@@ -266,14 +266,13 @@ class CartController extends Controller
                 //     }
                 // }
             }
-                $request->session()->forget('cartPayment');
-                toast('Payment Successful', 'success');
-                return redirect('purchase-history-shogun');
-            } else { //if payment unsuccessful
-                toast('Payment Unsuccessful', 'error');
-                return redirect('purchase-history-shogun');
-            }
-        
+            $request->session()->forget('cartPayment');
+            toast('Payment Successful', 'success');
+            return redirect('purchase-history-shogun');
+        } else { //if payment unsuccessful
+            toast('Payment Unsuccessful', 'error');
+            return redirect('purchase-history-shogun');
+        }
     }
 
     public function callback()

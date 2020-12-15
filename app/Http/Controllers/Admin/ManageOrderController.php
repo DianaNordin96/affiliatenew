@@ -17,7 +17,7 @@ class ManageOrderController extends Controller
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->join('customers', 'orders.customer_id', '=', 'customers.id')
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
-                ->where('users.belongsToAdmin', Auth::user()->id)
+                ->where('users.belongsToAdmin', Auth::user()->admin_category)
                 ->where('awb', '=', NULL)
                 ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
                 ->get();
@@ -28,7 +28,7 @@ class ManageOrderController extends Controller
         } else if ($status == 'completed') {
             $order_details_complete = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
-                ->where('users.belongsToAdmin', Auth::user()->id)
+                ->where('users.belongsToAdmin', Auth::user()->admin_category)
                 ->where('awb', '<>', NULL)
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
                 ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
@@ -102,7 +102,7 @@ class ManageOrderController extends Controller
         $getAllPendingOrders = DB::table('orders')
             ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('users.belongsToAdmin', Auth::user()->id)
+            ->where('users.belongsToAdmin', Auth::user()->admin_category)
             ->where('awb', '=', NULL)
             ->get();
 

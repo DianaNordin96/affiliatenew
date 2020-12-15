@@ -1,121 +1,56 @@
-@inject('tracking', 'App\Http\Controllers\Merchant\PurchaseController')
-@inject('order', 'App\Http\Controllers\Merchant\PurchaseController')
-@extends('layouts.merchant')
-@section('headScript')
-@endsection
-
+@extends('layouts.masteradmin')
 @section('content')
+
+    @if (session('success_message'))
+        <div class="alert alert-success">
+            {{ session('success_message') }}
+        </div>
+    @endif
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Purchase Item For {{ $referenceNo }}</h1>
-                    </div>
+                        <h1 class="m-0 text-dark"></h1>
+                    </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ url('MerchantDashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Purchase History</li>
+                            <li class="breadcrumb-item"><a href="{{ url('MasterDashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Agents</li>
                         </ol>
-                    </div>
-                </div>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
             </div><!-- /.container-fluid -->
-        </section>
+        </div>
+        <!-- /.content-header -->
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
 
                 <div class="row">
-                    <div class="col-lg-5">
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">Customer Details</h3>
-    
-                                {{-- <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                  <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                  <i class="fas fa-times"></i>
-                                </button>
-                              </div> --}}
-                            </div>
-                            <div class="card-body">
-                               @foreach($customerDetails as $customer)
-                                   <p><b>Name : {{$customer->name}}</b></p>
-                                   <p><b>Phone : {{$customer->phone}}</b></p>
-                                   <p><b>Address #1 : {{$customer->address}}</b></p>
-                                   <p><b>Address #2 : {{$customer->address_two}}</b></p>
-                                   <p><b>Address #3 : {{$customer->address_three}}</b></p>
-                               @endforeach
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        
-                        <div class="card card-warning collapsed-card">
-                            <div class="card-header">
-                                <h3 class="card-title">Parcel Tracking</h3>
-    
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-    
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <?php
-                                // dd($consignmentArray);
-                                ?>
-                                <?php $consignmentArray = $order->checkOrderExistConsignment($referenceNo); ?>
-                                @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL )
-                                <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray[0]->awb); 
-                            
-                                ?>
-                                @foreach($trackingStatus->result as $value)
-                                    Latest Status : {{$value->latest_status}}<br/>
-                                @endforeach
-                            @else
-                            <h6 style="color: red">Order not yet packed.</h6>
-                            @endif
-                                
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                    </div>
-
-                    <div class="col-lg-7">
+                    <div style="margin: auto;" class="col-lg-3">
                         <div class="card">
                             <div class="card-body">
-                                <!-- <h3 class="card-title">View Employee</h3> -->
-                                <a href="{{ url('/purchase-history-merchant') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
-                                    Go Back</a>
-                                    <br/><br/>
-                                <table id="example1" class="table table-bordered table-striped">
+
+                                <h5>Admin Category</h5>
+                                <table id="example2" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Image</th>
-                                            <th>Product Name</th>
-                                            <th>Price (RM) /each</th>
-                                            <th>Quantity</th>
-                                            {{-- <th>Action</th> --}}
+                                            <th>Category ID</th>
+                                            <th>Cat Name</th>
+                                            <th>Cat Desc</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($products as $product)
+                                        @foreach ($allTypeAdmin as $value)
                                             <tr>
-                                                <td><div class="col-sm-3 hidden-xs"><img
-                                                    src="../imageUploaded/products/{{ $product->product_image }}" width="100"
-                                                    height="100" class="img-responsive" /></div></td>
-                                                <td>{{ $product->product_name }}</td>
-                                                <td>{{ $product->price_hq + $product->price_damio + $product->price_shogun }}</td>
-                                                <td>{{ $product->quantity }}</td>
-                                                {{-- <td>
-                                                <a class="btn btn-warning" href="view-purchased-product/{{$orderDetail->orders_id}}"><i class="far fa-eye"></i>&nbsp; View item</a> &nbsp;
-                                                </td> --}}
+                                                <td>{{ $value->id }}</td>
+                                                <td>{{ $value->category }}</td>
+                                                <td>{{ $value->desc }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -123,7 +58,48 @@
                             </div>
                         </div>
                     </div>
-
+                    <div style="margin: auto;" class="col-lg-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>List Admin</h5><br/>
+                                <!-- <h3 class="card-title">View Employee</h3> -->
+                                {{-- <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
+                                    data-target="#modal-lg">
+                                    <i class="fas fa-plus"></i> &nbsp Add Users
+                                </button>
+                                <br /> --}}
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone Number</th>
+                                            <th>Admin Category</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($allAdmin as $user)
+                                            <tr>
+                                                <td>{{ $user->id }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->phone }}</td>
+                                                <td>
+                                                    <select onchange="location = this.value;" class="btn btn-default">
+                                                        @foreach($allTypeAdmin as $key => $value)
+                                                        <option value="/change-admin-type/{{$user->id}}/{{$value->id}}" @if($user->admin_category == $value->id){ selected }  @endif>{{$value->category}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                            
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div><!-- /.container-fluid -->
 
@@ -301,7 +277,7 @@
             </div>
 
             <div class="modal fade" id="modalView">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="viewEmpName"></h4>
@@ -325,8 +301,7 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- /.card -->
-
+    <!-- /.content-wrapper -->
 
 @endsection
 
@@ -348,7 +323,30 @@
             });
         });
 
-        document.getElementById("history").className = "nav-link active";
+        document.getElementById("manageAdmin").className = "nav-link active";
+
+        function openModalEdit(id, name, email, phone, address) {
+
+            document.getElementById("idEdit").value = id;
+            document.getElementById("nameEdit").value = name;
+            document.getElementById("emailEdit").value = email;
+            document.getElementById("phoneEdit").value = phone;
+            document.getElementById("addressEdit").value = address;
+
+        }
+
+        function openModalView(id, name, email, phone, address) {
+
+            document.getElementById("modal-body-view").innerHTML =
+                "<div class='row'>" +
+                "<br/>" +
+                "<div class='col-sm-6'>" +
+                "<b>Name  </b>" + "<br/>" + name + "<br/>" +
+                "<b>Email  </b>" + "<br/>" + email + "<br/>" +
+                "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
+                "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+                "</div>";
+        }
 
     </script>
 @endsection

@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\MasterAdmin;
 
-use Illuminate\Support\Facades\Http;
-use Billplz\Laravel\Billplz;
 use DB;
 use App\Purchase;
 use App\Product;
@@ -14,7 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 
-class ManageProductController extends Controller
+
+class ProductController extends Controller
 {
     public function index()
     {
@@ -22,7 +21,7 @@ class ManageProductController extends Controller
         $products = DB::table('products')->get();
 
         return view(
-            'admin/manageProduct',
+            'masteradmin/products',
             [
                 'product' => $products
             ]
@@ -42,12 +41,13 @@ class ManageProductController extends Controller
             'damioPriceEdit' => 'required',
             'merchantPriceEdit' => 'required',
             'productLinkEdit' => '',
+            'categoryEdit' => 'required',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
             toast('Please fill in all the box before creating new products', 'error');
-            return redirect('/manageProduct');
+            return redirect('/master-manageProduct');
         } else {
             $data = $req->input();
             try {
@@ -62,13 +62,14 @@ class ManageProductController extends Controller
                         'price_merchant' => $data['merchantPriceEdit'],
                         'price_dropship' => $data['dropshipPriceEdit'],
                         'price_hq' => $data['hqPriceEdit'],
-                        'product_link' => $data['productLinkEdit']
+                        'product_link' => $data['productLinkEdit'],
+                        'belongToAdmin' => $data['categoryEdit'],
                     ]);
 
                 toast('Product has been updated', 'success');
-                return redirect('/manageProduct');
+                return redirect('/master-manageProduct');
             } catch (Exception $e) {
-                return redirect('manageProduct')->with('error', "Data cannot be updated");
+                return redirect('/master-manageProduct')->with('error', "Data cannot be updated");
             }
         }
     }
@@ -85,13 +86,14 @@ class ManageProductController extends Controller
             'merchantPrice' => 'required',
             'hqPrice' => 'required',
             'productLink' => '',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'categoryEdit' => '',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
             toast('Please fill in all the box before creating new products', 'error');
-            return redirect('/manageProduct');
+            return redirect('/master-manageProduct');
         } else {
             $data = $req->input();
             try {
@@ -106,7 +108,7 @@ class ManageProductController extends Controller
                     'price_merchant' => $data['merchantPrice'],
                     'price_dropship' => $data['dropshipPrice'],
                     'product_link' => $data['productLink'],
-                    'belongToAdmin' =>  Auth::user()->admin_category
+                    'belongToAdmin' => $data['category'],
                 ]);
 
                 $image = $req->file('image');
@@ -114,7 +116,7 @@ class ManageProductController extends Controller
                 $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
 
                 toast('Product has been created', 'success');
-                return redirect('/manageProduct');
+                return redirect('/master-manageProduct');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -127,6 +129,6 @@ class ManageProductController extends Controller
             ->delete($id);
 
         toast('Product has been removed', 'success');
-        return redirect('/manageProduct');
+        return redirect('/master-manageProduct');
     }
 }

@@ -125,6 +125,24 @@
                         </li>
 
                         <li class="nav-item">
+                            <a id="manageProduct" href="/master-manageProduct" class="nav-link">
+                                <i class="nav-icon fab fa-product-hunt"></i>
+                                <p>
+                                    Products
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="manageAdmin" href="/master-manageAdmin" class="nav-link">
+                                <i class="nav-icon fas fa-user-lock"></i>
+                                <p>
+                                    Manage Admin
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="/master-commission" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>

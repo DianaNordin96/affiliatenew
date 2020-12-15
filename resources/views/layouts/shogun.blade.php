@@ -71,7 +71,7 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="shogun-cart">
+                    <a class="nav-link" href="/shogun-cart">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="badge badge-danger navbar-badge">
 

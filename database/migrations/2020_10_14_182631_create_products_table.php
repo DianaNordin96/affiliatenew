@@ -19,11 +19,13 @@ class CreateProductsTable extends Migration
             $table->string('product_description')->nullable();
             $table->string('product_price')->nullable();
             $table->string('product_image')->nullable();
+            $table->string('product_link')->nullable();
             $table->string('price_shogun')->nullable();
             $table->string('price_damio')->nullable();
             $table->string('price_merchant')->nullable();
             $table->string('price_dropship')->nullable();
             $table->string('price_hq')->nullable();
+            $table->bigInteger('belongToAdmin')->nullable();
             $table->timestamps();
         });
     }

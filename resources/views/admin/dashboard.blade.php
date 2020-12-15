@@ -1,3 +1,4 @@
+@inject('sales', 'App\Http\Controllers\Admin\SalesController')
 @extends('layouts.admin')
 @section('content')
 
@@ -27,12 +28,27 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-6 col-sm-6 col-6">
+                <div class="col-lg-4 col-sm-4 col-4">
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">
-                            <h4>RM {{ number_format($totalSale,2) }}</h4>
+                            
+                            <h4>RM {{ number_format($sales->getTotalSales(),2) }}</h4>
                             <p>Total Sales <span class="text-success"> &nbsp; &nbsp;</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-4">
+                    <!-- small box -->
+                    <div class="small-box bg-light">
+                        <div class="inner">
+                            
+                            <h4>RM {{ number_format($sales->getTotalSales() - $sales->getTotalPurchase(),2) }}</h4>
+                            <p>Gross Profit <span class="text-success"> &nbsp; &nbsp;</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -43,7 +59,7 @@
                 <!-- ./col -->
 
                 <!-- ./col -->
-                <div class="col-lg-6 col-6">
+                <div class="col-lg-4 col-4">
                     <!-- small box -->
                     <div class="small-box bg-light">
                         <div class="inner">

@@ -84,6 +84,180 @@ class CartController extends Controller
 
     public function checkout(Request $req)
     {
+        $cart = session()->get('cartPayment');
+
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+
+        $orderID = date("Ymd") . date("hi") . Auth::user()->id;
+
+        $total = 0;
+
+        foreach ($cart as $key => $value) {
+            foreach ($cart[$key][0] as $details) {
+                $total += $details['price'] * $details['quantity'];
+            }
+        }
+
+        $option = array(
+            'userSecretKey' => 'ky1g673m-az9v-dwde-6nyk-24r0x9g83msb',
+            'categoryCode' => 'g2lwd3s7',
+            'billName' => 'Purchase for Stock',
+            'billDescription' => 'Buy stock',
+            'billPriceSetting' => 1,
+            'billPayorInfo' => 1,
+            'billAmount' => $total * 100,
+            'billReturnUrl' => url('statusMerchant'),
+            'billCallbackUrl' => url('callbackMerchant'),
+            'billExternalReferenceNo' => $orderID,
+            'billTo' => Auth::user()->name,
+            'billEmail' => Auth::user()->email,
+            'billPhone' => Auth::user()->phone,
+            'billSplitPayment' => 0,
+            'billSplitPaymentArgs' => '',
+            'billMultiPayment' => 1,
+            'billPaymentChannel' => 0,
+            'billDisplayMerchant' => 1,
+            'billContentEmail' => 'Email content'
+        );
+
+        $url = 'https://dev.toyyibpay.com/index.php/api/createBill';
+
+        $response = Http::asForm()->post($url, $option);
+        $billCode = $response[0]['BillCode'];
+
+        return redirect('https://dev.toyyibpay.com/' .  $billCode);
+    }
+
+    public function paymentStatus(Request $request)
+    {
+        $cart = session()->get('cartPayment');
+
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+
+        $response = request()->all(['status_id', 'billcode', 'order_id']);
+
+        //if payment success
+        if ($request->status_id == 1) {
+            foreach ($cart as $key => $value) {
+                $total = 0;
+                foreach ($cart[$key][0] as $details) {
+                    $total += $details['price'] * $details['quantity'];
+                }
+
+                $orderID = date("Ymd") . date("hi") . Auth::user()->id . $key;
+
+                DB::table('orders')->insert([
+                    [
+                        'orders_id' => $orderID,
+                        'bill_code' => $request->billcode,
+                        'user_id' => Auth::user()->id,
+                        'amount' => $total,
+                        'created_at' => NOW(),
+                        'customer_id' => $key
+                    ],
+                ]);
+
+                //insert product orders
+                foreach ($cart[$key][0] as $id => $details) {
+                    DB::table('orders_details')->insert([
+                        [
+                            'product_id' => $id,
+                            'referenceNo' => $orderID,
+                            'quantity' => $details['quantity'],
+                        ],
+                    ]);
+                }
+
+                $totalCommission = 0;
+                //update commision
+                foreach ($cart[$key][0] as $id => $details) {
+                    $prod = DB::table('products')
+                        ->where('id', $id)
+                        ->get();
+                    foreach ($prod as $product) {
+                        $commisionPerProduct = $product->price_merchant;
+                        $commisionPerProduct = $commisionPerProduct * $details['quantity'];
+                        $totalCommission = $totalCommission + $commisionPerProduct;
+
+                        //check downline
+                        $status = true;
+                        // $statusCheck = false;
+                        $id = Auth::user()->downlineTo;
+                        $commissionPoint = 0;
+
+
+                        while ($status) {
+                            $check = DB::table('users')
+                                ->where('id', $id)
+                                ->get();
+                            // dd($check);
+                            foreach ($check as $checking) {
+                                if ($checking->id != '') {
+                                    $id = $checking->downlineTo;
+                                    $role = $checking->role;
+                                    switch ($role) {
+                                        case 'shogun':
+                                            $commissionPoint = ($product->price_shogun * $details['quantity']) + $checking->commissionPoint;
+                                            break;
+                                        case 'merchant':
+                                            $commissionPoint = ($product->price_merchant * $details['quantity']) + $checking->commissionPoint;
+                                            break;
+                                        case 'damio':
+                                            $commissionPoint = ($product->price_damio * $details['quantity']) + $checking->commissionPoint;
+                                            break;
+                                        case 'dropship':
+                                            $commissionPoint = ($product->price_dropship * $details['quantity']) + $checking->commissionPoint;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    DB::table('users')
+                                        ->where('id', $checking->id)
+                                        ->update([
+                                            'commissionPoint' => $commissionPoint
+                                        ]);
+
+                                    if ($checking->downlineTo == null) {
+                                        $status = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $request->session()->forget('cartPayment');
+            toast('Payment Successful', 'success');
+            return redirect('purchase-history-merchant');
+        } else { //if payment unsuccessful
+            toast('Payment Unsuccessful', 'error');
+            return redirect('purchase-history-merchant');
+        }
+    }
+
+    public function callback()
+    {
+        $response = request()->all(['refno', 'status', 'billcode', 'order_id', 'amount']);
+        Log::info($response);
+    }
+
+    public function removeFromCartPayment(Request $request)
+    {
+
+        DB::table('customers')->where('id', $request->id)->delete();
+
+        if ($request->id) {
+            $cart = session()->get('cartPayment');
+            if (isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cartPayment', $cart);
+            }
+            session()->flash('success', 'Customer order has been removed successfully');
+        }
+    }
+
+    public function addToPaymentCart(Request $req)
+    {
         $validatedData = [
             'name' => 'required',
             'phone' => 'required',
@@ -97,7 +271,7 @@ class CartController extends Controller
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before checkout', 'error');
+            toast('Please fill in all the box before submit page', 'error');
             return redirect()->back();
         } else {
             $data = $req->input();
@@ -115,174 +289,23 @@ class CartController extends Controller
                 'email' => $data['email']
             ]);
 
-            date_default_timezone_set("Asia/Kuala_Lumpur");
+            $cart = session()->get('cart');
+            $cartPayment = session()->get('cartPayment');
 
-            $orderID = date("Ymd") . date("hi") . Auth::user()->id;
-
-            session()->put('customer', $customerDetails);
-
-            $total = 0;
-
-            foreach (session('cart') as $id => $details) {
-                $total += $details['price'] * $details['quantity'];
-            }
-            $option = array(
-                'userSecretKey' => '7jjvcrsb-h3ro-1zsh-wrrs-7j47nubg36v2',
-                'categoryCode' => 'p5cfhstp',
-                'billName' => 'Purchase for Stock',
-                'billDescription' => 'Buy stock',
-                'billPriceSetting' => 1,
-                'billPayorInfo' => 1,
-                'billAmount' => $total * 100,
-                'billReturnUrl' => url('statusMerchant'),
-                'billCallbackUrl' => url('callbackMerchant'),
-                'billExternalReferenceNo' => $orderID,
-                'billTo' => Auth::user()->name,
-                'billEmail' => Auth::user()->email,
-                'billPhone' => Auth::user()->phone,
-                'billSplitPayment' => 0,
-                'billSplitPaymentArgs' => '',
-                'billMultiPayment' => 1,
-                'billPaymentChannel' => 0,
-                'billDisplayMerchant' => 1,
-                'billContentEmail' => 'Email content'
-            );
-
-            $url = 'https://toyyibpay.com/index.php/api/createBill';
-
-            $response = Http::asForm()->post($url, $option);
-            $billCode = $response[0]['BillCode'];
-
-            return redirect('https://toyyibpay.com/' .  $billCode);
-        }
-    }
-
-    public function paymentStatus(Request $request)
-    {
-        $custID = session('customer');
-        $total = 0;
-        foreach (session('cart') as $id => $details) {
-            $total += $details['price'] * $details['quantity'];
-        }
-
-        $response = request()->all(['status_id', 'billcode', 'order_id']);
-
-        //if payment success
-        if ($request->status_id == 1) {
-            //insert orders
-            DB::table('orders')->insert([
-                [
-                    'orders_id' => $request->order_id,
-                    'bill_code' => $request->billcode,
-                    'user_id' => Auth::user()->id,
-                    'amount' => $total,
-                    'created_at' => NOW(),
-                    'customer_id' => $custID
-                ],
-            ]);
-
-            //insert product orders
-            foreach (session('cart') as $id => $details) {
-                DB::table('orders_details')->insert([
-                    [
-                        'product_id' => $id,
-                        'referenceNo' => $request->order_id,
-                        'quantity' => $details['quantity'],
-                    ],
-                ]);
+            if (!$cartPayment) {
+                $cartPayment = [
+                    $customerDetails => [$cart]
+                ];
+                session()->put('cartPayment', $cartPayment);
+                $req->session()->forget('cart');
+                return redirect()->back()->with('success', 'Product added to cart successfully!');
             }
 
-            $totalCommission = 0;
-            //update commision
-            foreach (session('cart') as $id => $details) {
-                $prod = DB::table('products')
-                    ->where('id', $id)
-                    ->get();
-                foreach ($prod as $product) {
-                    $commisionPerProduct = $product->price_merchant;
-                    $commisionPerProduct = $commisionPerProduct * $details['quantity'];
-                    $totalCommission = $totalCommission + $commisionPerProduct;
-
-                    //check downline
-                    $status = true;
-                    // $statusCheck = false;
-                    $id = Auth::user()->downlineTo;
-                    $commissionPoint = 0;
-
-
-                    while ($status) {
-                        $check = DB::table('users')
-                            ->where('id', $id)
-                            ->get();
-                        // dd($check);
-                        foreach ($check as $checking) {
-                            if ($checking->id != '') {
-                                $id = $checking->downlineTo;
-                                $role = $checking->role;
-                                switch ($role) {
-                                    case 'shogun':
-                                        $commissionPoint = ($product->price_shogun * $details['quantity']) + $checking->commissionPoint;
-                                        break;
-                                    case 'merchant':
-                                        $commissionPoint = ($product->price_merchant * $details['quantity']) + $checking->commissionPoint;
-                                        break;
-                                    case 'damio':
-                                        $commissionPoint = ($product->price_damio * $details['quantity']) + $checking->commissionPoint;
-                                        break;
-                                    case 'dropship':
-                                        $commissionPoint = ($product->price_dropship * $details['quantity']) + $checking->commissionPoint;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                DB::table('users')
-                                    ->where('id', $checking->id)
-                                    ->update([
-                                        'commissionPoint' => $commissionPoint
-                                    ]);
-
-                                if ($checking->downlineTo == null) {
-                                    $status = false;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            //addToCommision
-            // $userCommission = DB::table('users')->where('id', Auth::user()->id)->get();
-
-            // foreach ($userCommission as $user) {
-            //     $commissionPoint = $user->commissionPoint;
-            //     if ($commissionPoint == null) {
-            //         DB::table('users')
-            //             ->where('id', Auth::user()->id)
-            //             ->update([
-            //                 'commissionPoint' => $totalCommission
-            //             ]);
-            //     } else {
-            //         $totalCommission += $commissionPoint;
-            //         DB::table('users')
-            //             ->where('id', Auth::user()->id)
-            //             ->update([
-            //                 'commissionPoint' => $totalCommission
-            //             ]);
-            //     }
-            // }
-
-            $request->session()->forget('cart');
-            toast('Payment Successful', 'success');
-            return redirect('purchase-history-merchant');
-        } else { //if payment unsuccessful
-            toast('Payment Unsuccessful', 'error');
-            return redirect('purchase-history-merchant');
+            // if item not exist in cart then add to cart with quantity = 1
+            $cartPayment[$customerDetails] = [$cart];
+            session()->put('cartPayment', $cartPayment);
+            $req->session()->forget('cart');
+            return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
-    }
-
-    public function callback()
-    {
-        $response = request()->all(['refno', 'status', 'billcode', 'order_id', 'amount']);
-        Log::info($response);
     }
 }

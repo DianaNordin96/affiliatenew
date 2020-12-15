@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
         //total downline
         $numberDownline = DB::table('users')
-            ->where('belongsToAdmin', '=', Auth::user()->id)
+            ->where('belongsToAdmin', '=', Auth::user()->admin_category)
             ->where(function($query) {
                 $query->whereNull('statusDownline')
                     ->orWhere('statusDownline','!=', 'decline');
@@ -42,7 +42,7 @@ class DashboardController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->id)
+            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
             ->select('amount')
             ->sum('amount');
 
@@ -51,7 +51,7 @@ class DashboardController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->id)
+            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'shogun')
             ->select('amount')
             ->sum('amount');
@@ -62,7 +62,7 @@ class DashboardController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->id)
+            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'damio')
             ->select('amount')
             ->sum('amount');
@@ -72,7 +72,7 @@ class DashboardController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->id)
+            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'merchant')
             ->select('amount')
             ->sum('amount');
@@ -82,7 +82,7 @@ class DashboardController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->id)
+            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'dropship')
             ->select('amount')
             ->sum('amount');

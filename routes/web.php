@@ -90,7 +90,7 @@ Route::group(['middleware' => 'shogun'], function () {
     Route::POST('/commission-shogun-withdrawal', 'Shogun\CommissionController@withdraw')->middleware('auth');
     Route::get('/approveDownline-shogun/{id}', 'Shogun\ManageDownlineController@approve')->middleware('auth');
     Route::get('/declineDownline-shogun/{id}', 'Shogun\ManageDownlineController@decline')->middleware('auth');
-    Route::post('addToPaymentCart-shogun', 'Shogun\CartController@addToPaymentCart')->middleware('auth');
+    Route::post('/addToPaymentCart-shogun', 'Shogun\CartController@addToPaymentCart')->middleware('auth');
     Route::delete('/remove-from-cart-payment-Shogun', 'Shogun\CartController@removeFromCartPayment')->middleware('auth');
     
 //guideline-shogun
@@ -123,6 +123,8 @@ Route::group(['middleware' => 'damio'], function () {
     Route::POST('/commission-damio-withdrawal', 'Damio\CommissionController@withdraw')->middleware('auth');
     Route::get('/approveDownline-damio/{id}', 'Damio\ManageDownlineController@approve')->middleware('auth');
     Route::get('/declineDownline-damio/{id}', 'Damio\ManageDownlineController@decline')->middleware('auth');
+    Route::post('/addToPaymentCart-damio', 'Damio\CartController@addToPaymentCart')->middleware('auth');
+    Route::delete('/remove-from-cart-payment-Damio', 'Damio\CartController@removeFromCartPayment')->middleware('auth');
 });
 
 Route::group(['middleware' => 'merchant'], function () {
@@ -151,6 +153,8 @@ Route::group(['middleware' => 'merchant'], function () {
     Route::POST('/commission-merchant-withdrawal', 'Merchant\CommissionController@withdraw')->middleware('auth');
     Route::get('/approveDownline-merchant/{id}', 'Merchant\ManageDownlineController@approve')->middleware('auth');
     Route::get('/declineDownline-merchant/{id}', 'Merchant\ManageDownlineController@decline')->middleware('auth');
+    Route::post('/addToPaymentCart-merchant', 'Merchant\CartController@addToPaymentCart')->middleware('auth');
+    Route::delete('/remove-from-cart-payment-Merchant', 'Merchant\CartController@removeFromCartPayment')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\DropshipMiddleware'], function () {
@@ -174,7 +178,8 @@ Route::group(['middleware' => 'App\Http\Middleware\DropshipMiddleware'], functio
     Route::get('/customers-dropship-delete/{id}', 'Dropship\CustomerController@delete')->middleware('auth');
     Route::get('/commission-dropship', 'Dropship\CommissionController@index')->middleware('auth');
     Route::POST('/commission-dropship-withdrawal', 'Dropship\CommissionController@withdraw')->middleware('auth');
-
+    Route::post('/addToPaymentCart-dropship', 'Dropship\CartController@addToPaymentCart')->middleware('auth');
+    Route::delete('/remove-from-cart-payment-Dropship', 'Dropship\CartController@removeFromCartPayment')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], function () {
@@ -187,6 +192,12 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::POST('profile-update-masteradmin', 'MasterAdmin\ProfileController@update')->middleware('auth');
     Route::POST('change-password-masteradmin', 'MasterAdmin\ProfileController@changePassword')->middleware('auth');
     Route::get('/master-viewAgent-one/{id}', 'MasterAdmin\ManageAgentController@viewAgentProfile')->middleware('auth');
+    Route::post('/product-create-master', 'MasterAdmin\ProductController@create')->middleware('auth');
+    Route::post('/product-update-master', 'MasterAdmin\ProductController@update')->middleware('auth');
+    Route::get('/master-manageProduct', 'MasterAdmin\ProductController@index')->middleware('auth');
+    Route::get('/product-delete-master/{id}', 'MasterAdmin\ProductController@delete')->middleware('auth');
+    Route::get('/master-manageAdmin', 'MasterAdmin\ManageAdminController@index')->middleware('auth');
+    Route::get('/change-admin-type/{id}/{catID}', 'MasterAdmin\ManageAdminController@changeCategory')->middleware('auth');
     
 });
 

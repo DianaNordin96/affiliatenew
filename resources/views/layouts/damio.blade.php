@@ -71,12 +71,12 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="damio-cart">
+                    <a class="nav-link" href="/damio-cart">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="badge badge-danger navbar-badge">
 
-                            @if (session('cart') != null)
-                                {{ count(session('cart')) }}
+                            @if (session('cartPayment') != null)
+                            {{ count(session('cartPayment')) }}
 
                             @else
                                 0

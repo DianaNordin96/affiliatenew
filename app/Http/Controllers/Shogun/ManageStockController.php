@@ -16,7 +16,15 @@ class ManageStockController extends Controller
         $email = Auth::user()->email;
         $pass = Auth::user()->password;
 
-        $product = DB::table('products')->get();
+        $getProdGrp = DB::table('users')
+        ->where('id',Auth::user()->belongsToAdmin)
+        ->select('admin_category')
+        ->get();
+
+
+        $product = DB::table('products')
+        ->where('belongToAdmin',$getProdGrp[0]->admin_category)
+        ->get();
 
         return view(
             'shogun/restock',

@@ -94,4 +94,12 @@ class CustomerController extends Controller
         toast('Customer has been removed', 'success');
         return redirect('customers-merchant');
     }
+
+    public static function getCustomer($id){
+        $customer = DB::table('customers')
+        ->where('id',$id)
+        ->get();
+
+        return $customer;
+    }
 }

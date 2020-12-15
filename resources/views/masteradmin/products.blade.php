@@ -1,4 +1,5 @@
-@extends('layouts.admin')
+@inject('category', 'App\Http\Controllers\MasterAdmin\ManageAdminController')
+@extends('layouts.masteradmin')
 @section('content')
 
     <!-- Content Wrapper. Contains page content -->
@@ -70,7 +71,8 @@
                                                                     '{{ $product->price_damio }}',
                                                                     '{{ $product->price_merchant }}',
                                                                     '{{ $product->price_dropship }}',
-                                                                    '{{ $product->product_link }}'
+                                                                    '{{ $product->product_link }}',
+                                                                    '{{ $product->belongToAdmin }}'
                                                                     )" data-target="#modalEdit" class="btn btn-warning"><i
                                                             class="fas fa-edit"></i></button> &nbsp;
                                                     <button type="button" title="View" data-toggle="modal" onclick="openModalView(
@@ -83,12 +85,13 @@
                                                                     '{{ $product->price_damio }}',
                                                                     '{{ $product->price_merchant }}',
                                                                     '{{ $product->price_dropship }}',
-                                                                    '{{ $product->product_link }}'
+                                                                    '{{ $product->product_link }}',
+                                                                    '{{ $product->belongToAdmin }}'
                                                                     )" data-target="#modalView" class="btn btn-success"><i
                                                             class="far fa-eye"></i></button> &nbsp;
 
                                                             <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                onclick="window.location.href='manageProduct/delete/{{$product->id}}'" class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
+                                                onclick="window.location.href='/product-delete-master/{{$product->id}}'" class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -111,7 +114,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('manageProduct.create') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ url('product-create-master') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -203,6 +206,21 @@
                                                 placeholder="Shogun Price" />
                                         </div>
                                     </div>
+
+                                    <?php $allAdminType = $category->getAllAdminType(); ?>
+
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Product Group </label>
+                                            <select class="form-control" name="category">
+                                                @foreach($allAdminType as $value)
+                                                    <option value="{{$value->id}}">{{$value->category}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="modal-footer justify-content-between">
@@ -230,7 +248,7 @@
                         </div>
 
                         <div class="modal-body">
-                            <form action="{{ route('manageProduct.update') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{  url('product-update-master')  }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="text" name="productIDEdit" id="productIDEdit" hidden />
                                 <div class="row">
@@ -313,6 +331,20 @@
                                                 placeholder="Shogun Price" />
                                         </div>
                                     </div>
+
+                                    <?php $allAdminType = $category->getAllAdminType(); ?>
+
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Product Group </label>
+                                            <select class="form-control" id="categoryEdit" name="categoryEdit">
+                                                @foreach($allAdminType as $value)
+                                                    <option value="{{$value->id}}">{{$value->category}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="modal-footer justify-content-between">
@@ -377,7 +409,7 @@
 
         document.getElementById("manageProduct").className = "nav-link active";
 
-        function openModalEdit(prodID,name,hq,price, desc , shogun, damio, merchant, dropship , link) {
+        function openModalEdit(prodID,name,hq,price, desc , shogun, damio, merchant, dropship , link, category) {
 
             document.getElementById("productIDEdit").value = prodID;
             document.getElementById("productNameEdit").value = name;
@@ -389,7 +421,7 @@
             document.getElementById("damioPriceEdit").value = damio;
             document.getElementById("merchantPriceEdit").value = merchant;
             document.getElementById("dropshipPriceEdit").value = dropship;
-
+            document.getElementById("categoryEdit").value = category;
         }
 
         function openModalView(prodID,name, hq, price, desc , shogun, damio, merchant, dropship, link) {

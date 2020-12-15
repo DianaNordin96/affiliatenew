@@ -22,7 +22,7 @@ class ManageAgentController extends Controller
     {
         $users = DB::table('users')
             ->where('id', '<>', Auth::user()->id)
-            ->where('belongsToAdmin', Auth::user()->id)
+            ->where('belongsToAdmin', Auth::user()->admin_category)
             ->where(function ($query) {
                 $query->whereNull('statusDownline')
                     ->orWhere('statusDownline', '!=', 'decline');
@@ -93,7 +93,7 @@ class ManageAgentController extends Controller
                         $user->dob = $data['dob'];
                         $user->downlineTo = null;
                         $user->commissionPoint = 0;
-                        $user->belongsToAdmin = Auth::user()->id;
+                        $user->belongsToAdmin = Auth::user()->admin_category;
                         $user->role = 'shogun';
                         $user->save();
 
@@ -114,7 +114,7 @@ class ManageAgentController extends Controller
                         $user->icnumber = $data['ic'];
                         $user->dob = $data['dob'];
                         $user->downlineTo = null;
-                        $user->belongsToAdmin = Auth::user()->id;
+                        $user->belongsToAdmin = Auth::user()->admin_category;
                         $user->role = 'shogun';
                         $user->save();
 

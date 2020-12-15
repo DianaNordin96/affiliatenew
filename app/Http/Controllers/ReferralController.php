@@ -35,24 +35,32 @@ class ReferralController extends Controller
         } else {
             $data = $req->input();
             try {
-                $user = new User;
-                $user->name = $data['name'];
-                $user->email = $data['email'];
-                $user->phone = $data['phone'];
-                $user->address = $data['address'];
-                $user->image = null;
-                $user->password = null;
-                $user->icnumber = $data['ic'];
-                $user->dob = $data['dob'];
-                $user->downlineTo = $data['id'];
-                $user->belongsToAdmin = null;
-                $user->role = null;
-                $user->statusDownline = 'pending';
-                $user->save();
+                //check IC exist
+                $icStatus = DB::table('users')->where('icnumber', $data['ic'])->get();
 
-                return view('referral/info')->with([
-                    'message' => "You have been successfully registered. The approval of your account will took 2-3 days of working days"
-                ]);
+                $countIC = count($icStatus);
+                if ($countIC == 0) {
+                    $user = new User;
+                    $user->name = $data['name'];
+                    $user->email = $data['email'];
+                    $user->phone = $data['phone'];
+                    $user->address = $data['address'];
+                    $user->image = null;
+                    $user->password = null;
+                    $user->icnumber = $data['ic'];
+                    $user->dob = $data['dob'];
+                    $user->downlineTo = $data['id'];
+                    $user->belongsToAdmin = null;
+                    $user->role = null;
+                    $user->statusDownline = 'pending';
+                    $user->save();
+
+                    return view('referral/info')->with([
+                        'message' => "You have been successfully registered. The approval of your account will took 2-3 days of working days"
+                    ]);
+                } else {
+                    return redirect()->back()->with('failed', "Your IC number has been registered to one of the agents.");
+                }
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }

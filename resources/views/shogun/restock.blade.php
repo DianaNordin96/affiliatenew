@@ -72,9 +72,9 @@
                                                         <br />
                                                         {{ $product->product_description }}
                                                         <br />
-                                                        <b>RM {{ $product->price_hq }}</b>
+                                                        <b>RM {{ number_format($product->price_hq,2) }}</b>
                                                         <br />
-                                                        <b style="color : blue">Comm : RM {{ $product->product_price - $product->price_hq }} /each</b>
+                                                        <b style="color : blue">Comm : RM {{ number_format($product->product_price - $product->price_hq,2) }} /each</b>
                                                     </div>
                                                 </div>
 
@@ -88,8 +88,9 @@
                                                                                                                     '{{ $product->product_image }}',
                                                                                                                     '{{ $product->product_name }}',
                                                                                                                     '{{ $product->product_description }}',
-                                                                                                                    '{{ $product->price_hq }}',
-                                                                                                                    '{{ $product->product_price - $product->price_hq }}'
+                                                                                                                    '{{ number_format($product->price_hq,2) }}',
+                                                                                                                    '{{ number_format($product->product_price - $product->price_hq,2) }}',
+                                                                                                                    '{{ $product->product_link }}'
                                                                                                                     )"
                                                     data-target="#modalView" class="btn btn-block btn-outline-info" ><i class="fas fa-info"></i></button>
                                                 </div>
@@ -521,7 +522,7 @@
 
     document.getElementById("products").className = "nav-link active";
 
-    function openModalView(prodImage, prodName,prodDesc,prodActualPrice,prodComm) {
+    function openModalView(prodImage, prodName,prodDesc,prodActualPrice,prodComm,link) {
 
         document.getElementById("modal-body-view").innerHTML =
             "<div class='row'>" +
@@ -532,8 +533,9 @@
             "<div class='col-sm-6'>" +
             "<b>Product Name  </b> : " + prodName + "<br/>" +
             "<b>Description  </b> : " + prodDesc + "<br/>" +
-            "<b>Product Price  </b> : " + prodActualPrice + "<br/>" +
-            "<b>Commission </b> : " + prodComm + "<br/>" +
+            "<b>Product Price  </b> : RM " + prodActualPrice + "<br/>" +
+            "<b>Commission </b> : RM " + prodComm + "<br/>" +
+            "<b>Product Link: </b><a href=" + link + ">"+ link +"</a><br/>" +
             "</div>"+
             "</div>";
     }
