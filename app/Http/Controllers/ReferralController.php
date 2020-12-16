@@ -26,7 +26,7 @@ class ReferralController extends Controller
             'phone' => 'required',
             'dob' => 'required',
             'ic' => 'required',
-            'image' => ''
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
@@ -45,7 +45,7 @@ class ReferralController extends Controller
                     $user->email = $data['email'];
                     $user->phone = $data['phone'];
                     $user->address = $data['address'];
-                    $user->image = null;
+                    $user->image = $req->file('image')->getClientOriginalName();
                     $user->password = null;
                     $user->icnumber = $data['ic'];
                     $user->dob = $data['dob'];
@@ -55,6 +55,10 @@ class ReferralController extends Controller
                     $user->statusDownline = 'pending';
                     $user->save();
 
+                    $image = $req->file('image');
+
+                    $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                    
                     return view('referral/info')->with([
                         'message' => "You have been successfully registered. The approval of your account will took 2-3 days of working days"
                     ]);

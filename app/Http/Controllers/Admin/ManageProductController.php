@@ -19,7 +19,7 @@ class ManageProductController extends Controller
     public function index()
     {
 
-        $products = DB::table('products')->get();
+        $products = DB::table('products')->where('belongToAdmin',Auth::user()->admin_category)->get();
 
         return view(
             'admin/manageProduct',

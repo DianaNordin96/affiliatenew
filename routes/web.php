@@ -198,7 +198,10 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::get('/product-delete-master/{id}', 'MasterAdmin\ProductController@delete')->middleware('auth');
     Route::get('/master-manageAdmin', 'MasterAdmin\ManageAdminController@index')->middleware('auth');
     Route::get('/change-admin-type/{id}/{catID}', 'MasterAdmin\ManageAdminController@changeCategory')->middleware('auth');
-    
+    Route::POST('master.create.admin', 'MasterAdmin\ManageAdminController@addAdmin')->middleware('auth');
+    Route::get('/master.remove.admin/{id}', 'MasterAdmin\ManageAdminController@removeAdmin')->middleware('auth');
+    Route::POST('/master.create.adminCat', 'MasterAdmin\ManageAdminController@addCategory')->middleware('auth');
+    Route::POST('/master.update.adminCat', 'MasterAdmin\ManageAdminController@updateCategory')->middleware('auth');
 });
 
 
