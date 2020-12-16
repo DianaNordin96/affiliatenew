@@ -66,4 +66,11 @@ class PurchaseController extends Controller
 
         return $parcel;
     }
+
+    public static function getTrackingDetails($awb)
+    {
+        $getDetails= DB::table('consignment')->where('awb',$awb)->get();
+
+        return $getDetails;
+    }
 }

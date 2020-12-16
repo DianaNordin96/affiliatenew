@@ -16,14 +16,8 @@ class ManageStockController extends Controller
         $email = Auth::user()->email;
         $pass = Auth::user()->password;
 
-        $getProdGrp = DB::table('users')
-        ->where('id',Auth::user()->belongsToAdmin)
-        ->select('admin_category')
-        ->get();
-
-
         $product = DB::table('products')
-        ->where('belongToAdmin',$getProdGrp[0]->admin_category)
+        ->where('belongToAdmin',Auth::user()->belongsToAdmin)
         ->get();
 
         return view(

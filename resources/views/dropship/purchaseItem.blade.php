@@ -67,14 +67,15 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <?php
-                                // dd($consignmentArray);
-                                ?>
                                 <?php $consignmentArray = $order->checkOrderExistConsignment($referenceNo); ?>
                                 @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL )
-                                <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray[0]->awb); 
-                            
+                                <?php 
+                                $trackingStatus = $tracking->getTrackingStatus($consignmentArray[0]->awb);
+                                $trackingDetails = $tracking->getTrackingDetails($consignmentArray[0]->awb);
                                 ?>
+
+                                Courier : {{$trackingDetails[0]->courier}}<br/>
+                                Tracking No : {{$trackingDetails[0]->awb}}<br/>
                                 @foreach($trackingStatus->result as $value)
                                     Latest Status : {{$value->latest_status}}<br/>
                                 @endforeach
