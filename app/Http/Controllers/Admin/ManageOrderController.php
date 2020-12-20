@@ -16,10 +16,13 @@ class ManageOrderController extends Controller
             $order_details_pending = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->join('customers', 'orders.customer_id', '=', 'customers.id')
+                ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
+                ->join('products', 'orders_details.product_id', '=', 'products.id')
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
-                ->where('users.belongsToAdmin', Auth::user()->admin_category)
+                ->where('products.belongToAdmin', Auth::user()->admin_category)
                 ->where('awb', '=', NULL)
                 ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->groupBy('orders.orders_id')
                 ->get();
 
             return view('admin/view-order-pending', [

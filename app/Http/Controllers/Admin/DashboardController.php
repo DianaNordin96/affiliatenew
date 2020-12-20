@@ -25,14 +25,14 @@ class DashboardController extends Controller
 
         //total downline
         $numberDownline = DB::table('users')
-            ->where('belongsToAdmin', '=', Auth::user()->admin_category)
-            ->where(function($query) {
+            ->where('role', '<>', 'admin')
+            ->where(function ($query) {
                 $query->whereNull('statusDownline')
-                    ->orWhere('statusDownline','!=', 'decline');
+                    ->orWhere('statusDownline', '!=', 'decline');
             })
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->whereNull('statusDownline')
-                    ->orWhere('statusDownline','!=', 'pending');
+                    ->orWhere('statusDownline', '!=', 'pending');
             })
             ->get();
         $countDownline = count($numberDownline);
@@ -49,13 +49,23 @@ class DashboardController extends Controller
         //total sales downline today
         $shogun = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
+            ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
+            ->join('products', 'orders_details.product_id', '=', 'products.id')
+            ->select('orders.amount','orders.orders_id')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'shogun')
-            ->select('amount')
-            ->sum('amount');
+            ->where('products.belongToAdmin', '=', Auth::user()->admin_category)
+            ->groupBy('orders_details.referenceNo')
+            ->get();
 
+        $totalShogun = 0;
+
+        foreach($shogun as $valShogun){
+            $totalShogun += $valShogun->amount;
+        }
+
+        $shogun = $totalShogun;
 
         //total sales downline today
         $damio = DB::table('orders')

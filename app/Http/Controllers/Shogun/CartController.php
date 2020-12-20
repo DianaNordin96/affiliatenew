@@ -20,6 +20,7 @@ class CartController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
+
         return view('shogun/cart')->with([
             'customers' => $customer
         ]);
@@ -38,7 +39,8 @@ class CartController extends Controller
                     "name" => $product->product_name,
                     "quantity" => 1,
                     "price" => $product->price_hq,
-                    "photo" => $product->product_image
+                    "photo" => $product->product_image,
+                    "cat_id" => $product->belongToAdmin
                 ]
             ];
             session()->put('cart', $cart);
@@ -55,7 +57,8 @@ class CartController extends Controller
             "name" => $product->product_name,
             "quantity" => 1,
             "price" => $product->price_hq,
-            "photo" => $product->product_image
+            "photo" => $product->product_image,
+            "cat_id" => $product->belongToAdmin
         ];
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
@@ -143,6 +146,28 @@ class CartController extends Controller
         return redirect('https://dev.toyyibpay.com/' .  $billCode);
     }
 
+
+    /**
+     * Function that groups an array of associative arrays by some key.
+     * 
+     * @param {String} $key Property to sort by.
+     * @param {Array} $data Array that stores multiple associative arrays.
+     */
+    public function group_by($key, $data)
+    {
+        $result = array();
+
+        foreach ($data as $keyVal => $val) {
+            if (array_key_exists($key, $val)) {
+                $result[$val[$key]][$keyVal] = $val;
+            } else {
+                $result[""][] = $val;
+            }
+        }
+
+        return $result;
+    }
+
     public function paymentStatus(Request $request)
     {
         $cart = session()->get('cartPayment');
@@ -156,34 +181,51 @@ class CartController extends Controller
         if ($request->status_id == 1) {
             //insert orders
             foreach ($cart as $key => $value) {
-                $total = 0;
-                foreach ($cart[$key][0] as $details) {
-                    $total += $details['price'] * $details['quantity'];
-                }
+
 
                 $orderID = date("Ymd") . date("hi") . Auth::user()->id . $key;
 
-                DB::table('orders')->insert([
-                    [
-                        'orders_id' => $orderID,
-                        'bill_code' => $request->billcode,
-                        'user_id' => Auth::user()->id,
-                        'amount' => $total,
-                        'created_at' => NOW(),
-                        'customer_id' => $key
-                    ],
-                ]);
+                // dd($cart[$key][0]);
+                $byGroup = $this->group_by("cat_id", $cart[$key][0]);
 
-                //insert product orders
-                foreach ($cart[$key][0] as $id => $details) {
-                    DB::table('orders_details')->insert([
+                // Dump result
+
+                
+                foreach ($byGroup as $keyGrp => $group) {
+                    // dd($byGroup[$keyGrp]);
+                    $total = 0;
+                    foreach ($byGroup[$keyGrp] as $details) {
+                        $total += $details['price'] * $details['quantity'];
+                    }
+
+                    $orderID = $orderID . $keyGrp;
+
+                    DB::table('orders')->insert([
                         [
-                            'product_id' => $id,
-                            'referenceNo' => $orderID,
-                            'quantity' => $details['quantity'],
+                            'orders_id' => $orderID,
+                            'bill_code' => $request->billcode,
+                            'user_id' => Auth::user()->id,
+                            'amount' => $total,
+                            'created_at' => NOW(),
+                            'customer_id' => $key
                         ],
                     ]);
+
+
+                    //insert product orders
+                    foreach ($byGroup[$keyGrp] as $id => $details) {
+
+                        DB::table('orders_details')->insert([
+                            [
+                                'product_id' => $id,
+                                'referenceNo' => $orderID,
+                                'quantity' => $details['quantity'],
+                            ],
+                        ]);
+                    }
                 }
+
+
 
                 $totalCommission = 0;
                 //update commision

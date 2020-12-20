@@ -19,11 +19,10 @@ class SalesController extends Controller
         $getTotalPurchase = DB::table('orders_details')
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
-            ->JOIN('users', 'orders.user_id', '=', 'users.id')
             ->selectRaw('orders_details.quantity * products.price_hq AS total_purchase')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
+            ->where('products.belongToAdmin', '=', Auth::user()->admin_category)
             ->get();
 
         $total = 0;
@@ -44,11 +43,10 @@ class SalesController extends Controller
         $getTotalSales = DB::table('orders_details')
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
-            ->JOIN('users', 'orders.user_id', '=', 'users.id')
             ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
+            ->where('products.belongToAdmin', '=', Auth::user()->admin_category)
             ->get();
 
         $total = 0;
