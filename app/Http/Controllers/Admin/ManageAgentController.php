@@ -80,7 +80,7 @@ class ManageAgentController extends Controller
                 $icStatus = DB::table('users')->where('icnumber', $data['ic'])->get();
 
                 $countIC = count($icStatus);
-                if ($countIC == 0){
+                if ($countIC == 0) {
                     if ($req->file('image') != null) {
                         $user = new User;
                         $user->name = $data['name'];
@@ -121,8 +121,7 @@ class ManageAgentController extends Controller
                         toast('User has been created', 'success');
                         return redirect('/manageAgent');
                     }
-                }
-                else {
+                } else {
                     toast('User with the same IC number has existed in the system.', 'error');
                     return redirect('/manageAgent');
                 }
@@ -201,8 +200,12 @@ class ManageAgentController extends Controller
                 'role' => $role
             ]);
 
-        toast('User role has been changed', 'success');
-        return redirect('/manageAgent');
+            $notification = array(
+                'message' => 'Agent has been updated!',
+                'alert-type' => 'success'
+            );
+
+        return redirect('/manageAgent')->with($notification);
     }
 
     public function delete($id)
@@ -210,8 +213,13 @@ class ManageAgentController extends Controller
         DB::table('users')
             ->delete($id);
 
-        toast('Agent has been removed', 'success');
-        return redirect('/manageAgent');
+        
+            $notification = array(
+                'message' => 'Agent has been removed!',
+                'alert-type' => 'success'
+            );
+
+        return redirect('/manageAgent')->with($notification);
     }
 
     public function __construct()

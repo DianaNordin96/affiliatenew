@@ -21,7 +21,7 @@ class ManageOrderController extends Controller
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
                 ->where('products.belongToAdmin', Auth::user()->admin_category)
                 ->where('awb', '=', NULL)
-                ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount')
                 ->groupBy('orders.orders_id')
                 ->get();
 
@@ -31,10 +31,14 @@ class ManageOrderController extends Controller
         } else if ($status == 'completed') {
             $order_details_complete = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
-                ->where('users.belongsToAdmin', Auth::user()->admin_category)
-                ->where('awb', '<>', NULL)
+                ->join('customers', 'orders.customer_id', '=', 'customers.id')
+                ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
+                ->join('products', 'orders_details.product_id', '=', 'products.id')
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
-                ->select('orders.orders_id', 'orders.created_at', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->where('products.belongToAdmin', Auth::user()->admin_category)
+                ->where('awb', '<>', NULL)
+                ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->groupBy('orders.orders_id')
                 ->get();
 
             return view('admin/view-order-completed', [
@@ -120,18 +124,18 @@ class ManageOrderController extends Controller
         date_default_timezone_set('Asia/Kuala_Lumpur');
 
         DB::table('consignment')
-        ->insert([
-            'created_at' =>  date("Y-m-d H:i:s"),
-            'updated_at' =>  date("Y-m-d H:i:s"),
-            'price' => $req->input('price'),
-            'awb' => $req->input('trackingNo'),
-            'refNo' => $req->input('refNo'),
-            'courier' => $req->input('courier'),
-            'order_number' => $req->input('orderno'),
-            'status' => 'Success'
-        ]);
+            ->insert([
+                'created_at' =>  date("Y-m-d H:i:s"),
+                'updated_at' =>  date("Y-m-d H:i:s"),
+                'price' => $req->input('price'),
+                'awb' => $req->input('trackingNo'),
+                'refNo' => $req->input('refNo'),
+                'courier' => $req->input('courier'),
+                'order_number' => $req->input('orderno'),
+                'status' => 'Success'
+            ]);
 
-        toast('Order has been updated.','success');
+        toast('Order has been updated.', 'success');
         return redirect('update-order');
     }
 }

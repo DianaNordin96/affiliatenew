@@ -10,394 +10,476 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet"
-        href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-    <!-- iCheck -->
-    <link rel="stylesheet"
-        href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet"
-        href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
+    <link href="{{ asset('vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendor/chartist/css/chartist.min.css') }}">
+    <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+    <link href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
+    <!-- Datatable -->
+    <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <!-- Toastr -->
-    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
-    <!-- DataTables -->
-    <link rel="stylesheet"
-        href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet"
-        href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
-    <!-- Bootstrap4 Duallistbox -->
-    <link rel="stylesheet" href="{{ asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
 </head>
 
 
-<body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
+<body>
 
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark navbar-lightblue">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="dashboard" class="nav-link">Home</a>
-                </li>
-            </ul>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
 
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fas fa-user-alt"></i> &nbsp; {{ Auth::user()->name }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <div class="dropdown-divider"></div>
-                        {{-- <a href="/change-password" class="dropdown-item">
-                            <i class="fas fa-key mr-2"></i> Change Password
-                        </a> --}}
-                        <div class="dropdown-divider"></div>
-                        <a href="{{ url('/logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();" data-toggle="modal" data-target="#modal-sm"
-                            class="dropdown-item">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST"
-                            class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.navbar -->
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar elevation-4 sidebar-light-lightblue">
-            <!-- Brand Logo -->
-            <a href="dashboard" class="brand-link navbar-white">
-                <img src="../dist/img/AdminLTELogo.png" alt="Affiliate" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
-                <span class="brand-text font-weight-light">Affiliate System</span>
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="index.html" class="brand-logo">
+                <img class="logo-abbr" src="{{ asset('images/logo-white.png') }}" alt="">
+                <img class="logo-compact" src="{{ asset('images/logo-text.png') }}" alt="">
+                <img class="brand-title" src="{{ asset('images/logo-text.png') }}" alt="">
             </a>
 
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="../imageUploaded/profile/{{Auth::user()->image}}" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="/profile-admin" class="d-block"> {{ Auth::user()->name }}</a>
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Chat box start
+        ***********************************-->
+        <div class="chatbox">
+            <div class="chatbox-close"></div>
+            <div class="custom-tab-1">
+
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="chat" role="tabpanel">
+                        <div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
+                            <div class="card-header chat-list-header text-center">
+
+                            </div>
+                            <div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        {{-- <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Orders
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="view-order" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>View Orders</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> --}}
-
-
-                        <!-- <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-table"></i>
-                                <p>
-                                    Tables
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="pages/tables/simple.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Simple Tables</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/data.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>DataTables</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>jsGrid</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> -->
-
-                        <li class="nav-item">
-                            <a id='agents' href="/manageAgent" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Agents
-                                </p>
-                            </a>
-                        </li>
-
-                        {{-- <li class="nav-item">
-                            <a id='view-order' href="/view-order" class="nav-link">
-                                <i class="nav-icon far fa-user"></i>
-                                <p>
-                                    Orders
-                                </p>
-                            </a>
-                        </li> --}}
-
-                        <li id="menuOrders" class="nav-item has-treeview">
-                            <a id="menuOrder" href="#" class="nav-link">
-                                <i class="nav-icon fas fa-list-ol"></i>
-                                <p>
-                                    Orders
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a id="pendingOrder" href="/view-order/pending" class="nav-link">
-                                        <i class="fas fa-clipboard-list nav-icon"></i>
-                                        <p>Pending Orders</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="completedOrder" href="/view-order/completed" class="nav-link">
-                                        <i class="fas fa-clipboard-list nav-icon"></i>
-                                        <p>Completed Orders</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="updateOrder" href="/update-order" class="nav-link">
-                                        <i class="fas fa-clipboard-list nav-icon"></i>
-                                        <p>Update Order<br/>(For Bulk Parcels)</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a id='customers' href="/customers" class="nav-link">
-                                <i class="nav-icon fas fa-user-friends"></i>
-                                <p>
-                                    Customers
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a id="manageProduct" href="/manageProduct" class="nav-link">
-                                <i class="nav-icon fab fa-product-hunt"></i>
-                                <p>
-                                    Products
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a id="blastMessage" href="/blastMessage" class="nav-link">
-                                <i class="nav-icon fas fa-sms"></i>
-                                <p>
-                                    Blast Message
-                                </p>
-                            </a>
-                        </li>
-
-                        {{-- <li class="nav-item">
-                            <a id="parcel" href="/parcel" class="nav-link">
-                                <i class="nav-icon fas fa-box-open"></i>
-                                <p>
-                                    Parcel
-                                </p>
-                            </a>
-                        </li> --}}
-                        <li id="menuParcels" class="nav-item has-treeview">
-                            <a id="menuParcel" href="#" class="nav-link">
-                                <i class="nav-icon fas fa-box-open"></i>
-                                <p>
-                                    Parcel
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a id="parcel" href="/parcel" class="nav-link">
-                                        <i class="fas fa-money-check-alt nav-icon"></i>
-                                        <p>Parcel Payment</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="bulk-parcel" href="/bulk-parcel" class="nav-link">
-                                        <i class="fas fa-boxes nav-icon"></i>
-                                        <p>Bulk Parcel</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="paid-parcel" href="/paid-parcel" class="nav-link">
-                                        <i class="fas fa-receipt nav-icon"></i>
-                                        <p>Paid Parcel</p>
-                                    </a>
-                                </li>
-                                
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a id="support" href="/support" class="nav-link">
-                                <i class="nav-icon far fa-question-circle"></i>
-                                <p>
-                                    Support
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a id="guidelines" href="/guidelines" class="nav-link">
-                                <i class="nav-icon far fa-question-circle"></i>
-                                <p>
-                                    User Guidelines
-                                </p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
-        </aside>
+        </div>
+        <!--**********************************
+            Chat box End
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+
+                        </div>
+
+                        <ul class="navbar-nav header-right">
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link bell dz-fullscreen" href="#">
+                                    <svg id="icon-full" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        class="css-i6dzq1">
+                                        <path
+                                            d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+                                        </path>
+                                    </svg>
+                                    <svg id="icon-minimize" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-minimize">
+                                        <path
+                                            d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3">
+                                        </path>
+                                    </svg>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" />
+                                    <div class="header-info">
+                                        <span>Hey, <strong>{{ Auth::user()->name }}</strong></span>
+                                        <small>{{ Auth::user()->role }}</small>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="/profile-admin" class="dropdown-item ai-icon">
+                                        <svg id="icon-userh" xmlns="http://www.w3.org/2000/svg" class="text-primary"
+                                            width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <span class="ml-2">Profile </span>
+                                    </a>
+
+                                    <a href="/logout" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();" class="dropdown-item ai-icon">
+                                        <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger"
+                                            width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                            <polyline points="16 17 21 12 16 7"></polyline>
+                                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                                        </svg>
+                                        <span class="ml-2">Logout </span>
+                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item right-sidebar">
+                                <a class="nav-link ai-icon" href="#">
+                                    <i class="lni lni-cart"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="deznav">
+            <div class="deznav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label first">Main Menu</li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
+                                    <path
+                                        d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z"
+                                        fill="#000000" opacity="0.3" />
+                                </g>
+                            </svg>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/dashboard">Go to Dashboard</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Manage Data</li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <polygon fill="#000000" opacity="0.3" points="5 7 5 15 19 15 19 7" />
+                                    <path
+                                        d="M11,19 L11,16 C11,15.4477153 11.4477153,15 12,15 C12.5522847,15 13,15.4477153 13,16 L13,19 L14.5,19 C14.7761424,19 15,19.2238576 15,19.5 C15,19.7761424 14.7761424,20 14.5,20 L9.5,20 C9.22385763,20 9,19.7761424 9,19.5 C9,19.2238576 9.22385763,19 9.5,19 L11,19 Z"
+                                        fill="#000000" opacity="0.3" />
+                                    <path
+                                        d="M5,7 L5,15 L19,15 L19,7 L5,7 Z M5.25,5 L18.75,5 C19.9926407,5 21,5.8954305 21,7 L21,15 C21,16.1045695 19.9926407,17 18.75,17 L5.25,17 C4.00735931,17 3,16.1045695 3,15 L3,7 C3,5.8954305 4.00735931,5 5.25,5 Z"
+                                        fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg> --}}
+                            <i class="lni lni-list"></i>
+                            <span class="nav-text">Orders</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/view-order/pending">Pending Orders</a></li>
+                            <li><a href="/view-order/completed">Completed Orders</a></li>
+                            <li><a href="/update-order">Update Order (For Bulk Parcels)</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="lni lni-package"></i><span class="nav-text">Parcel</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/parcel">Parcel Payment</a></li>
+                            <li><a href="/bulk-parcel">Bulk Parcel</a></li>
+                            <li><a href="/paid-parcel">Paid Parcel</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a class="ai-icon" href="/manageAgent" aria-expanded="false">
+                            <i class="lni lni-users"></i>
+                            <span class="nav-text">Agents</span>
+                        </a>
+                    </li>
+
+                    <li><a class="ai-icon" href="/manageProduct" aria-expanded="false">
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <polygon fill="#000000" opacity="0.3" points="5 7 5 15 19 15 19 7" />
+                                    <path
+                                        d="M11,19 L11,16 C11,15.4477153 11.4477153,15 12,15 C12.5522847,15 13,15.4477153 13,16 L13,19 L14.5,19 C14.7761424,19 15,19.2238576 15,19.5 C15,19.7761424 14.7761424,20 14.5,20 L9.5,20 C9.22385763,20 9,19.7761424 9,19.5 C9,19.2238576 9.22385763,19 9.5,19 L11,19 Z"
+                                        fill="#000000" opacity="0.3" />
+                                    <path
+                                        d="M5,7 L5,15 L19,15 L19,7 L5,7 Z M5.25,5 L18.75,5 C19.9926407,5 21,5.8954305 21,7 L21,15 C21,16.1045695 19.9926407,17 18.75,17 L5.25,17 C4.00735931,17 3,16.1045695 3,15 L3,7 C3,5.8954305 4.00735931,5 5.25,5 Z"
+                                        fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg> --}}
+                            <i class="lni lni-shopify"></i>
+                            <span class="nav-text">Products</span>
+                        </a>
+                    </li>
+
+                    <li><a class="ai-icon" href="/customers" aria-expanded="false">
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <polygon fill="#000000" opacity="0.3" points="5 7 5 15 19 15 19 7" />
+                                    <path
+                                        d="M11,19 L11,16 C11,15.4477153 11.4477153,15 12,15 C12.5522847,15 13,15.4477153 13,16 L13,19 L14.5,19 C14.7761424,19 15,19.2238576 15,19.5 C15,19.7761424 14.7761424,20 14.5,20 L9.5,20 C9.22385763,20 9,19.7761424 9,19.5 C9,19.2238576 9.22385763,19 9.5,19 L11,19 Z"
+                                        fill="#000000" opacity="0.3" />
+                                    <path
+                                        d="M5,7 L5,15 L19,15 L19,7 L5,7 Z M5.25,5 L18.75,5 C19.9926407,5 21,5.8954305 21,7 L21,15 C21,16.1045695 19.9926407,17 18.75,17 L5.25,17 C4.00735931,17 3,16.1045695 3,15 L3,7 C3,5.8954305 4.00735931,5 5.25,5 Z"
+                                        fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg> --}}
+                            <i class="lni lni-customer"></i>
+                            <span class="nav-text">Customers</span>
+                        </a>
+                    </li>
+
+                    <li><a class="ai-icon" href="/blastMessage" aria-expanded="false">
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <polygon fill="#000000" opacity="0.3" points="5 7 5 15 19 15 19 7" />
+                                    <path
+                                        d="M11,19 L11,16 C11,15.4477153 11.4477153,15 12,15 C12.5522847,15 13,15.4477153 13,16 L13,19 L14.5,19 C14.7761424,19 15,19.2238576 15,19.5 C15,19.7761424 14.7761424,20 14.5,20 L9.5,20 C9.22385763,20 9,19.7761424 9,19.5 C9,19.2238576 9.22385763,19 9.5,19 L11,19 Z"
+                                        fill="#000000" opacity="0.3" />
+                                    <path
+                                        d="M5,7 L5,15 L19,15 L19,7 L5,7 Z M5.25,5 L18.75,5 C19.9926407,5 21,5.8954305 21,7 L21,15 C21,16.1045695 19.9926407,17 18.75,17 L5.25,17 C4.00735931,17 3,16.1045695 3,15 L3,7 C3,5.8954305 4.00735931,5 5.25,5 Z"
+                                        fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg> --}}
+                            <i class="lni lni-mobile"></i> <span class="nav-text">Blast Message</span>
+                        </a>
+                    </li>
+
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <polygon fill="#000000" opacity="0.3" points="5 7 5 15 19 15 19 7" />
+                                    <path
+                                        d="M11,19 L11,16 C11,15.4477153 11.4477153,15 12,15 C12.5522847,15 13,15.4477153 13,16 L13,19 L14.5,19 C14.7761424,19 15,19.2238576 15,19.5 C15,19.7761424 14.7761424,20 14.5,20 L9.5,20 C9.22385763,20 9,19.7761424 9,19.5 C9,19.2238576 9.22385763,19 9.5,19 L11,19 Z"
+                                        fill="#000000" opacity="0.3" />
+                                    <path
+                                        d="M5,7 L5,15 L19,15 L19,7 L5,7 Z M5.25,5 L18.75,5 C19.9926407,5 21,5.8954305 21,7 L21,15 C21,16.1045695 19.9926407,17 18.75,17 L5.25,17 C4.00735931,17 3,16.1045695 3,15 L3,7 C3,5.8954305 4.00735931,5 5.25,5 Z"
+                                        fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg> --}}
+                            <i class="lni lni-help"></i>
+                            <span class="nav-text">Help</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/support">Support</a></li>
+                            <li><a href="/customers">User Guidelines</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{-- <li><a class="ai-icon" href="/support" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <polygon fill="#000000" opacity="0.3" points="5 7 5 15 19 15 19 7" />
+                                    <path
+                                        d="M11,19 L11,16 C11,15.4477153 11.4477153,15 12,15 C12.5522847,15 13,15.4477153 13,16 L13,19 L14.5,19 C14.7761424,19 15,19.2238576 15,19.5 C15,19.7761424 14.7761424,20 14.5,20 L9.5,20 C9.22385763,20 9,19.7761424 9,19.5 C9,19.2238576 9.22385763,19 9.5,19 L11,19 Z"
+                                        fill="#000000" opacity="0.3" />
+                                    <path
+                                        d="M5,7 L5,15 L19,15 L19,7 L5,7 Z M5.25,5 L18.75,5 C19.9926407,5 21,5.8954305 21,7 L21,15 C21,16.1045695 19.9926407,17 18.75,17 L5.25,17 C4.00735931,17 3,16.1045695 3,15 L3,7 C3,5.8954305 4.00735931,5 5.25,5 Z"
+                                        fill="#000000" fill-rule="nonzero" />
+                                </g>
+                            </svg>
+                            <span class="nav-text">Support</span>
+                        </a>
+                    </li>
+                    <li><a class="ai-icon" href="/guidelines" aria-expanded="false">
+                            <span class="nav-text"><i class="nav-icon far fa-question-circle"></i>User Guidelines</span>
+                        </a>
+                    </li> --}}
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
         @yield('content')
 
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2020 <a>Affiliate</a>.</strong>
-            All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 1.0.0
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="http://dexignlab.com/" target="_blank">DexignLab</a>
+                    2020</p>
             </div>
-        </footer>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
     </div>
-    <!-- ./wrapper -->
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
 
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
+    <!--**********************************
+        Scripts
+    ***********************************-->
 
-    </script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- ChartJS -->
-    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
-    <!-- Sparkline -->
-    <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
-    <!-- JQVMap -->
-    <script src="{{ asset('plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset('plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-    <!-- daterangepicker -->
-    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script
-        src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}">
-    </script>
-    <!-- Select2 -->
-    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
-    <!-- Summernote -->
-    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
-    <!-- overlayScrollbars -->
-    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}">
-    </script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('dist/js/adminlte.js') }}"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('dist/js/demo.js') }}"></script>
-    <!-- DataTables -->
-    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}">
-    </script>
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}">
-    </script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}">
-    </script>
-    <!-- SweetAlert2 -->
-    <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <!-- Required vendors -->
+    <script src="{{ asset('vendor/global/global.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('vendor/chart.js/Chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/custom.min.js') }}"></script>
+    <script src="{{ asset('js/deznav-init.js') }}"></script>
+    <!-- Apex Chart -->
+    <script src="{{ asset('vendor/apexchart/apexchart.js') }}"></script>
+
+    <!-- Vectormap -->
+    <!-- Chart piety plugin files -->
+    <script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
+
+    <!-- Chartist -->
+    <script src="{{ asset('vendor/chartist/js/chartist.min.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/chartjs-init.js') }}"></script>
+
+    <!-- Dashboard 1 -->
+    <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
+
+    <!-- Datatable -->
+    <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/datatables.init.js') }}"></script>
+
+    <!-- Svganimation scripts -->
+    <script src="{{ asset('vendor/svganimation/vivus.min.js') }}"></script>
+    <script src="{{ asset('vendor/svganimation/svg.animation.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/sweetalert.init.js') }}"></script>
+
+
     <!-- Toastr -->
-    <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
-    <!-- Bootstrap4 Duallistbox -->
-    <script src="{{ asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
+    <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
 
-    {{-- @if (Session::has('alert.config'))
-        <script>
-            Swal.fire({
-                !!Session::pull('alert.config') !!
-            })
+    <script>
 
-        </script>
+    @if(Session::has('message'))
+        var type = "{{ Session::get('alert-type', 'info') }}";
+        switch(type){
+            case 'info':
+                toastr.info("{{ Session::get('message') }}");
+                break;
 
-@endif--}}
-@include('sweetalert::alert')
+            case 'warning':
+                toastr.warning("{{ Session::get('message') }}");
+                break;
 
+            case 'success':
+                toastr.success("{{ Session::get('message') }}");
+                break;
+
+            case 'error':
+                toastr.error("{{ Session::get('message') }}");
+                break;
+        }
+    @endif
+
+
+        (function($) {
+            "use strict"
+
+            var direction = getUrlParams('dir');
+            if (direction != 'rtl') {
+                direction = 'ltr';
+            }
+
+            new dezSettings({
+                typography: "roboto",
+                version: "dark",
+                layout: "vertical",
+                headerBg: "color_2",
+                navheaderBg: "color_1",
+                sidebarBg: "color_2",
+                sidebarStyle: "full",
+                sidebarPosition: "fixed",
+                headerPosition: "fixed",
+                containerLayout: "wide",
+                direction: direction
+            });
+
+        })(jQuery);
+
+        
+
+    </script>
+
+    
+
+    {{-- @include('sweetalert::alert') --}}
+
+    @yield('script')
 </body>
 
 </html>
-
-@yield('script')
