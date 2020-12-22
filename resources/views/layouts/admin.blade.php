@@ -16,13 +16,13 @@
     <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
-    <link href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
     <!-- Datatable -->
     <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
+    
+  
 </head>
 
 
@@ -124,7 +124,7 @@
                             </li>
 
                             <li class="nav-item dropdown header-profile">
-                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                <a class="nav-link" href="/profile-admin" role="button" data-toggle="dropdown">
                                     <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" />
                                     <div class="header-info">
                                         <span>Hey, <strong>{{ Auth::user()->name }}</strong></span>
@@ -405,10 +405,11 @@
 
     <!-- Chartist -->
     <script src="{{ asset('vendor/chartist/js/chartist.min.js') }}"></script>
-    <script src="{{ asset('js/plugins-init/chartjs-init.js') }}"></script>
+    {{-- <script src="{{ asset('js/plugins-init/chartjs-init.js') }}"></script> --}}
 
+    
     <!-- Dashboard 1 -->
-    <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
+    <script src="{{ asset('js/dashboard/dashboard-2.js') }}"></script>
 
     <!-- Datatable -->
     <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
@@ -419,9 +420,11 @@
     <script src="{{ asset('vendor/svganimation/svg.animation.js') }}"></script>
     <script src="{{ asset('js/plugins-init/sweetalert.init.js') }}"></script>
 
-
-    <!-- Toastr -->
+    <!-- All init script -->
+    <script src="{{ asset('js/plugins-init/toastr-init.js') }}"></script>
     <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
+    <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
 
     <script>
 
@@ -446,7 +449,55 @@
         }
     @endif
 
+    function isPriceKey(e) {
+            var keyCode = e.keyCode || e.which;
 
+
+            //Regex for Valid Characters i.e. Alphabets.
+            var regex = /^[0-9\.]+$/;
+
+            //Validate TextBox value against the Regex.
+            var isValid = regex.test(String.fromCharCode(keyCode));
+            if (!isValid) {
+                return false;
+            }
+
+            return isValid;
+        }
+
+
+        function isAlphabetsKey(e) {
+            var keyCode = e.keyCode || e.which;
+
+
+            //Regex for Valid Characters i.e. Alphabets.
+            var regex = /^[A-Za-z ]+$/;
+
+            //Validate TextBox value against the Regex.
+            var isValid = regex.test(String.fromCharCode(keyCode));
+            if (!isValid) {
+                return false;
+            }
+
+            return isValid;
+        }
+
+        function isNumberKey(e) {
+            var keyCode = e.keyCode || e.which;
+
+
+            //Regex for Valid Characters i.e. Alphabets.
+            var regex = /^[0-9]+$/;
+
+            //Validate TextBox value against the Regex.
+            var isValid = regex.test(String.fromCharCode(keyCode));
+            if (!isValid) {
+                return false;
+            }
+
+            return isValid;
+        }
+        
         (function($) {
             "use strict"
 
@@ -471,7 +522,8 @@
 
         })(jQuery);
 
-        
+            //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
 
     </script>
 

@@ -5,28 +5,21 @@
 @endsection
 
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <div class="content-body">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Profile</h1>
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4>Profile</h4>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active">Manage Profile</li>
+                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Profile</a></li>
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <section class="content">
-        <div class="container-fluid">
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-6">
@@ -37,19 +30,18 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ url('profile-update-admin') }}" method="post"
-                            enctype="multipart/form-data">
+                        <form action="{{ url('profile-update-admin') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
-                                    <input type="name" class="form-control" name="name"
-                                        value="{{ Auth::user()->name }}" placeholder="Enter name">
+                                    <input type="name" class="form-control" onkeypress="return isAlphabetsKey(event)"
+                                        name="name" value="{{ Auth::user()->name }}" placeholder="Enter name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Phone Number</label>
-                                    <input type="name" class="form-control" name="phone"
-                                        value="{{ Auth::user()->phone }}" placeholder="Enter name">
+                                    <input type="name" class="form-control" onkeypress="return isNumberKey(event)"
+                                        name="phone" value="{{ Auth::user()->phone }}" placeholder="Enter name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
@@ -62,22 +54,22 @@
                                         placeholder="Address">{{ Auth::user()->address }}</textarea>
                                 </div>
                                 {{-- <div class="form-group">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1"
-                                            placeholder="Password">
-                                    </div> --}}
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1"
+                                        placeholder="Password">
+                                </div> --}}
                                 {{-- <div class="form-group">
-                                        <label for="exampleInputFile">File input</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="exampleInputFile">
-                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">Upload</span>
-                                            </div>
+                                    <label for="exampleInputFile">File input</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         </div>
-                                    </div> --}}
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
+                                </div> --}}
                             </div>
                             <!-- /.card-body -->
 
@@ -97,8 +89,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ url('change-password-admin') }}" method="post"
-                            enctype="multipart/form-data">
+                        <form action="{{ url('change-password-admin') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -121,45 +112,45 @@
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+
 
 
 @endsection
 
 @section('script')
-<script>
-    function myFunction() {
-        /* Get the text field */
-        var copyText = document.getElementById("link");
+    <script>
+        function myFunction() {
+            /* Get the text field */
+            var copyText = document.getElementById("link");
 
-        /* Select the text field */
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /*For mobile devices*/
 
-        /* Copy the text inside the text field */
-        document.execCommand("copy");
+            /* Copy the text inside the text field */
+            document.execCommand("copy");
 
-        /* Alert the copied text */
+            /* Alert the copied text */
 
-        alert("Copied the text: " + copyText.value);
-    }
+            alert("Copied the text: " + copyText.value);
+        }
 
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
         });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
 
-</script>
+    </script>
 @endsection

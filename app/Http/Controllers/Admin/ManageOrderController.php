@@ -37,7 +37,7 @@ class ManageOrderController extends Controller
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
                 ->where('products.belongToAdmin', Auth::user()->admin_category)
                 ->where('awb', '<>', NULL)
-                ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount', 'orders.tracking_number', 'orders.courier_code')
+                ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount')
                 ->groupBy('orders.orders_id')
                 ->get();
 

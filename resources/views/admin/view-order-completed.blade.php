@@ -7,31 +7,24 @@
         {{ session('success_message') }}
     </div>
 @endif
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Orders</h4>
+                    <span>Completed Orders</span>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Completed Order</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Completed Order</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active">Manage Order</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-warning">
@@ -42,7 +35,8 @@
                                         List to
                                         Excel</button>
                                     <br /><br />
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <div class="table-responsive">
+                                        <table id="example5" class="display" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Order ID</th>
@@ -58,30 +52,27 @@
                                             @foreach($orders_details_complete as $order)
                                                 <tr>
                                                     <td>{{ $order->orders_id }}</td>
-                                                    <td>{{ $order->created_at }}</td>
+                                                    <td>{{ $order->order_created }}</td>
                                                     <td>RM {{ number_format($order->amount,2) }}</td>
                                                     <td>{{ $order->name }}</td>
                                                     {{-- <td>{{ $tracking->getTrackingStatusSingle($order->tracking_number,$order->courier_code) }}</td> --}}
                                                     <td>
                                                         <a class="btn btn-warning"
-                                                            href="/view-order-item/{{ $order->orders_id }}"><i
-                                                                class="far fa-eye"></i></a> &nbsp;
+                                                        href="/view-order-item/{{ $order->orders_id }}"></i>View Order</a> &nbsp;
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+    </div>
 </div>
-<!-- /.content-wrapper -->
 
 @endsection
 

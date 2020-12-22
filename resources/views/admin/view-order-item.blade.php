@@ -42,7 +42,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>State</label>
-                                                <select id="state" class="form-control select2bs4" name="state">
+                                                <select class="select2-width-75" style="width: 75%" id="state" name="state">
                                                     <option value="jhr">Johor</option>
                                                     <option value="kdh">Kedah</option>
                                                     <option value="ktn">Kelantan</option>
@@ -72,7 +72,8 @@
                                     </div>
                                     <div class="input-group input-group-sm">
                                         <input type="text" name="refNo" value="{{ $referenceNo }}" hidden />
-                                        <input style="width:50%" type="text" id="weight" class="form-control" name="weight"
+                                        <input style="width:50%" type="text" id="weight" onkeypress="return isNumberKey(event)"
+                                        class="form-control" name="weight"
                                             placeholder="Parcel Weight in KG" />
                                         <span class="input-group-append">
                                             <button type="submit" class="btn btn-primary">Check!</button>
@@ -183,16 +184,7 @@
     <!-- Bootstrap Switch -->
     <script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
     <script>
-        $(function() {
-            //Initialize Select2 Elements
-            $('.select2').select2()
-
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-        });
-
+        
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,

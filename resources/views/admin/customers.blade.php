@@ -50,7 +50,7 @@
                                                     <button type="button" title="View" data-toggle="modal"
                                                         onclick="openModalView( '{{ $customer->id }}','{{ $customer->name }}','{{ $customer->phone }}','{{ $customer->address }}')"
                                                         data-target="#modalView" class="btn btn-success"><i
-                                                            class="far fa-eye"></i></button> &nbsp;
+                                                        class="lni lni-eye"></i></button> &nbsp;
                                                 </td>
                                         @endforeach
                                         </tr>

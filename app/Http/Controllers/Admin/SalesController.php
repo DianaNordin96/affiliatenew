@@ -56,4 +56,92 @@ class SalesController extends Controller
 
         return $total;
     }
+
+    public function getGraphSales()
+    {
+
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $month = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+        $monthlySales = array();
+        $year = date('Y');
+
+        foreach ($month as $mth) {
+
+            $getTotalSales = DB::table('orders_details')
+                ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
+                ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
+                ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
+                ->where('orders.created_at', '>=', $year . $mth . '01')
+                ->where('orders.created_at', '<=', $year . $mth . '31')
+                ->where('products.belongToAdmin', '=', Auth::user()->admin_category)
+                ->get();
+
+            $total = 0;
+            foreach ($getTotalSales as $value) {
+                $total += $value->total_sales;
+            }
+
+            if ($total != 0) {
+                array_push($monthlySales, $total);
+            } else {
+                array_push($monthlySales, 0);
+            }
+        }
+
+        return $monthlySales;
+    }
+
+    public function getGraphPurchase()
+    {
+
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $month = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+        $monthlyPurchase = array();
+        $year = date('Y');
+
+        foreach ($month as $mth) {
+
+            $getTotalPurchase = DB::table('orders_details')
+                ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
+                ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
+                ->selectRaw('orders_details.quantity * products.price_hq AS total_purchase')
+                ->where('orders.created_at', '>=', $year . $mth . '01')
+                ->where('orders.created_at', '<=', $year . $mth . '31')
+                ->where('products.belongToAdmin', '=', Auth::user()->admin_category)
+                ->get();
+
+            $total = 0;
+            foreach ($getTotalPurchase as $value) {
+                $total += $value->total_purchase;
+            }
+
+            if ($total != 0) {
+                array_push($monthlyPurchase, $total);
+            } else {
+                array_push($monthlyPurchase, 0);
+            }
+        }
+
+        return $monthlyPurchase;
+    }
+
+    public function getGraphProfit()
+    {
+        $sales = $this->getGraphSales();
+        $purchases = $this->getGraphPurchase();
+
+        $profitMonthly = array();
+
+        for ($i = 0; $i < 12; $i++) {
+            $total = $sales[$i] - $purchases[$i];
+
+            if ($total != 0) {
+                array_push($profitMonthly, $total);
+            } else {
+                array_push($profitMonthly, 0);
+            }
+        }
+        
+        return $profitMonthly;
+    }
 }

@@ -70,8 +70,12 @@ class ManageAgentController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new user', 'error');
-            return redirect('/manageAgent');
+            $notification = array(
+                'message' => 'Please fill in all the box before creating new user!',
+                'alert-type' => 'error'
+            );
+
+            return redirect('/manageAgent')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -101,8 +105,12 @@ class ManageAgentController extends Controller
 
                         $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
 
-                        toast('User has been created', 'success');
-                        return redirect('/manageAgent');
+                        $notification = array(
+                            'message' => 'Agent has been created',
+                            'alert-type' => 'success'
+                        );
+
+                        return redirect('/manageAgent')->with($notification);
                     } else {
                         $user = new User;
                         $user->name = $data['name'];
@@ -118,12 +126,21 @@ class ManageAgentController extends Controller
                         $user->role = 'shogun';
                         $user->save();
 
-                        toast('User has been created', 'success');
-                        return redirect('/manageAgent');
+                        $notification = array(
+                            'message' => 'Agent has been created',
+                            'alert-type' => 'success'
+                        );
+
+                        return redirect('/manageAgent')->with($notification);
                     }
                 } else {
-                    toast('User with the same IC number has existed in the system.', 'error');
-                    return redirect('/manageAgent');
+
+                    $notification = array(
+                        'message' => 'User with the same IC number has existed in the system',
+                        'alert-type' => 'error'
+                    );
+
+                    return redirect('/manageAgent')->with($notification);
                 }
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
@@ -145,8 +162,13 @@ class ManageAgentController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please dont leave any boxes empty', 'error');
-            return redirect('/manageAgent');
+
+            $notification = array(
+                'message' => 'Please dont leave any boxes empty',
+                'alert-type' => 'error'
+            );
+
+            return redirect('/manageAgent')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -162,8 +184,12 @@ class ManageAgentController extends Controller
                             'icnumber' => $data['icEdit']
                         ]);
 
-                    toast('Agent has been updated', 'success');
-                    return redirect('/manageAgent');
+                    $notification = array(
+                        'message' => 'Agent has been updated',
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect('/manageAgent')->with($notification);
                 } else if ($req->file('imageEdit') != null) {
                     DB::table('users')
                         ->where('id', $data['userID'])
@@ -181,8 +207,12 @@ class ManageAgentController extends Controller
 
                     $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
 
-                    toast('Agent has been updated', 'success');
-                    return redirect('/manageAgent');
+                    $notification = array(
+                        'message' => 'Agent has been updated',
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect('/manageAgent')->with($notification);
                 }
             } catch (Exception $e) {
                 toast('Something went wrong', 'error');
@@ -200,10 +230,10 @@ class ManageAgentController extends Controller
                 'role' => $role
             ]);
 
-            $notification = array(
-                'message' => 'Agent has been updated!',
-                'alert-type' => 'success'
-            );
+        $notification = array(
+            'message' => 'Agent has been updated!',
+            'alert-type' => 'success'
+        );
 
         return redirect('/manageAgent')->with($notification);
     }
@@ -213,11 +243,11 @@ class ManageAgentController extends Controller
         DB::table('users')
             ->delete($id);
 
-        
-            $notification = array(
-                'message' => 'Agent has been removed!',
-                'alert-type' => 'success'
-            );
+
+        $notification = array(
+            'message' => 'Agent has been removed!',
+            'alert-type' => 'success'
+        );
 
         return redirect('/manageAgent')->with($notification);
     }

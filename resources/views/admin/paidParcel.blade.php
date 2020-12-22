@@ -7,42 +7,30 @@
         {{ session('success_message') }}
     </div>
 @endif
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Paid Parcel</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active">Paid Parcel</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Paid Parcels</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Paid Parcels</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-warning">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    {{-- <button class="btn btn-warning" onclick="exportTableToExcelPending()">Export Order
-                                        List to
-                                        Excel</button> --}}
-                                <br /><br />
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <div class="table-responsive">
+                                        <table id="example5" class="display" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Paid At</th>
@@ -80,6 +68,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -87,11 +76,7 @@
                 </div>
             </div>
         </div>
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-
+    </div>
 @endsection
 
 @section('script')
@@ -128,9 +113,7 @@
         });
     });
 
-    document.getElementById("paid-parcel").className = "nav-link active";
-    document.getElementById("menuParcel").className = "nav-link active";
-    document.getElementById("menuParcels").className = "nav-item menu-open has-treeview";
+
     function openModalEdit(id, name, email, phone, address) {
 
         document.getElementById("idEdit").value = id;

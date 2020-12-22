@@ -30,10 +30,11 @@
                 <div class="col-12">
                     <div class="card overflow-hidden">
                         <div class="card-body pb-0 px-4 pt-4">
-                            <button style="width:100%" type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg">
+                            <button style="width:100%" type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#modal-lg">
                                 <i class="lni lni-plus"></i></i> &nbsp Add Agents
                             </button>
-                            <br /><br/>
+                            <br /><br />
                             <div class="table-responsive">
                                 <table id="example5" class="display" style="width:100%">
                                     <thead>
@@ -60,51 +61,50 @@
                                                             <option value="" selected>Not Yet Assign</option>
                                                         @endif
                                                         <option value="/manageAgent/admin/{{ $user->id }}" @if ($user->role == 'admin'){ selected }
-                                                        @endif>Admin</option>
-                                                        <option value="/manageAgent/shogun/{{ $user->id }}" @if ($user->role == 'shogun'){ selected @endif
-                                                            }>Shogun
-                                                        </option>
-                                                        <option value="/manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif
-                                                            >Damio
-                                                        </option>
-                                                        <option value="/manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif
-                                                            >Merchant</option>
-                                                        <option value="/manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif
-                                                            >Dropship</option>
-                                                        </select>
-                                                </td>
-                                                <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                        onclick="openModalEdit(
-                                                                '{{ $user->id }}',
-                                                                '{{ $user->name }}',
-                                                                '{{ $user->email }}',
-                                                                '{{ $user->phone }}',
-                                                                '{{ $user->address }}',
-                                                                '{{ $user->icnumber }}',
-                                                                '{{ $user->dob }}',
-                                                                '{{ $user->image }}'
-                                                            )" data-target="#modalEdit" class="btn btn-warning"><i
-                                                            class="lni lni-pencil-alt"></i></button> &nbsp;
-                                                    <button type="button" title="View" data-toggle="modal" onclick="openModalView(
-                                                                '{{ $user->id }}',
-                                                                '{{ $user->name }}',
-                                                                '{{ $user->email }}',
-                                                                '{{ $user->phone }}',
-                                                                '{{ $user->address }}',
-                                                                '{{ $user->icnumber }}',
-                                                                '{{ $user->dob }}',
-                                                                '{{ $user->image }}'
-                                                                )" data-target="#modalView" class="btn btn-success"><i
-                                                            class="lni lni-eye"></i></button> &nbsp;
-                                                    <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                        onclick="window.location.href='manageAgent/delete/{{ $user->id }}'"
-                                                        class="btn btn-danger"><i class="lni lni-trash"></i></button>
-                                                    &nbsp;
-                                                </td>
-                                                
-                                            </tr>
+                                        @endif>Admin</option>
+                                        <option value="/manageAgent/shogun/{{ $user->id }}" @if ($user->role == 'shogun'){ selected @endif
+                                            }>Shogun
+                                        </option>
+                                        <option value="/manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif
+                                            >Damio
+                                        </option>
+                                        <option value="/manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif
+                                            >Merchant</option>
+                                        <option value="/manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif
+                                            >Dropship</option>
+                                        </select>
+                                        </td>
+                                        <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal" onclick="openModalEdit(
+                                                                        '{{ $user->id }}',
+                                                                        '{{ $user->name }}',
+                                                                        '{{ $user->email }}',
+                                                                        '{{ $user->phone }}',
+                                                                        '{{ $user->address }}',
+                                                                        '{{ $user->icnumber }}',
+                                                                        '{{ $user->dob }}',
+                                                                        '{{ $user->image }}'
+                                                                    )" data-target="#modalEdit" class="btn btn-warning"><i
+                                                    class="lni lni-pencil-alt"></i></button> &nbsp;
+                                            <button type="button" title="View" data-toggle="modal" onclick="openModalView(
+                                                                        '{{ $user->id }}',
+                                                                        '{{ $user->name }}',
+                                                                        '{{ $user->email }}',
+                                                                        '{{ $user->phone }}',
+                                                                        '{{ $user->address }}',
+                                                                        '{{ $user->icnumber }}',
+                                                                        '{{ $user->dob }}',
+                                                                        '{{ $user->image }}'
+                                                                        )" data-target="#modalView"
+                                                class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
+                                            <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
+                                                onclick="window.location.href='manageAgent/delete/{{ $user->id }}'"
+                                                class="btn btn-danger"><i class="lni lni-trash"></i></button>
+                                            &nbsp;
+                                        </td>
+
+                                        </tr>
                                         @endforeach
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -130,7 +130,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Photo</label>
+                                    <label for="exampleInputFile">Photo <span style="color:yellow">  *</span></label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" id="image" name="image">
@@ -144,8 +144,9 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Name </label>
-                                    <input type="text" id="name" class="form-control" name="name" placeholder="Name" />
+                                    <label> Name <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="name" onkeypress="return isAlphabetsKey(event)" class="form-control"
+                                        name="name" placeholder="Name" />
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -157,15 +158,16 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> IC </label>
-                                    <input type="text" id="ic" class="form-control" name="ic" placeholder="IC Number" />
+                                    <label> IC <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="ic" class="form-control" onkeypress="return isNumberKey(event)"
+                                        name="ic" placeholder="IC Number" />
                                 </div>
                             </div>
 
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Email </label>
+                                    <label> Email <span style="color:yellow">  *</span></label>
                                     <input type="text" id="email" class="form-control" name="email" placeholder="Email" />
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -180,7 +182,7 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Date Of Birth </label>
+                                    <label> Date Of Birth <span style="color:yellow">  *</span></label>
                                     <input type="date" id="dob" class="form-control" name="dob"
                                         placeholder="Date Of Birth" />
                                 </div>
@@ -188,8 +190,8 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Phone Number </label>
-                                    <input type="text" id="phoneNum" class="form-control" name="phone"
+                                    <label> Phone Number <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="phoneNum" class="form-control" onkeypress="return isNumberKey(event)" name="phone"
                                         placeholder="Phone Number" />
                                     @error('phone')
                                         <span class="invalid-feedback" role="alert">
@@ -201,7 +203,7 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Address</label>
+                                    <label>Address <span style="color:yellow">  *</span></label>
                                     <textarea class="form-control" name="address" id="address" rows="3"
                                         placeholder="Address"></textarea>
                                     @error('address')
@@ -244,7 +246,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Photo</label>
+                                    <label for="exampleInputFile">Photo </label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" id="imageEdit" name="imageEdit">
@@ -258,8 +260,8 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Name </label>
-                                    <input type="text" id="nameEdit" class="form-control" name="nameEdit"
+                                    <label> Name <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="nameEdit" class="form-control" onkeypress="return isAlphabetsKey(event)" name="nameEdit"
                                         placeholder="Name" />
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -272,8 +274,8 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> IC </label>
-                                    <input type="text" id="icEdit" class="form-control" name="icEdit"
+                                    <label> IC <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="icEdit" class="form-control" onkeypress="return isNumberKey(event)" name="icEdit"
                                         placeholder="IC Number" />
                                 </div>
                             </div>
@@ -281,7 +283,7 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Email </label>
+                                    <label> Email <span style="color:yellow">  *</span></label>
                                     <input type="text" id="emailEdit" class="form-control" name="emailEdit"
                                         placeholder="Email" />
                                     @error('email')
@@ -297,7 +299,7 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Date Of Birth </label>
+                                    <label> Date Of Birth <span style="color:yellow">  *</span></label>
                                     <input type="date" id="dobEdit" class="form-control" name="dobEdit"
                                         placeholder="Date Of Birth" />
                                 </div>
@@ -305,8 +307,8 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Phone Number </label>
-                                    <input type="text" id="phoneEdit" class="form-control" name="phoneEdit"
+                                    <label> Phone Number <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="phoneEdit" class="form-control" onkeypress="return isNumberKey(event)" name="phoneEdit"
                                         placeholder="Phone Number" />
                                     @error('phone')
                                         <span class="invalid-feedback" role="alert">
@@ -318,7 +320,7 @@
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Address</label>
+                                    <label>Address <span style="color:yellow">  *</span></label>
                                     <textarea class="form-control" name="addressEdit" id="addressEdit" rows="3"
                                         placeholder="Address"></textarea>
                                     @error('address')
@@ -370,6 +372,31 @@
 
 @section('script')
     <script>
+        function isAlphabetsKey(e) {
+            var keyCode = e.keyCode || e.which;
+
+
+            //Regex for Valid Characters i.e. Alphabets.
+            var regex = /^[A-Za-z ]+$/;
+
+            //Validate TextBox value against the Regex.
+            var isValid = regex.test(String.fromCharCode(keyCode));
+            if (!isValid) {
+                return false;
+            }
+
+            return isValid;
+        }
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31 &&
+                (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,

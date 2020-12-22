@@ -6,7 +6,8 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4>Agents</h4>
+                        <h4>Products</h4>
+                        <span>Manage Product</span>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -26,7 +27,7 @@
                                 <i class="lni lni-plus"></i> &nbsp Add Products
                             </button>
                             <br />
-                            <br/>
+                            <br />
                             <div class="table-responsive">
                                 <table id="example5" class=" table table-striped table-responsive-sm">
                                     <thead>
@@ -57,30 +58,31 @@
                                                 </td>
                                                 <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
                                                         onclick="openModalEdit(
-                                                                            '{{ $product->id }}',
-                                                                            '{{ $product->product_name }}',
-                                                                            '{{ $product->price_hq }}',
-                                                                            '{{ $product->product_price }}',
-                                                                            '{{ $product->product_description }}',
-                                                                            '{{ $product->price_shogun }}',
-                                                                            '{{ $product->price_damio }}',
-                                                                            '{{ $product->price_merchant }}',
-                                                                            '{{ $product->price_dropship }}',
-                                                                            '{{ $product->product_link }}'
-                                                                            )" data-target="#modalEdit"
-                                                        class="btn btn-warning"><i class="lni lni-pencil-alt"></i></button> &nbsp;
+                                                                                '{{ $product->id }}',
+                                                                                '{{ $product->product_name }}',
+                                                                                '{{ $product->price_hq }}',
+                                                                                '{{ $product->product_price }}',
+                                                                                '{{ $product->product_description }}',
+                                                                                '{{ $product->price_shogun }}',
+                                                                                '{{ $product->price_damio }}',
+                                                                                '{{ $product->price_merchant }}',
+                                                                                '{{ $product->price_dropship }}',
+                                                                                '{{ $product->product_link }}'
+                                                                                )" data-target="#modalEdit"
+                                                        class="btn btn-warning"><i class="lni lni-pencil-alt"></i></button>
+                                                    &nbsp;
                                                     <button type="button" title="View" data-toggle="modal" onclick="openModalView(
-                                                                            '{{ $product->id }}',
-                                                                            '{{ $product->product_name }}',
-                                                                            '{{ $product->price_hq }}',
-                                                                            '{{ $product->product_price }}',
-                                                                            '{{ $product->product_description }}',
-                                                                            '{{ $product->price_shogun }}',
-                                                                            '{{ $product->price_damio }}',
-                                                                            '{{ $product->price_merchant }}',
-                                                                            '{{ $product->price_dropship }}',
-                                                                            '{{ $product->product_link }}'
-                                                                            )" data-target="#modalView"
+                                                                                '{{ $product->id }}',
+                                                                                '{{ $product->product_name }}',
+                                                                                '{{ $product->price_hq }}',
+                                                                                '{{ $product->product_price }}',
+                                                                                '{{ $product->product_description }}',
+                                                                                '{{ $product->price_shogun }}',
+                                                                                '{{ $product->price_damio }}',
+                                                                                '{{ $product->price_merchant }}',
+                                                                                '{{ $product->price_dropship }}',
+                                                                                '{{ $product->product_link }}'
+                                                                                )" data-target="#modalView"
                                                         class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
 
                                                     <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
@@ -115,7 +117,7 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Product Name </label>
+                                    <label> Product Name <span style="color:yellow">  *</span></label>
                                     <input type="text" id="productName" class="form-control" name="productName"
                                         placeholder="Name" />
                                 </div>
@@ -123,7 +125,7 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Photo</label>
+                                    <label for="exampleInputFile">Photo <span style="color:yellow">  *</span></label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" id="image" name="image">
@@ -137,7 +139,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Product Description</label>
+                                    <label>Product Description <span style="color:yellow">  *</span></label>
                                     <textarea class="form-control" name="productDesc" id="productDesc" rows="3"
                                         placeholder="Description"></textarea>
                                 </div>
@@ -157,48 +159,48 @@
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Actual Price </label>
-                                    <input type="text" id="productPrice" class="form-control" name="productPrice"
+                                    <label> Actual Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="productPrice" onkeypress="return isPriceKey(event)" class="form-control" name="productPrice"
                                         placeholder="Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> HQ Price </label>
-                                    <input type="text" id="hqPrice" class="form-control" name="hqPrice"
+                                    <label> HQ Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="hqPrice" onkeypress="return isPriceKey(event)" class="form-control" name="hqPrice"
                                         placeholder="HQ Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Shogun Price </label>
-                                    <input type="text" id="shogunPrice" class="form-control" name="shogunPrice"
+                                    <label> Shogun Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="shogunPrice" onkeypress="return isPriceKey(event)" class="form-control" name="shogunPrice"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Damio Price </label>
-                                    <input type="text" id="damioPrice" class="form-control" name="damioPrice"
+                                    <label> Damio Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="damioPrice" onkeypress="return isPriceKey(event)" class="form-control" name="damioPrice"
                                         placeholder="Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Merchant Price </label>
-                                    <input type="text" id="merchantPrice" class="form-control" name="merchantPrice"
+                                    <label> Merchant Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="merchantPrice" onkeypress="return isPriceKey(event)" class="form-control" name="merchantPrice"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Dropship Price </label>
-                                    <input type="text" id="dropshipPrice" class="form-control" name="dropshipPrice"
+                                    <label> Dropship Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="dropshipPrice" onkeypress="return isPriceKey(event)" class="form-control" name="dropshipPrice"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
@@ -236,7 +238,7 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Product Name </label>
+                                    <label> Product Name <span style="color:yellow">  *</span></label>
                                     <input type="text" id="productNameEdit" class="form-control" name="productNameEdit"
                                         placeholder="Name" />
                                 </div>
@@ -247,7 +249,7 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Product Description</label>
+                                    <label>Product Description <span style="color:yellow">  *</span></label>
                                     <textarea class="form-control" name="productDescEdit" id="productDescEdit" rows="3"
                                         placeholder="Description"></textarea>
                                 </div>
@@ -268,48 +270,48 @@
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Actual Price </label>
-                                    <input type="text" id="productPriceEdit" class="form-control" name="productPriceEdit"
+                                    <label> Actual Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="productPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="productPriceEdit"
                                         placeholder="Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> HQ Price </label>
-                                    <input type="text" id="hqPriceEdit" class="form-control" name="hqPriceEdit"
+                                    <label> HQ Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="hqPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="hqPriceEdit"
                                         placeholder="HQ Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Shogun Price </label>
-                                    <input type="text" id="shogunPriceEdit" class="form-control" name="shogunPriceEdit"
+                                    <label> Shogun Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="shogunPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="shogunPriceEdit"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Damio Price </label>
-                                    <input type="text" id="damioPriceEdit" class="form-control" name="damioPriceEdit"
+                                    <label> Damio Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="damioPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="damioPriceEdit"
                                         placeholder="Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Merchant Price </label>
-                                    <input type="text" id="merchantPriceEdit" class="form-control" name="merchantPriceEdit"
+                                    <label> Merchant Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="merchantPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="merchantPriceEdit"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label> Dropship Price </label>
-                                    <input type="text" id="dropshipPriceEdit" class="form-control" name="dropshipPriceEdit"
+                                    <label> Dropship Price <span style="color:yellow">  *</span></label>
+                                    <input type="text" id="dropshipPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="dropshipPriceEdit"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>

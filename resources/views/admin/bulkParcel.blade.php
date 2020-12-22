@@ -3,39 +3,29 @@
 @endsection
 
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Bulk Parcel</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Dashboard</a>
-                        <li class="breadcrumb-item active">Bulk Parcel</li>
-                    </ol>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Bulk Parcels</h4>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Bulk Parcel</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
             <div class="row">
                 <div style="margin: auto;" class="col-lg-8">
                     <div class="card card-warning">
                         <div class="card-header">
-                            <h3 class="card-title">Update Bulk Orders Records</h3>
+                            <h3 class="card-title">Create Bulk Orders Consignment</h3>
 
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i>
-                                </button>
-                            </div>
                             <!-- /.card-tools -->
                         </div>
                         <!-- /.card-header -->
@@ -114,12 +104,8 @@
                 </div>
 
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+    </div>
 </div>
-<!-- /.card -->
-
 
 @endsection
 

@@ -62,7 +62,7 @@
 
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
-                                                        <select class="form-control select2bs4" style="width: 100%;"
+                                                        <select class="select2-width-75" style="width: 75%" style="width: 100%;"
                                                             id="dropoff_point" name="dropoff_point" required>
                                                             <option value="" hidden selected> Choose dropoff point </option>
                                                             <option value=""> Pickup (Select this for pickup service)
@@ -96,9 +96,10 @@
                                                             <div class="col-12">
                                                                 <!-- text input -->
                                                                 <div class="form-group">
-                                                                    <label> Sender Name </label>
+                                                                    <label> Sender Name <span style="color:yellow">  *</span></label>
                                                                     <input type="text" id="sender_name" class="form-control"
-                                                                        name="sender_name" placeholder="Sender Name"
+                                                                        name="sender_name" onkeypress="return isAlphabetsKey(event)"
+                                                                         placeholder="Sender Name"
                                                                         required />
                                                                 </div>
                                                             </div>
@@ -108,8 +109,8 @@
                                                             <div class="col-12">
                                                                 <!-- text input -->
                                                                 <div class="form-group">
-                                                                    <label> Phone Number </label>
-                                                                    <input type="text" id="sender_phone"
+                                                                    <label> Phone Number <span style="color:yellow">  *</span></label>
+                                                                    <input type="text" id="sender_phone" onkeypress="return isNumberKey(event)"
                                                                         class="form-control" name="sender_phone"
                                                                         placeholder="Phone Number" required />
                                                                 </div>
@@ -119,7 +120,7 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="form-group">
-                                                                    <label>Address #1</label>
+                                                                    <label>Address #1 <span style="color:yellow">  *</span></label>
                                                                     <input type="text" id="sender_address1"
                                                                         class="form-control" name="sender_address1"
                                                                         placeholder="" required />
@@ -152,7 +153,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-4">
                                                                 <div class="form-group">
-                                                                    <label>City</label>
+                                                                    <label>City <span style="color:yellow">  *</span></label>
                                                                     <input type="text" id="sender_city" class="form-control"
                                                                         name="sender_city" placeholder="" required />
                                                                 </div>
@@ -390,7 +391,7 @@
                                     <div id="bordered_collapseFour" class="collapse accordion__body"
                                         data-parent="#accordion-two">
                                         <div class="accordion__body--text">
-                                            <div class="form-group">
+                                            <div id="step4" class="form-group">
                                                 SMS Tracking (RM 0.20) :
                                                 @if (!isset($cart['sms']))
                                                     <button class="btn btn-warning" type="button" onclick="addSMS()"
@@ -472,16 +473,6 @@
 @section('script')
     <script>
         document.getElementById("blastMessage").className = "nav-link active";
-
-        $(function() {
-            //Initialize Select2 Elements
-            $('.select2').select2()
-
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-        });
 
         function checkout() {
 
