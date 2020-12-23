@@ -201,8 +201,11 @@ class ParcelController extends Controller
         } else {
 
             if ($parcelCart[$desc]) {
-                toast('Shipping Cost already in cart', 'error');
-                return redirect('/consignment-details');
+                $notification = array(
+                    'message' => 'Shipping Cost already in cart',
+                    'alert-type' => 'error'
+                );
+                return redirect('/consignment-details')->with($notification);
             } else {
                 $desc = [
                     "desc" => $desc,

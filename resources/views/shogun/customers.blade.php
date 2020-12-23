@@ -2,29 +2,24 @@
 @section('content')
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Manage Customers</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('ShogunDashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active">Manage Product</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Customers</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Customers</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
+
 
             <div class="row">
                 <div class="col-lg-12">
@@ -36,7 +31,8 @@
                                 <i class="fas fa-plus"></i> &nbsp Add Customers
                             </button>
                             <br /> --}}
-                            <table id="example1" class="table table-bordered table-striped">
+                            <div class="table-responsive">
+                                <table id="example5" class="display example5" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -60,29 +56,31 @@
                                                                             '{{ $customer->phone }}',
                                                                             '{{ $customer->address }}'
                                                                             )" data-target="#modalEdit"
-                                                    class="btn btn-warning"><i class="fas fa-edit"></i></button> &nbsp;
+                                                    class="btn btn-warning"><i class="lni lni-pencil-alt"></i></button> &nbsp;
                                                 <button type="button" title="View" data-toggle="modal" onclick="openModalView(
                                                                             '{{ $customer->id }}',
                                                                             '{{ $customer->name }}',
                                                                             '{{ $customer->phone }}',
                                                                             '{{ $customer->address }}'
                                                                             )" data-target="#modalView"
-                                                    class="btn btn-success"><i class="far fa-eye"></i></button> &nbsp;
+                                                    class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
 
                                                 <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
                                                     onclick="window.location.href='customers-shogun-delete/{{ $customer->id }}'"
-                                                    class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
+                                                    class="btn btn-danger"><i class="lni lni-trash"></i></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
-        </div><!-- /.container-fluid -->
+        
+        
 
         <div class="modal fade" id="modal-lg">
             <div class="modal-dialog modal-md">
@@ -231,33 +229,12 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-
-    </section>
-    <!-- /.content -->
+    </div>
 </div>
-<!-- /.content-wrapper -->
-
 @endsection
 
 @section('script')
 <script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-
-    document.getElementById("customers").className = "nav-link active";
 
     function openModalEdit(id,name,phone,address) {
 

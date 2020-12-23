@@ -40,19 +40,23 @@ class BlastMessageController extends Controller
     public function bulkSMSagent(Request $req)
     {
         if($req->input('agents') == ''){
-            toast('Please choose agent from list.', 'error');
-            return redirect('blastMessage');
+            $notification = array(
+                'message' => 'Please choose agent from list.',
+                'alert-type' => 'error'
+            );
 
+            return redirect('blastMessage')->with($notification);
         }
-        // $agentPhoneList = DB::table('users')
-        // ->select('phone')
-        // ->get();
 
-        // $phoneList= array();
-        // foreach($agentPhoneList as $value){
-        //     array_push($phoneList,$value->phone);
-        // }
+        if($req->input('messageAgent') == ''){
+            $notification = array(
+                'message' => 'Please enter your message.',
+                'alert-type' => 'error'
+            );
 
+            return redirect('blastMessage')->with($notification);
+        }
+       
         $phoneList = implode(';',$req->input('agents'));
         $todayDate = date("Y-m-d h:i:sa");
 
@@ -70,43 +74,63 @@ class BlastMessageController extends Controller
         $status = $response['status'];
         $msgCode = $response['msgCode'];
 
+        $notification = array();
+        
         switch ($msgCode) {
             case 'E00001':
-                toast('Message has been sent.', 'success');
+                $notification = array(
+                    'message' => 'Message has been sent.',
+                    'alert-type' => 'success'
+                );
                 break;
             case 'E00242':
-                toast('Invalid recipient(s).', 'error');
+                $notification = array(
+                    'message' => 'Invalid recipient(s).',
+                    'alert-type' => 'error'
+                );
                 break;
             case 'E00250':
-                toast('Insufficient balance.', 'error');
+                $notification = array(
+                    'message' => 'Insufficient balance.',
+                    'alert-type' => 'error'
+                );
                 break;
             case 'BE00128':
-                toast('Completed successfully(low balance).', 'success');
+                $notification = array(
+                    'message' => 'Completed successfully(low balance).',
+                    'alert-type' => 'success'
+                );
                 break;
             case 'E00359':
-                toast('Invalid API Key.', 'error');
+                $notification = array(
+                    'message' => 'Invalid API Key.',
+                    'alert-type' => 'error'
+                );
                 break;
             default:
                 break;
         }
-        return redirect('blastMessage');
+        return redirect('blastMessage')->with($notification);
     }
 
     public function bulkSMScustomer(Request $req)
     {
-        if($req->input('customers') == ''){
-            toast('Please choose customer from list.', 'error');
-            return redirect('blastMessage');
+        if($req->input('messageCustomer') == ''){
+            $notification = array(
+                'message' => 'Please enter your message.',
+                'alert-type' => 'error'
+            );
 
+            return redirect('blastMessage')->with($notification);
         }
-        
-        // $customerPhoneList = DB::table('customers')
-        // ->select('phone')
-        // ->get();
-        // $phoneList= array();
-        // foreach($customerPhoneList as $value){
-        //     array_push($phoneList,$value->phone);
-        // }
+
+        if($req->input('customers') == ''){
+            $notification = array(
+                'message' => 'Please choose customer from list.',
+                'alert-type' => 'error'
+            );
+            return redirect('blastMessage')->with($notification);
+        }
 
         $phoneList = implode(';',$req->input('customers'));
         $todayDate = date("Y-m-d h:i:sa");
@@ -124,32 +148,56 @@ class BlastMessageController extends Controller
         // dd(json_decode($response));
         $status = $response['status'];
         $msgCode = $response['msgCode'];
-
+        $notification = array();
+        
         switch ($msgCode) {
             case 'E00001':
-                toast('Message has been sent.', 'success');
+                $notification = array(
+                    'message' => 'Message has been sent.',
+                    'alert-type' => 'success'
+                );
                 break;
             case 'E00242':
-                toast('Invalid recipient(s).', 'error');
+                $notification = array(
+                    'message' => 'Invalid recipient(s).',
+                    'alert-type' => 'error'
+                );
                 break;
             case 'E00250':
-                toast('Insufficient balance.', 'error');
+                $notification = array(
+                    'message' => 'Insufficient balance.',
+                    'alert-type' => 'error'
+                );
                 break;
             case 'BE00128':
-                toast('Completed successfully(low balance).', 'success');
+                $notification = array(
+                    'message' => 'Completed successfully(low balance).',
+                    'alert-type' => 'success'
+                );
                 break;
             case 'E00359':
-                toast('Invalid API Key.', 'error');
+                $notification = array(
+                    'message' => 'Invalid API Key.',
+                    'alert-type' => 'error'
+                );
                 break;
             default:
                 break;
         }
-        return redirect('blastMessage');
+        return redirect('blastMessage')->with($notification);
     }
 
     public function singleSMS(Request $req)
     {
-       
+        if($req->input('phoneSingle') == '' || $req->input('messageSingle') == ''){
+            $notification = array(
+                'message' => 'Please fill all the details before submit your page.',
+                'alert-type' => 'error'
+            );
+
+            return redirect('blastMessage')->with($notification);
+        }
+
         $todayDate = date("Y-m-d h:i:sa");
         $option = array(
             'apiKey' => '9e8611e27e899012d28f215859462bdf',
@@ -165,25 +213,42 @@ class BlastMessageController extends Controller
         $status = $response['status'];
         $msgCode = $response['msgCode'];
 
+        $notification = array();
+        
         switch ($msgCode) {
             case 'E00001':
-                toast('Message has been sent.', 'success');
+                $notification = array(
+                    'message' => 'Message has been sent.',
+                    'alert-type' => 'success'
+                );
                 break;
             case 'E00242':
-                toast('Invalid recipient(s).', 'error');
+                $notification = array(
+                    'message' => 'Invalid recipient(s).',
+                    'alert-type' => 'error'
+                );
                 break;
             case 'E00250':
-                toast('Insufficient balance.', 'error');
+                $notification = array(
+                    'message' => 'Insufficient balance.',
+                    'alert-type' => 'error'
+                );
                 break;
             case 'BE00128':
-                toast('Completed successfully(low balance).', 'success');
+                $notification = array(
+                    'message' => 'Completed successfully(low balance).',
+                    'alert-type' => 'success'
+                );
                 break;
             case 'E00359':
-                toast('Invalid API Key.', 'error');
+                $notification = array(
+                    'message' => 'Invalid API Key.',
+                    'alert-type' => 'error'
+                );
                 break;
             default:
                 break;
         }
-        return redirect('blastMessage');
+        return redirect('blastMessage')->with($notification);
     }
 }

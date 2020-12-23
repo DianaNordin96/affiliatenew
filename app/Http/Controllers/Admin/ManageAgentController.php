@@ -215,8 +215,11 @@ class ManageAgentController extends Controller
                     return redirect('/manageAgent')->with($notification);
                 }
             } catch (Exception $e) {
-                toast('Something went wrong', 'error');
-                return redirect('/manageAgent');
+                $notification = array(
+                    'message' => 'Something went wrong.',
+                    'alert-type' => 'error'
+                );
+                return redirect('/manageAgent')->with($notification);
             }
         }
     }

@@ -9,7 +9,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
 
-    <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 </head>
 
@@ -65,8 +65,8 @@
 
     <script src="{{ asset('vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('dist/js/custom.min.js') }}"></script>
-    <script src="{{ asset('dist/js/deznav-init.js') }}"></script>
+    <script src="{{ asset('js/custom.min.js') }}"></script>
+    <script src="{{ asset('js/deznav-init.js') }}"></script>
 
 </body>
 

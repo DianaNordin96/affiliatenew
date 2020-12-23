@@ -28,8 +28,11 @@ class ProfileController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please dont leave any boxes empty', 'error');
-            return redirect('/profile-admin');
+            $notification = array(
+                'message' => 'Please dont leave any boxes empty',
+                'alert-type' => 'error'
+            );
+            return redirect('/profile-admin')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -42,11 +45,17 @@ class ProfileController extends Controller
                         'address' => $data['address'],
                     ]);
 
-                toast('User has been updated', 'success');
-                return redirect('/profile-admin');
+                $notification = array(
+                    'message' => 'User has been updated',
+                    'alert-type' => 'success'
+                );
+                return redirect('/profile-admin')->with($notification);
             } catch (Exception $e) {
-                toast('Something went wrong', 'error');
-                return redirect('/profile-admin');
+                $notification = array(
+                    'message' => 'Something went wrong',
+                    'alert-type' => 'error'
+                );
+                return redirect('/profile-admin')->with($notification);
             }
         }
     }
@@ -60,8 +69,11 @@ class ProfileController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please check your password again', 'error');
-            return redirect()->back();
+            $notification = array(
+                'message' => 'Please check your password again',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -72,15 +84,24 @@ class ProfileController extends Controller
                             'password' => Hash::make($req->password1),
                         ]);
 
-                    toast('Your password has been updated', 'success');
-                    return redirect('/profile-admin');
+                    $notification = array(
+                        'message' => 'Your password has been updated',
+                        'alert-type' => 'success'
+                    );
+                    return redirect('/profile-admin') > with($notification);
                 } else {
-                    toast('Your created password do not match. Please enter again.', 'error');
-                    return redirect()->back();
+                    $notification = array(
+                        'message' => 'Your created password do not match. Please enter again.',
+                        'alert-type' => 'error'
+                    );
+                    return redirect()->back() > with($notification);
                 }
             } catch (Exception $e) {
-                toast('Something went wrong', 'error');
-                return redirect('/profile-admin');
+                $notification = array(
+                    'message' => 'Something went wrong',
+                    'alert-type' => 'error'
+                );
+                return redirect('/profile-admin') > with($notification);
             }
         }
     }

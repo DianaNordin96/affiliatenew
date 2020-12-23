@@ -19,7 +19,7 @@ class ManageProductController extends Controller
     public function index()
     {
 
-        $products = DB::table('products')->where('belongToAdmin',Auth::user()->admin_category)->get();
+        $products = DB::table('products')->where('belongToAdmin', Auth::user()->admin_category)->get();
 
         return view(
             'admin/manageProduct',
@@ -46,8 +46,12 @@ class ManageProductController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new products', 'error');
-            return redirect('/manageProduct');
+            $notification = array(
+                'message' => 'Please fill in all the box before creating new products',
+                'alert-type' => 'error'
+            );
+
+            return redirect('/manageProduct')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -65,8 +69,11 @@ class ManageProductController extends Controller
                         'product_link' => $data['productLinkEdit']
                     ]);
 
-                toast('Product has been updated', 'success');
-                return redirect('/manageProduct');
+                $notification = array(
+                    'message' => 'Product has been updated',
+                    'alert-type' => 'success'
+                );
+                return redirect('/manageProduct')->with($notification);
             } catch (Exception $e) {
                 return redirect('manageProduct')->with('error', "Data cannot be updated");
             }
@@ -90,8 +97,12 @@ class ManageProductController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new products', 'error');
-            return redirect('/manageProduct');
+            $notification = array(
+                'message' => 'Please fill in all the box before creating new products',
+                'alert-type' => 'error'
+            );
+
+            return redirect('/manageProduct')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -113,10 +124,13 @@ class ManageProductController extends Controller
 
                 $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
 
-                toast('Product has been created', 'success');
-                return redirect('/manageProduct');
+                $notification = array(
+                    'message' => 'Product has been created',
+                    'alert-type' => 'success'
+                );
+                return redirect('/manageProduct')->with($notification);
             } catch (Exception $e) {
-                return redirect('insert')->with('failed', "operation failed");
+                return redirect('insert')->with('error', "operation failed");
             }
         }
     }
@@ -126,7 +140,11 @@ class ManageProductController extends Controller
         DB::table('products')
             ->delete($id);
 
-        toast('Product has been removed', 'success');
-        return redirect('/manageProduct');
+
+        $notification = array(
+            'message' => 'Product has been removed',
+            'alert-type' => 'success'
+        );
+        return redirect('/manageProduct')->with($notification);
     }
 }

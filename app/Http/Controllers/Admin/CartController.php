@@ -91,20 +91,30 @@ class CartController extends Controller
                         ]);
                 }
 
-                toast($result['result'][0]['messagenow'], 'success');
+                $notification = array(
+                    'message' => $result['result'][0]['messagenow'],
+                    'alert-type' => 'success'
+                );
+
                 session()->forget('cart');
                 // $array = Excel::toArray(new UsersImport, 'users.xlsx');
-                return redirect('/parcel');
+                return redirect('/parcel')->with($notification);
             }else{
-                toast($result['result'][0]['messagenow'], 'error');
+                $notification = array(
+                    'message' => $result['result'][0]['messagenow'],
+                    'alert-type' => 'error'
+                );
                 // $array = Excel::toArray(new UsersImport, 'users.xlsx');
-                return redirect('/parcel');
+                return redirect('/parcel')->with($notification);
             }
 
             
         } else {
-            toast('Insufficient Credit', 'error');
-            return redirect('/parcel');
+            $notification = array(
+                'message' => 'Insufficient Credit.',
+                'alert-type' => 'error'
+            );
+            return redirect('/parcel')->with($notification);
         }
     }
 }

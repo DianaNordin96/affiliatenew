@@ -17,12 +17,10 @@ class ManageOrderController extends Controller
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->join('customers', 'orders.customer_id', '=', 'customers.id')
                 ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
-                ->join('products', 'orders_details.product_id', '=', 'products.id')
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
-                ->where('products.belongToAdmin', Auth::user()->admin_category)
+                ->where('orders.belongToAdmin', Auth::user()->admin_category)
                 ->where('awb', '=', NULL)
                 ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount')
-                ->groupBy('orders.orders_id')
                 ->get();
 
             return view('admin/view-order-pending', [
@@ -33,12 +31,10 @@ class ManageOrderController extends Controller
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->join('customers', 'orders.customer_id', '=', 'customers.id')
                 ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
-                ->join('products', 'orders_details.product_id', '=', 'products.id')
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
-                ->where('products.belongToAdmin', Auth::user()->admin_category)
+                ->where('orders.belongToAdmin', Auth::user()->admin_category)
                 ->where('awb', '<>', NULL)
                 ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount')
-                ->groupBy('orders.orders_id')
                 ->get();
 
             return view('admin/view-order-completed', [
@@ -123,6 +119,7 @@ class ManageOrderController extends Controller
     {
         date_default_timezone_set('Asia/Kuala_Lumpur');
 
+        
         DB::table('consignment')
             ->insert([
                 'created_at' =>  date("Y-m-d H:i:s"),
@@ -135,7 +132,11 @@ class ManageOrderController extends Controller
                 'status' => 'Success'
             ]);
 
-        toast('Order has been updated.', 'success');
-        return redirect('update-order');
+        $notification = array(
+            'message' => 'Order has been updated.',
+            'alert-type' => 'success'
+        );
+
+        return redirect('update-order')->with($notification);
     }
 }

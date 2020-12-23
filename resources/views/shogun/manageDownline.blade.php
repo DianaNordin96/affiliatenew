@@ -3,28 +3,22 @@
 @endsection
 
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Manage Downline</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/ShogunDashboard">Home</a></li>
-                        <li class="breadcrumb-item active">Manage Downline</li>
-                    </ol>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Downline Agents</h4>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Downline</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
 
             <div class="row">
                 <div class="col-lg-12">
@@ -33,7 +27,8 @@
                             <button class="btn btn-warning" onclick="exportTableToExcel()">Export Downline List to
                                 Excel</button>
                             <br /><br />
-                            <table id="example1" class="table table-bordered table-striped">
+                            <div class="table-responsive">
+                                <table id="example5" class="display example5" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -54,17 +49,9 @@
                                             <td>{{ $user[0]->phone }}</td>
                                             <td hidden>{{ $user[0]->role }}</td>
                                             <td>
-                                                {{-- <button type="button" id="buttonEdit"
-                                                        title="Edit" data-toggle="modal"
-                                                        onclick="openModalEdit('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
-                                                data-target="#modalEdit" class="btn btn-warning"><i
-                                                    class="fas fa-edit"></i></button> &nbsp
-                                                --}}
-
                                                 <button type="button" title="View" data-toggle="modal"
                                                     onclick="openModalView('{{ $user[0]->id }}','{{ $user[0]->name }}','{{ $user[0]->email }}','{{ $user[0]->phone }}','{{ $user[0]->address }}')"
-                                                    data-target="#modalView" class="btn btn-success"><i
-                                                        class="far fa-eye"></i></button> &nbsp;
+                                                    data-target="#modalView" class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
                                                 <select onchange="location = this.value;" class="btn btn-default">
                                                     @if($user[0]->role == '')
                                                         <option value="" selected>Not Yet Assign</option>
@@ -87,6 +74,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -108,7 +96,8 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-striped">
+                            <div class="table-responsive">
+                                <table id="example5" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -128,8 +117,7 @@
                                             <td>
                                                 <button type="button" title="View" data-toggle="modal"
                                                     onclick="openModalView('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
-                                                    data-target="#modalView" class="btn btn-success"><i
-                                                        class="far fa-eye"></i>
+                                                    data-target="#modalView" class="btn btn-success"><i class="lni lni-eye"></i>
                                                 </button> &nbsp;
                                                 <button type="button"
                                                     onclick="location.href='/approveDownline-shogun/{{ $user->id }}'"
@@ -142,13 +130,15 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
                 </div>
             </div>
 
-        </div><!-- /.container-fluid -->
+    </div>
+</div>
 
         <div class="modal fade" id="modal-lg">
             <div class="modal-dialog modal-lg">
@@ -346,12 +336,6 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal -->
-
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.card -->
 
 
 @endsection
@@ -361,29 +345,13 @@
 <script>
     function exportTableToExcel() {
         $(document).ready(function () {
-            $("#example1").table2excel({
+            $(".example5").table2excel({
                 exclude: ".noExport",
                 filename: "Agent List"
             });
         });
 
     }
-
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
 
     document.getElementById("agents").className = "nav-link active";
 

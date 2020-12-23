@@ -182,7 +182,6 @@ class CartController extends Controller
             //insert orders
             foreach ($cart as $key => $value) {
 
-
                 $orderID = date("Ymd") . date("hi") . Auth::user()->id . $key;
 
                 // dd($cart[$key][0]);
@@ -207,7 +206,8 @@ class CartController extends Controller
                             'user_id' => Auth::user()->id,
                             'amount' => $total,
                             'created_at' => NOW(),
-                            'customer_id' => $key
+                            'customer_id' => $key,
+                            'belongToAdmin' => $keyGrp
                         ],
                     ]);
 
@@ -224,9 +224,6 @@ class CartController extends Controller
                         ]);
                     }
                 }
-
-
-
                 $totalCommission = 0;
                 //update commision
                 foreach ($cart[$key][0] as $id => $details) {
