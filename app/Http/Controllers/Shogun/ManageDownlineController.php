@@ -91,8 +91,11 @@ class ManageDownlineController extends Controller
                 'role' => $role
             ]);
 
-        toast('User role has been changed', 'success');
-        return redirect('/downline-shogun');
+        $notification = array(
+            'message' => 'User role has been changed',
+            'alert-type' => 'success'
+        );
+        return redirect('/downline-shogun')->with($notification);
     }
 
     public function approve($id){

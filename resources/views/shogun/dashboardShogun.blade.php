@@ -153,7 +153,7 @@
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-3 ">
+                                <div class="col-lg-4 ">
                                     <div class="info-box bg-lightblue">
                                         <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
                                         <div class="info-box-content">
@@ -167,7 +167,7 @@
                                         <!-- /.info-box-content -->
                                     </div>
                                 </div>
-                                <div class="col-lg-3 ">
+                                <div class="col-lg-4 ">
                                     <div class="info-box bg-lightblue">
                                         <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
                                         <div class="info-box-content">
@@ -181,7 +181,7 @@
                                         <!-- /.info-box-content -->
                                     </div>
                                 </div>
-                                <div class="col-lg-3 ">
+                                <div class="col-lg-4 ">
                                     <div class="info-box bg-lightblue">
                                         <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
                                         <div class="info-box-content">

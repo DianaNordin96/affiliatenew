@@ -4,40 +4,28 @@
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Commission</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('ShogunDashboard') }}">Dashboard</a>
-                            <li class="breadcrumb-item active">Commission</li>
-                        </ol>
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4>Purchase History</h4>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Purchase History</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
 
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="card card-warning">
                             <div class="card-header">
                                 <h3 class="card-title">Total Commission</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                            class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                                <!-- /.card-tools -->
                             </div>
                             <!-- /.card-header -->
                             <div style="text-align: center" class="card-body">
@@ -53,12 +41,6 @@
                         <div class="card card-warning">
                             <div class="card-header">
                                 <h3 class="card-title">Request for withdrawal</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                            class="fas fa-plus"></i>
-                                    </button>
-                                </div>
                                 <!-- /.card-tools -->
                             </div>
                             <!-- /.card-header -->
@@ -70,8 +52,9 @@
                                         <div class="col-sm-6">
                                             <!-- text input -->
                                             <div class="form-group">
-                                                <label> Amount To Withdraw</label>
-                                                <input type="number" id="amount" class="form-control" name="amount"
+                                                <label> Amount To Withdraw <span style="color:yellow">  *</span>
+                                                </label>
+                                                <input type="text" id="amount" class="form-control" name="amount" onkeypress="return isPriceKey(event)"
                                                     placeholder="Amount to withdraw" required />
                                             </div>
                                         </div>
@@ -81,8 +64,9 @@
 
                                             <!-- text input -->
                                             <div class="form-group">
-                                                <label> Bank Name </label>
-                                                <input type="text" id="bank" class="form-control" name="bank"
+                                                <label> Bank Name <span style="color:yellow">  *</span>
+                                                </label>
+                                                <input type="text" id="bank" class="form-control" name="bank" onkeypress="return isAlphabetsKey(event)"
                                                     placeholder="Bank Name" required />
                                             </div>
                                         </div>
@@ -92,8 +76,10 @@
                                         <div class="col-sm-6">
                                             <!-- text input -->
                                             <div class="form-group">
-                                                <label> Account No. </label>
-                                                <input type="text" id="accountNo" class="form-control" name="accountNo"
+                                                <label> Account No. <span style="color:yellow">  *</span>
+                                                </label>
+                                                <input type="text" id="accountNo" onkeypress="return isNumberKey(event)"
+                                                class="form-control" name="accountNo"
                                                     placeholder="Account Number" required />
                                             </div>
                                         </div>
@@ -101,7 +87,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-block bg-danger">Request for
+                                            <button type="submit" class="btn btn-block btn-danger">Request for
                                                 Withdrawal</button>
                                         </div>
                                     </div>
@@ -117,17 +103,11 @@
                         <div class="card card-warning">
                             <div class="card-header">
                                 <h3 class="card-title">Withdrawal Request History</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                            class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                                <!-- /.card-tools -->
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <div class="table-responsive">
+                                    <table id="example5" class="display">
                                     <thead>
                                         <tr>
                                             <th>Date</th>
@@ -153,18 +133,14 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                         </div>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+        </div>
     </div>
-    <!-- /.card -->
-
-
 @endsection
 
 @section('script')

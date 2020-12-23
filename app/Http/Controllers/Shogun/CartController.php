@@ -81,6 +81,10 @@ class CartController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
+            $notification = array(
+            'message' => 'User role has been changed',
+            'alert-type' => 'success'
+        );
             session()->flash('success', 'Product removed successfully');
         }
     }

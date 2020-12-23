@@ -22,6 +22,7 @@
     <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
+    <link href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
     
   
 </head>
@@ -176,28 +177,12 @@
                         </div>
 
                         <ul class="navbar-nav header-right">
-                            <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link bell dz-fullscreen" href="#">
-                                    <svg id="icon-full" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="css-i6dzq1">
-                                        <path
-                                            d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
-                                        </path>
-                                    </svg>
-                                    <svg id="icon-minimize" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-minimize">
-                                        <path
-                                            d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3">
-                                        </path>
-                                    </svg>
-                                </a>
-                            </li>
+                            
 
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="/profile-shogun" role="button" data-toggle="dropdown">
-                                    <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" />
+                                    {{-- <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" /> --}}
+                                    <img src="{{ asset('imageUploaded/avatar.png') }}" width="20" alt="" /> 
                                     <div class="header-info">
                                         <span>Hey, <strong>{{ Auth::user()->name }}</strong></span>
                                         <small>{{ Auth::user()->role }}</small>
@@ -276,30 +261,30 @@
                     </li>
                     <li class="nav-label">Manage Data</li>
 
-                    <li><a class="ai-icon" href="/downline-shogun" aria-expanded="false">
+                    <li><a title="Downline Agent" class="ai-icon" href="/downline-shogun" aria-expanded="false">
                             <i class="lni lni-users"></i>
                             <span class="nav-text">Downline Agent</span>
                         </a>
                     </li>
 
-                    <li><a class="ai-icon" href="/customers-shogun" aria-expanded="false">
+                    <li><a title="Customers" class="ai-icon" href="/customers-shogun" aria-expanded="false">
                             <i class="lni lni-customer"></i>
                             <span class="nav-text">Customers</span>
                         </a>
                     </li>
 
-                    <li><a class="ai-icon" href="/product-shogun" aria-expanded="false">
+                    <li><a title="Buy Product" class="ai-icon" href="/product-shogun" aria-expanded="false">
                             <i class="lni lni-shopify"></i>
                             <span class="nav-text">Buy Product</span>
                         </a>
                     </li>
 
-                    <li><a class="ai-icon" href="/purchase-history-shogun" aria-expanded="false">
+                    <li><a title="Purchase History" class="ai-icon" href="/purchase-history-shogun" aria-expanded="false">
                             <i class="lni lni-list"></i> <span class="nav-text">Purchase History</span>
                         </a>
                     </li>
 
-                    <li><a class="ai-icon" href="/commission-shogun" aria-expanded="false">
+                    <li><a title="Commission" class="ai-icon" href="/commission-shogun" aria-expanded="false">
                         <i class="lni lni-wallet"></i> <span class="nav-text">Commission</span>
                     </a>
                 </li>
@@ -388,15 +373,36 @@
     <!-- Svganimation scripts -->
     <script src="{{ asset('vendor/svganimation/vivus.min.js') }}"></script>
     <script src="{{ asset('vendor/svganimation/svg.animation.js') }}"></script>
-    <script src="{{ asset('js/plugins-init/sweetalert.init.js') }}"></script>
+
+    <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
 
     <!-- All init script -->
-    <script src="{{ asset('js/plugins-init/toastr-init.js') }}"></script>
+    {{-- <script src="{{ asset('js/plugins-init/toastr-init.js') }}"></script> --}}
     <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
     <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
 
     <script>
+
+    // document.getElementsByClassName("swal2-select").style.display = none;
+
+        toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+        };
 
     @if(Session::has('message'))
         var type = "{{ Session::get('alert-type', 'info') }}";
@@ -417,6 +423,23 @@
                 toastr.error("{{ Session::get('message') }}");
                 break;
         }
+    @endif
+
+    @if(Session::has('success'))
+        toastr.success("{{ Session::get('success') }}");
+        Swal.fire(
+        'The Internet?',
+        'That thing is still around?',
+        'success'
+        )
+    @endif
+
+    @if(Session::has('failed'))
+        toastr.error("{{ Session::get('failed') }}");
+    @endif
+
+    @if(Session::has('error'))
+        toastr.error("{{ Session::get('error') }}");
     @endif
 
     function isPriceKey(e) {

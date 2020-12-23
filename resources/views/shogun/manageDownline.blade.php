@@ -317,7 +317,7 @@
         </div>
 
         <div class="modal fade" id="modalView">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="viewEmpName"></h4>
@@ -352,8 +352,6 @@
         });
 
     }
-
-    document.getElementById("agents").className = "nav-link active";
 
     function openModalView(id, name, phone, address) {
 

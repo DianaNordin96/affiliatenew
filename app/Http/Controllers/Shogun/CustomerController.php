@@ -13,9 +13,9 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = DB::table('customers')
-        ->where('user_id',Auth::user()->id)
-        ->get();
-        
+            ->where('user_id', Auth::user()->id)
+            ->get();
+
         return view('shogun/customers')->with([
             'customers' => $customers
         ]);
@@ -46,7 +46,7 @@ class CustomerController extends Controller
                     ]);
 
                 toast('Customer has been created', 'success');
-                return redirect('customers-shogun');
+                return redirect('customers-shogun')->with('success', 'ok');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -58,13 +58,22 @@ class CustomerController extends Controller
         $validatedData = [
             'nameEdit' => 'required',
             'phoneEdit' => 'required',
-            'addressEdit' => 'required',
+            'address1Edit' => 'required',
+            'address2Edit' => '',
+            'address3Edit' => '',
+            'stateEdit' => 'required',
+            'postcodeEdit' => 'required',
+            'emailEdit' => 'required',
+            'cityEdit' => 'required',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before updating customer', 'error');
-            return redirect('customers-shogun');
+            $notification = array(
+                'message' => 'Make sure all details has been filled properly',
+                'alert-type' => 'error'
+            );
+            return redirect('customers-shogun')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -73,15 +82,17 @@ class CustomerController extends Controller
                     ->where('id', $data['customerID'])
                     ->update([
                         'name' => $data['nameEdit'],
-                        'address' => $data['addressEdit'],
+                        'address' => $data['address1Edit'],
                         'phone' => $data['phoneEdit']
                     ]);
 
-
-                toast('Customer has been updated', 'success');
-                return redirect('customers-shogun');
+                    return redirect('customers-shogun')->with('success','Customer has been updated');
             } catch (Exception $e) {
-                return redirect('insert')->with('failed', "operation failed");
+                $notification = array(
+                    'message' => 'Something went wrong',
+                    'alert-type' => 'error'
+                );
+                return redirect('customers-shogun')->with($notification);
             }
         }
     }
@@ -89,17 +100,18 @@ class CustomerController extends Controller
     public function delete($id)
     {
         DB::table('customers')
-        ->where('id',$id)
-        ->delete();
+            ->where('id', $id)
+            ->delete();
 
         toast('Customer has been removed', 'success');
         return redirect('customers-shogun');
     }
 
-    public static function getCustomer($id){
+    public static function getCustomer($id)
+    {
         $customer = DB::table('customers')
-        ->where('id',$id)
-        ->get();
+            ->where('id', $id)
+            ->get();
 
         return $customer;
     }
