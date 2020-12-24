@@ -207,20 +207,98 @@
 
 @section('script')
 <script>
-(function($) {
-    "use strict"
+    (function($) {
+        "use strict"
 
-    let draw = Chart.controllers.line.__super__.draw; //draw shadow
+        let draw = Chart.controllers.line.__super__.draw; //draw shadow
 
-    
-    //gradient line chart
-    if (jQuery('#lineChart_2').length > 0) {
-
-        const lineChart_2 = document.getElementById("lineChart_2").getContext('2d');
         
-        const lineChart_2gradientStroke = lineChart_2.createLinearGradient(500, 0, 100, 0);
-        lineChart_2gradientStroke.addColorStop(0, "rgba(58, 122, 254, 1)");
-        lineChart_2gradientStroke.addColorStop(1, "rgba(58, 122, 254, 0.5)");
+        //gradient line chart
+        if (jQuery('#lineChart_2').length > 0) {
+
+            const lineChart_2 = document.getElementById("lineChart_2").getContext('2d');
+            
+            const lineChart_2gradientStroke = lineChart_2.createLinearGradient(500, 0, 100, 0);
+            lineChart_2gradientStroke.addColorStop(0, "rgba(58, 122, 254, 1)");
+            lineChart_2gradientStroke.addColorStop(1, "rgba(58, 122, 254, 0.5)");
+
+            Chart.controllers.line = Chart.controllers.line.extend({
+                draw: function() {
+                    draw.apply(this, arguments);
+                    let nk = this.chart.chart.ctx;
+                    let _stroke = nk.stroke;
+                    nk.stroke = function() {
+                        nk.save();
+                        nk.shadowColor = 'rgba(0, 0, 128, .2)';
+                        nk.shadowBlur = 10;
+                        nk.shadowOffsetX = 0;
+                        nk.shadowOffsetY = 10;
+                        _stroke.apply(this, arguments)
+                        nk.restore();
+                    }
+                }
+            });
+
+            lineChart_2.height = 100;
+
+            new Chart(lineChart_2, {
+                type: 'line',
+                data: {
+                    defaultFontFamily: 'Poppins',
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: "Monthly Sales (RM)",
+                        data: [
+                        <?php 
+                        
+                        $salesGraph = $sales->getGraphSales();
+
+                        foreach($salesGraph as $sale){
+                            echo $sale.',';
+                        }
+                        ?>
+                        ],
+                        borderColor: lineChart_2gradientStroke,
+                        borderWidth: "2",
+                        backgroundColor: 'transparent',
+                        pointBackgroundColor: 'rgba(58, 122, 254, 0.5)'
+                    }]
+                },
+                options: {
+                legend: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: {{max($salesGraph)}},
+                            min: {{min($salesGraph)}},
+                            stepSize: 100,
+                            padding: 5
+                        },
+                        gridLines: {
+                            color: 'rgba(192, 192, 192, 0.1)'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            padding: 5
+                        },
+                        gridLines: {
+                            color: 'rgba(192, 192, 192, 0.1)'
+                        }
+                    }]
+                }
+            }
+            });
+        }
+        
+        //chart
+        if (jQuery('#lineChart_3').length > 0) {
+
+        const lineChart_3 = document.getElementById("lineChart_3").getContext('2d');
+        const lineChart_3gradientStroke = lineChart_3.createLinearGradient(500, 0, 100, 0);
+        lineChart_3gradientStroke.addColorStop(0, "rgba(58, 122, 254, 1)");
+        lineChart_3gradientStroke.addColorStop(1, "rgba(58, 122, 254, 0.5)");
 
         Chart.controllers.line = Chart.controllers.line.extend({
             draw: function() {
@@ -239,26 +317,26 @@
             }
         });
 
-        lineChart_2.height = 100;
+        lineChart_3.height = 100;
 
-        new Chart(lineChart_2, {
+        new Chart(lineChart_3, {
             type: 'line',
             data: {
                 defaultFontFamily: 'Poppins',
                 labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
                 datasets: [{
-                    label: "Monthly Sales (RM)",
+                    label: "Monthly Purchases (RM)",
                     data: [
                     <?php 
                     
-                    $salesGraph = $sales->getGraphSales();
+                    $purchasesGraph = $sales->getGraphPurchase();
 
-                    foreach($salesGraph as $sale){
-                        echo $sale.',';
+                    foreach($purchasesGraph as $purchase){
+                        echo $purchase.',';
                     }
                     ?>
                     ],
-                    borderColor: lineChart_2gradientStroke,
+                    borderColor: lineChart_3gradientStroke,
                     borderWidth: "2",
                     backgroundColor: 'transparent',
                     pointBackgroundColor: 'rgba(58, 122, 254, 0.5)'
@@ -270,166 +348,106 @@
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
-                            max: {{max($salesGraph)}},
-                            min: {{min($salesGraph)}},
+                            max: {{max($purchasesGraph)}},
+                            min: {{min($purchasesGraph)}},
                             stepSize: 100,
                             padding: 5
+                        },
+                        gridLines: {
+                            color: 'rgba(192, 192, 192, 0.1)'
                         }
                     }],
                     xAxes: [{
                         ticks: {
                             padding: 5
+                        },
+                        gridLines: {
+                            color: 'rgba(192, 192, 192, 0.1)'
                         }
                     }]
                 }
             }
         });
-    }
-    
-    //chart
-    if (jQuery('#lineChart_3').length > 0) {
-
-    const lineChart_3 = document.getElementById("lineChart_3").getContext('2d');
-    const lineChart_3gradientStroke = lineChart_3.createLinearGradient(500, 0, 100, 0);
-    lineChart_3gradientStroke.addColorStop(0, "rgba(58, 122, 254, 1)");
-    lineChart_3gradientStroke.addColorStop(1, "rgba(58, 122, 254, 0.5)");
-
-    Chart.controllers.line = Chart.controllers.line.extend({
-        draw: function() {
-            draw.apply(this, arguments);
-            let nk = this.chart.chart.ctx;
-            let _stroke = nk.stroke;
-            nk.stroke = function() {
-                nk.save();
-                nk.shadowColor = 'rgba(0, 0, 128, .2)';
-                nk.shadowBlur = 10;
-                nk.shadowOffsetX = 0;
-                nk.shadowOffsetY = 10;
-                _stroke.apply(this, arguments)
-                nk.restore();
-            }
         }
-    });
 
-    lineChart_3.height = 100;
+        //chart
+        if (jQuery('#lineChart_4').length > 0) {
 
-    new Chart(lineChart_3, {
-        type: 'line',
-        data: {
-            defaultFontFamily: 'Poppins',
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: "Monthly Purchases (RM)",
-                data: [
-                <?php 
-                
-                $purchasesGraph = $sales->getGraphPurchase();
+        const lineChart_4 = document.getElementById("lineChart_4").getContext('2d');
+        const lineChart_4gradientStroke = lineChart_4.createLinearGradient(500, 0, 100, 0);
+        lineChart_4gradientStroke.addColorStop(0, "rgba(58, 122, 254, 1)");
+        lineChart_4gradientStroke.addColorStop(1, "rgba(58, 122, 254, 0.5)");
 
-                foreach($purchasesGraph as $purchase){
-                    echo $purchase.',';
+        Chart.controllers.line = Chart.controllers.line.extend({
+            draw: function() {
+                draw.apply(this, arguments);
+                let nk = this.chart.chart.ctx;
+                let _stroke = nk.stroke;
+                nk.stroke = function() {
+                    nk.save();
+                    nk.shadowColor = 'rgba(0, 0, 128, .2)';
+                    nk.shadowBlur = 10;
+                    nk.shadowOffsetX = 0;
+                    nk.shadowOffsetY = 10;
+                    _stroke.apply(this, arguments)
+                    nk.restore();
                 }
-                ?>
-                ],
-                borderColor: lineChart_3gradientStroke,
-                borderWidth: "2",
-                backgroundColor: 'transparent',
-                pointBackgroundColor: 'rgba(58, 122, 254, 0.5)'
-            }]
-        },
-        options: {
-            legend: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        max: {{max($purchasesGraph)}},
-                        min: {{min($purchasesGraph)}},
-                        stepSize: 100,
-                        padding: 5
+            }
+        });
+
+        lineChart_4.height = 100;
+
+        new Chart(lineChart_4, {
+            type: 'line',
+            data: {
+                defaultFontFamily: 'Poppins',
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: "Monthly Profit (RM)",
+                    data: [
+                    <?php 
+                    
+                    $profitGraph = $sales->getGraphProfit();
+
+                    foreach($profitGraph as $profit){
+                        echo $profit.',';
                     }
-                }],
-                xAxes: [{
-                    ticks: {
-                        padding: 5
-                    }
+                    ?>
+                    ],
+                    borderColor: lineChart_4gradientStroke,
+                    borderWidth: "2",
+                    backgroundColor: 'transparent',
+                    pointBackgroundColor: 'rgba(58, 122, 254, 0.5)'
                 }]
-            }
-        }
-    });
-    }
-
-    //chart
-    if (jQuery('#lineChart_4').length > 0) {
-
-    const lineChart_4 = document.getElementById("lineChart_4").getContext('2d');
-    const lineChart_4gradientStroke = lineChart_4.createLinearGradient(500, 0, 100, 0);
-    lineChart_4gradientStroke.addColorStop(0, "rgba(58, 122, 254, 1)");
-    lineChart_4gradientStroke.addColorStop(1, "rgba(58, 122, 254, 0.5)");
-
-    Chart.controllers.line = Chart.controllers.line.extend({
-        draw: function() {
-            draw.apply(this, arguments);
-            let nk = this.chart.chart.ctx;
-            let _stroke = nk.stroke;
-            nk.stroke = function() {
-                nk.save();
-                nk.shadowColor = 'rgba(0, 0, 128, .2)';
-                nk.shadowBlur = 10;
-                nk.shadowOffsetX = 0;
-                nk.shadowOffsetY = 10;
-                _stroke.apply(this, arguments)
-                nk.restore();
-            }
-        }
-    });
-
-    lineChart_4.height = 100;
-
-    new Chart(lineChart_4, {
-        type: 'line',
-        data: {
-            defaultFontFamily: 'Poppins',
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: "Monthly Profit (RM)",
-                data: [
-                <?php 
-                
-                $profitGraph = $sales->getGraphProfit();
-
-                foreach($profitGraph as $profit){
-                    echo $profit.',';
+            },
+            options: {
+                legend: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: {{max($profitGraph)}},
+                            min: {{min($profitGraph)}},
+                            stepSize: 100,
+                            padding: 5
+                        },
+                        gridLines: {
+                            color: 'rgba(192, 192, 192, 0.1)'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            padding: 5
+                        },
+                        gridLines: {
+                            color: 'rgba(192, 192, 192, 0.1)'
+                        }
+                    }]
                 }
-                ?>
-                ],
-                borderColor: lineChart_4gradientStroke,
-                borderWidth: "2",
-                backgroundColor: 'transparent',
-                pointBackgroundColor: 'rgba(58, 122, 254, 0.5)'
-            }]
-        },
-        options: {
-            legend: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        max: {{max($profitGraph)}},
-                        min: {{min($profitGraph)}},
-                        stepSize: 100,
-                        padding: 5
-                    }
-                }],
-                xAxes: [{
-                    ticks: {
-                        padding: 5
-                    }
-                }]
             }
+        });
         }
-    });
-    }
 
-})(jQuery);
+    })(jQuery);
 </script>
 @endsection

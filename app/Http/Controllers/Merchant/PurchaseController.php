@@ -12,7 +12,10 @@ class PurchaseController extends Controller
 {
     public function index()
     {
-        $orders_detail = DB::table('orders')->where('user_id', '=', Auth::user()->id)->get();
+        $orders_detail = DB::table('orders')
+        ->join('customers','orders.customer_id','=','customers.id')
+        ->select('orders.*','customers.name')
+        ->where('orders.user_id', '=', Auth::user()->id)->get();
 
         return view('merchant/purchaseHistory', [
             'orders_detail' => $orders_detail
@@ -72,5 +75,16 @@ class PurchaseController extends Controller
         $getDetails= DB::table('consignment')->where('awb',$awb)->get();
 
         return $getDetails;
+    }
+
+    public function getProducts($refNo){
+
+        $product = DB::table('orders_details')
+        ->join('products','orders_details.product_id','=','products.id')
+        ->where('orders_details.referenceNo',$refNo)
+        ->select('products.*')
+        ->get();
+
+        return $product;
     }
 }

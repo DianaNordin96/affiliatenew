@@ -71,22 +71,7 @@
             Chat box start
         ***********************************-->
         <div class="chatbox">
-            <div class="chatbox-close"></div>
-            <div class="custom-tab-1">
-
-                <div class="tab-content">
-                    <div class="tab-pane fade active show" id="chat" role="tabpanel">
-                        <div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
-                            <div class="card-header chat-list-header text-center">
-
-                            </div>
-                            <div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <!--**********************************
             Chat box End
@@ -157,11 +142,6 @@
                                         </form>
                                     </a>
                                 </div>
-                            </li>
-                            <li class="nav-item right-sidebar">
-                                <a class="nav-link ai-icon" href="#">
-                                    <i class="lni lni-cart"></i>
-                                </a>
                             </li>
                         </ul>
                     </div>

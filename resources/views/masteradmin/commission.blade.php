@@ -1,30 +1,21 @@
 @extends('layouts.masteradmin')
 @section('content')
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Manage Commission</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ url('MasterDashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Manage Commission</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Agents</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Agents</a></li>
+                </ol>
+            </div>
         </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
@@ -35,7 +26,8 @@
                                     <i class="fas fa-plus"></i> &nbsp Add Products
                                 </button> --}}
                                 <br />
-                                <table id="example1" class="table table-bordered table-striped">
+                                <div class="table-responsive">
+                                    <table id="example5" class="display" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Date</th>
@@ -71,17 +63,14 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
-            </div><!-- /.container-fluid -->
-
-        </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+</div>
 
 @endsection
 

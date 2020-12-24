@@ -66,9 +66,11 @@ p {
         opacity: 1;
     }
 }
-.rounded-lg{
-	border-radius:$radius;
+
+.rounded-lg {
+    border-radius: $radius;
 }
+
 ul {
     padding: 0;
     margin: 0;
@@ -86,9 +88,11 @@ a {
         text-decoration: none;
     }
 }
-.w-space-no{
-	white-space:nowrap;
+
+.w-space-no {
+    white-space: nowrap;
 }
+
 // .content-body {
 //     .container-fluid {
 //         padding: 0 30px 0;
@@ -106,12 +110,11 @@ a {
         padding-top: 30px;
         padding-right: 30px;
         padding-left: 30px;
-		
-		@include custommq($max: 575px) {
-			padding-top: 15px;
-			padding-right: 15px;
-			padding-left: 15px;
-		}
+        @include custommq($max: 575px) {
+            padding-top: 15px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
     }
 }
 
@@ -165,39 +168,51 @@ a {
         color: #fff;
     }
 }
-.bg-gray-dark{
-	background:$color_pallate_2 !important;
+
+.bg-gray-dark {
+    background: $color_pallate_2 !important;
 }
-.bg-purpal{
-	background:$color_pallate_4 !important;
+
+.bg-purpal {
+    background: $color_pallate_4 !important;
 }
-.bg-red{
-	background:$color_pallate_5 !important;
+
+.bg-red {
+    background: $color_pallate_5 !important;
 }
-.bg-blue-dark{
-	background:$color_pallate_6 !important;
+
+.bg-blue-dark {
+    background: $color_pallate_6 !important;
 }
-.bg-blue{
-	background:$color_pallate_7 !important;
+
+.bg-blue {
+    background: $color_pallate_7 !important;
 }
-.bg-blue-light{
-	background:$color_pallate_8 !important;
+
+.bg-blue-light {
+    background: $color_pallate_8 !important;
 }
-.bg-green-light{
-	background:$color_pallate_9 !important;
+
+.bg-green-light {
+    background: $color_pallate_9 !important;
 }
-.bg-green{
-	background:$color_pallate_10 !important;
+
+.bg-green {
+    background: $color_pallate_10 !important;
 }
-.bg-black{
-	background:$black;
+
+.bg-black {
+    background: $black;
 }
-.text-black{
-	color:$black !important;
+
+.text-black {
+    color: $black !important;
 }
-.dz-scroll{
-	position:relative;
+
+.dz-scroll {
+    position: relative;
 }
+
 //   @keyframes crescendo {
 //     0%   {transform: scale(.8);}
 //     50% {transform: scale(1);}

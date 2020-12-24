@@ -515,12 +515,15 @@
 
         })(jQuery);
 
-            //Bootstrap Duallistbox
-    $('.duallistbox').bootstrapDualListbox()
+
 
     </script>
 
-    
+    <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
 
     {{-- @include('sweetalert::alert') --}}
 

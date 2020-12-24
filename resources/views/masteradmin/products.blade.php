@@ -2,41 +2,35 @@
 @extends('layouts.masteradmin')
 @section('content')
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Manage Product</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Manage Product</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Agents</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Agents</a></li>
+                </ol>
+            </div>
         </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+        <!-- row -->
 
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <!-- <h3 class="card-title">View Employee</h3> -->
-                                <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
+                                <button type="button" class="btn btn-block btn-success" data-toggle="modal"
                                     data-target="#modal-lg">
-                                    <i class="fas fa-plus"></i> &nbsp Add Products
+                                    <i class="lni lni-plus"></i> &nbsp Add Products
                                 </button>
                                 <br />
-                                <table id="example1" class="table table-bordered table-striped">
+                                <div class="table-responsive">
+                                    <table id="example5" class="display" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -74,7 +68,7 @@
                                                                     '{{ $product->product_link }}',
                                                                     '{{ $product->belongToAdmin }}'
                                                                     )" data-target="#modalEdit" class="btn btn-warning"><i
-                                                            class="fas fa-edit"></i></button> &nbsp;
+                                                            class="lni lni-pencil-alt"></i></button> &nbsp;
                                                     <button type="button" title="View" data-toggle="modal" onclick="openModalView(
                                                                     '{{ $product->id}}',
                                                                     '{{ $product->product_name }}',
@@ -88,21 +82,23 @@
                                                                     '{{ $product->product_link }}',
                                                                     '{{ $product->belongToAdmin }}'
                                                                     )" data-target="#modalView" class="btn btn-success"><i
-                                                            class="far fa-eye"></i></button> &nbsp;
+                                                            class="lni lni-eye"></i></button> &nbsp;
 
                                                             <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                onclick="window.location.href='/product-delete-master/{{$product->id}}'" class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
+                                                onclick="window.location.href='/product-delete-master/{{$product->id}}'" class="btn btn-danger"><i class="lni lni-trash"></i></i></button>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
-            </div><!-- /.container-fluid -->
+    </div>
+</div>
 
             <div class="modal fade" id="modal-lg">
                 <div class="modal-dialog modal-lg">
@@ -391,23 +387,6 @@
 
 @section('script')
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
-        document.getElementById("manageProduct").className = "nav-link active";
 
         function openModalEdit(prodID,name,hq,price, desc , shogun, damio, merchant, dropship , link, category) {
 

@@ -8,30 +8,21 @@
         </div>
     @endif
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark"></h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ url('MasterDashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Agents</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4>Agents</h4>
+                    </div>
+                </div>
+                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Agents</a></li>
+                    </ol>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="card card-warning">
@@ -41,11 +32,12 @@
                                 <!-- /.card-tools -->
                             </div>
                             <div class="card-body">
-                                <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
+                                <button type="button" class="btn btn-block btn-success" data-toggle="modal"
                                     data-target="#addAdminCat">
-                                    <i class="fas fa-plus"></i> &nbsp Add Admin Category
+                                    <i class="lni lni-plus"></i> &nbsp Add Admin Category
                                 </button><br/>
-                                <table id="example2" class="table table-bordered table-striped">
+                                <div class="table-responsive">
+                                    <table id="example5" class="display" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Category ID</th>
@@ -67,11 +59,12 @@
                                                         '{{ $value->desc }}'
                                                         )"
                                                     data-target="#editCategory" class="btn btn-success"><i
-                                                        class="fas fa-edit"></i></button> &nbsp;</td>
+                                                        class="lni lni-pencil-alt"></i></button> &nbsp;</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,9 +77,9 @@
                             </div>
                             <div class="card-body">
                                 
-                                <button type="button" class="btn btn-block bg-gradient-lightblue" data-toggle="modal"
+                                <button type="button" class="btn btn-block btn-success" data-toggle="modal"
                                     data-target="#addAdmin">
-                                    <i class="fas fa-plus"></i> &nbsp Add Admin
+                                    <i class="lni lni-plus"></i> &nbsp Add Admin
                                 </button><br/>
                             
                                 <!-- <h3 class="card-title">View Employee</h3> -->
@@ -95,7 +88,8 @@
                                     <i class="fas fa-plus"></i> &nbsp Add Users
                                 </button>
                                 <br /> --}}
-                                <table id="example1" class="table table-bordered table-striped">
+                                <div class="table-responsive">
+                                    <table id="example5" class="display" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -125,13 +119,14 @@
                                                 <td style="text-align: center">
                                                     <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
                                                             onclick="window.location.href='/master.remove.admin/{{ $user->id }}'"
-                                                            class="btn btn-danger"><i class="fas fa-trash"></i></i></button>
+                                                            class="btn btn-danger"><i class="lni lni-trash"></i></i></button>
                                                         &nbsp;
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -391,33 +386,10 @@
                 <!-- /.modal-dialog -->
             </div>
             <!-- /.modal -->
-
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
 @endsection
 
 @section('script')
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
-        document.getElementById("manageAdmin").className = "nav-link active";
 
         function openModalEdit(id, cat, desc) {
 

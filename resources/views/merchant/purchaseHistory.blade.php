@@ -5,28 +5,22 @@
 @endsection
 
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Purchase History</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ url('MerchantDashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Purchase History</li>
-                        </ol>
-                    </div>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Purchase History</h4>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Purchase History</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -34,13 +28,16 @@
                             <div class="card-body">
                                 <!-- <h3 class="card-title">View Employee</h3> -->
 
-                                <table id="example1" class="table table-bordered table-striped">
+                                <div class="table-responsive">
+                                    <table id="example5" class="display">
                                     <thead>
                                         <tr>
+                                            <th>Purchased At</th>
                                             <th>Orders ID</th>
                                             <th>Bill Code</th>
+                                            <th>Name</th>
                                             <th>Amount (RM)</th>
-                                            <th>Purchased At</th>
+                                            <th>Items</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                             {{-- <th>View Receipt</th>
@@ -50,32 +47,44 @@
                                     <tbody>
                                         @foreach ($orders_detail as $orderDetail)
                                             <tr>
+                                                <td>{{ $orderDetail->created_at }}</td>
                                                 <td>{{ $orderDetail->orders_id }}</td>
                                                 <td>{{ $orderDetail->bill_code }}</td>
+                                                <td>{{ $orderDetail->name }}</td>
                                                 <td>{{ number_format($orderDetail->amount, 2) }}</td>
-                                                <td>{{ $orderDetail->created_at }}</td>
+                                                <td>
+                                                    <?php 
+                                                        $products = $order->getProducts($orderDetail->orders_id)?> 
+                                                    
+                                                    @foreach ($products as $prod)
+                                                        {{$prod->product_name}} ,
+                                                    @endforeach
+                                                </td>
                                                 <td>
 
-                                                    <?php $consignmentArray = $order->checkOrderExistConsignment($orderDetail->orders_id); ?>
+                                                    <?php $consignmentArray = $order->checkOrderExistConsignment($orderDetail->orders_id);
+                                                    ?>
                                                     @if(count($consignmentArray) != 0 && $consignmentArray[0]->awb != NULL )
                                                     <?php $trackingStatus = $tracking->getTrackingStatus($consignmentArray[0]->awb);?>
                                                     @foreach($trackingStatus->result as $value)
+                                                        Courier : {{$consignmentArray[0]->courier}}<br/>
+                                                        Tracking No : {{$consignmentArray[0]->awb}}<br/>
                                                         Latest Status : {{$value->latest_status}}<br/>
                                                     @endforeach
                                                     @else
-                                                    <h6 style="color: red">Order not yet packed.</h6>
+                                                    <a style="color: red">Order not yet packed.</a>
                                                     @endif
 
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-warning"
-                                                        href="/view-purchased-product-merchant/{{ $orderDetail->orders_id }}"><i
-                                                            class="far fa-eye"></i>&nbsp; View item</a> &nbsp;
+                                                        href="/view-purchased-product-merchant/{{ $orderDetail->orders_id }}"></i>&nbsp; View Order</a> &nbsp;
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,24 +100,5 @@
 @endsection
 
 @section('script')
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
 
-        document.getElementById("history").className = "nav-link active";
-
-    </script>
 @endsection

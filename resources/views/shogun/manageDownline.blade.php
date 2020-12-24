@@ -320,7 +320,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="viewEmpName"></h4>
+                        <h4 class="modal-title" id="viewEmpName"> Agent Details </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -329,7 +329,7 @@
 
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -359,7 +359,7 @@
             "<div class='row'>" +
             "<br/>" +
             "<div class='col-sm-12'>" +
-            "<b>Customer Name:  </b>" + name + "<br/>" +
+            "<b>Agent Name:  </b>" + name + "<br/>" +
             "<b>Phone Number: </b>" + phone + "<br/>" +
             "<b>Address: </b> " + address + "<br/>" +
             "</div>";

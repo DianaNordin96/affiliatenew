@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <div class="row">
                         <div class="col-xl-6 col-md-6">
-                            <div id="accordion-two" class="accordion accordion-danger-solid">
+                            <div id="accordion-eight" class="accordion accordion-solid-bg">
                                 <div class="accordion__item">
                                     <div class="accordion__header" data-toggle="collapse"
                                         data-target="#bordered_collapseOne"> <span
@@ -404,20 +404,35 @@
             e.preventDefault();
 
             var ele = $(this);
+            var status = null;
 
-            if (confirm("Are you sure")) {
-                $.ajax({
-                    url: '{{ url('remove-from-cartShogun') }}',
-                    method: "DELETE",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: ele.attr("data-id")
-                    },
-                    success: function(response) {
-                        window.location.reload();
-                    }
-                });
-            }
+            Swal.fire({
+            title: 'Do you want to save the changes?',
+            showCancelButton: true,
+            confirmButtonText: `Save`,
+            }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                   alert("bifi");
+                } else if (result.isDenied) {
+                    alert("bifi");
+                }
+            });
+
+
+            // if (confirm("Are you sure")) {
+            //     $.ajax({
+            //         url: '{{ url('remove-from-cartShogun') }}',
+            //         method: "DELETE",
+            //         data: {
+            //             _token: '{{ csrf_token() }}',
+            //             id: ele.attr("data-id")
+            //         },
+            //         success: function(response) {
+            //             window.location.reload();
+            //         }
+            //     });
+            // }
         });
 
         document.getElementById("products").className = "nav-link active";
