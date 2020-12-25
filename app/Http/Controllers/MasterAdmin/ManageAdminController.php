@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class ManageAdminController extends Controller
@@ -58,41 +59,72 @@ class ManageAdminController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new user', 'error');
-            return redirect('/master-manageAdmin');
+            
+            return redirect('/master-manageAdmin')->with('error','Please fill in all the box and ensure image uploaded is an image files');
         } else {
             $data = $req->input();
             try {
 
-                //check IC exist
-                $icStatus = DB::table('users')->where('icnumber', $data['ic'])->get();
+                //check IC and email exist 
+                $icStatus = DB::table('users')
+                    ->where('icnumber', $data['ic'])
+                    ->orWhere('email', $data['email'])
+                    ->get();
 
                 $countIC = count($icStatus);
                 if ($countIC == 0) {
-                    $user = new User;
-                    $user->name = $data['name'];
-                    $user->email = $data['email'];
-                    $user->phone = $data['phone'];
-                    $user->address = $data['address'];
-                    $user->password = Hash::make('12345678');
-                    $user->image = $req->file('image')->getClientOriginalName();
-                    $user->icnumber = $data['ic'];
-                    $user->dob = $data['dob'];
-                    $user->downlineTo = null;
-                    $user->commissionPoint = 0;
-                    $user->admin_category = $data['category'];
-                    $user->role = 'admin';
-                    $user->save();
 
-                    $image = $req->file('image');
+                    if ($req->file('image') != null) {
 
-                    $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                        $image = $req->file('image');
+                        $newFileName = $image->getClientOriginalName();
+                        $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                        $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
 
-                    toast('User has been created', 'success');
-                    return redirect('/master-manageAdmin');
+                        if (File::exists(public_path('../../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
+                            $newFileName = $filename . '1' . '.' . $extension;
+                            $image->move(base_path('../../public_html/imageUploaded/profile'), $newFileName);
+                        } else {
+                            $image->move(base_path('../../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                        }
+
+                        $user = new User;
+                        $user->name = $data['name'];
+                        $user->email = $data['email'];
+                        $user->phone = $data['phone'];
+                        $user->address = $data['address'];
+                        $user->password = Hash::make('12345678');
+                        $user->image = $req->file('image')->getClientOriginalName();
+                        $user->icnumber = $data['ic'];
+                        $user->dob = $data['dob'];
+                        $user->downlineTo = null;
+                        $user->commissionPoint = 0;
+                        $user->admin_category = $data['category'];
+                        $user->role = 'admin';
+                        $user->save();
+
+                        
+                        return redirect('/master-manageAdmin')->with('success','User has been created');
+                    } else {
+                        $user = new User;
+                        $user->name = $data['name'];
+                        $user->email = $data['email'];
+                        $user->phone = $data['phone'];
+                        $user->address = $data['address'];
+                        $user->password = Hash::make('12345678');
+                        $user->image = $req->file('image')->getClientOriginalName();
+                        $user->icnumber = $data['ic'];
+                        $user->dob = $data['dob'];
+                        $user->downlineTo = null;
+                        $user->commissionPoint = 0;
+                        $user->admin_category = $data['category'];
+                        $user->role = 'admin';
+                        $user->save();
+
+                        return redirect('/master-manageAdmin')->with('success','User has been created');
+                    }
                 } else {
-                    toast('User with the same IC number has existed in the system.', 'error');
-                    return redirect('/master-manageAdmin');
+                    return redirect('/master-manageAdmin')->with('error','User with the same IC number has existed in the system.');
                 }
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
@@ -106,7 +138,7 @@ class ManageAdminController extends Controller
             ->delete($id);
 
         toast('Admin has been removed', 'success');
-        return redirect('/master-manageAdmin');
+        return redirect('/master-manageAdmin')->with( 'success','Admin has been removed');
     }
 
     public function addCategory(Request $req)
@@ -118,8 +150,7 @@ class ManageAdminController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new category', 'error');
-            return redirect('/master-manageAdmin');
+            return redirect('/master-manageAdmin')->with('error','Please fill in all the box before creating new category');
         } else {
             $data = $req->input();
             try {
@@ -130,8 +161,7 @@ class ManageAdminController extends Controller
                     'created_at' => NOW()
                 ]);
 
-                toast('User has been created', 'success');
-                return redirect('/master-manageAdmin');
+                return redirect('/master-manageAdmin')->with('success','Category has been created');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -147,22 +177,20 @@ class ManageAdminController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before updating category', 'error');
-            return redirect('/master-manageAdmin');
+            return redirect('/master-manageAdmin')->with('error','Please fill in all the box before updating category');
         } else {
             $data = $req->input();
             try {
 
                 DB::table('admin')
-                ->where('id',$data['idEdit'])
-                ->update([
-                    'category' => $data['catNameEdit'],
-                    'desc' => $data['descEdit'],
-                    'updated_at' => NOW()
-                ]);
+                    ->where('id', $data['idEdit'])
+                    ->update([
+                        'category' => $data['catNameEdit'],
+                        'desc' => $data['descEdit'],
+                        'updated_at' => NOW()
+                    ]);
 
-                toast('Category has been updated', 'success');
-                return redirect('/master-manageAdmin');
+                return redirect('/master-manageAdmin')->with('success','Category has been updated');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }

@@ -13,13 +13,13 @@
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
-                        <h4>Agents</h4>
+                        <h4>Admins</h4>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Agents</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Admins</a></li>
                     </ol>
                 </div>
             </div>
@@ -164,8 +164,8 @@
                                     <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Name </label>
-                                            <input type="text" id="name" class="form-control" name="name"
+                                            <label> Name <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="name" onkeypress="return isAlphabetsKey(event)" class="form-control" name="name"
                                                 placeholder="Name" />
                                             @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -178,8 +178,8 @@
                                     <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> IC </label>
-                                            <input type="text" id="ic" class="form-control" name="ic"
+                                            <label> IC <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="ic" onkeypress="return isNumberKey(event)" class="form-control" name="ic"
                                                 placeholder="IC Number" />
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@
                                     <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Email </label>
+                                            <label> Email <span style="color:yellow">  *</span></label>
                                             <input type="text" id="email" class="form-control" name="email"
                                                 placeholder="Email" />
                                             @error('email')
@@ -203,7 +203,7 @@
                                     <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Date Of Birth </label>
+                                            <label> Date Of Birth <span style="color:yellow">  *</span></label>
                                             <input type="date" id="dob" class="form-control" name="dob"
                                                 placeholder="Date Of Birth" />
                                         </div>
@@ -211,8 +211,8 @@
                                     <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Phone Number </label>
-                                            <input type="text" id="phoneNum" class="form-control" name="phone"
+                                            <label> Phone Number <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="phoneNum" onkeypress="return isNumberKey(event)" class="form-control" name="phone"
                                                 placeholder="Phone Number" />
                                             @error('phone')
                                             <span class="invalid-feedback" role="alert">
@@ -225,7 +225,7 @@
                                     <div class="col-sm-4">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Admin Group </label>
+                                            <label> Admin Group <span style="color:yellow">  *</span></label>
                                             <select class="form-control" id="category" name="category">
                                                 @foreach($allAdminType as $value)
                                                     <option value="{{$value->id}}">{{$value->category}}</option>
@@ -240,7 +240,7 @@
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label>Address</label>
+                                            <label>Address <span style="color:yellow">  *</span></label>
                                             <textarea class="form-control" name="address" id="address" rows="3"
                                                 placeholder="Address"></textarea>
                                             @error('address')
@@ -284,7 +284,7 @@
                                     <div class="col-sm-12">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Category Name </label>
+                                            <label> Category Name <span style="color:yellow">  *</span></label>
                                             <input type="text" id="catName" class="form-control" name="catName"
                                                 placeholder="Category Name" />
                                         </div>
@@ -294,7 +294,7 @@
                                     <div class="col-sm-12">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label>Description</label>
+                                            <label>Description <span style="color:yellow">  *</span></label>
                                             <textarea class="form-control" name="desc" id="desc" rows="3"
                                                 placeholder="Description"></textarea>
                                         </div>

@@ -42,12 +42,13 @@ class ManageProductController extends Controller
             'damioPriceEdit' => 'required',
             'merchantPriceEdit' => 'required',
             'productLinkEdit' => '',
+            'imageEdit' => 'image|mimes:jpeg,png,jpg'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
             $notification = array(
-                'message' => 'Please fill in all the box before creating new products',
+                'message' => 'Please ensure all fields filled and file uploaded is an image file.',
                 'alert-type' => 'error'
             );
 
@@ -55,25 +56,62 @@ class ManageProductController extends Controller
         } else {
             $data = $req->input();
             try {
-                DB::table('products')
-                    ->where('id', $data['productIDEdit'])
-                    ->update([
-                        'product_name' => $data['productNameEdit'],
-                        'product_price' => $data['productPriceEdit'],
-                        'product_description' => $data['productDescEdit'],
-                        'price_shogun' => $data['shogunPriceEdit'],
-                        'price_damio' => $data['damioPriceEdit'],
-                        'price_merchant' => $data['merchantPriceEdit'],
-                        'price_dropship' => $data['dropshipPriceEdit'],
-                        'price_hq' => $data['hqPriceEdit'],
-                        'product_link' => $data['productLinkEdit']
-                    ]);
 
-                $notification = array(
-                    'message' => 'Product has been updated',
-                    'alert-type' => 'success'
-                );
-                return redirect('/manageProduct')->with($notification);
+                if ($req->file('imageEdit') == null) {
+                    DB::table('products')
+                        ->where('id', $data['productIDEdit'])
+                        ->update([
+                            'product_name' => $data['productNameEdit'],
+                            'product_price' => $data['productPriceEdit'],
+                            'product_description' => $data['productDescEdit'],
+                            'price_shogun' => $data['shogunPriceEdit'],
+                            'price_damio' => $data['damioPriceEdit'],
+                            'price_merchant' => $data['merchantPriceEdit'],
+                            'price_dropship' => $data['dropshipPriceEdit'],
+                            'price_hq' => $data['hqPriceEdit'],
+                            'product_link' => $data['productLinkEdit']
+                        ]);
+
+                    $notification = array(
+                        'message' => 'Product has been updated',
+                        'alert-type' => 'success'
+                    );
+                    return redirect('/manageProduct')->with($notification);
+                }else{
+
+                    $image = $req->file('imageEdit');
+                    $newFileName = $image->getClientOriginalName();
+                    $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                    $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+    
+                    if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+                        $newFileName = $filename . '1' . '.' . $extension;
+                        $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
+                    } else {
+                        $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
+                    }
+
+                    DB::table('products')
+                        ->where('id', $data['productIDEdit'])
+                        ->update([
+                            'product_name' => $data['productNameEdit'],
+                            'product_price' => $data['productPriceEdit'],
+                            'product_description' => $data['productDescEdit'],
+                            'price_shogun' => $data['shogunPriceEdit'],
+                            'price_damio' => $data['damioPriceEdit'],
+                            'price_merchant' => $data['merchantPriceEdit'],
+                            'price_dropship' => $data['dropshipPriceEdit'],
+                            'price_hq' => $data['hqPriceEdit'],
+                            'product_link' => $data['productLinkEdit'],
+                            'product_image' => $newFileName
+                        ]);
+
+                    $notification = array(
+                        'message' => 'Product has been updated',
+                        'alert-type' => 'success'
+                    );
+                    return redirect('/manageProduct')->with($notification);
+                }
             } catch (Exception $e) {
                 return redirect('manageProduct')->with('error', "Data cannot be updated");
             }
@@ -92,7 +130,7 @@ class ManageProductController extends Controller
             'merchantPrice' => 'required',
             'hqPrice' => 'required',
             'productLink' => '',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif'
+            'image' => 'required|image|mimes:jpeg,png,jpg'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
@@ -106,12 +144,25 @@ class ManageProductController extends Controller
         } else {
             $data = $req->input();
             try {
+
+                $image = $req->file('image');
+                $newFileName = $image->getClientOriginalName();
+                $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+
+                if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+                    $newFileName = $filename . '1' . '.' . $extension;
+                    $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
+                } else {
+                    $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
+                }
+
                 DB::table('products')->insert([
                     'product_name' => $data['productName'],
                     'product_price' => $data['productPrice'],
                     'product_description' => $data['productDesc'],
                     'price_hq' => $data['hqPrice'],
-                    'product_image' => $req->file('image')->getClientOriginalName(),
+                    'product_image' => $newFileName,
                     'price_shogun' => $data['shogunPrice'],
                     'price_damio' => $data['damioPrice'],
                     'price_merchant' => $data['merchantPrice'],
@@ -119,10 +170,6 @@ class ManageProductController extends Controller
                     'product_link' => $data['productLink'],
                     'belongToAdmin' =>  Auth::user()->admin_category
                 ]);
-
-                $image = $req->file('image');
-
-                $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
 
                 $notification = array(
                     'message' => 'Product has been created',

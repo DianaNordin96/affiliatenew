@@ -31,7 +31,7 @@
                         <div style="text-align: center" class="card-body">
                             <h3>CR {{ $creditBalance }} </h3>
 
-                            <a target="_blank" href=" https://www.sms123.net/login.php" class="btn btn-block bg-danger">Top
+                            <a target="_blank" href=" https://www.sms123.net/login.php" class="btn btn-block btn-danger">Top
                                 Up</a>
                         </div>
                         <!-- /.card-body -->
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <button type="submit" class="btn btn-block bg-danger">Send Message</button>
+                                    <button type="submit" class="btn btn-block btn-danger">Send Message</button>
                                 </div>
                             </form>
                         </div>
@@ -163,7 +163,7 @@
                                 <br />
 
                                 <div class="row">
-                                    <button type="submit" class="btn btn-block bg-danger">Send Message</button>
+                                    <button type="submit" class="btn btn-block btn-danger">Send Message</button>
                                 </div>
                             </form>
                         </div>

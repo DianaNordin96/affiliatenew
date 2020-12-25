@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -65,13 +66,13 @@ class ManageAgentController extends Controller
             'phone' => 'required',
             'dob' => 'required',
             'ic' => 'required',
-            'image' => '',
+            'image' => 'image|mimes:jpeg,png,jpg'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
             $notification = array(
-                'message' => 'Please fill in all the box before creating new user!',
+                'message' => 'Please ensure all fields were filled and file uploaded is image files.',
                 'alert-type' => 'error'
             );
 
@@ -80,19 +81,35 @@ class ManageAgentController extends Controller
             $data = $req->input();
             try {
 
-                //check IC exist
-                $icStatus = DB::table('users')->where('icnumber', $data['ic'])->get();
+                //check IC and email exist 
+                $icStatus = DB::table('users')
+                    ->where('icnumber', $data['ic'])
+                    ->orWhere('email', $data['email'])
+                    ->get();
 
                 $countIC = count($icStatus);
                 if ($countIC == 0) {
                     if ($req->file('image') != null) {
+
+                        $image = $req->file('image');
+                        $newFileName = $image->getClientOriginalName();
+                        $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                        $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+
+                        if (File::exists(public_path('../../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
+                            $newFileName = $filename . '1' . '.' . $extension;
+                            $image->move(base_path('../../public_html/imageUploaded/profile'), $newFileName);
+                        } else {
+                            $image->move(base_path('../../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                        }
+
                         $user = new User;
                         $user->name = $data['name'];
                         $user->email = $data['email'];
                         $user->phone = $data['phone'];
                         $user->address = $data['address'];
                         $user->password = Hash::make('12345678');
-                        $user->image = $req->file('image')->getClientOriginalName();
+                        $user->image = $newFileName;
                         $user->icnumber = $data['ic'];
                         $user->dob = $data['dob'];
                         $user->downlineTo = null;
@@ -100,10 +117,6 @@ class ManageAgentController extends Controller
                         $user->belongsToAdmin = Auth::user()->admin_category;
                         $user->role = 'shogun';
                         $user->save();
-
-                        $image = $req->file('image');
-
-                        $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
 
                         $notification = array(
                             'message' => 'Agent has been created',
@@ -136,7 +149,7 @@ class ManageAgentController extends Controller
                 } else {
 
                     $notification = array(
-                        'message' => 'User with the same IC number has existed in the system',
+                        'message' => 'User with the same IC number/email has existed in the system',
                         'alert-type' => 'error'
                     );
 
@@ -158,13 +171,14 @@ class ManageAgentController extends Controller
             'phoneEdit' => 'required',
             'icEdit' => 'required',
             'dobEdit' => 'required',
+            'imageEdit' => 'image|mimes:jpeg,png,jpg'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
 
             $notification = array(
-                'message' => 'Please dont leave any boxes empty',
+                'message' => 'Please ensure all fields were filled and file uploaded is image files.',
                 'alert-type' => 'error'
             );
 
@@ -172,7 +186,9 @@ class ManageAgentController extends Controller
         } else {
             $data = $req->input();
             try {
+
                 if ($req->file('imageEdit') == null) {
+
                     DB::table('users')
                         ->where('id', $data['userID'])
                         ->update([
@@ -191,6 +207,19 @@ class ManageAgentController extends Controller
 
                     return redirect('/manageAgent')->with($notification);
                 } else if ($req->file('imageEdit') != null) {
+
+                    $image = $req->file('imageEdit');
+                    $newFileName = $image->getClientOriginalName();
+                    $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                    $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+
+                    if (File::exists(public_path('../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
+                        $newFileName = $filename . '1' . '.' . $extension;
+                        $image->move(base_path('../public_html/imageUploaded/profile'), $newFileName);
+                    } else {
+                        $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                    }
+
                     DB::table('users')
                         ->where('id', $data['userID'])
                         ->update([
@@ -198,14 +227,10 @@ class ManageAgentController extends Controller
                             'email' => $data['emailEdit'],
                             'phone' => $data['phoneEdit'],
                             'address' => $data['addressEdit'],
-                            'image' => $req->file('imageEdit')->getClientOriginalName(),
+                            'image' => $newFileName,
                             'dob' => $data['dobEdit'],
                             'icnumber' => $data['icEdit']
                         ]);
-
-                    $image = $req->file('imageEdit');
-
-                    $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
 
                     $notification = array(
                         'message' => 'Agent has been updated',
@@ -227,12 +252,20 @@ class ManageAgentController extends Controller
     public function changeRole($role, $id)
     {
 
-        DB::table('users')
+        if ($role == 'shogun') {
+            DB::table('users')
+                ->where('id', $id)
+                ->update([
+                    'role' => $role,
+                    'downlineTo' => null
+                ]);
+        }else{
+            DB::table('users')
             ->where('id', $id)
             ->update([
                 'role' => $role
             ]);
-
+        }
         $notification = array(
             'message' => 'Agent has been updated!',
             'alert-type' => 'success'

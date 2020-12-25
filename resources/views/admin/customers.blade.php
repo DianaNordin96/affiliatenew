@@ -18,7 +18,7 @@
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">customers</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Customers</a></li>
                     </ol>
                 </div>
             </div>
@@ -67,10 +67,11 @@
 
 
     <div class="modal fade" id="modalView">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md 
+        modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="viewEmpName"></h4>
+                    <h4 class="modal-title" id="viewName"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -93,33 +94,18 @@
 
 @section('script')
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
-        document.getElementById("customers").className = "nav-link active";
-
+        
         function openModalView(id, name, phone, address) {
 
+
+            document.getElementById("viewName").innerHTML = name;
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
                 "<br/>" +
                 "<div class='col-sm-6'>" +
                 "<b>Name  </b>" + "<br/>" + name + "<br/>" +
                 "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
-                "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+                "</div><div class='col-sm-6'><b>Address  </b>" + "<br/>" + address + "<br/>" +
                 "</div>" +
                 "</div>";
         }

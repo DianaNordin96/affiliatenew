@@ -37,12 +37,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <a href="https://easyparcel.com/application/source/Malaysia/Template/EasyParcel_Bulk_Template[MY_9.2].xls">
-                                        <button class="btn btn-block bg-warning">Download Bulk Template</button>
+                                        <button class="btn btn-block btn-warning">Download Bulk Template</button>
                                     </a>
                                 </div>
                                 <div class="col-md-6">
                                     <a target="_blank" href="https://easyparcel.com/my/en/bulk/"
-                                    class="btn btn-block bg-danger">Import Bulk Orders Here</a>
+                                    class="btn btn-block btn-danger">Import Bulk Orders Here</a>
                                 </div>
                             </div>
 <br/>

@@ -13,7 +13,7 @@
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Agents</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Products</a></li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- <h3 class="card-title">View Employee</h3> -->
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg">
+                            <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-lg">
                                 <i class="lni lni-plus"></i> &nbsp Add Products
                             </button>
                             <br />
@@ -35,7 +35,7 @@
                                             <th>ID</th>
                                             <th width="10%">Image</th>
                                             <th>Product Name</th>
-                                            <th>Price (RM)</th>
+                                            <th>Links</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -47,14 +47,21 @@
                                                         src="../imageUploaded/products/{{ $product->product_image }}" />
                                                 </td>
                                                 <td>{{ $product->product_name }}</td>
-                                                <td>Actual Price: RM {{ number_format($product->product_price, 2) }}<br />
+                                                <td>
+                                                    {{-- Actual Price: RM {{ number_format($product->product_price, 2) }}<br />
                                                     HQ Price: RM {{ number_format($product->price_hq, 2) }}<br />
                                                     Shogun Price: RM {{ number_format($product->price_shogun, 2) }}<br />
                                                     Damio Price: RM {{ number_format($product->price_damio, 2) }}<br />
                                                     Merchant Price: RM
                                                     {{ number_format($product->price_merchant, 2) }}<br />
                                                     Dropship Price: RM
-                                                    {{ number_format($product->price_dropship, 2) }}<br />
+                                                    {{ number_format($product->price_dropship, 2) }}<br /> --}}
+
+                                                    <?php $links = explode(',',$product->product_link);  ?>
+
+                                                    @foreach($links as $link)
+                                                    <a style="color:lightseagreen;text-decoration-line: underline;" href="{{$link}}">{{$link}}</a><br/>
+                                                    @endforeach
                                                 </td>
                                                 <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
                                                         onclick="openModalEdit(
@@ -102,7 +109,7 @@
     </div>
 
     <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Product</h4>
@@ -148,9 +155,9 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Product Link</label>
-                                    <input type="text" class="form-control" name="productLink" id="productLink"
-                                        placeholder="Link" />
+                                    <label>Product Link (use(,) if link more than 1) </label>
+                                    <textarea class="form-control" name="productLink" id="productLink" rows="3"
+                                        placeholder="Link"></textarea>
                                 </div>
                             </div>
 
@@ -201,7 +208,7 @@
                                 <div class="form-group">
                                     <label> Dropship Price <span style="color:yellow">  *</span></label>
                                     <input type="text" id="dropshipPrice" onkeypress="return isPriceKey(event)" class="form-control" name="dropshipPrice"
-                                        placeholder="Shogun Price" />
+                                        placeholder="Shogun Price"/>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +227,7 @@
     </div>
 
     <div class="modal fade" id="modalEdit">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Product Details</h4>
@@ -243,6 +250,17 @@
                                         placeholder="Name" />
                                 </div>
                             </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Photo</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" id="imageEdit" name="imageEdit">
+                                            <!-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -258,9 +276,9 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Product Link</label>
-                                    <input type="text" class="form-control" name="productLinkEdit" id="productLinkEdit"
-                                        placeholder="Link" />
+                                    <label>Product Link (use(,) if link more than 1) </label>
+                                    <textarea class="form-control" name="productLinkEdit" id="productLinkEdit" rows="3"
+                                        placeholder="Link"></textarea>
                                 </div>
                             </div>
 
@@ -331,10 +349,10 @@
     </div>
 
     <div class="modal fade" id="modalView">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="viewEmpName"></h4>
+                    <h4 class="modal-title" id="viewName"></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -355,23 +373,7 @@
 
 @section('script')
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
-        document.getElementById("manageProduct").className = "nav-link active";
+      
 
         function openModalEdit(prodID, name, hq, price, desc, shogun, damio, merchant, dropship, link) {
 
@@ -390,19 +392,20 @@
 
         function openModalView(prodID, name, hq, price, desc, shogun, damio, merchant, dropship, link) {
 
+            document.getElementById("viewName").innerHTML = name;
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
                 "<br/>" +
                 "<div class='col-sm-6'>" +
-                "<b>Actual Price: RM  </b>" + price + "<br/>" +
-                "<b>Product Name:  </b>" + name + "<br/>" +
-                "<b>Description: </b>" + desc + "<br/>" +
-                "<b>Price HQ: </b> RM " + hq + "<br/>" +
-                "<b>Price Shogun: </b> RM " + shogun + "<br/>" +
-                "<b>Price Damio: </b> RM " + damio + "<br/>" +
-                "<b>Price Merchant: </b> RM " + merchant + "<br/>" +
-                "<b>Price Dropship: </b> RM " + dropship + "<br/>" +
-                "<b>Product Link: </b><a href=" + link + ">" + link + "</a><br/>" +
+                    "<b>Actual Price: RM  </b>" + price + "<br/>" +
+                    "<b>Product Name:  </b>" + name + "<br/>" +
+                    "<b>Description: </b>" + desc + "<br/>" +
+                    "</div><div class='col-sm-6'>" +
+                    "<b>Price HQ: </b> RM " + hq + "<br/>" +
+                    "<b>Price Shogun: </b> RM " + shogun + "<br/>" +
+                    "<b>Price Damio: </b> RM " + damio + "<br/>" +
+                    "<b>Price Merchant: </b> RM " + merchant + "<br/>" +
+                    "<b>Price Dropship: </b> RM " + dropship + "<br/>" +
                 "</div>";
             "</div>";
         }

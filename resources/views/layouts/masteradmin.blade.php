@@ -93,7 +93,7 @@
                             
 
                             <li class="nav-item dropdown header-profile">
-                                <a class="nav-link" href="/profile-master" role="button" data-toggle="dropdown">
+                                <a class="nav-link" href="/profile-masteradmin" role="button" data-toggle="dropdown">
                                     {{-- <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" /> --}}
                                     <img src="{{ asset('imageUploaded/avatar.png') }}" width="20" alt="" /> 
                                     <div class="header-info">
@@ -102,7 +102,7 @@
                                     </div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="/profile-master" class="dropdown-item ai-icon">
+                                    <a href="/profile-masteradmin" class="dropdown-item ai-icon">
                                         <svg id="icon-userh" xmlns="http://www.w3.org/2000/svg" class="text-primary"
                                             width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -50,17 +50,17 @@
                                                     <td>
                                                         <?php $date=date_create($order->updated_at); ?> 
                                                         {{date_format($date,"d/m/Y h:i A")}}</td>
-                                                    <td><a href="/view-order-item/{{$order->refNo}}">{{$order->refNo}}</a></td>
+                                                    <td><a style="color:lightseagreen;text-decoration-line: underline;" href="/view-order-item/{{$order->refNo}}">{{$order->refNo}}</a></td>
                                                     <td>{{$order->awb}}</td>
                                                     <td>{{$order->courier}}</td>
                                                     <td>
                                                         @if($order->awb_id_link != '')
-                                                        <a target="_blank" href="{{$order->awb_id_link}}" download>Consignment note</a>
+                                                        <a style="color:lightseagreen;text-decoration-line: underline;" target="_blank" href="{{$order->awb_id_link}}" download>Consignment note</a>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if($order->tracking_url != '')
-                                                        <a target="_blank" href="{{$order->tracking_url}}">Click here to track parcel</a>
+                                                        <a style="color:lightseagreen;text-decoration-line: underline;" target="_blank" href="{{$order->tracking_url}}">Click here to track parcel</a>
                                                         @endif
                                                     </td>
                                                 </tr>

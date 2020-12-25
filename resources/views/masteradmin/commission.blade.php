@@ -6,13 +6,13 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Agents</h4>
+                    <h4>Commission</h4>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Agents</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Commission</a></li>
                 </ol>
             </div>
         </div>
@@ -76,44 +76,6 @@
 
 @section('script')
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
-        document.getElementById("manageProduct").className = "nav-link active";
-
-        function openModalEdit(name, price, desc) {
-
-            document.getElementById("productNameEdit").value = name;
-            document.getElementById("productPriceEdit").value = price;
-            document.getElementById("productDescEdit").value = desc;
-
-        }
-
-        function openModalView(name, price, desc) {
-
-            document.getElementById("modal-body-view").innerHTML =
-                "<div class='row'>" +
-                "<br/>" +
-                "<div class='col-sm-6'>" +
-                "<b>Price: RM  </b>" + price + "<br/>" +
-                "<b>Product Name:  </b>" + name + "<br/>" +
-                "<b>Description: </b>" + desc + "<br/>" +
-                "</div>";
-            "</div>";
-        }
-
+       
     </script>
 @endsection

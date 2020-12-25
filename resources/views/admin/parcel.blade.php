@@ -35,7 +35,7 @@
                                     <?php $total = 0; ?>
                                         <h4>Credit Balance: MYR {{ number_format($balance, 2) }} </h4>
                                         <a target="_blank" href="https://easyparcel.com/my/en/account/topup/"
-                                            class="btn btn-block bg-danger">Top Up</a>
+                                            class="btn btn-block btn-danger">Top Up</a>
                                     <br/>
 
                                     <h4 class="d-flex justify-content-between align-items-center mb-3">

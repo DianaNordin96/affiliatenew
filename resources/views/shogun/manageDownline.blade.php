@@ -353,18 +353,6 @@
 
     }
 
-    function openModalView(id, name, phone, address) {
-
-        document.getElementById("modal-body-view").innerHTML =
-            "<div class='row'>" +
-            "<br/>" +
-            "<div class='col-sm-12'>" +
-            "<b>Agent Name:  </b>" + name + "<br/>" +
-            "<b>Phone Number: </b>" + phone + "<br/>" +
-            "<b>Address: </b> " + address + "<br/>" +
-            "</div>";
-        "</div>";
-    }
 
 </script>
 @endsection

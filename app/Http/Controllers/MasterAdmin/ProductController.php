@@ -42,16 +42,48 @@ class ProductController extends Controller
             'merchantPriceEdit' => 'required',
             'productLinkEdit' => '',
             'categoryEdit' => 'required',
+            'imageEdit' => 'image|mimes:jpeg,png,jpg'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new products', 'error');
-            return redirect('/master-manageProduct');
+            return redirect('/master-manageProduct')->with('error','Please ensure all fields were filled and file uploaded is image files.');
         } else {
             $data = $req->input();
             try {
-                DB::table('products')
+                if ($req->file('imageEdit') == null) {
+                    DB::table('products')
+                        ->where('id', $data['productIDEdit'])
+                        ->update([
+                            'product_name' => $data['productNameEdit'],
+                            'product_price' => $data['productPriceEdit'],
+                            'product_description' => $data['productDescEdit'],
+                            'price_shogun' => $data['shogunPriceEdit'],
+                            'price_damio' => $data['damioPriceEdit'],
+                            'price_merchant' => $data['merchantPriceEdit'],
+                            'price_dropship' => $data['dropshipPriceEdit'],
+                            'price_hq' => $data['hqPriceEdit'],
+                            'product_link' => $data['productLinkEdit'],
+                            'belongToAdmin' => $data['categoryEdit'],
+                        ]);
+
+                    toast('Product has been updated', 'success');
+                    return redirect('/master-manageProduct');
+                } else {
+
+                    $image = $req->file('imageEdit');
+                    $newFileName = $image->getClientOriginalName();
+                    $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                    $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+    
+                    if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+                        $newFileName = $filename . '1' . '.' . $extension;
+                        $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
+                    } else {
+                        $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
+                    }
+
+                    DB::table('products')
                     ->where('id', $data['productIDEdit'])
                     ->update([
                         'product_name' => $data['productNameEdit'],
@@ -64,10 +96,11 @@ class ProductController extends Controller
                         'price_hq' => $data['hqPriceEdit'],
                         'product_link' => $data['productLinkEdit'],
                         'belongToAdmin' => $data['categoryEdit'],
+                        'product_image' => $newFileName
                     ]);
 
-                toast('Product has been updated', 'success');
-                return redirect('/master-manageProduct');
+                return redirect('/master-manageProduct')->with('success', "Product has been updated");
+                }
             } catch (Exception $e) {
                 return redirect('/master-manageProduct')->with('error', "Data cannot be updated");
             }
@@ -92,17 +125,29 @@ class ProductController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new products', 'error');
-            return redirect('/master-manageProduct');
+            return redirect('/master-manageProduct')->with('error','Please ensure all fields were filled and file uploaded is image files.');
         } else {
             $data = $req->input();
             try {
+
+                $image = $req->file('image');
+                $newFileName = $image->getClientOriginalName();
+                $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+
+                if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+                    $newFileName = $filename . '1' . '.' . $extension;
+                    $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
+                } else {
+                    $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
+                }
+
                 DB::table('products')->insert([
                     'product_name' => $data['productName'],
                     'product_price' => $data['productPrice'],
                     'product_description' => $data['productDesc'],
                     'price_hq' => $data['hqPrice'],
-                    'product_image' => $req->file('image')->getClientOriginalName(),
+                    'product_image' => $newFileName,
                     'price_shogun' => $data['shogunPrice'],
                     'price_damio' => $data['damioPrice'],
                     'price_merchant' => $data['merchantPrice'],
@@ -111,12 +156,8 @@ class ProductController extends Controller
                     'belongToAdmin' => $data['category'],
                 ]);
 
-                $image = $req->file('image');
-
-                $image->move(base_path('../public_html/imageUploaded/products'), $image->getClientOriginalName());
-
-                toast('Product has been created', 'success');
-                return redirect('/master-manageProduct');
+                
+                return redirect('/master-manageProduct')->with('success','Product has been created');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -128,7 +169,6 @@ class ProductController extends Controller
         DB::table('products')
             ->delete($id);
 
-        toast('Product has been removed', 'success');
-        return redirect('/master-manageProduct');
+        return redirect('/master-manageProduct')->with('error','Product has been removed.');
     }
 }

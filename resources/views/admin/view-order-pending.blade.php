@@ -20,8 +20,8 @@
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Datatable</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Pending Orders</a></li>
                     </ol>
                 </div>
             </div>
@@ -32,8 +32,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                            <button type="button" class="btn btn-warning" onclick="exportTableToExcel()">Export Order
+                                List to
+                                Excel</button>
+                            <br /><br />
                             <div class="table-responsive">
-                                <table id="example5" class="display">
+                                <table id="example5" class="display example5">
                                     <thead>
                                         <tr>
                                             <th class="noExport">Order ID</th>
@@ -42,9 +46,6 @@
                                             <th class="noExport">Agent Name</th>
                                             <th class="noExport"></th>
                                             <th class="noExport"></th>
-                                            {{-- <th>Actions</th> --}}
-
-                                            {{-- table for export --}}
                                             <th hidden>No*</th>
                                             <th hidden>Category</th>
                                             <th hidden>Parcel Content*</th>
@@ -190,39 +191,16 @@
 @endsection
 
 @section('script')
-    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"> </script>
-    <script>
-        function exportTableToExcelPending() {
-            $(document).ready(function() {
-                $("#example1").table2excel({
-                    exclude: ".noExport",
-                    filename: "Order List"
-                });
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"> </script>
+<script>
+    function exportTableToExcel() {
+        $(document).ready(function () {
+            $(".example5").table2excel({
+                exclude: ".noExport",
+                filename: "Pending Order List"
             });
-        }
+        });
 
-        function openModalEdit(id, name, email, phone, address) {
-
-            document.getElementById("idEdit").value = id;
-            document.getElementById("nameEdit").value = name;
-            document.getElementById("emailEdit").value = email;
-            document.getElementById("phoneEdit").value = phone;
-            document.getElementById("addressEdit").value = address;
-
-        }
-
-        function openModalView(id, name, email, phone, address) {
-
-            document.getElementById("modal-body-view").innerHTML =
-                "<div class='row'>" +
-                "<br/>" +
-                "<div class='col-sm-6'>" +
-                "<b>Name  </b>" + "<br/>" + name + "<br/>" +
-                "<b>Email  </b>" + "<br/>" + email + "<br/>" +
-                "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
-                "<b>Address  </b>" + "<br/>" + address + "<br/>" +
-                "</div>";
-        }
-
-    </script>
+    }
+</script>
 @endsection

@@ -202,6 +202,10 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::get('/master.remove.admin/{id}', 'MasterAdmin\ManageAdminController@removeAdmin')->middleware('auth');
     Route::POST('/master.create.adminCat', 'MasterAdmin\ManageAdminController@addCategory')->middleware('auth');
     Route::POST('/master.update.adminCat', 'MasterAdmin\ManageAdminController@updateCategory')->middleware('auth');
+    Route::POST('/master-manageAgent/create', 'MasterAdmin\ManageAgentController@create')->middleware('auth');
+    Route::get('/master-manageAgent/delete/{id}', 'MasterAdmin\ManageAgentController@Delete')->middleware('auth');
+    Route::POST('/master-manageAgent/update', 'MasterAdmin\ManageAgentController@update')->middleware('auth');
+    Route::get('/master-manageAgent/{role}/{id}', 'MasterAdmin\ManageAgentController@changeRole')->middleware('auth');
 });
 
 

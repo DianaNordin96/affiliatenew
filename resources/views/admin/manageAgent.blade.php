@@ -116,7 +116,7 @@
     </div>
 
     <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add User</h4>
@@ -229,10 +229,10 @@
     </div>
 
     <div class="modal fade" id="modalEdit">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Employee Details</h4>
+                    <h4 class="modal-title">Agent Details</h4>
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -285,7 +285,7 @@
                                 <div class="form-group">
                                     <label> Email <span style="color:yellow">  *</span></label>
                                     <input type="text" id="emailEdit" class="form-control" name="emailEdit"
-                                        placeholder="Email" />
+                                        placeholder="Email" readonly/>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -347,7 +347,7 @@
     </div>
 
     <div class="modal fade" id="modalView">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="viewEmpName"></h4>
@@ -424,12 +424,15 @@
             document.getElementById("addressEdit").value = address;
             document.getElementById("icEdit").value = ic;
             document.getElementById("dobEdit").value = dob;
+            document.getElementById("imageEdit").value = image;
 
         }
 
         function openModalView(id, name, email, phone, address, ic, dob, image) {
 
             document.getElementById('viewEmpName').innerText = name;
+
+            if(image != ''){
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
                 "<br/>" +
@@ -445,6 +448,23 @@
                 "<b>Address  </b>" + "<br/>" + address + "<br/>" +
                 "</div>" +
                 "</div>";
+
+            }else{
+                document.getElementById("modal-body-view").innerHTML =
+                "<div class='row'>" +
+                "<br/>" +
+                "<div class='col-sm-6'>" +
+                "<span>No Photo</span>" +
+                "</div>" +
+                "<div class='col-sm-6'>" +
+                "<b>Name  </b>" + "<br/>" + name + "<br/>" +
+                "<b>Email  </b>" + "<br/>" + email + "<br/>" +
+                "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
+                "<b>IC Number </b>" + "<br/>" + ic + "<br/>" +
+                "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+                "</div>" +
+                "</div>";
+            }
         }
 
     </script>

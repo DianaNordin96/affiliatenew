@@ -25,11 +25,6 @@
                         <div class="card-header">
                             <h3 class="card-title">Update Orders</h3>
 
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                        class="fas fa-minus"></i>
-                                </button>
-                            </div>
                             <!-- /.card-tools -->
                         </div>
                         <!-- /.card-header -->
@@ -50,10 +45,10 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Charges <span style="color:yellow">  *</span></label>
-                                            <input class="form-control" type="text" onkeypress="return isPriceKey(event)" name="price" placeholder="RM" required/>
+                                            <input class="form-control" type="text" onkeypress="return isPriceKey(event)" name="price" placeholder="0.00" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -69,14 +64,14 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Tracking No <span style="color:yellow">  *</span></label>
-                                            <input class="form-control" type="text" onkeypress="return isNumberKey(event)"
+                                            <input class="form-control" type="text"
                                              name="trackingNo" required/>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Courier <span style="color:yellow">  *</span></label>
-                                            <select class="js-example-data-array" name="courier" required>
+                                            <select class="select2-width-50" style="width: 50%" name="courier" required>
                                                 <option value="Pgeon Delivery" selected>Pgeon Delivery</option>
                                                 <option value="Pgeon Prime">Pgeon Prime</option>
                                                 <option value="Skynet">Skynet</option>
@@ -99,7 +94,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <button type="submit" class="btn btn-block bg-warning">Update Order</button>
+                                    <button type="submit" class="btn btn-block btn-warning">Update Order</button>
                                 </div>
                             </form>
                         </div>

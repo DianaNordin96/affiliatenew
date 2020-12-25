@@ -48,8 +48,7 @@ class ManageCommissionController extends Controller
                 ]);
         }
 
-        toast('User request has been approved', 'success');
-        return redirect('master-commission');
+        return redirect('master-commission')->with('success','User request has been approved');
     }
 
     public function decline($id)
@@ -60,7 +59,6 @@ class ManageCommissionController extends Controller
                 'status' => 'decline'
             ]);
 
-        toast('User request has been approved', 'success');
-        return redirect('master-commission');
+            return redirect('master-commission')->with('success','User request has been declined');
     }
 }
