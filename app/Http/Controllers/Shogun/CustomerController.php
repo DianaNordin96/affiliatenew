@@ -31,8 +31,8 @@ class CustomerController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new customer', 'error');
-            return redirect('customers-shogun');
+            
+            return redirect('customers-shogun')->with('error','Please fill in all the box before creating new customer');
         } else {
             $data = $req->input();
             try {
@@ -45,10 +45,9 @@ class CustomerController extends Controller
                         'user_id' => Auth::user()->id
                     ]);
 
-                toast('Customer has been created', 'success');
                 return redirect('customers-shogun')->with('success', 'ok');
             } catch (Exception $e) {
-                return redirect('insert')->with('failed', "operation failed");
+                return redirect('insert')->with('error', "operation failed");
             }
         }
     }
@@ -83,7 +82,13 @@ class CustomerController extends Controller
                     ->update([
                         'name' => $data['nameEdit'],
                         'address' => $data['address1Edit'],
-                        'phone' => $data['phoneEdit']
+                        'phone' => $data['phoneEdit'],
+                        'address_two' => $data['address2Edit'],
+                        'address_three' => $data['address3Edit'],
+                        'state' => $data['stateEdit'],
+                        'email' => $data['emailEdit'],
+                        'city' => $data['cityEdit'],
+                        'postcode' => $data['postcodeEdit']
                     ]);
 
                     return redirect('customers-shogun')->with('success','Customer has been updated');
@@ -103,8 +108,7 @@ class CustomerController extends Controller
             ->where('id', $id)
             ->delete();
 
-        toast('Customer has been removed', 'success');
-        return redirect('customers-shogun');
+        return redirect('customers-shogun')->with('success','Customer has been removed');
     }
 
     public static function getCustomer($id)

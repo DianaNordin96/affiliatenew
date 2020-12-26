@@ -51,7 +51,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="/Dashboard" class="brand-logo">
                 <img class="logo-abbr" src="{{ asset('images/logo-white.png') }}" alt="">
                 <img class="logo-compact" src="{{ asset('images/logo-text.png') }}" alt="">
                 <img class="brand-title" src="{{ asset('images/logo-text.png') }}" alt="">
@@ -407,23 +407,22 @@
     <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
 
     <script>
-
         toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "3000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
         };
 
     @if(Session::has('message'))
@@ -445,6 +444,23 @@
                 toastr.error("{{ Session::get('message') }}");
                 break;
         }
+    @endif
+
+    @if(Session::has('success'))
+        toastr.success("{{ Session::get('success') }}");
+        // Swal.fire(
+        // 'The Internet?',
+        // 'That thing is still around?',
+        // 'success'
+        // )
+    @endif
+
+    @if(Session::has('failed'))
+        toastr.error("{{ Session::get('failed') }}");
+    @endif
+
+    @if(Session::has('error'))
+        toastr.error("{{ Session::get('error') }}");
     @endif
 
     function isPriceKey(e) {
@@ -521,12 +537,14 @@
         })(jQuery);
 
 
-    function goBack() {
-            window.history.back();
-        }
+
     </script>
 
-    
+    <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
 
     {{-- @include('sweetalert::alert') --}}
 

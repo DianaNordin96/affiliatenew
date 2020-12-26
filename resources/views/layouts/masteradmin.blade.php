@@ -52,7 +52,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="/MasterDashboard" class="brand-logo">
                 <img class="logo-abbr" src="{{ asset('images/logo-white.png') }}" alt="">
                 <img class="logo-compact" src="{{ asset('images/logo-text.png') }}" alt="">
                 <img class="brand-title" src="{{ asset('images/logo-text.png') }}" alt="">
@@ -281,8 +281,7 @@
 
     <script>
 
-    // document.getElementsByClassName("swal2-select").style.display = none;
-
+<script>
         toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -324,11 +323,11 @@
 
     @if(Session::has('success'))
         toastr.success("{{ Session::get('success') }}");
-        Swal.fire(
-        'The Internet?',
-        'That thing is still around?',
-        'success'
-        )
+        // Swal.fire(
+        // 'The Internet?',
+        // 'That thing is still around?',
+        // 'success'
+        // )
     @endif
 
     @if(Session::has('failed'))

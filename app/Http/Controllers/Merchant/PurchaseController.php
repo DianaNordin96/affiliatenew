@@ -88,3 +88,4 @@ class PurchaseController extends Controller
         return $product;
     }
 }
+

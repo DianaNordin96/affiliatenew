@@ -12,6 +12,7 @@ class ManageDownlineController extends Controller
 {
     public function index()
     {
+    
         $allDownline = array();
         $statusLoop = true;
         $id = Auth::user()->id;
@@ -89,8 +90,8 @@ class ManageDownlineController extends Controller
                 'role' => $role
             ]);
 
-        toast('User role has been changed', 'success');
-        return redirect('/downline-merchant');
+        
+        return redirect('/downline-merchant')->with('success','User role has been changed');
     }
 
     public function approve($id){
@@ -103,8 +104,8 @@ class ManageDownlineController extends Controller
             'belongsToAdmin' => Auth::user()->belongsToAdmin
         ]);
 
-        toast('Agent has been approved', 'success');
-        return redirect('/downline-merchant');
+        
+        return redirect('/downline-merchant')->with('success','Agent has been approved');
     }
 
     public function decline($id){
@@ -114,7 +115,7 @@ class ManageDownlineController extends Controller
             'statusDownline' => 'decline',
         ]);
 
-        toast('Agent has been declined', 'success');
-        return redirect('/downline-merchant');
+        
+        return redirect('/downline-merchant')->with('success','Agent has been declined');
     }
 }

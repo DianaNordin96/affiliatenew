@@ -310,11 +310,10 @@ class CartController extends Controller
                 // }
             }
             $request->session()->forget('cartPayment');
-            toast('Payment Successful', 'success');
-            return redirect('purchase-history-shogun');
+            
+            return redirect('purchase-history-shogun')->with('success','Payment Successful');
         } else { //if payment unsuccessful
-            toast('Payment Unsuccessful', 'error');
-            return redirect('purchase-history-shogun');
+            return redirect('purchase-history-shogun')->with('error','Payment Unsuccessful');
         }
     }
 
@@ -339,8 +338,8 @@ class CartController extends Controller
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before submit page', 'error');
-            return redirect()->back();
+            
+            return redirect()->back()->with('error','Please fill in all the box before submit page');
         } else {
             $data = $req->input();
 

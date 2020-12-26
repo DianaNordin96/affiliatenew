@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- Small boxes (Stat box) -->
-                <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="col-xl-4 col-lg-6 col-sm-6">
                     <div class="widget-stat card">
                         <div class="card-body  p-4">
                             <div class="media ai-icon">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="col-xl-4 col-lg-6 col-sm-6">
                     <div class="widget-stat card">
                         <div class="card-body  p-4">
                             <div class="media ai-icon">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="col-xl-4 col-lg-6 col-sm-6">
                     <div class="widget-stat card">
                         <div class="card-body  p-4">
                             <div class="media ai-icon">
@@ -79,29 +79,6 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-lg-6 col-sm-6">
-                    <div class="widget-stat card">
-                        <div class="card-body p-4">
-                            <div class="media ai-icon">
-                                <span class="mr-3">
-                                    <!-- <i class="ti-user"></i> -->
-                                    <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                                            style="stroke-dasharray: 25, 45; stroke-dashoffset: 0;"></path>
-                                        <path d="M8,7A4,4 0,1,1 16,7A4,4 0,1,1 8,7"
-                                            style="stroke-dasharray: 26, 46; stroke-dashoffset: 0;"></path>
-                                    </svg>
-                                </span>
-                                <div class="media-body">
-                                    <p class="mb-1">Agents</p>
-                                    <h4 class="mb-0">{{ $downline }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="row">

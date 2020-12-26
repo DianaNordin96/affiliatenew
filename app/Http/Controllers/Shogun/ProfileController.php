@@ -24,12 +24,12 @@ class ProfileController extends Controller
             'email' => 'required|email',
             'address' => 'required',
             'phone' => 'required',
+            'ic' => 'required'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please dont leave any boxes empty', 'error');
-            return redirect('/profile-shogun');
+            return redirect('/profile-shogun')->with('error','Please dont leave any boxes empty');
         } else {
             $data = $req->input();
             try {
@@ -40,13 +40,12 @@ class ProfileController extends Controller
                         'email' => $data['email'],
                         'phone' => $data['phone'],
                         'address' => $data['address'],
+                        'icnumber' => $data['ic'],
                     ]);
 
-                toast('User has been updated', 'success');
-                return redirect('/profile-shogun');
+                return redirect('/profile-shogun')->with('success','Your details has been updated');
             } catch (Exception $e) {
-                toast('Something went wrong', 'error');
-                return redirect('/profile-shogun');
+                return redirect('/profile-shogun')->with('error','Something went wrong');
             }
         }
     }
@@ -60,8 +59,7 @@ class ProfileController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please check your password again', 'error');
-            return redirect()->back();
+            return redirect()->back()->with('error','Please check your password again.');
         } else {
             $data = $req->input();
             try {
@@ -72,15 +70,13 @@ class ProfileController extends Controller
                             'password' => Hash::make($req->password1),
                         ]);
 
-                    toast('Your password has been updated', 'success');
-                    return redirect('/profile-shogun');
+                        return redirect('/profile-shogun')->with('success','Your password has been updated.');
                 } else {
                     toast('Your created password do not match. Please enter again.', 'error');
-                    return redirect()->back();
+                    return redirect()->back()->with('error','Your created password did not match. Please enter again.');
                 }
             } catch (Exception $e) {
-                toast('Something went wrong', 'error');
-                return redirect('/profile-shogun');
+                return redirect('/profile-shogun')->with('error','Something went wrong.');
             }
         }
     }

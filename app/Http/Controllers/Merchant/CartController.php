@@ -38,7 +38,8 @@ class CartController extends Controller
                     "name" => $product->product_name,
                     "quantity" => 1,
                     "price" => $product->price_shogun + $product->price_hq + $product->price_damio,
-                    "photo" => $product->product_image
+                    "photo" => $product->product_image,
+                    "cat_id" => $product->belongToAdmin
                 ]
             ];
             session()->put('cart', $cart);
@@ -55,7 +56,8 @@ class CartController extends Controller
             "name" => $product->product_name,
             "quantity" => 1,
             "price" => $product->price_shogun + $product->price_hq + $product->price_damio,
-            "photo" => $product->product_image
+            "photo" => $product->product_image,
+            "cat_id" => $product->belongToAdmin
         ];
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
@@ -128,6 +130,21 @@ class CartController extends Controller
         return redirect('https://dev.toyyibpay.com/' .  $billCode);
     }
 
+    public function group_by($key, $data)
+    {
+        $result = array();
+
+        foreach ($data as $keyVal => $val) {
+            if (array_key_exists($key, $val)) {
+                $result[$val[$key]][$keyVal] = $val;
+            } else {
+                $result[""][] = $val;
+            }
+        }
+
+        return $result;
+    }
+
     public function paymentStatus(Request $request)
     {
         $cart = session()->get('cartPayment');
@@ -136,38 +153,53 @@ class CartController extends Controller
 
         $response = request()->all(['status_id', 'billcode', 'order_id']);
 
+
         //if payment success
         if ($request->status_id == 1) {
+            //insert orders
             foreach ($cart as $key => $value) {
-                $total = 0;
-                foreach ($cart[$key][0] as $details) {
-                    $total += $details['price'] * $details['quantity'];
-                }
 
                 $orderID = date("Ymd") . date("hi") . Auth::user()->id . $key;
 
-                DB::table('orders')->insert([
-                    [
-                        'orders_id' => $orderID,
-                        'bill_code' => $request->billcode,
-                        'user_id' => Auth::user()->id,
-                        'amount' => $total,
-                        'created_at' => NOW(),
-                        'customer_id' => $key
-                    ],
-                ]);
+                // dd($cart[$key][0]);
+                $byGroup = $this->group_by("cat_id", $cart[$key][0]);
 
-                //insert product orders
-                foreach ($cart[$key][0] as $id => $details) {
-                    DB::table('orders_details')->insert([
+                // Dump result
+
+
+                foreach ($byGroup as $keyGrp => $group) {
+                    // dd($byGroup[$keyGrp]);
+                    $total = 0;
+                    foreach ($byGroup[$keyGrp] as $details) {
+                        $total += $details['price'] * $details['quantity'];
+                    }
+
+                    $orderID = $orderID . $keyGrp;
+
+                    DB::table('orders')->insert([
                         [
-                            'product_id' => $id,
-                            'referenceNo' => $orderID,
-                            'quantity' => $details['quantity'],
+                            'orders_id' => $orderID,
+                            'bill_code' => $request->billcode,
+                            'user_id' => Auth::user()->id,
+                            'amount' => $total,
+                            'created_at' => NOW(),
+                            'customer_id' => $key,
+                            'belongToAdmin' => $keyGrp
                         ],
                     ]);
-                }
 
+                    //insert product orders
+                    foreach ($byGroup[$keyGrp] as $id => $details) {
+
+                        DB::table('orders_details')->insert([
+                            [
+                                'product_id' => $id,
+                                'referenceNo' => $orderID,
+                                'quantity' => $details['quantity'],
+                            ],
+                        ]);
+                    }
+                }
                 $totalCommission = 0;
                 //update commision
                 foreach ($cart[$key][0] as $id => $details) {
@@ -227,11 +259,9 @@ class CartController extends Controller
                 }
             }
             $request->session()->forget('cartPayment');
-            toast('Payment Successful', 'success');
-            return redirect('purchase-history-merchant');
+            return redirect('purchase-history-merchant')->with('success','Payment Successful');
         } else { //if payment unsuccessful
-            toast('Payment Unsuccessful', 'error');
-            return redirect('purchase-history-merchant');
+            return redirect('purchase-history-merchant')->with('error','Payment Unsuccessful');
         }
     }
 
@@ -271,8 +301,8 @@ class CartController extends Controller
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before submit page', 'error');
-            return redirect()->back();
+            
+            return redirect()->back()->with('error','Please fill in all the box before submit page');
         } else {
             $data = $req->input();
 

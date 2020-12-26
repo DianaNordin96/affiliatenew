@@ -37,10 +37,27 @@ class CommissionController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before submitting your page', 'error');
-            return redirect('/commission-shogun');
+            
+            return redirect('/commission-shogun')->with('error','Please fill in all the box before submitting your page');
         } else {
             $data = $req->input();
+
+            $checkBalance = DB::table('users')->select('commissionPoint')->where('id',Auth::user()->id)->get();
+            $checkRequest = DB::table('commission')
+                ->where('user_id', Auth::user()->id)
+                ->where(function ($query) {
+                    $query->where('status', '=', 'pending');
+                })
+                ->get();
+            
+            if ($checkBalance[0]->commissionPoint <= $data['amount']){
+                return redirect('/commission-shogun')->with('error','The amount you requested is not accepted.');
+            }
+
+            if ($checkRequest = 0){
+                return redirect('/commission-shogun')->with('error','You still have pending requests. Try again once your requests has been taken into actions. ');
+            }
+
 
             DB::table('commission')
                 ->insert([
@@ -52,8 +69,7 @@ class CommissionController extends Controller
                     'user_id' => Auth::user()->id
                 ]);
 
-            toast('Your request has been submitted.', 'success');
-            return redirect('/commission-shogun');
+            return redirect('/commission-shogun')->with('success','Your request has been submitted.');
         }
     }
 }

@@ -17,7 +17,6 @@ class ManageStockController extends Controller
         $pass = Auth::user()->password;
 
         $product = DB::table('products')
-        ->where('belongToAdmin',Auth::user()->belongsToAdmin)
         ->get();
 
         return view(

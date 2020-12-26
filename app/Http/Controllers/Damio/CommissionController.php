@@ -42,6 +42,23 @@ class CommissionController extends Controller
         } else {
             $data = $req->input();
 
+            $checkBalance = DB::table('users')->select('commissionPoint')->where('id',Auth::user()->id)->get();
+            $checkRequest = DB::table('commission')
+                ->where('user_id', Auth::user()->id)
+                ->where(function ($query) {
+                    $query->where('status', '=', 'pending');
+                })
+                ->get();
+            
+            
+            if ($checkBalance[0]->commissionPoint <= $data['amount']){
+                return redirect('/commission-damio')->with('error','The amount you requested is not accepted.');
+            }
+
+            if ($checkRequest = 0){
+                return redirect('/commission-damio')->with('error','You still have pending requests. Try again once your requests has been taken into actions. ');
+            }
+
             DB::table('commission')
                 ->insert([
                     'bank' => $data['bank'],

@@ -91,6 +91,8 @@
                                                     0
                                                 @endif
                                             </span>
+                                            <br/><br/>
+                                            <a class="btn btn-warning" style="color:black; width:100%" href="/shogun-cart">Click here to edit your cart</a>
                                         </div>
     
                                         <?php
@@ -383,9 +385,6 @@
     <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
 
     <script>
-
-    // document.getElementsByClassName("swal2-select").style.display = none;
-
         toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -427,11 +426,11 @@
 
     @if(Session::has('success'))
         toastr.success("{{ Session::get('success') }}");
-        Swal.fire(
-        'The Internet?',
-        'That thing is still around?',
-        'success'
-        )
+        // Swal.fire(
+        // 'The Internet?',
+        // 'That thing is still around?',
+        // 'success'
+        // )
     @endif
 
     @if(Session::has('failed'))

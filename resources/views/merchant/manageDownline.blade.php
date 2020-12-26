@@ -36,6 +36,7 @@
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th hidden>Role</th>
+                                        <th>Change Role</th>
                                         <th class="noExport">Actions</th>
                                     </tr>
                                 </thead>
@@ -48,21 +49,19 @@
                                             <td>{{ $user[0]->email }}</td>
                                             <td>{{ $user[0]->phone }}</td>
                                             <td hidden>{{ $user[0]->role }}</td>
+                                            <td><select onchange="location = this.value;" class="btn btn-default">
+                                                @if($user[0]->role == '')
+                                                    <option value="" selected>Not Yet Assign</option>
+                                                @endif
+                                                <option value="/manageDownlineMerchant/dropship/{{ $user[0]->id }}" @if ($user[0]->role ==
+                                                    'dropship'){ selected } @endif
+                                                    >Dropship</option>
+                                            </select></td>
                                             <td>
                                                 <button type="button" title="View" data-toggle="modal"
-                                                    onclick="openModalView('{{ $user[0]->id }}','{{ $user[0]->name }}','{{ $user[0]->email }}','{{ $user[0]->phone }}','{{ $user[0]->address }}')"
+                                                    onclick="openModalView('{{ $user[0]->id }}','{{ $user[0]->name }}','{{ $user[0]->email }}','{{ $user[0]->phone }}','{{ $user[0]->address }}','{{ $user[0]->icnumber }}','{{ $user[0]->dob }}','{{ $user[0]->image }}')"
                                                     data-target="#modalView" class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
-                                                <select onchange="location = this.value;" class="btn btn-default">
-                                                    @if($user[0]->role == '')
-                                                        <option value="" selected>Not Yet Assign</option>
-                                                    @endif
-                                                    <option value="/manageDownlineMerchant/merchant/{{ $user[0]->id }}" @if ($user[0]->role ==
-                                                        'merchant'){ selected } @endif
-                                                        >Merchant</option>
-                                                    <option value="/manageDownlineMerchant/dropship/{{ $user[0]->id }}" @if ($user[0]->role ==
-                                                        'dropship'){ selected } @endif
-                                                        >Dropship</option>
-                                                </select>
+                                                
                                             </td>
                                         </tr>
                                     @endforeach
@@ -110,7 +109,7 @@
                                             <td>{{ $user->phone }}</td>
                                             <td>
                                                 <button type="button" title="View" data-toggle="modal"
-                                                    onclick="openModalView('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}')"
+                                                    onclick="openModalView('{{ $user->id }}','{{ $user->name }}','{{ $user->email }}','{{ $user->phone }}','{{ $user->address }}','{{ $user->icnumber }}','{{ $user->dob }}','{{ $user->image }}')"
                                                     data-target="#modalView" class="btn btn-success"><i class="lni lni-eye"></i>
                                                 </button> &nbsp;
                                                 <button type="button"
@@ -134,12 +133,11 @@
     </div>
 </div>
 
-
         <div class="modal fade" id="modalView">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="viewEmpName">Agent Details</h4>
+                        <h4 class="modal-title" id="viewName"> </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -172,18 +170,43 @@
 
     }
 
-    function openModalView(id, name, phone, address) {
+    function openModalView(id, name, email, phone, address, ic, dob, image) {
 
+    document.getElementById('viewName').innerText = name;
+
+    if(image != ''){
+    document.getElementById("modal-body-view").innerHTML =
+        "<div class='row'>" +
+        "<br/>" +
+        "<div class='col-sm-6'>" +
+        "<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../imageUploaded/profile/" +
+        image + "'/>" +
+        "</div>" +
+        "<div class='col-sm-6'>" +
+        "<b>Name  </b>" + "<br/>" + name + "<br/>" +
+        "<b>Email  </b>" + "<br/>" + email + "<br/>" +
+        "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
+        "<b>IC Number </b>" + "<br/>" + ic + "<br/>" +
+        "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+        "</div>" +
+        "</div>";
+
+    }else{
         document.getElementById("modal-body-view").innerHTML =
-            "<div class='row'>" +
-            "<br/>" +
-            "<div class='col-sm-12'>" +
-            "<b>Customer Name:  </b>" + name + "<br/>" +
-            "<b>Phone Number: </b>" + phone + "<br/>" +
-            "<b>Address: </b> " + address + "<br/>" +
-            "</div>";
+        "<div class='row'>" +
+        "<br/>" +
+        "<div class='col-sm-6'>" +
+        "<span>No Photo</span>" +
+        "</div>" +
+        "<div class='col-sm-6'>" +
+        "<b>Name  </b>" + "<br/>" + name + "<br/>" +
+        "<b>Email  </b>" + "<br/>" + email + "<br/>" +
+        "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
+        "<b>IC Number </b>" + "<br/>" + ic + "<br/>" +
+        "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+        "</div>" +
         "</div>";
     }
-
+}
 </script>
 @endsection

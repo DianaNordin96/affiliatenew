@@ -189,7 +189,7 @@
                                             <div class="form-group">
                                                 <label> Phone Number <span style="color:yellow">  *</span>
                                                 </label>
-                                                <input type="text" id="phoneEdit" class="form-control" name="phoneEdit"
+                                                <input type="text" id="phoneEdit" onkeypress="return isNumberKey(event)" class="form-control" name="phoneEdit"
                                                     placeholder="Phone Number" required />
                                             </div>
                                         </div>
@@ -274,7 +274,7 @@
                                             <div class="form-group">
                                                 <label>Postcode <span style="color:yellow">  *</span>
                                                 </label>
-                                                <input type="text" id="postcodeEdit" class="form-control" name="postcodeEdit"
+                                                <input type="text" id="postcodeEdit" onkeypress="return isNumberKey(event)" class="form-control" name="postcodeEdit"
                                                     placeholder="" required />
                                             </div>
                                         </div>
@@ -299,6 +299,7 @@
             <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title">Customer Details</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -341,10 +342,10 @@
         document.getElementById("modal-body-view").innerHTML =
             "<div class='row'>" +
             "<br/>" +
-            "<div class='col-sm-12'>" +
+            "<div class='col-lg-6'>" +
             "<b>Customer Name:  </b>" + name + "<br/>" +
             "<b>Phone Number: </b>" + phone + "<br/>" +
-            "<b>Address: </b> " + address1 + "<br/>" +
+            "</div><div class='col-lg-6'><b>Address: </b> " + address1 + "<br/>" +
             "<b>Address: </b> " + address2 + "<br/>" +
             "<b>Address: </b> " + address3 + "<br/>" +
             "<b>Email: </b> " + email + "<br/>" +

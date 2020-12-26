@@ -23,6 +23,7 @@ class ProfileController extends Controller
             'email' => 'required|email',
             'address' => 'required',
             'phone' => 'required',
+            'ic' => 'required'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
@@ -38,6 +39,7 @@ class ProfileController extends Controller
                         'email' => $data['email'],
                         'phone' => $data['phone'],
                         'address' => $data['address'],
+                        'icnumber' => $data['ic'],
                     ]);
 
                 toast('User has been updated', 'success');

@@ -15,7 +15,8 @@ class PurchaseController extends Controller
         $orders_detail = DB::table('orders')
         ->join('customers','orders.customer_id','=','customers.id')
         ->select('orders.*','customers.name')
-        ->where('orders.user_id', '=', Auth::user()->id)->get();
+        ->where('orders.user_id', '=', Auth::user()->id)
+        ->get();
 
         return view('shogun/purchaseHistory', [
             'orders_detail' => $orders_detail

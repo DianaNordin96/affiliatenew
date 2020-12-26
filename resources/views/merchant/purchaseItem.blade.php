@@ -8,11 +8,11 @@
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
-            <div class="col-sm-1 p-md-0">
+            <div class="col-sm-2 p-md-0">
             <button onclick="goBack()" type="button" class="btn btn-success"><i class="fa fa-angle-left"></i>
                 Go Back</button>
             </div>
-            <div class="col-sm-5 p-md-0">
+            <div class="col-sm-4 p-md-0">
                 <div class="welcome-text">
                     <h4>Orders</h4>
                      <span>Purchase Item For {{ $referenceNo }}</span>
@@ -20,30 +20,46 @@
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Datatable</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">{{$referenceNo}}</a></li>
                 </ol>
             </div>
         </div>
         <!-- row -->
 
                 <div class="row">
-                    <div class="col-lg-5">
+
+                    <div class="col-lg-8">
                         <div class="card card-warning">
-                            <div class="card-body">
-
+                            <div class="card-header">
                                 <h3 class="card-title">Customer Details</h3>
-                                <br/>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    @foreach ($customerDetails as $customer)
+                                    <div class="col-lg-3">
+                                        <b>Name : {{ $customer->name }}</b><br />
+                                        <b>Phone : {{ $customer->phone }}</b><br />
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <b>Address #1 : {{ $customer->address }}</b><br />
+                                        <b>Address #2 : {{ $customer->address_two }}</b><br />
+                                        <b>Address #3 : {{ $customer->address_three }}</b><br />
+                                        <b>City : {{ $customer->city }}</b><br />
+                                        <b>State : {{ $customer->state }}</b><br />
+                                        <b>Postcode : {{ $customer->postcode }}</b><br />
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
 
-                               @foreach($customerDetails as $customer)
-                                   <p><b>Name : {{$customer->name}}</b></p>
-                                   <p><b>Phone : {{$customer->phone}}</b></p>
-                                   <p><b>Address #1 : {{$customer->address}}</b></p>
-                                   <p><b>Address #2 : {{$customer->address_two}}</b></p>
-                                   <p><b>Address #3 : {{$customer->address_three}}</b></p>
-                               @endforeach
-                                
-                               <br>
+
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
                                <h3 class="card-title">Parcel Tracking</h3>
 
                                <?php $consignmentArray = $order->checkOrderExistConsignment($referenceNo); ?>
@@ -66,8 +82,10 @@
                         </div>
                         
                     </div>
+                </div>
+                <div class="row">
 
-                    <div class="col-lg-7">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                     <div class="table-responsive">

@@ -13,9 +13,9 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = DB::table('customers')
-        ->where('user_id',Auth::user()->id)
-        ->get();
-        
+            ->where('user_id', Auth::user()->id)
+            ->get();
+
         return view('damio/customers')->with([
             'customers' => $customers
         ]);
@@ -31,8 +31,7 @@ class CustomerController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before creating new customer', 'error');
-            return redirect('customers-damio');
+            return redirect('customers-damio')->with('error', 'Please fill in all the box before creating new customer');
         } else {
             $data = $req->input();
             try {
@@ -45,8 +44,7 @@ class CustomerController extends Controller
                         'user_id' => Auth::user()->id
                     ]);
 
-                toast('Customer has been created', 'success');
-                return redirect('customers-damio');
+                return redirect('customers-damio')->with('success', 'Customer has been created');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -58,13 +56,22 @@ class CustomerController extends Controller
         $validatedData = [
             'nameEdit' => 'required',
             'phoneEdit' => 'required',
-            'addressEdit' => 'required',
+            'address1Edit' => 'required',
+            'address2Edit' => '',
+            'address3Edit' => '',
+            'stateEdit' => 'required',
+            'postcodeEdit' => 'required',
+            'emailEdit' => 'required',
+            'cityEdit' => 'required',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            toast('Please fill in all the box before updating customer', 'error');
-            return redirect('customers-damio');
+            $notification = array(
+                'message' => 'Make sure all details has been filled properly',
+                'alert-type' => 'error'
+            );
+            return redirect('customers-shogun')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -73,13 +80,17 @@ class CustomerController extends Controller
                     ->where('id', $data['customerID'])
                     ->update([
                         'name' => $data['nameEdit'],
-                        'address' => $data['addressEdit'],
-                        'phone' => $data['phoneEdit']
+                        'address' => $data['address1Edit'],
+                        'phone' => $data['phoneEdit'],
+                        'address_two' => $data['address2Edit'],
+                        'address_three' => $data['address3Edit'],
+                        'state' => $data['stateEdit'],
+                        'email' => $data['emailEdit'],
+                        'city' => $data['cityEdit'],
+                        'postcode' => $data['postcodeEdit']
                     ]);
 
-
-                toast('Customer has been updated', 'success');
-                return redirect('customers-damio');
+                    return redirect('customers-shogun')->with('success','Customer has been updated');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -89,17 +100,18 @@ class CustomerController extends Controller
     public function delete($id)
     {
         DB::table('customers')
-        ->where('id',$id)
-        ->delete();
+            ->where('id', $id)
+            ->delete();
 
-        toast('Customer has been removed', 'success');
-        return redirect('customers-damio');
+
+        return redirect('customers-damio')->with('success', 'Customer has been removed');
     }
 
-    public static function getCustomer($id){
+    public static function getCustomer($id)
+    {
         $customer = DB::table('customers')
-        ->where('id',$id)
-        ->get();
+            ->where('id', $id)
+            ->get();
 
         return $customer;
     }

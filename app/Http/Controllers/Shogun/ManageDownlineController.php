@@ -26,13 +26,13 @@ class ManageDownlineController extends Controller
 
                 $userDownlineL1 = DB::table('users')
                     ->where('downlineTo', $value)
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'decline');
+                            ->orWhere('statusDownline', '!=', 'decline');
                     })
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'pending');
+                            ->orWhere('statusDownline', '!=', 'pending');
                     })
                     ->select('id')
                     ->get();
@@ -59,13 +59,13 @@ class ManageDownlineController extends Controller
         }
 
         $users = array();
-        
-        for($i=0;$i<count($allDownline);$i++){
-            $getUser= DB::table('users')
-            ->where('id',$allDownline[$i])
-            ->get();
 
-            array_push($users,$getUser);
+        for ($i = 0; $i < count($allDownline); $i++) {
+            $getUser = DB::table('users')
+                ->where('id', $allDownline[$i])
+                ->get();
+
+            array_push($users, $getUser);
         }
 
         $pendingUser = DB::table('users')
@@ -82,13 +82,108 @@ class ManageDownlineController extends Controller
         );
     }
 
-    public function changeRole($role, $id)
+    public function changeRole($roles, $id)
     {
+        $higherLevelID = 0;
+
+        switch ($roles) {
+            case 'shogun':
+                $higherLevelID = null;
+                break;
+            case 'damio':
+                //check upper level
+                //check downline
+                $status = true;
+                // $statusCheck = false;
+                $ids = $id;
+
+                while ($status) {
+                    $check = DB::table('users')
+                        ->where('id', $ids)
+                        ->get();
+                    // dd($check);
+                    foreach ($check as $checking) {
+                        if ($checking->id != '') {
+                            $ids = $checking->downlineTo;
+                            $role = $checking->role;
+
+                            if ($role == 'shogun') {
+                                $higherLevelID = $checking->id;
+                            }
+
+                            if ($checking->downlineTo == null) {
+                                $status = false;
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case 'merchant':
+                //check upper level
+                //check downline
+                $status = true;
+                // $statusCheck = false;
+                $ids = $id;
+
+                while ($status) {
+                    $check = DB::table('users')
+                        ->where('id', $ids)
+                        ->get();
+                    // dd($check);
+                    foreach ($check as $checking) {
+                        if ($checking->id != '') {
+                            $ids = $checking->downlineTo;
+                            $role = $checking->role;
+
+                            if ($role == 'damio') {
+                                $higherLevelID = $checking->id;
+                            }
+
+                            if ($checking->downlineTo == null) {
+                                $status = false;
+                            }
+                        }
+                    }
+                }
+                break;
+            case 'dropship':
+                //check upper level
+                //check downline
+                $status = true;
+                // $statusCheck = false;
+                $ids = $id;
+
+                while ($status) {
+                    $check = DB::table('users')
+                        ->where('id', $ids)
+                        ->get();
+                    // dd($check);
+                    foreach ($check as $checking) {
+                        if ($checking->id != '') {
+                            $ids = $checking->downlineTo;
+                            $role = $checking->role;
+
+                            if ($role == 'merchant') {
+                                $higherLevelID = $checking->id;
+                            }
+
+                            if ($checking->downlineTo == null) {
+                                $status = false;
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
 
         DB::table('users')
             ->where('id', $id)
             ->update([
-                'role' => $role
+                'downlineTo' => $higherLevelID,
+                'role' => $roles
             ]);
 
         $notification = array(
@@ -98,26 +193,28 @@ class ManageDownlineController extends Controller
         return redirect('/downline-shogun')->with($notification);
     }
 
-    public function approve($id){
+    public function approve($id)
+    {
 
         DB::table('users')
-        ->where('id',$id)
-        ->update([
-            'statusDownline' => 'approve',
-            'password' => Hash::make('12345678'),
-            'belongsToAdmin' => Auth::user()->belongsToAdmin
-        ]);
+            ->where('id', $id)
+            ->update([
+                'statusDownline' => 'approve',
+                'password' => Hash::make('12345678'),
+                'belongsToAdmin' => Auth::user()->belongsToAdmin
+            ]);
 
         toast('Agent has been approved', 'success');
         return redirect('/downline-shogun');
     }
 
-    public function decline($id){
+    public function decline($id)
+    {
         DB::table('users')
-        ->where('id',$id)
-        ->update([
-            'statusDownline' => 'decline',
-        ]);
+            ->where('id', $id)
+            ->update([
+                'statusDownline' => 'decline',
+            ]);
 
         toast('Agent has been declined', 'success');
         return redirect('/downline-shogun');
