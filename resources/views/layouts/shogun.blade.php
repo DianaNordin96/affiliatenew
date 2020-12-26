@@ -53,7 +53,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="/ShogunDashboard" class="brand-logo">
                 <img class="logo-abbr" src="{{ asset('images/logo-white.png') }}" alt="">
                 <img class="logo-compact" src="{{ asset('images/logo-text.png') }}" alt="">
                 <img class="brand-title" src="{{ asset('images/logo-text.png') }}" alt="">
@@ -183,8 +183,8 @@
 
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="/profile-shogun" role="button" data-toggle="dropdown">
-                                    {{-- <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" /> --}}
-                                    <img src="{{ asset('imageUploaded/avatar.png') }}" width="20" alt="" /> 
+                                    <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" />
+                                    {{-- <img src="{{ asset('imageUploaded/avatar.png') }}" width="20" alt="" />  --}}
                                     <div class="header-info">
                                         <span>Hey, <strong>{{ Auth::user()->name }}</strong></span>
                                         <small>{{ Auth::user()->role }}</small>

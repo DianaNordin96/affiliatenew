@@ -92,7 +92,6 @@ class SalesController extends Controller
                             ->where('orders.created_at', '<=', $year . $month . '31')
                             ->where('orders.user_id', $user->id)
                             ->get();
-                            dd($getTotalPurchase);
                         foreach ($getTotalPurchase as $value) {
                             $total += $value->total_purchase;
                         }

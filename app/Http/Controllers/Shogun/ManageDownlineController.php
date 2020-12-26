@@ -84,12 +84,10 @@ class ManageDownlineController extends Controller
 
     public function changeRole($roles, $id)
     {
+
         $higherLevelID = 0;
 
         switch ($roles) {
-            case 'shogun':
-                $higherLevelID = null;
-                break;
             case 'damio':
                 //check upper level
                 //check downline
@@ -136,7 +134,7 @@ class ManageDownlineController extends Controller
                             $ids = $checking->downlineTo;
                             $role = $checking->role;
 
-                            if ($role == 'damio') {
+                            if ($role == 'shogun') {
                                 $higherLevelID = $checking->id;
                             }
 
@@ -155,7 +153,7 @@ class ManageDownlineController extends Controller
                 $ids = $id;
 
                 while ($status) {
-                    $check = DB::table('users')
+                    $check = DB::table('shogun')
                         ->where('id', $ids)
                         ->get();
                     // dd($check);
@@ -204,8 +202,7 @@ class ManageDownlineController extends Controller
                 'belongsToAdmin' => Auth::user()->belongsToAdmin
             ]);
 
-        toast('Agent has been approved', 'success');
-        return redirect('/downline-shogun');
+        return redirect('/downline-shogun')->with('success','Agent has been approved');
     }
 
     public function decline($id)
@@ -216,7 +213,6 @@ class ManageDownlineController extends Controller
                 'statusDownline' => 'decline',
             ]);
 
-        toast('Agent has been declined', 'success');
-        return redirect('/downline-shogun');
+            return redirect('/downline-shogun')->with('success','Agent has been declined');
     }
 }

@@ -52,23 +52,25 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->phone }}</td>
                                                 <td>
+                                                    @if($user->role == 'shogun')
+                                                        Shogun
+                                                    @elseif($user->role == '')    
                                                     <select style="width:50px" onchange="location = this.value;"
                                                         class="form-control">
-                                                        @if ($user->role == '')
-                                                            <option value="" selected>Not Yet Assign</option>
-                                                        @endif
-                                                        
-                                        <option value="/master-manageAgent/shogun/{{ $user->id }}" @if ($user->role == 'shogun'){ selected @endif
-                                            }>Shogun
-                                        </option>
-                                        <option value="/master-manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif
-                                            >Damio
-                                        </option>
-                                        <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif
-                                            >Merchant</option>
-                                        <option value="/master-manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif
-                                            >Dropship</option>
-                                        </select>
+                                                        <option value="" selected>Not Yet Assign</option>
+                                                        <option value="/master-manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
+                                                        <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
+                                                        <option value="/master-manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif>Dropship</option>
+                                                    </select>
+                                                    @else
+                                                    <select style="width:50px" onchange="location = this.value;"
+                                                        class="form-control">
+                                                        <option value="" selected>Not Yet Assign</option>
+                                                        <option value="/master-manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
+                                                        <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
+                                                        <option value="/master-manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif>Dropship</option>
+                                                    </select>
+                                                    @endif
                                         </td>
                                         <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal" onclick="openModalEdit(
                                                                         '{{ $user->id }}',

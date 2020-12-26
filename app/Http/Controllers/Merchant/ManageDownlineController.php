@@ -81,17 +81,113 @@ class ManageDownlineController extends Controller
         );
     }
 
-    public function changeRole($role, $id)
+    public function changeRole($roles, $id)
     {
+
+        $higherLevelID = 0;
+
+        switch ($roles) {
+            case 'damio':
+                //check upper level
+                //check downline
+                $status = true;
+                // $statusCheck = false;
+                $ids = $id;
+
+                while ($status) {
+                    $check = DB::table('users')
+                        ->where('id', $ids)
+                        ->get();
+                    // dd($check);
+                    foreach ($check as $checking) {
+                        if ($checking->id != '') {
+                            $ids = $checking->downlineTo;
+                            $role = $checking->role;
+
+                            if ($role == 'shogun') {
+                                $higherLevelID = $checking->id;
+                            }
+
+                            if ($checking->downlineTo == null) {
+                                $status = false;
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case 'merchant':
+                //check upper level
+                //check downline
+                $status = true;
+                // $statusCheck = false;
+                $ids = $id;
+
+                while ($status) {
+                    $check = DB::table('users')
+                        ->where('id', $ids)
+                        ->get();
+                    // dd($check);
+                    foreach ($check as $checking) {
+                        if ($checking->id != '') {
+                            $ids = $checking->downlineTo;
+                            $role = $checking->role;
+
+                            if ($role == 'shogun') {
+                                $higherLevelID = $checking->id;
+                            }
+
+                            if ($checking->downlineTo == null) {
+                                $status = false;
+                            }
+                        }
+                    }
+                }
+                break;
+            case 'dropship':
+                //check upper level
+                //check downline
+                $status = true;
+                // $statusCheck = false;
+                $ids = $id;
+
+                while ($status) {
+                    $check = DB::table('shogun')
+                        ->where('id', $ids)
+                        ->get();
+                    // dd($check);
+                    foreach ($check as $checking) {
+                        if ($checking->id != '') {
+                            $ids = $checking->downlineTo;
+                            $role = $checking->role;
+
+                            if ($role == 'merchant') {
+                                $higherLevelID = $checking->id;
+                            }
+
+                            if ($checking->downlineTo == null) {
+                                $status = false;
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
 
         DB::table('users')
             ->where('id', $id)
             ->update([
-                'role' => $role
+                'downlineTo' => $higherLevelID,
+                'role' => $roles
             ]);
 
-        
-        return redirect('/downline-merchant')->with('success','User role has been changed');
+        $notification = array(
+            'message' => 'User role has been changed',
+            'alert-type' => 'success'
+        );
+        return redirect('/downline-merchant')->with($notification);
     }
 
     public function approve($id){
