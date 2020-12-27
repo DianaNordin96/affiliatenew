@@ -57,7 +57,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Order No <span style="color:yellow">  *</span></label>
-                                            <input class="form-control" type="text" onkeypress="return isNumberKey(event)"
+                                            <input class="form-control" type="text"
                                              name="orderno" required/>
                                         </div>
                                     </div>

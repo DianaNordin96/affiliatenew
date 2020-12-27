@@ -119,7 +119,7 @@
                                                             @if (isset($cart[$parcel->order_number]))
                                                                 <a style="color:white"
                                                                     href="/remove-cart-admin/{{ $parcel->order_number }}"
-                                                                    id="checkout" class="btn btn-info"><i class="fas fa-times"></i>
+                                                                    id="checkout" class="btn btn-danger">
                                                                     Remove From Cart</a>
                                                             @else
                                                                 <a style="color:white"

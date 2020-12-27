@@ -56,9 +56,11 @@
                                                 <option value="/manageDownlineDamio/merchant/{{ $user[0]->id }}" @if ($user[0]->role ==
                                                     'merchant'){ selected } @endif
                                                     >Merchant</option>
+                                                @if($user[0]->role != 'merchant')    
                                                 <option value="/manageDownlineDamio/dropship/{{ $user[0]->id }}" @if ($user[0]->role ==
                                                     'dropship'){ selected } @endif
                                                     >Dropship</option>
+                                                @endif
                                             </select></td>
                                             <td>
                                                 <button type="button" title="View" data-toggle="modal"

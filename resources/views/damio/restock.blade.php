@@ -1,4 +1,4 @@
-@extends('layouts.merchant')
+@extends('layouts.damio')
 @section('content')
 
 @section('headScript')
@@ -69,7 +69,7 @@
                                         <div style="margin: auto">
                                             <button type="button"
                                                 class="btn btn-success" title="Add to cart"
-                                                onclick="window.location='{{ url('addToCartMerchant/' . $product->id) }}'">
+                                                onclick="window.location='{{ url('addToCartDamio/' . $product->id) }}'">
                                                 <li class="lni lni-cart"></li></button>
                                         
                                             &nbsp;<button style="color:white;" type="button" title="View"
@@ -108,7 +108,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('addToPaymentCart-merchant') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ url('addToPaymentCart-damio') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-12">
@@ -359,7 +359,7 @@
             var ele = $(this);
 
             $.ajax({
-                url: '{{ url('update-cartMerchant') }}',
+                url: '{{ url('update-cartDamio') }}',
                 method: "patch",
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -380,7 +380,7 @@
 
             if (confirm("Are you sure")) {
                 $.ajax({
-                    url: '{{ url('remove-from-cartMerchant') }}',
+                    url: '{{ url('remove-from-cartDamio') }}',
                     method: "DELETE",
                     data: {
                         _token: '{{ csrf_token() }}',

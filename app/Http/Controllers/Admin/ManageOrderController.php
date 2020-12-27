@@ -16,10 +16,10 @@ class ManageOrderController extends Controller
             $order_details_pending = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->join('customers', 'orders.customer_id', '=', 'customers.id')
-                ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
                 ->where('orders.belongToAdmin', Auth::user()->admin_category)
                 ->where('awb', '=', NULL)
+                ->groupBy('orders.orders_id')
                 ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount')
                 ->get();
 
@@ -34,6 +34,7 @@ class ManageOrderController extends Controller
                 ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
                 ->where('orders.belongToAdmin', Auth::user()->admin_category)
                 ->where('awb', '<>', NULL)
+                ->groupBy('orders.orders_id')
                 ->select('customers.name AS cust_name', 'customers.*', 'orders.orders_id', 'orders.user_id', 'orders.created_at AS order_created', 'users.name', 'orders.amount')
                 ->get();
 
@@ -104,8 +105,7 @@ class ManageOrderController extends Controller
     {
         $getAllPendingOrders = DB::table('orders')
             ->leftJoin('consignment', 'orders.orders_id', '=', 'consignment.refNo')
-            ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('users.belongsToAdmin', Auth::user()->admin_category)
+            ->where('orders.belongToAdmin', Auth::user()->admin_category)
             ->where('awb', '=', NULL)
             ->get();
 

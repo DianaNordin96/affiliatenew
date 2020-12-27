@@ -169,6 +169,6 @@ class ProductController extends Controller
         DB::table('products')
             ->delete($id);
 
-        return redirect('/master-manageProduct')->with('error','Product has been removed.');
+        return redirect('/master-manageProduct')->with('success','Product has been removed.');
     }
 }

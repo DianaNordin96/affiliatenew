@@ -16,7 +16,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Create Consignment</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Profile</a></li>
                 </ol>
             </div>
         </div>
@@ -37,13 +37,18 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Name</label>
-                                <input type="name" class="form-control" name="name"
+                                <input type="text" class="form-control" onkeypress="return isAlphabetsKey(event)" name="name"
                                     value="{{ Auth::user()->name }}" placeholder="Enter name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Phone Number</label>
-                                <input type="name" class="form-control" name="phone"
+                                <input type="text" class="form-control" onkeypress="return isNumberKey(event)" name="phone"
                                     value="{{ Auth::user()->phone }}" placeholder="Enter name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">IC Number</label>
+                                <input type="text" class="form-control" onkeypress="return isNumberKey(event)" name="ic"
+                                    value="{{ Auth::user()->icnumber }}" >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
@@ -55,6 +60,23 @@
                                 <textarea class="form-control" name="address" id="address" rows="3"
                                     placeholder="Address">{{ Auth::user()->address }}</textarea>
                             </div>
+                            {{-- <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1"
+                                        placeholder="Password">
+                                </div> --}}
+                            {{-- <div class="form-group">
+                                    <label for="exampleInputFile">File input</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
+                                </div> --}}
                         </div>
                         <!-- /.card-body -->
 
@@ -73,10 +95,11 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ url('change-password-merchant') }}" method="post"
-                        enctype="multipart/form-data">
-                        @csrf
+                   
                         <div class="card-body">
+                            <form action="{{ url('change-password-merchant') }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="password" minlength="8" class="form-control" name="password1"
@@ -87,9 +110,10 @@
                                 <input type="password" minlength="8" class="form-control" name="password2"
                                     placeholder="Re-enter Password">
                             </div>
-                        <br/>
+                            <br/>
                             <button type="submit" class="btn btn-primary">Change Password</button>
 
+                            </form>
 
                             <br/><br/><br/><br/>
 
@@ -101,7 +125,6 @@
                                 <button class="btn btn-primary" onclick="myFunction()">Copy text</button>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>

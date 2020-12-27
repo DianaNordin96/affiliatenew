@@ -152,7 +152,7 @@ class ManageDownlineController extends Controller
                 $ids = $id;
 
                 while ($status) {
-                    $check = DB::table('shogun')
+                    $check = DB::table('users')
                         ->where('id', $ids)
                         ->get();
                     // dd($check);
@@ -161,7 +161,7 @@ class ManageDownlineController extends Controller
                             $ids = $checking->downlineTo;
                             $role = $checking->role;
 
-                            if ($role == 'merchant') {
+                            if ($role == 'shogun') {
                                 $higherLevelID = $checking->id;
                             }
 

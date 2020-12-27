@@ -384,7 +384,6 @@
     <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
 
-    <script>
  <script>
         toastr.options = {
         "closeButton": true,

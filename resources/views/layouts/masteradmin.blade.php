@@ -281,7 +281,6 @@
 
     <script>
 
-<script>
         toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -323,11 +322,6 @@
 
     @if(Session::has('success'))
         toastr.success("{{ Session::get('success') }}");
-        // Swal.fire(
-        // 'The Internet?',
-        // 'That thing is still around?',
-        // 'success'
-        // )
     @endif
 
     @if(Session::has('failed'))

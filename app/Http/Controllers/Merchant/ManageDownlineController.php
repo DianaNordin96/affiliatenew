@@ -84,102 +84,9 @@ class ManageDownlineController extends Controller
     public function changeRole($roles, $id)
     {
 
-        $higherLevelID = 0;
-
-        switch ($roles) {
-            case 'damio':
-                //check upper level
-                //check downline
-                $status = true;
-                // $statusCheck = false;
-                $ids = $id;
-
-                while ($status) {
-                    $check = DB::table('users')
-                        ->where('id', $ids)
-                        ->get();
-                    // dd($check);
-                    foreach ($check as $checking) {
-                        if ($checking->id != '') {
-                            $ids = $checking->downlineTo;
-                            $role = $checking->role;
-
-                            if ($role == 'shogun') {
-                                $higherLevelID = $checking->id;
-                            }
-
-                            if ($checking->downlineTo == null) {
-                                $status = false;
-                            }
-                        }
-                    }
-                }
-                break;
-
-            case 'merchant':
-                //check upper level
-                //check downline
-                $status = true;
-                // $statusCheck = false;
-                $ids = $id;
-
-                while ($status) {
-                    $check = DB::table('users')
-                        ->where('id', $ids)
-                        ->get();
-                    // dd($check);
-                    foreach ($check as $checking) {
-                        if ($checking->id != '') {
-                            $ids = $checking->downlineTo;
-                            $role = $checking->role;
-
-                            if ($role == 'shogun') {
-                                $higherLevelID = $checking->id;
-                            }
-
-                            if ($checking->downlineTo == null) {
-                                $status = false;
-                            }
-                        }
-                    }
-                }
-                break;
-            case 'dropship':
-                //check upper level
-                //check downline
-                $status = true;
-                // $statusCheck = false;
-                $ids = $id;
-
-                while ($status) {
-                    $check = DB::table('shogun')
-                        ->where('id', $ids)
-                        ->get();
-                    // dd($check);
-                    foreach ($check as $checking) {
-                        if ($checking->id != '') {
-                            $ids = $checking->downlineTo;
-                            $role = $checking->role;
-
-                            if ($role == 'merchant') {
-                                $higherLevelID = $checking->id;
-                            }
-
-                            if ($checking->downlineTo == null) {
-                                $status = false;
-                            }
-                        }
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
         DB::table('users')
             ->where('id', $id)
             ->update([
-                'downlineTo' => $higherLevelID,
                 'role' => $roles
             ]);
 
@@ -196,8 +103,7 @@ class ManageDownlineController extends Controller
         ->where('id',$id)
         ->update([
             'statusDownline' => 'approve',
-            'password' => Hash::make('12345678'),
-            'belongsToAdmin' => Auth::user()->belongsToAdmin
+            'password' => Hash::make('12345678')
         ]);
 
         

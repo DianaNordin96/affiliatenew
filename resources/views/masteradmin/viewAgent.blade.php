@@ -12,9 +12,14 @@
     <div class="content-body">
         <div class="container-fluid">
             <div class="row page-titles mx-0">
-                <div class="col-sm-6 p-md-0">
+                <div class="col-sm-2 p-md-0">
+                    <button onclick="goBack()" type="button" class="btn btn-success"><i class="fa fa-angle-left"></i>
+                        Go Back</button>
+                    </div>
+                <div class="col-sm-4 p-md-0">
                     <div class="welcome-text">
                         <h4>Agents</h4>
+                        <span>Profile</span>
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -28,7 +33,7 @@
 
 
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                        <!-- Profile Image -->
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
@@ -70,7 +75,7 @@
                         <!-- /.card -->
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Downline Agents</h3>
@@ -80,7 +85,7 @@
                             <?php $getDownline = $agent->getDownline($users[0]->id);?>
 
                             @foreach($getDownline as $key => $dl)
-                            <strong><i class="fas fa-user mr-1"></i> {{$dl[0]->name}} </strong>
+                            <strong><i class="lni lni-user"></i> {{$dl[0]->name}} </strong>
                                 <p class="text-muted">
                                     Position : {{$dl[0]->role}}
                                 </p>
@@ -88,9 +93,8 @@
                             @endforeach
                             
                             </div>
-                      
+                        </div>
                     </div>
-                </div>
                 </div>
         </div>
     </div>

@@ -42,6 +42,7 @@
                                             <th>Phone Number</th>
                                             <th>Change Role</th>
                                             <th>Actions</th>
+                                            <th>View Profile</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,7 +63,16 @@
                                                         <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
                                                         <option value="/master-manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif>Dropship</option>
                                                     </select>
-                                                    @else
+                                                    @elseif($user->role == 'damio')    
+                                                        Damio
+                                                    @elseif($user->role == 'merchant')    
+                                                    <select style="width:50px" onchange="location = this.value;"
+                                                        class="form-control">
+                                                        <option value="" selected>Not Yet Assign</option>
+                                                        <option value="/master-manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
+                                                        <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
+                                                    </select>
+                                                    @elseif($user->role == 'dropship')    
                                                     <select style="width:50px" onchange="location = this.value;"
                                                         class="form-control">
                                                         <option value="" selected>Not Yet Assign</option>
@@ -97,7 +107,9 @@
                                             <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
                                                 onclick="window.location.href='master-manageAgent/delete/{{ $user->id }}'"
                                                 class="btn btn-danger"><i class="lni lni-trash"></i></button>
-                                            &nbsp;<a href="/master-viewAgent-one/{{ $user->id }}" class="btn btn-warning"> View
+                                        </td>
+                                        <td>
+                                            <a href="/master-viewAgent-one/{{ $user->id }}" class="btn btn-warning"> View
                                                 Profile</a>
                                         </td>
 

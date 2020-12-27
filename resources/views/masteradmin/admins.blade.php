@@ -24,7 +24,7 @@
                 </div>
             </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <div class="card card-warning">
                             <div class="card-header">
                                 <h3 class="card-title">Admin Category</h3>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                    <div  class="col-lg-8">
+                    <div  class="col-lg-7">
                         <div class="card card-warning">
                             <div class="card-header">
                                 <h3 class="card-title">List of Admin</h3>

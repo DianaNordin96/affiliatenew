@@ -18,6 +18,7 @@ class ProfileController extends Controller
 
     public function update(Request $req)
     {
+
         $validatedData = [
             'name' => 'required',
             'email' => 'required|email',
@@ -42,11 +43,12 @@ class ProfileController extends Controller
                         'icnumber' => $data['ic'],
                     ]);
 
-                toast('User has been updated', 'success');
+
+                
                 return redirect('/profile-masteradmin')->with('success','User has been updated');
             } catch (Exception $e) {
-                toast('Something went wrong', 'error');
-                return redirect('/profile-masteradmin');
+                
+                return redirect('/profile-masteradmin')->with('error','Something went wrong');
             }
         }
     }
@@ -60,7 +62,8 @@ class ProfileController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            return redirect('/profile-masteradmin')->with('error','Please check your password again');
+            
+            return redirect()->back()->with('error','Please check your password again');
         } else {
             $data = $req->input();
             try {
@@ -71,13 +74,12 @@ class ProfileController extends Controller
                             'password' => Hash::make($req->password1),
                         ]);
 
-                    return redirect('/profile-masteradmin')->with('success','Your password has been updated');
+                    return redirect('/profile-masteradmin')->with('error','Your password has been updated');
                 } else {
-                    
-                    return redirect()->back()->with( 'error','Your created password do not match. Please enter again.');
+                    return redirect()->back()->with('error','Your created password do not match. Please enter again.');
                 }
             } catch (Exception $e) {
-                return redirect('/profile-masteradmin');
+                return redirect('/profile-masteradmin')->with('error','Something went wrong');
             }
         }
     }

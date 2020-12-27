@@ -10,6 +10,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -23,12 +24,12 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Sign in your account</h4>
-                                    @if (isset($error))
+                                    {{-- @if (isset($error))
                                         <div class="input-group mb-3">
                                             <a
                                                 style="text-align:center;text-decoration: none;color:red">{{ $error }}</a>
                                         </div>
-                                    @endif
+                                    @endif --}}
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
@@ -67,7 +68,17 @@
     <script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('js/custom.min.js') }}"></script>
     <script src="{{ asset('js/deznav-init.js') }}"></script>
-
+    <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+    <script>
+    @if(isset($error))
+    // toastr.success("{{ Session::get('success') }}");
+    Swal.fire(
+    'Login failed',
+    "{{ $error }}",
+    'error'
+    )
+    </script>
+@endif
 </body>
 
 </html>

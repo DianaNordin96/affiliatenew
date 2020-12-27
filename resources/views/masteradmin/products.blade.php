@@ -362,7 +362,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Product Group <span style="color:yellow">  *</span></label>
-                                            <select class="form-control" id="categoryEdit" name="categoryEdit">
+                                            <select class="form-control" id="categoryEdit" name="categoryEdit" readonly>
                                                 @foreach($allAdminType as $value)
                                                     <option value="{{$value->id}}">{{$value->category}}</option>
                                                 @endforeach

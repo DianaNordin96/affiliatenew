@@ -6,6 +6,7 @@ use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class ParcelController extends Controller
 {
@@ -24,16 +25,19 @@ class ParcelController extends Controller
         ]);
     }
 
-    public function paidParcel(){
+    public function paidParcel()
+    {
         $parcelList = DB::table('consignment')
+            ->join('orders', 'consignment.refNo', '=', 'orders.orders_id')
             ->where('awb', '<>', null)
+            ->where('orders.belongToAdmin', '=', Auth::user()->admin_category )
             ->get();
         // dd($parcelList);
         return view('admin/paidParcel')->with([
             'consignment' => $parcelList
         ]);
     }
-    
+
     public function consignmentPage()
     {
         return view('admin/consignmentCustDetails');
@@ -331,15 +335,16 @@ class ParcelController extends Controller
         return redirect('/parcel');
     }
 
-    public function removeConsignment(Request $request){
+    public function removeConsignment(Request $request)
+    {
         $arrayConsignment = $request->orderNoList;
 
         // dd($arrayConsignment);
-        
-        foreach($arrayConsignment as $value){
+
+        foreach ($arrayConsignment as $value) {
             DB::table('consignment')
-            ->where('order_number',$value)
-            ->delete();
+                ->where('order_number', $value)
+                ->delete();
 
             //check if in cart
             $cart = session()->get('cart');
