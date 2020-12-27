@@ -15,12 +15,15 @@
     <link rel="stylesheet" href="{{ asset('vendor/chartist/css/chartist.min.css') }}">
     <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/icomoon.css') }}" rel="stylesheet">
     <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
     <!-- Datatable -->
     <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
+    <link href="{{ asset('vendor/calendar/lib/main.css')}}" rel="stylesheet" />
+    <script src="{{ asset('vendor/calendar/lib/main.js') }}"></script>
     
   
 </head>
@@ -359,16 +362,6 @@
     <script src="{{ asset('vendor/chart.js/Chart.bundle.min.js') }}"></script>
     <script src="{{ asset('js/custom.min.js') }}"></script>
     <script src="{{ asset('js/deznav-init.js') }}"></script>
-    <!-- Apex Chart -->
-    <script src="{{ asset('vendor/apexchart/apexchart.js') }}"></script>
-
-    <!-- Vectormap -->
-    <!-- Chart piety plugin files -->
-    <script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
-
-    <!-- Chartist -->
-    <script src="{{ asset('vendor/chartist/js/chartist.min.js') }}"></script>
-    {{-- <script src="{{ asset('js/plugins-init/chartjs-init.js') }}"></script> --}}
 
     
     <!-- Dashboard 1 -->
@@ -388,6 +381,12 @@
     <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
     <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
+
+    <script src="{{ asset('vendor/fullcalendar/js/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/fullcalendar-init.js') }}"></script>
+
+    <script src="{{ asset('vendor/jqueryui/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('vendor/moment/moment.min.js')}}"></script>
 
     <script>
         toastr.options = {

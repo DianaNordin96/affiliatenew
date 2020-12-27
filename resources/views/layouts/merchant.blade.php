@@ -383,7 +383,8 @@
     <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
     <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
-
+    <link href="{{ asset('vendor/calendar/lib/main.css')}}" rel="stylesheet" />
+    <script src="{{ asset('vendor/calendar/lib/main.js') }}"></script>
 
  <script>
         toastr.options = {

@@ -7,32 +7,30 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-
+       
         return view('admin/profile');
     }
 
     public function update(Request $req)
     {
+
         $validatedData = [
             'name' => 'required',
             'email' => 'required|email',
             'address' => 'required',
             'phone' => 'required',
+            'ic' => 'required',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            $notification = array(
-                'message' => 'Please dont leave any boxes empty',
-                'alert-type' => 'error'
-            );
-            return redirect('/profile-admin')->with($notification);
+           
+            return redirect('/profile-admin')->with('error','Please dont leave any boxes empty');
         } else {
             $data = $req->input();
             try {
@@ -43,19 +41,13 @@ class ProfileController extends Controller
                         'email' => $data['email'],
                         'phone' => $data['phone'],
                         'address' => $data['address'],
+                        'icnumber' => $data['ic'],
                     ]);
-
-                $notification = array(
-                    'message' => 'User has been updated',
-                    'alert-type' => 'success'
-                );
-                return redirect('/profile-admin')->with($notification);
+                
+                return redirect('/profile-admin')->with('success','User has been updated');
             } catch (Exception $e) {
-                $notification = array(
-                    'message' => 'Something went wrong',
-                    'alert-type' => 'error'
-                );
-                return redirect('/profile-admin')->with($notification);
+                
+                return redirect('/profile-admin')->with('error','Something went wrong');
             }
         }
     }
@@ -69,11 +61,8 @@ class ProfileController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            $notification = array(
-                'message' => 'Please check your password again',
-                'alert-type' => 'error'
-            );
-            return redirect()->back()->with($notification);
+            
+            return redirect()->back()->with('error','Please check your password again');
         } else {
             $data = $req->input();
             try {
@@ -84,25 +73,14 @@ class ProfileController extends Controller
                             'password' => Hash::make($req->password1),
                         ]);
 
-                    $notification = array(
-                        'message' => 'Your password has been updated',
-                        'alert-type' => 'success'
-                    );
-                    return redirect('/profile-admin') > with($notification);
+                    return redirect('/profile-admin')->with('error','Your password has been updated');
                 } else {
-                    $notification = array(
-                        'message' => 'Your created password do not match. Please enter again.',
-                        'alert-type' => 'error'
-                    );
-                    return redirect()->back() > with($notification);
+                    return redirect()->back()->with('error','Your created password do not match. Please enter again.');
                 }
             } catch (Exception $e) {
-                $notification = array(
-                    'message' => 'Something went wrong',
-                    'alert-type' => 'error'
-                );
-                return redirect('/profile-admin') > with($notification);
+                return redirect('/profile-admin')->with('error','Something went wrong');
             }
         }
     }
+
 }

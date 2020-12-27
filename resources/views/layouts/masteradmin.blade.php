@@ -22,7 +22,8 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
     <link href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
-    
+    <link href="{{ asset('vendor/calendar/lib/main.css')}}" rel="stylesheet" />
+    <script src="{{ asset('vendor/calendar/lib/main.js') }}"></script>
   
 </head>
 

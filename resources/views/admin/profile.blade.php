@@ -20,6 +20,7 @@
                     </ol>
                 </div>
             </div>
+            <!-- row -->
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-6">
@@ -35,13 +36,18 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
-                                    <input type="name" class="form-control" onkeypress="return isAlphabetsKey(event)"
+                                    <input type="text" class="form-control" onkeypress="return isAlphabetsKey(event)"
                                         name="name" value="{{ Auth::user()->name }}" placeholder="Enter name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Phone Number</label>
-                                    <input type="name" class="form-control" onkeypress="return isNumberKey(event)"
+                                    <input type="text" class="form-control" onkeypress="return isNumberKey(event)"
                                         name="phone" value="{{ Auth::user()->phone }}" placeholder="Enter name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">IC Number</label>
+                                    <input type="text" class="form-control" onkeypress="return isNumberKey(event)" name="ic"
+                                        value="{{ Auth::user()->icnumber }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
@@ -82,16 +88,17 @@
                 </div>
 
                 <div class="col-md-6">
-                    <!-- general form elements -->
                     <div class="card card-warning">
                         <div class="card-header">
                             <h3 class="card-title">Change Password</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ url('change-password-admin') }}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <div class="card-body">
+
+                        <div class="card-body">
+                            <form action="{{ url('change-password-admin') }}" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input type="password" minlength="8" class="form-control" name="password1"
@@ -102,18 +109,18 @@
                                     <input type="password" minlength="8" class="form-control" name="password2"
                                         placeholder="Re-enter Password">
                                 </div>
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
-                                </div>
-                            </div>
-                        </form>
+                                <br />
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+
+                            </form>
+                        </div>
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
+
+
         </div>
     </div>
-
 
 
 @endsection
@@ -135,22 +142,6 @@
 
             alert("Copied the text: " + copyText.value);
         }
-
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
 
     </script>
 @endsection
