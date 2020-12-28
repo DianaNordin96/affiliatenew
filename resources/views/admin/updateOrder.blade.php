@@ -48,7 +48,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>Charges <span style="color:yellow">  *</span></label>
-                                            <input class="form-control" type="text" onkeypress="return isPriceKey(event)" name="price" placeholder="0.00" required/>
+                                            <input class="form-control" type="text" onkeyup="price(event);" onkeypress="return isPriceKey(event)" name="price" placeholder="0.00" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -108,10 +108,4 @@
 </div>
 
 
-@endsection
-
-@section('script')
-<script>
-
-</script>
 @endsection

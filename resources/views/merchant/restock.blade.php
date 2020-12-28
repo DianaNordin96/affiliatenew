@@ -212,7 +212,7 @@
                                         <div class="form-group">
                                             <label>Postcode <span style="color:yellow">  *</span>
                                             </label>
-                                            <input type="text" id="postcode" class="form-control" name="postcode"
+                                            <input type="text" id="postcode" class="form-control" onkeyup="number(event);"  onkeypress="return isNumberKey(event)" name="postcode"
                                                 placeholder="" required />
                                         </div>
                                     </div>

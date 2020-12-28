@@ -36,17 +36,17 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
-                                    <input type="text" class="form-control" onkeypress="return isAlphabetsKey(event)"
+                                    <input type="text" class="form-control" onkeyup="alphabets(event);" onkeypress="return isAlphabetsKey(event)"
                                         name="name" value="{{ Auth::user()->name }}" placeholder="Enter name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Phone Number</label>
-                                    <input type="text" class="form-control" onkeypress="return isNumberKey(event)"
+                                    <input type="text" class="form-control" onkeyup="number(event);" onkeypress="return isNumberKey(event)"
                                         name="phone" value="{{ Auth::user()->phone }}" placeholder="Enter name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">IC Number</label>
-                                    <input type="text" class="form-control" onkeypress="return isNumberKey(event)" name="ic"
+                                    <input type="text" class="form-control" onkeyup="number(event);" onkeypress="return isNumberKey(event)" name="ic"
                                         value="{{ Auth::user()->icnumber }}">
                                 </div>
                                 <div class="form-group">

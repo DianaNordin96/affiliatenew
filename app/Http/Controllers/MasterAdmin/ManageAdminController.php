@@ -81,11 +81,11 @@ class ManageAdminController extends Controller
                         $filename = pathinfo($newFileName, PATHINFO_FILENAME);
                         $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
 
-                        if (File::exists(public_path('../../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
+                        if (File::exists(public_path('../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
                             $newFileName = $filename . '1' . '.' . $extension;
-                            $image->move(base_path('../../public_html/imageUploaded/profile'), $newFileName);
+                            $image->move(base_path('../public_html/imageUploaded/profile'), $newFileName);
                         } else {
-                            $image->move(base_path('../../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                            $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
                         }
 
                         $user = new User;

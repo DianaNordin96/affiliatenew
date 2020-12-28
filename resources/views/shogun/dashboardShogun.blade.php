@@ -221,6 +221,34 @@
 
 @section('script')
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            displayEventTime: false,
+            initialDate: '{{date("Y-m-d")}}',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,listYear'
+            },
+            events: {
+                url: 'ics/feed.ics',
+                format: 'ics',
+                failure: function() {
+                    document.getElementById('script-warning').style.display = 'block';
+                }
+            },
+            loading: function(bool) {
+                document.getElementById('loading').style.display =
+                    bool ? 'block' : 'none';
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+<script>
 
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');

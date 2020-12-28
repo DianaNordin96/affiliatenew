@@ -30,7 +30,8 @@ class ManageAgentController extends Controller
                     ->orWhere('statusDownline','!=', 'pending');
             })
             ->where(function($query) {
-                $query->where('role','<>','admin');
+                $query->where('role','<>','admin')
+                ->where('role','<>','masteradmin');
             })
             ->get();
 

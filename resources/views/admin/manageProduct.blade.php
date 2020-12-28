@@ -167,7 +167,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Actual Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="productPrice" onkeypress="return isPriceKey(event)" class="form-control" name="productPrice"
+                                    <input type="text" id="productPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="productPrice"
                                         placeholder="Price" />
                                 </div>
                             </div>
@@ -175,7 +175,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> HQ Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="hqPrice" onkeypress="return isPriceKey(event)" class="form-control" name="hqPrice"
+                                    <input type="text" id="hqPrice" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="hqPrice"
                                         placeholder="HQ Price" />
                                 </div>
                             </div>
@@ -183,7 +183,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Shogun Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="shogunPrice" onkeypress="return isPriceKey(event)" class="form-control" name="shogunPrice"
+                                    <input type="text" id="shogunPrice" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="shogunPrice"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Damio Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="damioPrice" onkeypress="return isPriceKey(event)" class="form-control" name="damioPrice"
+                                    <input type="text" id="damioPrice" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="damioPrice"
                                         placeholder="Price" />
                                 </div>
                             </div>
@@ -199,7 +199,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Merchant Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="merchantPrice" onkeypress="return isPriceKey(event)" class="form-control" name="merchantPrice"
+                                    <input type="text" id="merchantPrice" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="merchantPrice"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
@@ -207,7 +207,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Dropship Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="dropshipPrice" onkeypress="return isPriceKey(event)" class="form-control" name="dropshipPrice"
+                                    <input type="text" id="dropshipPrice" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="dropshipPrice"
                                         placeholder="Shogun Price"/>
                                 </div>
                             </div>
@@ -289,7 +289,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Actual Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="productPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="productPriceEdit"
+                                    <input type="text" id="productPriceEdit" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="productPriceEdit"
                                         placeholder="Price" />
                                 </div>
                             </div>
@@ -297,7 +297,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> HQ Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="hqPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="hqPriceEdit"
+                                    <input type="text" id="hqPriceEdit" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="hqPriceEdit"
                                         placeholder="HQ Price" />
                                 </div>
                             </div>
@@ -305,7 +305,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Shogun Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="shogunPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="shogunPriceEdit"
+                                    <input type="text" id="shogunPriceEdit" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="shogunPriceEdit"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
@@ -313,7 +313,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Damio Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="damioPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="damioPriceEdit"
+                                    <input type="text" id="damioPriceEdit" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="damioPriceEdit"
                                         placeholder="Price" />
                                 </div>
                             </div>
@@ -321,7 +321,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Merchant Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="merchantPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="merchantPriceEdit"
+                                    <input type="text" id="merchantPriceEdit" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="merchantPriceEdit"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>
@@ -329,7 +329,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Dropship Price <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="dropshipPriceEdit" onkeypress="return isPriceKey(event)" class="form-control" name="dropshipPriceEdit"
+                                    <input type="text" id="dropshipPriceEdit" onkeypress="return isPriceKey(event)" onkeyup="price(event);" class="form-control" name="dropshipPriceEdit"
                                         placeholder="Shogun Price" />
                                 </div>
                             </div>

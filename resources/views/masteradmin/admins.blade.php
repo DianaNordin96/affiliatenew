@@ -165,7 +165,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Name <span style="color:yellow">  *</span></label>
-                                            <input type="text" id="name" onkeypress="return isAlphabetsKey(event)" class="form-control" name="name"
+                                            <input type="text" id="name" onkeyup="alphabets(event);" onkeypress="return isAlphabetsKey(event)" class="form-control" name="name"
                                                 placeholder="Name" />
                                             @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -179,7 +179,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> IC <span style="color:yellow">  *</span></label>
-                                            <input type="text" id="ic" onkeypress="return isNumberKey(event)" class="form-control" name="ic"
+                                            <input type="text" id="ic" onkeyup="number(event);" onkeypress="return isNumberKey(event)" class="form-control" name="ic"
                                                 placeholder="IC Number" />
                                         </div>
                                     </div>
@@ -212,7 +212,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Phone Number <span style="color:yellow">  *</span></label>
-                                            <input type="text" id="phoneNum" onkeypress="return isNumberKey(event)" class="form-control" name="phone"
+                                            <input type="text" id="phoneNum" onkeyup="number(event);" onkeypress="return isNumberKey(event)" class="form-control" name="phone"
                                                 placeholder="Phone Number" />
                                             @error('phone')
                                             <span class="invalid-feedback" role="alert">

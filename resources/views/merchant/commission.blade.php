@@ -54,7 +54,7 @@
                                             <div class="form-group">
                                                 <label> Amount To Withdraw <span style="color:yellow">  *</span>
                                                 </label>
-                                                <input type="text" id="amount" class="form-control" name="amount" onkeypress="return isPriceKey(event)"
+                                                <input type="text" id="amount" class="form-control" onkeyup="price(event);" name="amount" onkeypress="return isPriceKey(event)"
                                                     placeholder="Amount to withdraw" required />
                                             </div>
                                         </div>
@@ -66,7 +66,7 @@
                                             <div class="form-group">
                                                 <label> Bank Name <span style="color:yellow">  *</span>
                                                 </label>
-                                                <input type="text" id="bank" class="form-control" name="bank" onkeypress="return isAlphabetsKey(event)"
+                                                <input type="text" id="bank" class="form-control" onkeyup="alphabets(event);" name="bank" onkeypress="return isAlphabetsKey(event)"
                                                     placeholder="Bank Name" required />
                                             </div>
                                         </div>
@@ -78,7 +78,7 @@
                                             <div class="form-group">
                                                 <label> Account No. <span style="color:yellow">  *</span>
                                                 </label>
-                                                <input type="text" id="accountNo" onkeypress="return isNumberKey(event)"
+                                                <input type="text" id="accountNo" onkeyup="number(event);" onkeypress="return isNumberKey(event)"
                                                 class="form-control" name="accountNo"
                                                     placeholder="Account Number" required />
                                             </div>

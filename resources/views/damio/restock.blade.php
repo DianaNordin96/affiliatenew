@@ -212,7 +212,7 @@
                                         <div class="form-group">
                                             <label>Postcode <span style="color:yellow">  *</span>
                                             </label>
-                                            <input type="text" id="postcode" class="form-control" name="postcode"
+                                            <input type="text" onkeyup="number(event);"  onkeypress="return isNumberKey(event)" id="postcode" class="form-control" name="postcode"
                                                 placeholder="" required />
                                         </div>
                                     </div>
@@ -350,7 +350,6 @@
 @endsection
 
 @section('script')
-
 
     <script type="text/javascript">
         $(".update-cart").click(function(e) {

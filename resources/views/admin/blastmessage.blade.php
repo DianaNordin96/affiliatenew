@@ -50,7 +50,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label> Phone Number<span style="color:yellow">  *</span></label>
-                                            <input type="text" class="form-control" onkeypress="return isNumberKey(event)"
+                                            <input type="text" class="form-control" onkeyup="number(event);" onkeypress="return isNumberKey(event)"
                                              name="phoneSingle"
                                                 placeholder="Recipient Number" required />
                                         </div>
@@ -198,22 +198,5 @@
                     $('#agents option').prop('selected', true);
             });
         });
-
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
     </script>
 @endsection

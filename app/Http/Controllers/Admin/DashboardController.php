@@ -25,7 +25,10 @@ class DashboardController extends Controller
 
         //total downline
         $numberDownline = DB::table('users')
-            ->where('role', '<>', 'admin')
+            ->where(function ($query) {
+                $query->where('role', '<>', 'admin')
+                    ->where('role', '<>', 'masteradmin');
+            })
             ->where(function ($query) {
                 $query->whereNull('statusDownline')
                     ->orWhere('statusDownline', '!=', 'decline');
@@ -51,7 +54,7 @@ class DashboardController extends Controller
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
             ->join('products', 'orders_details.product_id', '=', 'products.id')
-            ->select('orders.amount','orders.orders_id')
+            ->select('orders.amount', 'orders.orders_id')
             ->where('orders.created_at', '>=', $year . $month . '01')
             ->where('orders.created_at', '<=', $year . $month . '31')
             ->where('users.role', 'shogun')
@@ -61,7 +64,7 @@ class DashboardController extends Controller
 
         $totalShogun = 0;
 
-        foreach($shogun as $valShogun){
+        foreach ($shogun as $valShogun) {
             $totalShogun += $valShogun->amount;
         }
 

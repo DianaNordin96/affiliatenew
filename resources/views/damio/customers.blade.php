@@ -189,7 +189,7 @@
                                             <div class="form-group">
                                                 <label> Phone Number <span style="color:yellow">  *</span>
                                                 </label>
-                                                <input type="text" id="phoneEdit" onkeypress="return isNumberKey(event)" class="form-control" name="phoneEdit"
+                                                <input type="text" id="phoneEdit" onkeyup="number(event);" onkeypress="return isNumberKey(event)" class="form-control" name="phoneEdit"
                                                     placeholder="Phone Number" required />
                                             </div>
                                         </div>
@@ -274,7 +274,7 @@
                                             <div class="form-group">
                                                 <label>Postcode <span style="color:yellow">  *</span>
                                                 </label>
-                                                <input type="text" id="postcodeEdit" onkeypress="return isNumberKey(event)" class="form-control" name="postcodeEdit"
+                                                <input type="text" id="postcodeEdit" onkeyup="number(event);" onkeypress="return isNumberKey(event)" class="form-control" name="postcodeEdit"
                                                     placeholder="" required />
                                             </div>
                                         </div>

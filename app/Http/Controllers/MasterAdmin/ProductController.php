@@ -67,8 +67,8 @@ class ProductController extends Controller
                             'belongToAdmin' => $data['categoryEdit'],
                         ]);
 
-                    toast('Product has been updated', 'success');
-                    return redirect('/master-manageProduct');
+                   
+                    return redirect('/master-manageProduct')-> with('success','Product has been updated');
                 } else {
 
                     $image = $req->file('imageEdit');

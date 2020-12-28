@@ -76,6 +76,10 @@ class DashboardController extends Controller
             $query->whereNull('statusDownline')
                 ->orWhere('statusDownline','!=', 'pending');
         })
+        ->where(function($query) {
+            $query->where('role','<>','admin')
+            ->where('role','<>','masteradmin');
+        })
         ->get();
 
         return view('masteradmin/dashboard')->with([

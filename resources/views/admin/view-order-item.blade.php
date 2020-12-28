@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="input-group input-group-sm">
                                         <input type="text" name="refNo" value="{{ $referenceNo }}" hidden />
-                                        <input style="width:50%" type="text" id="weight" onkeypress="return isNumberKey(event)"
+                                        <input style="width:50%" type="text" id="weight" onkeyup="number(event);" onkeypress="return isNumberKey(event)"
                                         class="form-control" name="weight"
                                             placeholder="Parcel Weight in KG" />
                                         <span class="input-group-append">

@@ -442,6 +442,21 @@
         toastr.error("{{ Session::get('error') }}");
     @endif
 
+    function number(e){
+        e.target.value = e.target.value.replace(/[^\d]/g,'');
+        return false;
+    }
+
+    function price(e){
+        e.target.value = e.target.value.replace(/^[0-9\.]+$/,'');
+        return false;
+    }
+
+    function alphabets(e){
+        e.target.value = e.target.value.replace(/^[A-Za-z ]+$/,'');
+        return false;
+    }
+    
     function isPriceKey(e) {
             var keyCode = e.keyCode || e.which;
 

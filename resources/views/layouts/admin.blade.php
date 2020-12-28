@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="{{ asset('vendor/chartist/css/chartist.min.css') }}">
     <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/icomoon.css') }}" rel="stylesheet">
     <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
     <!-- Datatable -->
     <link href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
+    <link href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/calendar/lib/main.css')}}" rel="stylesheet" />
     <script src="{{ asset('vendor/calendar/lib/main.js') }}"></script>
     
@@ -356,37 +356,42 @@
     ***********************************-->
 
 
-    <!-- Required vendors -->
-    <script src="{{ asset('vendor/global/global.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('vendor/chart.js/Chart.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/custom.min.js') }}"></script>
-    <script src="{{ asset('js/deznav-init.js') }}"></script>
+   <!-- Required vendors -->
+   <script src="{{ asset('vendor/global/global.min.js') }}"></script>
+   <script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+   <script src="{{ asset('vendor/chart.js/Chart.bundle.min.js') }}"></script>
+   <script src="{{ asset('js/custom.min.js') }}"></script>
+   <script src="{{ asset('js/deznav-init.js') }}"></script>
+   <!-- Apex Chart -->
+   <script src="{{ asset('vendor/apexchart/apexchart.js') }}"></script>
 
-    
-    <!-- Dashboard 1 -->
-    <script src="{{ asset('js/dashboard/dashboard-2.js') }}"></script>
+   <!-- Vectormap -->
+   <!-- Chart piety plugin files -->
+   <script src="{{ asset('vendor/peity/jquery.peity.min.js') }}"></script>
 
-    <!-- Datatable -->
-    <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/plugins-init/datatables.init.js') }}"></script>
+   <!-- Chartist -->
+   <script src="{{ asset('vendor/chartist/js/chartist.min.js') }}"></script>
+   {{-- <script src="{{ asset('js/plugins-init/chartjs-init.js') }}"></script> --}}
 
-    <!-- Svganimation scripts -->
-    <script src="{{ asset('vendor/svganimation/vivus.min.js') }}"></script>
-    <script src="{{ asset('vendor/svganimation/svg.animation.js') }}"></script>
-    <script src="{{ asset('js/plugins-init/sweetalert.init.js') }}"></script>
+   
+   <!-- Dashboard 1 -->
+   <script src="{{ asset('js/dashboard/dashboard-2.js') }}"></script>
 
-    <!-- All init script -->
-    <script src="{{ asset('js/plugins-init/toastr-init.js') }}"></script>
-    <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
-    <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
+   <!-- Datatable -->
+   <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ asset('js/plugins-init/datatables.init.js') }}"></script>
 
-    <script src="{{ asset('vendor/fullcalendar/js/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('js/plugins-init/fullcalendar-init.js') }}"></script>
+   <!-- Svganimation scripts -->
+   <script src="{{ asset('vendor/svganimation/vivus.min.js') }}"></script>
+   <script src="{{ asset('vendor/svganimation/svg.animation.js') }}"></script>
 
-    <script src="{{ asset('vendor/jqueryui/js/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('vendor/moment/moment.min.js')}}"></script>
+   <script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+
+   <!-- All init script -->
+   {{-- <script src="{{ asset('js/plugins-init/toastr-init.js') }}"></script> --}}
+   <script src="{{ asset('vendor/toastr/js/toastr.min.js') }}"></script>
+   <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+   <script src="{{ asset('js/plugins-init/select2-init.js') }}"></script>
 
     <script>
         toastr.options = {
@@ -444,6 +449,21 @@
     @if(Session::has('error'))
         toastr.error("{{ Session::get('error') }}");
     @endif
+
+    function number(e){
+        e.target.value = e.target.value.replace(/[^\d]/g,'');
+        return false;
+    }
+
+    function price(e){
+        e.target.value = e.target.value.replace(/^[0-9\.]+$/,'');
+        return false;
+    }
+
+    function alphabets(e){
+        e.target.value = e.target.value.replace(/^[A-Za-z ]+$/,'');
+        return false;
+    }
 
     function isPriceKey(e) {
             var keyCode = e.keyCode || e.which;

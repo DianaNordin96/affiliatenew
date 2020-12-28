@@ -98,7 +98,7 @@
                                                                 <div class="form-group">
                                                                     <label> Sender Name <span style="color:yellow">  *</span></label>
                                                                     <input type="text" id="sender_name" class="form-control"
-                                                                        name="sender_name" onkeypress="return isAlphabetsKey(event)"
+                                                                        name="sender_name" onkeyup="alphabets(event);" onkeypress="return isAlphabetsKey(event)"
                                                                          placeholder="Sender Name"
                                                                         required />
                                                                 </div>
@@ -110,7 +110,7 @@
                                                                 <!-- text input -->
                                                                 <div class="form-group">
                                                                     <label> Phone Number <span style="color:yellow">  *</span></label>
-                                                                    <input type="text" id="sender_phone" onkeypress="return isNumberKey(event)"
+                                                                    <input type="text" id="sender_phone" onkeyup="number(event);" onkeypress="return isNumberKey(event)"
                                                                         class="form-control" name="sender_phone"
                                                                         placeholder="Phone Number" required />
                                                                 </div>
