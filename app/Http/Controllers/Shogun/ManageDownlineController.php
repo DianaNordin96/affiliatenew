@@ -88,6 +88,12 @@ class ManageDownlineController extends Controller
         $higherLevelID = 0;
 
         switch ($roles) {
+
+            case 'shogun':
+                $higherLevelID = 0 ;
+                break;
+
+
             case 'damio':
                 //check upper level
                 //check downline
@@ -153,7 +159,7 @@ class ManageDownlineController extends Controller
                 $ids = $id;
 
                 while ($status) {
-                    $check = DB::table('shogun')
+                    $check = DB::table('users')
                         ->where('id', $ids)
                         ->get();
                     // dd($check);

@@ -1,3 +1,4 @@
+@inject('category', 'App\Http\Controllers\Dropship\ManageStockController')
 @extends('layouts.dropship')
 @section('content')
 
@@ -37,16 +38,30 @@
             </div>
         </div>
 
-        <button type="button" title="View" data-toggle="modal"  data-target="#modalCart" class="btn btn-success">Cart &nbsp;
-            <span class="badge badge-primary badge-pill">
-                @if (session('cart') != null)
-                {{ count(session('cart')) }}
-                @else
-                    0
-                @endif
-            </span>
-        </button>
-<br/><br/>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
+                <button type="button" title="View" data-toggle="modal"  data-target="#modalCart" class="btn btn-success">Cart &nbsp;
+                    <span class="badge badge-primary badge-pill">
+                        @if (session('cart') != null)
+                        {{ count(session('cart')) }}
+                        @else
+                            0
+                        @endif
+                    </span>
+                </button>
+                <br><br>
+        
+            <?php $prodCat = $category->getProdCategory(); ?>
+            Sort By: <select onchange="location = this.value;" class="form-control">
+                    <option value="/product-dropship" selected>All Products</option>
+                    @foreach ($prodCat as $item)
+                    <option value="/product-dropship/{{$item->category}}/{{ $item->id }}" @if ($catID == $item->id){ selected } @endif>{{$item->category}}
+                    </option>
+                    @endforeach
+                </select>
+            <br/><br/>
+            </div>
+        </div>
         <div class="row">
                 @foreach ($products as $product)
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
@@ -146,9 +161,8 @@
                                     <div class="col-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Email </label>
-                                            <input type="text" id="email" class="form-control" name="email"
-                                                placeholder="Email" />
+                                            <label> Notes </label>
+                                            <textarea type="text" id="notes" class="form-control" name="notes" rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>

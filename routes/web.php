@@ -34,6 +34,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('view-order/{page}', 'Admin\ManageOrderController@index')->name('view-order')->middleware('auth');
     Route::get('view-order-item/{id}', 'Admin\ManageOrderController@viewItem')->middleware('auth');
     Route::get('customers', 'Admin\CustomerController@index')->middleware('auth');
+    Route::get('clearCustomer', 'Admin\CustomerController@clearCustomer')->middleware('auth');
     Route::get('profile-admin', 'Admin\ProfileController@index')->middleware('auth');
     Route::POST('profile-update-admin', 'Admin\ProfileController@update')->middleware('auth');
     Route::POST('change-password-admin', 'Admin\ProfileController@changePassword')->middleware('auth');
@@ -92,6 +93,7 @@ Route::group(['middleware' => 'shogun'], function () {
     Route::get('/declineDownline-shogun/{id}', 'Shogun\ManageDownlineController@decline')->middleware('auth');
     Route::post('/addToPaymentCart-shogun', 'Shogun\CartController@addToPaymentCart')->middleware('auth');
     Route::delete('/remove-from-cart-payment-Shogun', 'Shogun\CartController@removeFromCartPayment')->middleware('auth');
+    Route::get('/product-shogun/{cat}/{prodCat}', 'Shogun\ManageStockController@getProductsBy')->middleware('auth', 'shogun');
     
 //guideline-shogun
 //support-shogun
@@ -206,6 +208,8 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::get('/master-manageAgent/delete/{id}', 'MasterAdmin\ManageAgentController@Delete')->middleware('auth');
     Route::POST('/master-manageAgent/update', 'MasterAdmin\ManageAgentController@update')->middleware('auth');
     Route::get('/master-manageAgent/{role}/{id}', 'MasterAdmin\ManageAgentController@changeRole')->middleware('auth');
+    Route::POST('/master.create.prodCat', 'MasterAdmin\ProductController@addCategory')->middleware('auth');
+    Route::POST('/master.update.prodCat', 'MasterAdmin\ProductController@updateCategory')->middleware('auth');
 });
 
 

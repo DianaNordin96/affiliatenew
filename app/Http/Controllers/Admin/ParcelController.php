@@ -304,7 +304,7 @@ class ParcelController extends Controller
                     'send_country'    => 'MY',
                     'collect_date'    => date("Y-m-d"),
                     'sms'    => $sms,
-                    'send_email'    => $req->input('email'),
+                    'send_email'    => '',
                     'hs_code'    => '',
                     'REQ_ID'    => $parcelDetails['refNo'],
                     'reference'    => $parcelDetails['refNo'],

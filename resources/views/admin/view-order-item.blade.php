@@ -108,6 +108,7 @@
                                 <b>City : {{ $customer->city }}</b><br />
                                 <b>State : {{ $customer->state }}</b><br />
                                 <b>Postcode : {{ $customer->postcode }}</b><br />
+                                <b>Notes : {{ $customer->notes }}</b><br />
                             @endforeach
                         </div>
                         <!-- /.card-body -->
@@ -120,12 +121,12 @@
                             <h3 class="card-title">Parcel Tracking</h3>
                         </div>
                         <div class="card-body">
-                            <?php
-                            // dd($consignmentArray);
-                            ?>
                             @if (count($consignmentArray) != 0 && $consignmentArray[0]->awb != null)
                                 <?php $trackingStatus =
-                                $tracking->getTrackingStatus($consignmentArray[0]->awb); ?>
+                                $tracking->getTrackingStatus($consignmentArray[0]->awb); 
+                                $trackingDetails = $order->getTrackingDetails($consignmentArray[0]->awb);?>
+                                 Courier : {{$trackingDetails[0]->courier}}<br/>
+                                 Tracking No : {{$trackingDetails[0]->awb}}<br/>
                                 @foreach ($trackingStatus->result as $value)
                                     Latest Status : {{ $value->latest_status }}<br />
                                 @endforeach

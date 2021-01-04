@@ -456,15 +456,15 @@
     }
 
     function price(e){
-        e.target.value = e.target.value.replace(/^[0-9\.]+$/,'');
+        e.target.value = e.target.value.replace(/[^0-9\.]/g,'');
         return false;
     }
 
     function alphabets(e){
-        e.target.value = e.target.value.replace(/^[A-Za-z ]+$/,'');
+        e.target.value = e.target.value.replace(/[^A-Za-z ]/g,'');
         return false;
     }
-
+    
     function isPriceKey(e) {
             var keyCode = e.keyCode || e.which;
 

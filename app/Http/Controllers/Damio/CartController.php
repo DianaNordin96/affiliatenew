@@ -298,7 +298,7 @@ class CartController extends Controller
             'city' => 'required',
             'state' => 'required',
             'postcode' => 'required',
-            'email' => ''
+            'notes' => ''
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
@@ -316,7 +316,7 @@ class CartController extends Controller
                 'city' => $data['city'],
                 'postcode' => $data['postcode'],
                 'user_id' => Auth::user()->id,
-                'email' => $data['email']
+                'notes' => $data['notes']
             ]);
 
             $cart = session()->get('cart');

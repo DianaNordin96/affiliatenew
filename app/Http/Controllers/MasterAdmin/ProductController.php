@@ -20,13 +20,22 @@ class ProductController extends Controller
 
         $products = DB::table('products')->get();
 
+        $allTypeProdCat = DB::table('products_category')->get();
+
         return view(
             'masteradmin/products',
             [
-                'product' => $products
+                'product' => $products,
+                'allTypeProdCat' => $allTypeProdCat
             ]
         );
     }
+
+    public static function getAllProdCat()
+    {
+        $getAll = DB::table('products_category')->get();
+        return $getAll;
+    } 
 
     public function update(Request $req)
     {
@@ -42,6 +51,7 @@ class ProductController extends Controller
             'merchantPriceEdit' => 'required',
             'productLinkEdit' => '',
             'categoryEdit' => 'required',
+            'prodcategoryEdit' => 'required',
             'imageEdit' => 'image|mimes:jpeg,png,jpg'
         ];
 
@@ -65,6 +75,7 @@ class ProductController extends Controller
                             'price_hq' => $data['hqPriceEdit'],
                             'product_link' => $data['productLinkEdit'],
                             'belongToAdmin' => $data['categoryEdit'],
+                            'product_cat' => $data['prodcategoryEdit'],
                         ]);
 
                    
@@ -96,7 +107,8 @@ class ProductController extends Controller
                         'price_hq' => $data['hqPriceEdit'],
                         'product_link' => $data['productLinkEdit'],
                         'belongToAdmin' => $data['categoryEdit'],
-                        'product_image' => $newFileName
+                        'product_image' => $newFileName,
+                        'product_cat' => $data['prodcategoryEdit'],
                     ]);
 
                 return redirect('/master-manageProduct')->with('success', "Product has been updated");
@@ -120,7 +132,8 @@ class ProductController extends Controller
             'hqPrice' => 'required',
             'productLink' => '',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'categoryEdit' => '',
+            'category' => 'required',
+            'prod_category' => 'required'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
@@ -154,6 +167,7 @@ class ProductController extends Controller
                     'price_dropship' => $data['dropshipPrice'],
                     'product_link' => $data['productLink'],
                     'belongToAdmin' => $data['category'],
+                    'product_cat' => $data['prod_category'],
                 ]);
 
                 
@@ -170,5 +184,61 @@ class ProductController extends Controller
             ->delete($id);
 
         return redirect('/master-manageProduct')->with('success','Product has been removed.');
+    }
+
+    public function addCategory(Request $req)
+    {
+        $validatedData = [
+            'catName' => 'required',
+            'desc' => 'required'
+        ];
+
+        $validator = Validator::make($req->all(), $validatedData);
+        if ($validator->fails()) {
+            return redirect('/master-manageProduct')->with('error','Please fill in all the box before creating new category');
+        } else {
+            $data = $req->input();
+            try {
+
+                DB::table('products_category')->insert([
+                    'category' => $data['catName'],
+                    'desc' => $data['desc'],
+                    'created_at' => NOW()
+                ]);
+
+                return redirect('/master-manageProduct')->with('success','Category has been created');
+            } catch (Exception $e) {
+                return redirect('insert')->with('failed', "operation failed");
+            }
+        }
+    }
+
+    public function updateCategory(Request $req)
+    {
+        $validatedData = [
+            'catNameEdit' => 'required',
+            'descEdit' => 'required'
+        ];
+
+        $validator = Validator::make($req->all(), $validatedData);
+        if ($validator->fails()) {
+            return redirect('/master-manageProduct')->with('error','Please fill in all the box before updating category');
+        } else {
+            $data = $req->input();
+            try {
+
+                DB::table('products_category')
+                    ->where('id', $data['idEdit'])
+                    ->update([
+                        'category' => $data['catNameEdit'],
+                        'desc' => $data['descEdit'],
+                        'updated_at' => NOW()
+                    ]);
+
+                return redirect('/master-manageProduct')->with('success','Category has been updated');
+            } catch (Exception $e) {
+                return redirect('insert')->with('failed', "operation failed");
+            }
+        }
     }
 }

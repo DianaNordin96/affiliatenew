@@ -62,7 +62,7 @@ class CustomerController extends Controller
             'address3Edit' => '',
             'stateEdit' => 'required',
             'postcodeEdit' => 'required',
-            'emailEdit' => 'required',
+            'notesEdit' => 'required',
             'cityEdit' => 'required',
         ];
 
@@ -86,7 +86,7 @@ class CustomerController extends Controller
                         'address_two' => $data['address2Edit'],
                         'address_three' => $data['address3Edit'],
                         'state' => $data['stateEdit'],
-                        'email' => $data['emailEdit'],
+                        'notes' => $data['notesEdit'],
                         'city' => $data['cityEdit'],
                         'postcode' => $data['postcodeEdit']
                     ]);

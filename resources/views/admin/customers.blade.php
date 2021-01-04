@@ -27,9 +27,13 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            <button class="btn btn-warning" onclick="exportTableToExcel()">Export Customers to
+                                Excel</button>
+                                
+                                <button class="btn btn-warning" onclick="clearCustomer()">Clear Customers</button><br><br>
                             <!-- <h3 class="card-title">View Employee</h3> -->
                             <div class="table-responsive">
-                                <table id="example5" class="display" style="width:100%">
+                                <table id="example5" class="display">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -45,15 +49,16 @@
                                                 <td>{{ $customer->id }}</td>
                                                 <td>{{ $customer->name }}</td>
                                                 <td>{{ $customer->phone }}</td>
-                                                <td>{{ $customer->address }}</td>
+                                                <td>{{ $customer->address }},{{ $customer->address_two }},{{ $customer->address_three}},{{ $customer->city}},{{ $customer->postcode}},{{ $customer->state}}</td>
                                                 <td>
                                                     <button type="button" title="View" data-toggle="modal"
-                                                        onclick="openModalView( '{{ $customer->id }}','{{ $customer->name }}','{{ $customer->phone }}','{{ $customer->address }}')"
+                                                        onclick="openModalView( '{{ $customer->id }}','{{ $customer->name }}','{{ $customer->phone }}','{{ $customer->address }},{{ $customer->address_two }},{{ $customer->address_three}},{{ $customer->city}},{{ $customer->postcode}},{{ $customer->state}}')"
                                                         data-target="#modalView" class="btn btn-success"><i
                                                         class="lni lni-eye"></i></button> &nbsp;
                                                 </td>
+                                            </tr>
                                         @endforeach
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -93,8 +98,30 @@
 @endsection
 
 @section('script')
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"> </script>
     <script>
         
+        function exportTableToExcel() {
+        $(document).ready(function () {
+            $("#example5").table2excel({
+                    exclude: ".noExport",
+                    filename: "Customers List"
+                });
+            });
+        }
+
+        function clearCustomer() {
+            $.ajax({
+                url: '{{ url('clearCustomer') }}',
+                method: "get",
+                data: {
+                },
+                success: function(response) {
+                    window.location.reload();
+                }
+            });
+        }
+
         function openModalView(id, name, phone, address) {
 
 

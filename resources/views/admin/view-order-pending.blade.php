@@ -202,5 +202,12 @@
         });
 
     }
+
+    var table = $('#example5').DataTable();
+ 
+ // Sort by column 1 and then re-draw
+ table
+     .order( [ 0, 'desc' ] )
+     .draw();
 </script>
 @endsection

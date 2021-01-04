@@ -36,6 +36,7 @@
                                             <th>Orders ID</th>
                                             <th>Bill Code</th>
                                             <th>Name</th>
+                                            <th>Phone</th>
                                             <th>Amount (RM)</th>
                                             <th>Items</th>
                                             <th>Status</th>
@@ -51,6 +52,7 @@
                                                 <td>{{ $orderDetail->orders_id }}</td>
                                                 <td>{{ $orderDetail->bill_code }}</td>
                                                 <td>{{ $orderDetail->name }}</td>
+                                                <td>{{ $orderDetail->phone }}</td>
                                                 <td>{{ number_format($orderDetail->amount, 2) }}</td>
                                                 <td>
                                                     <?php 
@@ -101,4 +103,13 @@
 
 @section('script')
 
+<script>
+     var table = $('#example5').DataTable();
+ 
+ // Sort by column 1 and then re-draw
+ table
+     .order( [ 0, 'desc' ] )
+     .draw();
+
+</script>
 @endsection

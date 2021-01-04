@@ -121,6 +121,17 @@
                                                             onclick="window.location.href='/master.remove.admin/{{ $user->id }}'"
                                                             class="btn btn-danger"><i class="lni lni-trash"></i></i></button>
                                                         &nbsp;
+                                                        <button type="button" title="View" data-toggle="modal" onclick="openModalView(
+                                                                        '{{ $user->id }}',
+                                                                        '{{ $user->name }}',
+                                                                        '{{ $user->email }}',
+                                                                        '{{ $user->phone }}',
+                                                                        '{{ $user->address }}',
+                                                                        '{{ $user->icnumber }}',
+                                                                        '{{ $user->dob }}',
+                                                                        '{{ $user->image }}'
+                                                                        )" data-target="#modalView"
+                                                class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -268,7 +279,7 @@
 
             {{-- modal add admin cat --}}
             <div class="modal fade" id="addAdminCat">
-                <div class="modal-dialog modal-md">
+                <div class="modal-dialog modal-md modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Admin Category</h4>
@@ -317,7 +328,7 @@
 
              {{-- modal edit admin cat --}}
             <div class="modal fade" id="editCategory">
-                <div class="modal-dialog modal-md">
+                <div class="modal-dialog modal-md modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Admin Category</h4>
@@ -366,10 +377,10 @@
             </div>
 
             <div class="modal fade" id="modalView">
-                <div class="modal-dialog modal-sm">
+                <div class="modal-dialog modal-md modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="viewEmpName"></h4>
+                            <h4 class="modal-title" id="viewName"></h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -398,18 +409,43 @@
             document.getElementById("descEdit").value = desc;
         }
 
-        function openModalView(id, name, email, phone, address) {
+        function openModalView(id, name, email, phone, address, ic, dob, image) {
 
+            document.getElementById('viewName').innerText = name;
+
+            if(image != ''){
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
                 "<br/>" +
                 "<div class='col-sm-6'>" +
+                "<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../imageUploaded/profile/" +
+                image + "'/>" +
+                "</div>" +
+                "<div class='col-sm-6'>" +
                 "<b>Name  </b>" + "<br/>" + name + "<br/>" +
                 "<b>Email  </b>" + "<br/>" + email + "<br/>" +
                 "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
+                "<b>IC Number </b>" + "<br/>" + ic + "<br/>" +
                 "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+                "</div>" +
                 "</div>";
-        }
 
+            }else{
+                document.getElementById("modal-body-view").innerHTML =
+                "<div class='row'>" +
+                "<br/>" +
+                "<div class='col-sm-6'>" +
+                "<span>No Photo</span>" +
+                "</div>" +
+                "<div class='col-sm-6'>" +
+                "<b>Name  </b>" + "<br/>" + name + "<br/>" +
+                "<b>Email  </b>" + "<br/>" + email + "<br/>" +
+                "<b>Phone Number  </b>" + "<br/>" + phone + "<br/>" +
+                "<b>IC Number </b>" + "<br/>" + ic + "<br/>" +
+                "<b>Address  </b>" + "<br/>" + address + "<br/>" +
+                "</div>" +
+                "</div>";
+            }
+        }
     </script>
 @endsection

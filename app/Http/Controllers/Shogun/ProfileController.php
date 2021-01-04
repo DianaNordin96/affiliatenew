@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-       
+
         return view('shogun/profile');
     }
 
@@ -24,16 +25,43 @@ class ProfileController extends Controller
             'email' => 'required|email',
             'address' => 'required',
             'phone' => 'required',
-            'ic' => 'required'
+            'ic' => 'required',
+            'image' => 'image'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            return redirect('/profile-shogun')->with('error','Please dont leave any boxes empty');
+
+            return redirect('/profile-shogun')->with('error', 'Please ensure all fields were filled and file uploaded is image files.');
         } else {
             $data = $req->input();
             try {
-                DB::table('users')
+                if ($req->file('image') == null) {
+                    DB::table('users')
+                        ->where('id', Auth::user()->id)
+                        ->update([
+                            'name' => $data['name'],
+                            'email' => $data['email'],
+                            'phone' => $data['phone'],
+                            'address' => $data['address'],
+                            'icnumber' => $data['ic'],
+                        ]);
+
+                    return redirect('/profile-shogun')->with('success', 'User has been updated');
+                } else {
+                    $image = $req->file('image');
+                    $newFileName = $image->getClientOriginalName();
+                    $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                    $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+    
+                    if (File::exists(public_path('../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
+                        $newFileName = $filename . '1' . '.' . $extension;
+                        $image->move(base_path('../public_html/imageUploaded/profile'), $newFileName);
+                    } else {
+                        $image->move(base_path('../public_html/imageUploaded/profile'), $image->getClientOriginalName());
+                    }
+
+                    DB::table('users')
                     ->where('id', Auth::user()->id)
                     ->update([
                         'name' => $data['name'],
@@ -41,11 +69,16 @@ class ProfileController extends Controller
                         'phone' => $data['phone'],
                         'address' => $data['address'],
                         'icnumber' => $data['ic'],
+                        'image' => $newFileName
                     ]);
 
-                return redirect('/profile-shogun')->with('success','Your details has been updated');
+                return redirect('/profile-shogun')->with('success', 'User has been updated');
+
+                }
+
             } catch (Exception $e) {
-                return redirect('/profile-shogun')->with('error','Something went wrong');
+
+                return redirect('/profile-shogun')->with('error', 'Something went wrong');
             }
         }
     }
@@ -59,7 +92,7 @@ class ProfileController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            return redirect()->back()->with('error','Please check your password again.');
+            return redirect()->back()->with('error', 'Please check your password again.');
         } else {
             $data = $req->input();
             try {
@@ -70,15 +103,14 @@ class ProfileController extends Controller
                             'password' => Hash::make($req->password1),
                         ]);
 
-                        return redirect('/profile-shogun')->with('success','Your password has been updated.');
+                    return redirect('/profile-shogun')->with('success', 'Your password has been updated.');
                 } else {
                     toast('Your created password do not match. Please enter again.', 'error');
-                    return redirect()->back()->with('error','Your created password did not match. Please enter again.');
+                    return redirect()->back()->with('error', 'Your created password did not match. Please enter again.');
                 }
             } catch (Exception $e) {
-                return redirect('/profile-shogun')->with('error','Something went wrong.');
+                return redirect('/profile-shogun')->with('error', 'Something went wrong.');
             }
         }
     }
-
 }

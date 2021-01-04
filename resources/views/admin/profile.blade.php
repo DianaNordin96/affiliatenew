@@ -35,6 +35,16 @@
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
+                                    <label for="exampleInputFile">Change Profile Picture</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" id="image" name="image">
+                                            <!-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
                                     <input type="text" class="form-control" onkeyup="alphabets(event);" onkeypress="return isAlphabetsKey(event)"
                                         name="name" value="{{ Auth::user()->name }}" placeholder="Enter name">

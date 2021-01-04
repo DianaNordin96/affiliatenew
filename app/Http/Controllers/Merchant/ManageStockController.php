@@ -28,4 +28,23 @@ class ManageStockController extends Controller
         );
     }
     
+    public function getProdCategory(){
+        $allProdCat = DB::table('products_category')->get();
+        return $allProdCat;
+    }
+
+    public function getProductsBy($catName,$prodCat){
+
+        $allProd = DB::table('products')
+        ->where('product_cat',$prodCat)
+        ->get();
+
+        return view(
+            'merchant/restock',
+            [
+                'catID' => $prodCat,
+                'products' => $allProd
+            ]
+        );
+    }
 }

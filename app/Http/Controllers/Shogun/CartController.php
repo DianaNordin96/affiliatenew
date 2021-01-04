@@ -81,10 +81,6 @@ class CartController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            $notification = array(
-            'message' => 'User role has been changed',
-            'alert-type' => 'success'
-        );
             session()->flash('success', 'Product removed successfully');
         }
     }
@@ -193,7 +189,7 @@ class CartController extends Controller
 
                 // Dump result
 
-                
+
                 foreach ($byGroup as $keyGrp => $group) {
                     // dd($byGroup[$keyGrp]);
                     $total = 0;
@@ -310,10 +306,10 @@ class CartController extends Controller
                 // }
             }
             $request->session()->forget('cartPayment');
-            
-            return redirect('purchase-history-shogun')->with('success','Payment Successful');
+
+            return redirect('purchase-history-shogun')->with('success', 'Payment Successful');
         } else { //if payment unsuccessful
-            return redirect('purchase-history-shogun')->with('error','Payment Unsuccessful');
+            return redirect('purchase-history-shogun')->with('error', 'Payment Unsuccessful');
         }
     }
 
@@ -334,12 +330,12 @@ class CartController extends Controller
             'city' => 'required',
             'state' => 'required',
             'postcode' => 'required',
-            'email' => ''
+            'notes' => ''
         ];
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            
-            return redirect()->back()->with('error','Please fill in all the box before submit page');
+
+            return redirect()->back()->with('error', 'Please fill in all the box before submit page');
         } else {
             $data = $req->input();
 
@@ -353,7 +349,7 @@ class CartController extends Controller
                 'city' => $data['city'],
                 'postcode' => $data['postcode'],
                 'user_id' => Auth::user()->id,
-                'email' => $data['email']
+                'notes' => $data['notes']
             ]);
 
             $cart = session()->get('cart');

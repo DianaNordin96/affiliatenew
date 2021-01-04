@@ -14,7 +14,7 @@ class PurchaseController extends Controller
     {
         $orders_detail = DB::table('orders')
         ->join('customers','orders.customer_id','=','customers.id')
-        ->select('orders.*','customers.name')
+        ->select('orders.*','customers.name','customers.phone')
         ->where('orders.user_id', '=', Auth::user()->id)->get();
 
         return view('merchant/purchaseHistory', [

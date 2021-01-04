@@ -139,4 +139,11 @@ class ManageOrderController extends Controller
 
         return redirect('update-order')->with($notification);
     }
+
+    public static function getTrackingDetails($awb)
+    {
+        $getDetails= DB::table('consignment')->where('awb',$awb)->get();
+
+        return $getDetails;
+    }
 }

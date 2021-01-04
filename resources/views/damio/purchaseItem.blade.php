@@ -48,6 +48,7 @@
                                         <b>City : {{ $customer->city }}</b><br />
                                         <b>State : {{ $customer->state }}</b><br />
                                         <b>Postcode : {{ $customer->postcode }}</b><br />
+                                        <b>Notes : {{ $customer->notes }}</b><br />
                                     </div>
                                     @endforeach
                                 </div>

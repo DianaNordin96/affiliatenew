@@ -55,27 +55,10 @@
                                                 <td>
                                                     @if($user->role == 'shogun')
                                                         Shogun
-                                                    @elseif($user->role == '')    
+                                                    @elseif($user->role != '')    
                                                     <select style="width:50px" onchange="location = this.value;"
                                                         class="form-control">
-                                                        <option value="" selected>Not Yet Assign</option>
-                                                        <option value="/master-manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
-                                                        <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
-                                                        <option value="/master-manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif>Dropship</option>
-                                                    </select>
-                                                    @elseif($user->role == 'damio')    
-                                                        Damio
-                                                    @elseif($user->role == 'merchant')    
-                                                    <select style="width:50px" onchange="location = this.value;"
-                                                        class="form-control">
-                                                        <option value="" selected>Not Yet Assign</option>
-                                                        <option value="/master-manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
-                                                        <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
-                                                    </select>
-                                                    @elseif($user->role == 'dropship')    
-                                                    <select style="width:50px" onchange="location = this.value;"
-                                                        class="form-control">
-                                                        <option value="" selected>Not Yet Assign</option>
+                                                        <option value="/master-manageAgent/shogun/{{ $user->id }}" @if ($user->role == 'shogun'){ selected } @endif >Shogun</option>
                                                         <option value="/master-manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
                                                         <option value="/master-manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
                                                         <option value="/master-manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif>Dropship</option>
@@ -161,7 +144,7 @@
                                 <div class="form-group">
                                     <label> Name <span style="color:yellow">  *</span></label>
                                     <input type="text" id="name" onkeyup="alphabets(event);" onkeypress="return isAlphabetsKey(event)" class="form-control"
-                                        name="name" placeholder="Name" />
+                                        name="name"  />
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -175,7 +158,7 @@
                                 <div class="form-group">
                                     <label> IC <span style="color:yellow">  *</span></label>
                                     <input type="text" id="ic" onkeyup="number(event);" class="form-control" onkeypress="return isNumberKey(event)"
-                                        name="ic" placeholder="IC Number" />
+                                        name="ic" />
                                 </div>
                             </div>
 
@@ -183,7 +166,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label> Email <span style="color:yellow">  *</span></label>
-                                    <input type="text" id="email" class="form-control" name="email" placeholder="Email" />
+                                    <input type="text" id="email" class="form-control" name="email" />
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -199,7 +182,7 @@
                                 <div class="form-group">
                                     <label> Date Of Birth <span style="color:yellow">  *</span></label>
                                     <input type="date" id="dob" class="form-control" name="dob"
-                                        placeholder="Date Of Birth" />
+                                         />
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -207,7 +190,7 @@
                                 <div class="form-group">
                                     <label> Phone Number <span style="color:yellow">  *</span></label>
                                     <input type="text" id="phoneNum" class="form-control" onkeyup="number(event);" onkeypress="return isNumberKey(event)" name="phone"
-                                        placeholder="Phone Number" />
+                                        />
                                     @error('phone')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -220,7 +203,7 @@
                                 <div class="form-group">
                                     <label>Address <span style="color:yellow">  *</span></label>
                                     <textarea class="form-control" name="address" id="address" rows="3"
-                                        placeholder="Address"></textarea>
+                                        ></textarea>
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -277,7 +260,7 @@
                                 <div class="form-group">
                                     <label> Name <span style="color:yellow">  *</span></label>
                                     <input type="text" id="nameEdit" class="form-control" onkeyup="alphabets(event);" onkeypress="return isAlphabetsKey(event)" name="nameEdit"
-                                        placeholder="Name" />
+                                         />
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -291,7 +274,7 @@
                                 <div class="form-group">
                                     <label> IC <span style="color:yellow">  *</span></label>
                                     <input type="text" id="icEdit" class="form-control" onkeyup="number(event);" onkeypress="return isNumberKey(event)" name="icEdit"
-                                        placeholder="IC Number" />
+                                        />
                                 </div>
                             </div>
 
@@ -300,7 +283,7 @@
                                 <div class="form-group">
                                     <label> Email <span style="color:yellow">  *</span></label>
                                     <input type="text" id="emailEdit" class="form-control" name="emailEdit"
-                                        placeholder="Email" readonly/>
+                                         readonly/>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -316,7 +299,7 @@
                                 <div class="form-group">
                                     <label> Date Of Birth <span style="color:yellow">  *</span></label>
                                     <input type="date" id="dobEdit" class="form-control" name="dobEdit"
-                                        placeholder="Date Of Birth" />
+                                        />
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -324,7 +307,7 @@
                                 <div class="form-group">
                                     <label> Phone Number <span style="color:yellow">  *</span></label>
                                     <input type="text" id="phoneEdit" class="form-control" onkeyup="number(event);" onkeypress="return isNumberKey(event)" name="phoneEdit"
-                                        placeholder="Phone Number" />
+                                        />
                                     @error('phone')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -337,7 +320,7 @@
                                 <div class="form-group">
                                     <label>Address <span style="color:yellow">  *</span></label>
                                     <textarea class="form-control" name="addressEdit" id="addressEdit" rows="3"
-                                        placeholder="Address"></textarea>
+                                        ></textarea>
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

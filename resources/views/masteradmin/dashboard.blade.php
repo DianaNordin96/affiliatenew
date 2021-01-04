@@ -142,81 +142,98 @@
 
         <div class="row">
             <!-- Left col -->
-            <div class="col-xl-6 col-lg-12 col-sm-12">
-                <div class="card">
-                    <div class="card-header bg-gradient-lightblue">
-                        <h3 class="card-title">
-                            <i class="fas fa-chart-pie mr-1"></i>
-                            DOWNLINE SALES THIS MONTH
-                        </h3>
-
-                    </div><!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3 ">
-                                <div class="info-box bg-lightblue">
-                                    <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                    <div class="info-box-content">
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>Shogun</h6>
-                                        </span>
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>RM {{ number_format($shogunSales, 2) }}</h6>
-                                        </span>
-                                    </div>
-                                    <!-- /.info-box-content -->
-                                </div>
-                            </div>
-                            <div class="col-lg-3 ">
-                                <div class="info-box bg-lightblue">
-                                    <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                    <div class="info-box-content">
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>Damio</h6>
-                                        </span>
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>RM {{ number_format($damioSales, 2) }}</h6>
-                                        </span>
-                                    </div>
-                                    <!-- /.info-box-content -->
-                                </div>
-                            </div>
-                            <div class="col-lg-3 ">
-                                <div class="info-box bg-lightblue">
-                                    <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                    <div class="info-box-content">
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>Merchant</h6>
-                                        </span>
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>RM {{ number_format($merchantSales, 2) }}</h6>
-                                        </span>
-                                    </div>
-                                    <!-- /.info-box-content -->
-                                </div>
-                            </div>
-                            <div class="col-lg-3 ">
-                                <div class="info-box bg-lightblue">
-                                    <!-- <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span> -->
-                                    <div class="info-box-content">
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>Dropship</h6>
-                                        </span>
-                                        <span style="text-align : center" class="info-box-text">
-                                            <h6>RM {{ number_format($dropshipSales, 2) }}</h6>
-                                        </span>
-                                    </div>
-                                    <!-- /.info-box-content -->
+            <div class="col-xl-4 col-lg-12 col-sm-12">
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <div class="widget-stat card">
+                        <div class="card-body  p-4">
+                            <div class="media ai-icon">
+                                <span class="mr-3">
+                                    <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                        </path>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                    </svg>
+                                </span>
+                                <div class="media-body">
+                                    <p class="mb-1">Total Purchase Shogun</p>
+                                    <h4 class="mb-0">{{ number_format($shogunSales, 2) }}</h4>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div><!-- /.card-body -->
-
-
+                </div>
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <div class="widget-stat card">
+                        <div class="card-body  p-4">
+                            <div class="media ai-icon">
+                                <span class="mr-3">
+                                    <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                        </path>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                    </svg>
+                                </span>
+                                <div class="media-body">
+                                    <p class="mb-1">Total Purchase Damio</p>
+                                    <h4 class="mb-0">{{ number_format($damioSales, 2) }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <div class="widget-stat card">
+                        <div class="card-body  p-4">
+                            <div class="media ai-icon">
+                                <span class="mr-3">
+                                    <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                        </path>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                    </svg>
+                                </span>
+                                <div class="media-body">
+                                    <p class="mb-1">Total Purchase Merchant</p>
+                                    <h4 class="mb-0">{{ number_format($merchantSales, 2) }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <div class="widget-stat card">
+                        <div class="card-body  p-4">
+                            <div class="media ai-icon">
+                                <span class="mr-3">
+                                    <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                        </path>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                    </svg>
+                                </span>
+                                <div class="media-body">
+                                    <p class="mb-1">Total Purchase Dropship</p>
+                                    <h4 class="mb-0">{{ number_format($dropshipSales, 2) }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-xl-6">
+            <div class="col-xl-6 col-lg-8 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div id="loading" style="display: none;
@@ -237,33 +254,46 @@
 
 @section('script')
 <script>
+
     document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            displayEventTime: false,
-            initialDate: '2019-04-01',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,listYear'
-            },
-            events: {
-                url: 'ics/feed.ics',
-                format: 'ics',
-                failure: function() {
-                    document.getElementById('script-warning').style.display = 'block';
-                }
-            },
-            loading: function(bool) {
-                document.getElementById('loading').style.display =
-                    bool ? 'block' : 'none';
-            }
-        });
-
-        calendar.render();
+      var calendarEl = document.getElementById('calendar');
+  
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+  
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,listYear'
+        },
+  
+        displayEventTime: false, // don't show the time column in list view
+  
+        // THIS KEY WON'T WORK IN PRODUCTION!!!
+        // To make your own Google API key, follow the directions here:
+        // http://fullcalendar.io/docs/google_calendar/
+        googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
+  
+        // US Holidays
+        events: 'en.usa#holiday@group.v.calendar.google.com',
+  
+        eventClick: function(arg) {
+          // opens events in a popup window
+          window.open(arg.event.url, 'google-calendar-event', 'width=600,height=500');
+  
+          arg.jsEvent.preventDefault() // don't navigate in main tab
+        },
+  
+        loading: function(bool) {
+          document.getElementById('loading').style.display =
+            bool ? 'block' : 'none';
+        }
+  
+      });
+  
+      calendar.render();
     });
-</script>
+  
+  </script>
 <script>
     (function($) {
         "use strict"

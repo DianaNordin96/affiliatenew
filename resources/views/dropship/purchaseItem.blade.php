@@ -41,6 +41,7 @@
                                    <p><b>Address #1 : {{$customer->address}}</b></p>
                                    <p><b>Address #2 : {{$customer->address_two}}</b></p>
                                    <p><b>Address #3 : {{$customer->address_three}}</b></p>
+                                   <b>Notes : {{ $customer->notes }}</b><br />
                                @endforeach
                                 
                                <br>

@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->string('price_dropship')->nullable();
             $table->string('price_hq')->nullable();
             $table->bigInteger('belongToAdmin')->nullable();
+            $table->bigInteger('product_cat')->nullable();
             $table->timestamps();
         });
     }

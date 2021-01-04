@@ -8,7 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+     {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
+     <title> Affiliate System </title>
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
     <link href="{{ asset('vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
@@ -339,12 +340,12 @@
     }
 
     function price(e){
-        e.target.value = e.target.value.replace(/^[0-9\.]+$/,'');
+        e.target.value = e.target.value.replace(/[^0-9\.]/g,'');
         return false;
     }
 
     function alphabets(e){
-        e.target.value = e.target.value.replace(/^[A-Za-z ]+$/,'');
+        e.target.value = e.target.value.replace(/[^A-Za-z ]/g,'');
         return false;
     }
     
@@ -372,7 +373,7 @@
             //Regex for Valid Characters i.e. Alphabets.
             var regex = /^[A-Za-z ]+$/;
 
-            //Validate TextBox value against the Regex.
+            //Validate TextBox value against the Regex.  
             var isValid = regex.test(String.fromCharCode(keyCode));
             if (!isValid) {
                 return false;

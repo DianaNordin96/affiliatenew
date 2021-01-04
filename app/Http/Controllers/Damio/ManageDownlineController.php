@@ -87,6 +87,12 @@ class ManageDownlineController extends Controller
         $higherLevelID = 0;
 
         switch ($roles) {
+
+            case 'shogun':
+                $higherLevelID = 0 ;
+                break;
+
+
             case 'damio':
                 //check upper level
                 //check downline
@@ -161,7 +167,7 @@ class ManageDownlineController extends Controller
                             $ids = $checking->downlineTo;
                             $role = $checking->role;
 
-                            if ($role == 'shogun') {
+                            if ($role == 'merchant') {
                                 $higherLevelID = $checking->id;
                             }
 

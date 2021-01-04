@@ -57,7 +57,7 @@
                                                                             '{{ $customer->address }}',
                                                                             '{{ $customer->address_two }}',
                                                                             '{{ $customer->address_three }}',
-                                                                            '{{ $customer->email }}',
+                                                                            '{{ $customer->notes }}',
                                                                             '{{ $customer->state }}',
                                                                             '{{ $customer->postcode }}',
                                                                             '{{ $customer->city }}'
@@ -70,7 +70,7 @@
                                                                             '{{ $customer->address }}',
                                                                             '{{ $customer->address_two }}',
                                                                             '{{ $customer->address_three }}',
-                                                                            '{{ $customer->email }}',
+                                                                            '{{ $customer->notes }}',
                                                                             '{{ $customer->state }}',
                                                                             '{{ $customer->postcode }}',
                                                                             '{{ $customer->city }}'
@@ -93,69 +93,6 @@
             </div>
         
         
-
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add New Customer</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url('customers-damio-add') }}" method="post"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label> Customer Name </label>
-                                        <input type="text" id="name" class="form-control" name="name"
-                                            placeholder="Name" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- text input -->
-
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Address</label>
-                                        <textarea class="form-control" name="address" id="address" rows="3"
-                                            placeholder="Address"></textarea>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label> Phone Number </label>
-                                        <input type="text" id="phone" class="form-control" name="phone"
-                                            placeholder="Phone Number" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Add Customer</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        </div>
-
         <div class="modal fade" id="modalEdit">
             <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content">
@@ -208,9 +145,8 @@
                                         <div class="col-6">
                                             <!-- text input -->
                                             <div class="form-group">
-                                                <label> Email </label>
-                                                <input type="text" id="emailEdit" class="form-control" name="emailEdit"
-                                                    placeholder="Email" />
+                                                <label> Notes </label>
+                                                <textarea type="text" id="notesEdit" class="form-control" name="notesEdit" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -323,21 +259,21 @@
 @section('script')
 <script>
 
-    function openModalEdit(id,name,phone,address1,address2,address3,email,state,postcode,city) {
+    function openModalEdit(id,name,phone,address1,address2,address3,notes,state,postcode,city) {
 
         document.getElementById("customerID").value = id;
         document.getElementById("nameEdit").value = name;
         document.getElementById("address1Edit").value = address1;
         document.getElementById("address2Edit").value = address2;
         document.getElementById("address3Edit").value = address3;
-        document.getElementById("emailEdit").value = email;
+        document.getElementById("notesEdit").value = notes;
         $('#stateEdit').val(state).change();
         document.getElementById("postcodeEdit").value = postcode;
         document.getElementById("cityEdit").value = city;
         document.getElementById("phoneEdit").value = phone;
     }
 
-    function openModalView(id,name,phone,address1,address2,address3,email,state,postcode,city) {
+    function openModalView(id,name,phone,address1,address2,address3,notes,state,postcode,city) {
 
         document.getElementById("modal-body-view").innerHTML =
             "<div class='row'>" +
@@ -348,7 +284,7 @@
             "</div><div class='col-lg-6'><b>Address: </b> " + address1 + "<br/>" +
             "<b>Address: </b> " + address2 + "<br/>" +
             "<b>Address: </b> " + address3 + "<br/>" +
-            "<b>Email: </b> " + email + "<br/>" +
+            "<b>Notes: </b> " + notes + "<br/>" +
             "<b>State: </b> " + state + "<br/>" +
             "<b>Postcode: </b> " + postcode + "<br/>" +
             "<b>City: </b> " + city + "<br/>" +

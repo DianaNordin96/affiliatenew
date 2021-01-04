@@ -27,4 +27,14 @@ class CustomerController extends Controller
         return $customer;
 
     }
+
+    public function clearCustomer(){
+        DB::table('customers')
+        ->join('orders','orders.customer_id','=','customers.id')
+        ->leftJoin('consignment','orders.orders_id','=','consignment.refNo')
+        ->where('awb','!=', NULL)
+        ->delete();
+
+        session()->flash('success', 'Completed customer has been removed.');
+    }
 }
