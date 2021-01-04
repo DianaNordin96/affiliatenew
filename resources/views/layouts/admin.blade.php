@@ -8,8 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
 
+    <title> Affiliate System </title>
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
     <link href="{{ asset('vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendor/chartist/css/chartist.min.css') }}">
@@ -96,7 +97,7 @@
 
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="/profile-admin" role="button" data-toggle="dropdown">
-                                    <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" />
+                                   <img src="{{asset('imageUploaded/profile/'.Auth::user()->image.'')}}" width="20" alt="" />
                                     <div class="header-info">
                                         <span>Hey, <strong>{{ Auth::user()->name }}</strong></span>
                                         <small>{{ Auth::user()->role }}</small>

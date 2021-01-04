@@ -23,11 +23,11 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- <h3 class="card-title">View Employee</h3> -->
-                            <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-lg">
+                            {{-- <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-lg">
                                 <i class="lni lni-plus"></i> &nbsp Add Products
-                            </button>
-                            <br />
-                            <br />
+                            </button> --}}
+                            {{-- <br />
+                            <br /> --}}
                             <div class="table-responsive">
                                 <table id="example5" class=" table table-striped table-responsive-sm">
                                     <thead>
@@ -63,7 +63,8 @@
                                                     <a style="color:lightseagreen;text-decoration-line: underline;" href="{{$link}}">{{$link}}</a><br/>
                                                     @endforeach
                                                 </td>
-                                                <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
+                                                <td>
+                                                    {{-- <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
                                                         onclick="openModalEdit(
                                                                                 '{{ $product->id }}',
                                                                                 '{{ $product->product_name }}',
@@ -77,7 +78,7 @@
                                                                                 '{{ $product->product_link }}'
                                                                                 )" data-target="#modalEdit"
                                                         class="btn btn-warning"><i class="lni lni-pencil-alt"></i></button>
-                                                    &nbsp;
+                                                    &nbsp; --}}
                                                     <button type="button" title="View" data-toggle="modal" onclick="openModalView(
                                                                                 '{{ $product->id }}',
                                                                                 '{{ $product->product_name }}',

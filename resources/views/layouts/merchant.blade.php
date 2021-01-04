@@ -184,8 +184,7 @@
 
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="/profile-merchant" role="button" data-toggle="dropdown">
-                                    <img src="../imageUploaded/profile/{{ Auth::user()->image }}" width="20" alt="" />
-                                    {{-- <img src="{{ asset('imageUploaded/avatar.png') }}" width="20" alt="" />  --}}
+                                    <img src="{{asset('imageUploaded/profile/'.Auth::user()->image.'')}}" width="20" alt="" />
                                     <div class="header-info">
                                         <span>Hey, <strong>{{ Auth::user()->name }}</strong></span>
                                         <small>{{ Auth::user()->role }}</small>

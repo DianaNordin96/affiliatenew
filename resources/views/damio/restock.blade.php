@@ -71,10 +71,8 @@
                                 <div class="new-arrival-product">
                                     <div class="new-arrivals-img-contnent">
                                         <img class="img-fluid"
-                                        style="display: block; margin-left: auto; margin-right: auto;" 
-                                            src="../imageUploaded/products/{{ $product->product_image }}" />
-                                           
-                                            {{-- src="{{ asset('imageUploaded/popcorn_PNG56.png') }}" /> --}}
+                                        style="width: 150px;height:170px; display: block; margin-left: auto; margin-right: auto;" 
+                                            src="{{asset('imageUploaded/products/'.$product->product_image.'')}}" />
                                     </div>
                                     <div class="new-arrival-content text-center mt-3">
                                         <h4>{{ $product->product_name }}</h4>
