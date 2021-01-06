@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'admin'], function () {
     
-    Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard')->middleware('auth');
+Route::get('dashboard', 'Admin\DashboardController@index')->name('dashboard')->middleware('auth');
     Route::get('manageAgent', 'Admin\ManageAgentController@index')->name('manageAgent')->middleware('auth');
     Route::POST('manageAgent/create', 'Admin\ManageAgentController@create')->name('manageAgent.create')->middleware('auth');
     Route::get('manageAgent/delete/{id}', 'Admin\ManageAgentController@Delete')->middleware('auth');
@@ -127,6 +127,7 @@ Route::group(['middleware' => 'damio'], function () {
     Route::get('/declineDownline-damio/{id}', 'Damio\ManageDownlineController@decline')->middleware('auth');
     Route::post('/addToPaymentCart-damio', 'Damio\CartController@addToPaymentCart')->middleware('auth');
     Route::delete('/remove-from-cart-payment-Damio', 'Damio\CartController@removeFromCartPayment')->middleware('auth');
+    Route::get('/product-damio/{cat}/{prodCat}', 'Damio\ManageStockController@getProductsBy')->middleware('auth');
 });
 
 Route::group(['middleware' => 'merchant'], function () {
@@ -157,6 +158,7 @@ Route::group(['middleware' => 'merchant'], function () {
     Route::get('/declineDownline-merchant/{id}', 'Merchant\ManageDownlineController@decline')->middleware('auth');
     Route::post('/addToPaymentCart-merchant', 'Merchant\CartController@addToPaymentCart')->middleware('auth');
     Route::delete('/remove-from-cart-payment-Merchant', 'Merchant\CartController@removeFromCartPayment')->middleware('auth');
+    Route::get('/product-merchant/{cat}/{prodCat}', 'Merchant\ManageStockController@getProductsBy')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\DropshipMiddleware'], function () {
@@ -182,6 +184,7 @@ Route::group(['middleware' => 'App\Http\Middleware\DropshipMiddleware'], functio
     Route::POST('/commission-dropship-withdrawal', 'Dropship\CommissionController@withdraw')->middleware('auth');
     Route::post('/addToPaymentCart-dropship', 'Dropship\CartController@addToPaymentCart')->middleware('auth');
     Route::delete('/remove-from-cart-payment-Dropship', 'Dropship\CartController@removeFromCartPayment')->middleware('auth');
+    Route::get('/product-dropship/{cat}/{prodCat}', 'Dropship\ManageStockController@getProductsBy')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], function () {

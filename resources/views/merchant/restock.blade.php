@@ -303,7 +303,7 @@
                                                 <td>
                                                     <br />
                                                     <img style="display: block;margin-left: auto;margin-right: auto;"
-                                                        src="../imageUploaded/products/{{ $details['photo'] }}"
+                                                    src="{{asset('imageUploaded/products/'.$details['photo'].'')}}" 
                                                         width="30" height="30" class="img-responsive" />
                                                     <br />
                                                     <div style="text-align: center">
@@ -409,27 +409,33 @@
 
         function openModalView(prodImage, prodName, prodDesc, prodActualPrice, prodComm, link) {
 
-            var links = link.split(",");
-            document.getElementById("viewName").innerHTML = prodName;
-            var string =
-                "<div class='row'>" +
-                "<br/>" +
-                "<div class='col-sm-6'>" +
-                "<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../imageUploaded/products/" +
-                prodImage + "'/>" +
-                "</div>" +
-                "<div class='col-sm-6'>" +
-                "<b>Product Name  </b> : " + prodName + "<br/>" +
-                "<b>Description  </b> : " + prodDesc + "<br/>" +
-                "<b>Product Price  </b> : RM " + prodActualPrice + "<br/>" +
-                "<b>Commission </b> : RM " + prodComm + "<br/>" ;
-                for (i = 0; i < links.length; i++) {
-                    string = string.concat("<b>Product Link: </b><a style='color:lightseagreen;text-decoration-line: underline;' href=" + links[i] + ">" + links[i] + "</a><br/>");
-                    console.log(string);
-                } 
+        var links = link.split(",");
+        document.getElementById("viewName").innerHTML = prodName;
+        var string =
+            "<div class='row'>" +
+            "<br/>" +
+            "<div class='col-sm-6'>";
 
-                string= string.concat("</div></div>");
-                document.getElementById("modal-body-view").innerHTML = string;
+            @if($catID == 0)
+            string = string.concat("<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../imageUploaded/products/" + prodImage + "'/>");
+            @else
+            string = string.concat("<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../../../imageUploaded/products/" + prodImage + "'/>");
+            @endif
+
+            string = string.concat("</div>" +
+            "<div class='col-sm-6'>" +
+            "<b>Product Name  </b> : " + prodName + "<br/>" +
+            "<b>Description  </b> : " + prodDesc + "<br/>" +
+            "<b>Product Price  </b> : RM " + prodActualPrice + "<br/>" +
+            "<b>Commission </b> : RM " + prodComm + "<br/>" );
+
+            for (i = 0; i < links.length; i++) {
+                string = string.concat("<b>Product Link: </b><a style='color:lightseagreen;text-decoration-line: underline;' href=" + links[i] + ">" + links[i] + "</a><br/>");
+                console.log(string);
+            } 
+
+            string= string.concat("</div></div>");
+            document.getElementById("modal-body-view").innerHTML = string;
         }
 
     </script>

@@ -23,6 +23,7 @@ class ManageStockController extends Controller
             'dropship/restock',
             [
                 'userId' => $id,
+                'catID' => 0,
                 'products' => $product,
             ]
         );

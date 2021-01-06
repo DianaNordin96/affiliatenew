@@ -129,7 +129,7 @@
                             <h3>Referral Link</h3>
                             <div class="form-group">
                                 <input style="width:200px" type="text"
-                                    value="http://tryitgo.com/registerDownline/{{ Auth::user()->id }}" id="link"
+                                value="https://saudagarorder.com/registerDownline/{{ Auth::user()->id }}" id="link"
                                     readonly>
                                 <button class="btn btn-primary" onclick="myFunction()">Copy text</button>
                             </div>

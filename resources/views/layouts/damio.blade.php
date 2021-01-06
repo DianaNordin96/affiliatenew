@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
      {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
-     <title> Affiliate System </title>
+     <title> saudagarorder.com </title>
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
     <link href="{{ asset('vendor/jqvmap/css/jqvmap.min.css') }}" rel="stylesheet">
