@@ -168,6 +168,12 @@ class ManageAdminController extends Controller
         }
     }
 
+    public function deleteCategory($id)
+    {
+        DB::table('admin')->where('id',$id)->delete();
+        return redirect('/master-manageAdmin')->with('success','Category has been deleted.');
+    }
+
     public function updateCategory(Request $req)
     {
         $validatedData = [

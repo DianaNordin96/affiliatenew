@@ -59,7 +59,11 @@
                                                         '{{ $value->desc }}'
                                                         )"
                                                     data-target="#editCategory" class="btn btn-success"><i
-                                                        class="lni lni-pencil-alt"></i></button> &nbsp;</td>
+                                                        class="lni lni-pencil-alt"></i></button> &nbsp; 
+                                                    <button type="button" id="btnDelete" title="Delete" data-toggle="modal"
+                                                    onclick="window.location.href='/master-delete-admin-cat/{{ $value->id }}'"
+                                                    class="btn btn-danger"><i class="lni lni-trash"></i></button>
+                                                    </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

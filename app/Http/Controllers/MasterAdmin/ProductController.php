@@ -186,6 +186,12 @@ class ProductController extends Controller
         return redirect('/master-manageProduct')->with('success','Product has been removed.');
     }
 
+    public function deleteCategory($id)
+    {
+        DB::table('products_category')->where('id',$id)->delete();
+        return redirect('/master-manageProduct')->with('success','Category has been deleted.');
+    }
+
     public function addCategory(Request $req)
     {
         $validatedData = [

@@ -12,7 +12,7 @@ class ManageDownlineController extends Controller
 {
     public function index()
     {
-    
+
         $allDownline = array();
         $statusLoop = true;
         $id = Auth::user()->id;
@@ -25,13 +25,13 @@ class ManageDownlineController extends Controller
 
                 $userDownlineL1 = DB::table('users')
                     ->where('downlineTo', $value)
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'decline');
+                            ->orWhere('statusDownline', '!=', 'decline');
                     })
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'pending');
+                            ->orWhere('statusDownline', '!=', 'pending');
                     })
                     ->select('id')
                     ->get();
@@ -58,13 +58,13 @@ class ManageDownlineController extends Controller
         }
 
         $users = array();
-        
-        for($i=0;$i<count($allDownline);$i++){
-            $getUser= DB::table('users')
-            ->where('id',$allDownline[$i])
-            ->get();
 
-            array_push($users,$getUser);
+        for ($i = 0; $i < count($allDownline); $i++) {
+            $getUser = DB::table('users')
+                ->where('id', $allDownline[$i])
+                ->get();
+
+            array_push($users, $getUser);
         }
 
         $pendingUser = DB::table('users')
@@ -84,43 +84,179 @@ class ManageDownlineController extends Controller
     public function changeRole($roles, $id)
     {
 
-        $higherLevelID = 0;
+        $getRole = DB::table('users')->where('id', $id)->select('role')->get();
 
-        DB::table('users')
-        ->where('id', $id)
-        ->update([
-            'role' => $roles
-        ]);
-        
-        $notification = array(
-            'message' => 'User role has been changed',
-            'alert-type' => 'success'
-        );
-        return redirect('/downline-damio')->with($notification);
+        if ($getRole[0]->role == 'damio') {
+            switch ($roles) {
+                case 'merchant':
+                    return redirect('/downline-damio')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+                case 'dropship':
+                    return redirect('/downline-damio')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if ($getRole[0]->role == 'merchant') {
+
+            $higherLevelID = 0;
+
+            switch ($roles) {
+                case 'damio':
+                    $status = true;
+                    // $statusCheck = false;
+                    $ids = $id;
+
+                    while ($status) {
+                        $check = DB::table('users')
+                            ->where('id', $ids)
+                            ->get();
+                        // dd($check);
+                        foreach ($check as $checking) {
+                            if ($checking->id != '') {
+                                $ids = $checking->downlineTo;
+                                $role = $checking->role;
+
+                                if ($role == 'shogun') {
+                                    $higherLevelID = $checking->id;
+                                }
+
+                                if ($checking->downlineTo == null) {
+                                    $status = false;
+                                }
+                            }
+                        }
+                    }
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => $higherLevelID
+                        ]);
+                    return redirect('/downline-damio')->with('success', 'Agent role has been changed.');
+                    break;
+                case 'dropship':
+                    return redirect('/downline-damio')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+        if ($getRole[0]->role == 'dropship') {
+            $higherLevelID = 0;
+
+            switch ($roles) {
+                case 'damio':
+                    $status = true;
+                    // $statusCheck = false;
+                    $ids = $id;
+
+                    while ($status) {
+                        $check = DB::table('users')
+                            ->where('id', $ids)
+                            ->get();
+                        // dd($check);
+                        foreach ($check as $checking) {
+                            if ($checking->id != '') {
+                                $ids = $checking->downlineTo;
+                                $role = $checking->role;
+
+                                if ($role == 'shogun') {
+                                    $higherLevelID = $checking->id;
+                                }
+
+                                if ($checking->downlineTo == null) {
+                                    $status = false;
+                                }
+                            }
+                        }
+                    }
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => $higherLevelID
+                        ]);
+                    return redirect('/downline-damio')->with('success', 'Agent role has been changed.');
+                    break;
+                case 'merchant':
+                    $status = true;
+                    // $statusCheck = false;
+                    $ids = $id;
+
+                    while ($status) {
+                        $check = DB::table('users')
+                            ->where('id', $ids)
+                            ->get();
+                        // dd($check);
+                        foreach ($check as $checking) {
+                            if ($checking->id != '') {
+                                $ids = $checking->downlineTo;
+                                $role = $checking->role;
+
+                                if ($role == 'shogun') {
+                                    $higherLevelID = $checking->id;
+                                }
+
+                                if ($checking->downlineTo == null) {
+                                    $status = false;
+                                }
+                            }
+                        }
+                    }
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => $higherLevelID
+                        ]);
+                    return redirect('/downline-damio')->with('success', 'Agent role has been changed.');
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        if ($getRole[0]->role == '') {
+            DB::table('users')
+                ->where('id', $id)
+                ->update([
+                    'role' => $roles
+                ]);
+            return redirect('/downline-damio')->with('success', 'Agent role has been set.');
+        }
     }
 
-    public function approve($id){
+    public function approve($id)
+    {
 
         DB::table('users')
-        ->where('id',$id)
-        ->update([
-            'statusDownline' => 'approve',
-            'password' => Hash::make('12345678'),
-            'belongsToAdmin' => Auth::user()->belongsToAdmin
-        ]);
+            ->where('id', $id)
+            ->update([
+                'statusDownline' => 'approve',
+                'password' => Hash::make('12345678'),
+                'belongsToAdmin' => Auth::user()->belongsToAdmin
+            ]);
 
-        
-        return redirect('/downline-damio')->with('success','Agent has been approved');
+
+        return redirect('/downline-damio')->with('success', 'Agent has been approved');
     }
 
-    public function decline($id){
+    public function decline($id)
+    {
         DB::table('users')
-        ->where('id',$id)
-        ->update([
-            'statusDownline' => 'decline',
-        ]);
+            ->where('id', $id)
+            ->update([
+                'statusDownline' => 'decline',
+            ]);
 
-        
-        return redirect('/downline-damio')->with('success','Agent has been declined');
+
+        return redirect('/downline-damio')->with('success', 'Agent has been declined');
     }
 }

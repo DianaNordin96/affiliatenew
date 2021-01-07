@@ -50,16 +50,14 @@
                                             <td>{{ $user[0]->phone }}</td>
                                             <td hidden>{{ $user[0]->role }}</td>
                                             <td> 
-                                                @if($user[0]->role == '')
                                                 <select onchange="location = this.value;" class="btn btn-default">
+                                                    @if($user[0]->role == '')
                                                     <option value="" selected>Not Yet Assign</option>
-                                                    <option value="/manageDownlineShogun/damio/{{ $user[0]->id }}">Damio</option>
-                                                    <option value="/manageDownlineShogun/merchant/{{ $user[0]->id }}">Merchant</option>
-                                                    <option value="/manageDownlineShogun/dropship/{{ $user[0]->id }}" >Dropship</option>
+                                                    @endif
+                                                    <option value="/manageDownlineShogun/damio/{{ $user[0]->id }}" @if($user[0]->role == 'damio') selected @endif>Damio</option>
+                                                    <option value="/manageDownlineShogun/merchant/{{ $user[0]->id }}"  @if($user[0]->role == 'merchant') selected @endif>Merchant</option>
+                                                    <option value="/manageDownlineShogun/dropship/{{ $user[0]->id }}"  @if($user[0]->role == 'dropship') selected @endif>Dropship</option>
                                                 </select>
-                                                @else
-                                                {{$user[0]->role}}
-                                                @endif
                                            </td>
                                             <td>
                                                 <button type="button" title="View" data-toggle="modal"

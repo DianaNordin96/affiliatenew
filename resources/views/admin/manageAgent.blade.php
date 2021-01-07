@@ -56,62 +56,44 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->phone }}</td>
                                                 <td>
-                                                    @if($user->role == 'shogun')
-                                                        Shogun
-                                                    @elseif($user->role == '')    
                                                     <select style="width:50px" onchange="location = this.value;"
                                                         class="form-control">
+                                                        @if($user->role == '')
                                                         <option value="" selected>Not Yet Assign</option>
+                                                        @endif
+                                                        <option value="/manageAgent/shogun/{{ $user->id }}" @if ($user->role == 'shogun'){ selected } @endif >Shogun</option>
                                                         <option value="/manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
                                                         <option value="/manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
                                                         <option value="/manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif>Dropship</option>
                                                     </select>
-                                                    @elseif($user->role == 'damio')    
-                                                        Damio
-                                                    @elseif($user->role == 'merchant')    
-                                                    <select style="width:50px" onchange="location = this.value;"
-                                                        class="form-control">
-                                                        <option value="" selected>Not Yet Assign</option>
-                                                        <option value="/manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
-                                                        <option value="/manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
-                                                    </select>
-                                                    @elseif($user->role == 'dropship')    
-                                                    <select style="width:50px" onchange="location = this.value;"
-                                                        class="form-control">
-                                                        <option value="" selected>Not Yet Assign</option>
-                                                        <option value="/manageAgent/damio/{{ $user->id }}" @if ($user->role == 'damio'){ selected } @endif >Damio</option>
-                                                        <option value="/manageAgent/merchant/{{ $user->id }}" @if ($user->role == 'merchant'){ selected } @endif>Merchant</option>
-                                                        <option value="/manageAgent/dropship/{{ $user->id }}" @if ($user->role == 'dropship'){ selected } @endif>Dropship</option>
-                                                    </select>
-                                                    @endif
-                                        </td>
-                                        <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal" onclick="openModalEdit(
-                                                                        '{{ $user->id }}',
-                                                                        '{{ $user->name }}',
-                                                                        '{{ $user->email }}',
-                                                                        '{{ $user->phone }}',
-                                                                        '{{ $user->address }}',
-                                                                        '{{ $user->icnumber }}',
-                                                                        '{{ $user->dob }}',
-                                                                        '{{ $user->image }}'
-                                                                    )" data-target="#modalEdit" class="btn btn-warning"><i
-                                                    class="lni lni-pencil-alt"></i></button> &nbsp;
-                                            <button type="button" title="View" data-toggle="modal" onclick="openModalView(
-                                                                        '{{ $user->id }}',
-                                                                        '{{ $user->name }}',
-                                                                        '{{ $user->email }}',
-                                                                        '{{ $user->phone }}',
-                                                                        '{{ $user->address }}',
-                                                                        '{{ $user->icnumber }}',
-                                                                        '{{ $user->dob }}',
-                                                                        '{{ $user->image }}'
-                                                                        )" data-target="#modalView"
-                                                class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
-                                            <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                onclick="window.location.href='manageAgent/delete/{{ $user->id }}'"
-                                                class="btn btn-danger"><i class="lni lni-trash"></i></button>
-                                            &nbsp;
-                                        </td>
+                                                </td>
+                                                <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal" onclick="openModalEdit(
+                                                                                '{{ $user->id }}',
+                                                                                '{{ $user->name }}',
+                                                                                '{{ $user->email }}',
+                                                                                '{{ $user->phone }}',
+                                                                                '{{ $user->address }}',
+                                                                                '{{ $user->icnumber }}',
+                                                                                '{{ $user->dob }}',
+                                                                                '{{ $user->image }}'
+                                                                            )" data-target="#modalEdit" class="btn btn-warning"><i
+                                                            class="lni lni-pencil-alt"></i></button> &nbsp;
+                                                    <button type="button" title="View" data-toggle="modal" onclick="openModalView(
+                                                                                '{{ $user->id }}',
+                                                                                '{{ $user->name }}',
+                                                                                '{{ $user->email }}',
+                                                                                '{{ $user->phone }}',
+                                                                                '{{ $user->address }}',
+                                                                                '{{ $user->icnumber }}',
+                                                                                '{{ $user->dob }}',
+                                                                                '{{ $user->image }}'
+                                                                                )" data-target="#modalView"
+                                                        class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
+                                                    <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
+                                                        onclick="window.location.href='manageAgent/delete/{{ $user->id }}'"
+                                                        class="btn btn-danger"><i class="lni lni-trash"></i></button>
+                                                    &nbsp;
+                                                </td>
 
                                         </tr>
                                         @endforeach

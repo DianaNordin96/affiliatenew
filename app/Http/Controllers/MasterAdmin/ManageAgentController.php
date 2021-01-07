@@ -21,17 +21,17 @@ class ManageAgentController extends Controller
     {
         $agentList = DB::table('users')
             ->where('id', '<>', Auth::user()->id)
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->whereNull('statusDownline')
-                    ->orWhere('statusDownline','!=', 'decline');
+                    ->orWhere('statusDownline', '!=', 'decline');
             })
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->whereNull('statusDownline')
-                    ->orWhere('statusDownline','!=', 'pending');
+                    ->orWhere('statusDownline', '!=', 'pending');
             })
-            ->where(function($query) {
-                $query->where('role','<>','admin')
-                ->where('role','<>','masteradmin');
+            ->where(function ($query) {
+                $query->where('role', '<>', 'admin')
+                    ->where('role', '<>', 'masteradmin');
             })
             ->get();
 
@@ -40,9 +40,10 @@ class ManageAgentController extends Controller
         ]);
     }
 
-    public function viewAgentProfile($id){
+    public function viewAgentProfile($id)
+    {
 
-        $getUser = DB::table('users')->where('id',$id)->get();
+        $getUser = DB::table('users')->where('id', $id)->get();
 
         return view('masteradmin/viewAgent')->with([
             'users' => $getUser,
@@ -50,7 +51,8 @@ class ManageAgentController extends Controller
         ]);
     }
 
-    public static function countDownline($userID){
+    public static function countDownline($userID)
+    {
         $allDownline = array();
         $statusLoop = true;
         $id = $userID;
@@ -63,13 +65,13 @@ class ManageAgentController extends Controller
 
                 $userDownlineL1 = DB::table('users')
                     ->where('downlineTo', $value)
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'decline');
+                            ->orWhere('statusDownline', '!=', 'decline');
                     })
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'pending');
+                            ->orWhere('statusDownline', '!=', 'pending');
                     })
                     ->select('id')
                     ->get();
@@ -99,7 +101,8 @@ class ManageAgentController extends Controller
         return $numDownline;
     }
 
-    public static function getDownline($userID){
+    public static function getDownline($userID)
+    {
         $allDownline = array();
         $statusLoop = true;
         $id = $userID;
@@ -113,13 +116,13 @@ class ManageAgentController extends Controller
 
                 $userDownlineL1 = DB::table('users')
                     ->where('downlineTo', $value)
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'decline');
+                            ->orWhere('statusDownline', '!=', 'decline');
                     })
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'pending');
+                            ->orWhere('statusDownline', '!=', 'pending');
                     })
                     ->select('id')
                     ->get();
@@ -145,10 +148,10 @@ class ManageAgentController extends Controller
             }
         }
 
-        foreach($allDownline as $value){
-            $dl = DB::table('users')->where('id',$value)->get();
+        foreach ($allDownline as $value) {
+            $dl = DB::table('users')->where('id', $value)->get();
 
-            array_push($downlineListAll,$dl);
+            array_push($downlineListAll, $dl);
         }
         // dd($downlineListAll);
 
@@ -245,117 +248,196 @@ class ManageAgentController extends Controller
 
     public function changeRole($roles, $id)
     {
+        $getRole = DB::table('users')->where('id', $id)->select('role')->get();
 
-        $higherLevelID = 0;
-
-        switch ($roles) {
-
-            case 'shogun':
-                $higherLevelID = 0 ;
-                break;
-
-
-            case 'damio':
-                //check upper level
-                //check downline
-                $status = true;
-                // $statusCheck = false;
-                $ids = $id;
-
-                while ($status) {
-                    $check = DB::table('users')
-                        ->where('id', $ids)
-                        ->get();
-                    // dd($check);
-                    foreach ($check as $checking) {
-                        if ($checking->id != '') {
-                            $ids = $checking->downlineTo;
-                            $role = $checking->role;
-
-                            if ($role == 'shogun') {
-                                $higherLevelID = $checking->id;
-                            }
-
-                            if ($checking->downlineTo == null) {
-                                $status = false;
-                            }
-                        }
-                    }
-                }
-                break;
-
-            case 'merchant':
-                //check upper level
-                //check downline
-                $status = true;
-                // $statusCheck = false;
-                $ids = $id;
-
-                while ($status) {
-                    $check = DB::table('users')
-                        ->where('id', $ids)
-                        ->get();
-                    // dd($check);
-                    foreach ($check as $checking) {
-                        if ($checking->id != '') {
-                            $ids = $checking->downlineTo;
-                            $role = $checking->role;
-
-                            if ($role == 'shogun') {
-                                $higherLevelID = $checking->id;
-                            }
-
-                            if ($checking->downlineTo == null) {
-                                $status = false;
-                            }
-                        }
-                    }
-                }
-                break;
-            case 'dropship':
-                //check upper level
-                //check downline
-                $status = true;
-                // $statusCheck = false;
-                $ids = $id;
-
-                while ($status) {
-                    $check = DB::table('users')
-                        ->where('id', $ids)
-                        ->get();
-                    // dd($check);
-                    foreach ($check as $checking) {
-                        if ($checking->id != '') {
-                            $ids = $checking->downlineTo;
-                            $role = $checking->role;
-
-                            if ($role == 'merchant') {
-                                $higherLevelID = $checking->id;
-                            }
-
-                            if ($checking->downlineTo == null) {
-                                $status = false;
-                            }
-                        }
-                    }
-                }
-                break;
-            default:
-                break;
+        if ($getRole[0]->role == 'shogun') {
+            switch ($roles) {
+                case 'damio':
+                    return redirect('/master-viewAgent')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+                case 'merchant':
+                    return redirect('/master-viewAgent')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+                case 'dropship':
+                    return redirect('/master-viewAgent')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+                default:
+                    break;
+            }
         }
 
-        DB::table('users')
-            ->where('id', $id)
-            ->update([
-                'downlineTo' => $higherLevelID,
-                'role' => $roles
-            ]);
+        if ($getRole[0]->role == 'damio') {
+            switch ($roles) {
+                case 'shogun':
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => null
+                        ]);
+                    return redirect('/master-viewAgent')->with('success', 'Agent role has been changed.');
+                    break;
+                case 'merchant':
+                    return redirect('/master-viewAgent')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+                case 'dropship':
+                    return redirect('/master-viewAgent')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        $notification = array(
-            'message' => 'User role has been changed',
-            'alert-type' => 'success'
-        );
-        return redirect('/master-viewAgent')->with($notification);
+        if ($getRole[0]->role == 'merchant') {
+
+            $higherLevelID = 0;
+
+            switch ($roles) {
+                case 'shogun':
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => null
+                        ]);
+                    return redirect('/master-viewAgent')->with('success', 'Agent role has been changed.');
+                    break;
+                case 'damio':
+                    $status = true;
+                    // $statusCheck = false;
+                    $ids = $id;
+
+                    while ($status) {
+                        $check = DB::table('users')
+                            ->where('id', $ids)
+                            ->get();
+                        // dd($check);
+                        foreach ($check as $checking) {
+                            if ($checking->id != '') {
+                                $ids = $checking->downlineTo;
+                                $role = $checking->role;
+
+                                if ($role == 'shogun') {
+                                    $higherLevelID = $checking->id;
+                                }
+
+                                if ($checking->downlineTo == null) {
+                                    $status = false;
+                                }
+                            }
+                        }
+                    }
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => $higherLevelID
+                        ]);
+                    return redirect('/master-viewAgent')->with('success', 'Agent role has been changed.');
+                    break;
+                case 'dropship':
+                    return redirect('/master-viewAgent')->with('error', 'Agent can only be upgraded to upper level.');
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+        if ($getRole[0]->role == 'dropship') {
+            $higherLevelID = 0;
+
+            switch ($roles) {
+                case 'shogun':
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => null
+                        ]);
+                    return redirect('/master-viewAgent')->with('success', 'Agent role has been changed.');
+                    break;
+                case 'damio':
+                    $status = true;
+                    // $statusCheck = false;
+                    $ids = $id;
+
+                    while ($status) {
+                        $check = DB::table('users')
+                            ->where('id', $ids)
+                            ->get();
+                        // dd($check);
+                        foreach ($check as $checking) {
+                            if ($checking->id != '') {
+                                $ids = $checking->downlineTo;
+                                $role = $checking->role;
+
+                                if ($role == 'shogun') {
+                                    $higherLevelID = $checking->id;
+                                }
+
+                                if ($checking->downlineTo == null) {
+                                    $status = false;
+                                }
+                            }
+                        }
+                    }
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => $higherLevelID
+                        ]);
+                    return redirect('/master-viewAgent')->with('success', 'Agent role has been changed.');
+                    break;
+                case 'merchant':
+                    $status = true;
+                    // $statusCheck = false;
+                    $ids = $id;
+
+                    while ($status) {
+                        $check = DB::table('users')
+                            ->where('id', $ids)
+                            ->get();
+                        // dd($check);
+                        foreach ($check as $checking) {
+                            if ($checking->id != '') {
+                                $ids = $checking->downlineTo;
+                                $role = $checking->role;
+
+                                if ($role == 'shogun') {
+                                    $higherLevelID = $checking->id;
+                                }
+
+                                if ($checking->downlineTo == null) {
+                                    $status = false;
+                                }
+                            }
+                        }
+                    }
+                    DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'role' => $roles,
+                            'downlineTo' => $higherLevelID
+                        ]);
+                    return redirect('/master-viewAgent')->with('success', 'Agent role has been changed.');
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        if ($getRole[0]->role == '') {
+            DB::table('users')
+                ->where('id', $id)
+                ->update([
+                    'role' => $roles
+                ]);
+            return redirect('/master-viewAgent')->with('success', 'Agent role has been set.');
+        }
     }
 
     public function delete($id)
@@ -475,6 +557,4 @@ class ManageAgentController extends Controller
             }
         }
     }
-
-
 }
