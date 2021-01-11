@@ -38,7 +38,7 @@
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle" src="../imageUploaded/profile/{{ $users[0]->image }}"
+                                <img width="200px" height="200px" class="profile-user-img img-fluid img-circle" src="../imageUploaded/profile/{{ $users[0]->image }}"
                                     alt="User profile picture">
                             </div>
             

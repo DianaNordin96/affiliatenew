@@ -298,7 +298,6 @@
                             <span class="nav-text">Help</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/support-shogun">Support</a></li>
                             <li><a href="/guideline-shogun">User Guidelines</a></li>
                         </ul>
                     </li>

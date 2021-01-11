@@ -286,7 +286,6 @@
                             <span class="nav-text">Help</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/support-dropship">Support</a></li>
                             <li><a href="/guideline-dropship">User Guidelines</a></li>
                         </ul>
                     </li>

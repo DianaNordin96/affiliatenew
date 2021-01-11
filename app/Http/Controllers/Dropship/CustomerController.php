@@ -61,7 +61,7 @@ class CustomerController extends Controller
             'address3Edit' => '',
             'stateEdit' => 'required',
             'postcodeEdit' => 'required',
-            'notesEdit' => 'required',
+            'notesEdit' => '',
             'cityEdit' => 'required',
         ];
 

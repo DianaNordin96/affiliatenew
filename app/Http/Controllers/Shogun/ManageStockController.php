@@ -17,36 +17,52 @@ class ManageStockController extends Controller
         $pass = Auth::user()->password;
 
         $product = DB::table('products')
-        ->get();
+            ->get();
+
+        $prodCat = $this->getProdCategory();
 
         return view(
-            'shogun/restock',
+            'shogun/productCategory',
             [
                 'userId' => $id,
                 'catID' => 0,
-                'products' => $product,
+                'productsCategory' => $prodCat,
             ]
         );
     }
-    
-    public function getProdCategory(){
+
+    public function getProdCategory()
+    {
         $allProdCat = DB::table('products_category')->get();
         return $allProdCat;
     }
 
-    public function getProductsBy($catName,$prodCat){
+    public function getProductsBy($catName, $prodCat)
+    {
 
-        $allProd = DB::table('products')
-        ->where('product_cat',$prodCat)
-        ->get();
+        if ($prodCat == 0) {
+            $allProd = DB::table('products')
+                ->get();
 
-        return view(
-            'shogun/restock',
-            [
-                'catID' => $prodCat,
-                'products' => $allProd
-            ]
-        );
+            return view(
+                'shogun/restock',
+                [
+                    'catID' => $prodCat,
+                    'products' => $allProd
+                ]
+            );
+        } else {
+            $allProd = DB::table('products')
+                ->where('product_cat', $prodCat)
+                ->get();
+
+            return view(
+                'shogun/restock',
+                [
+                    'catID' => $prodCat,
+                    'products' => $allProd
+                ]
+            );
+        }
     }
-    
 }

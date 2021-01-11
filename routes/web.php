@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('redirected','RedirectController@redirect');
-
+Route::get('logout','Auth\LoginController@logout');
 Auth::routes();
 
 
@@ -215,6 +215,8 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::GET('/master.delete.prodCat/{id}', 'MasterAdmin\ProductController@deleteCategory')->middleware('auth');
     Route::POST('/master.update.prodCat', 'MasterAdmin\ProductController@updateCategory')->middleware('auth');
     Route::get('/master-delete-admin-cat/{id}', 'MasterAdmin\ManageAdminController@deleteCategory')->middleware('auth');
+    Route::get('/master-manageProdCat', 'MasterAdmin\ProductController@viewProdCategory')->middleware('auth');
+    
 });
 
 

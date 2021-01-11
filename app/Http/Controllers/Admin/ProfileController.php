@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -53,8 +54,8 @@ class ProfileController extends Controller
                     $newFileName = $image->getClientOriginalName();
                     $filename = pathinfo($newFileName, PATHINFO_FILENAME);
                     $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
-    
-                    if (File::exists(public_path('../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
+
+                    if (file_exists(base_path('../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
                         $newFileName = $filename . '1' . '.' . $extension;
                         $image->move(base_path('../public_html/imageUploaded/profile'), $newFileName);
                     } else {

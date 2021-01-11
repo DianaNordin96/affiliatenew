@@ -61,7 +61,7 @@ class CustomerController extends Controller
             'address3Edit' => '',
             'stateEdit' => 'required',
             'postcodeEdit' => 'required',
-            'notesEdit' => 'required',
+            'notesEdit' => '',
             'cityEdit' => 'required',
         ];
 
@@ -71,7 +71,7 @@ class CustomerController extends Controller
                 'message' => 'Make sure all details has been filled properly',
                 'alert-type' => 'error'
             );
-            return redirect('customers-shogun')->with($notification);
+            return redirect('customers-damio')->with($notification);
         } else {
             $data = $req->input();
             try {
@@ -90,7 +90,7 @@ class CustomerController extends Controller
                         'postcode' => $data['postcodeEdit']
                     ]);
 
-                    return redirect('customers-shogun')->with('success','Customer has been updated');
+                    return redirect('customers-damio')->with('success','Customer has been updated');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }

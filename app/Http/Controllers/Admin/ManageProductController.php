@@ -84,7 +84,7 @@ class ManageProductController extends Controller
                     $filename = pathinfo($newFileName, PATHINFO_FILENAME);
                     $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
     
-                    if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+                    if (file_exists(base_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
                         $newFileName = $filename . '1' . '.' . $extension;
                         $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
                     } else {
@@ -150,7 +150,7 @@ class ManageProductController extends Controller
                 $filename = pathinfo($newFileName, PATHINFO_FILENAME);
                 $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
 
-                if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+                if (file_exists(base_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
                     $newFileName = $filename . '1' . '.' . $extension;
                     $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
                 } else {

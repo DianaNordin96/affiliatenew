@@ -54,7 +54,7 @@ class ProfileController extends Controller
                     $filename = pathinfo($newFileName, PATHINFO_FILENAME);
                     $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
     
-                    if (File::exists(public_path('../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
+                    if (file_exists(base_path('../public_html/imageUploaded/profile/' . $image->getClientOriginalName() . ''))) {
                         $newFileName = $filename . '1' . '.' . $extension;
                         $image->move(base_path('../public_html/imageUploaded/profile'), $newFileName);
                     } else {

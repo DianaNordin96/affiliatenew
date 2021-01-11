@@ -170,10 +170,20 @@
                         </a>
                     </li>
 
-                    <li><a title="Products" class="ai-icon" href="/master-manageProduct" aria-expanded="false">
+                    {{-- <li><a title="Products" class="ai-icon" href="/master-manageProduct" aria-expanded="false">
                             <i class="lni lni-shopify"></i>
                             <span class="nav-text">Products</span>
                         </a>
+                    </li> --}}
+
+                    <li><a title="Products" class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="lni lni-shopify"></i>
+                        <span class="nav-text">Products</span>
+                    </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/master-manageProdCat">Products Category</a></li>
+                            <li><a href="/master-manageProduct" >View Products</a></li>
+                        </ul>
                     </li>
 
                     <li><a title="Admin" class="ai-icon" href="/master-manageAdmin" aria-expanded="false">
@@ -192,7 +202,6 @@
                             <span class="nav-text">Help</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/master-support">Support</a></li>
                             <li><a href="/master-guidelines">User Guidelines</a></li>
                         </ul>
                     </li>

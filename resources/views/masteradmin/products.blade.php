@@ -21,55 +21,7 @@
         <!-- row -->
 
                 <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card card-warning">
-                            <div class="card-header">
-                                <h3 class="card-title">Product Category</h3>
-    
-                                <!-- /.card-tools -->
-                            </div>
-                            <div class="card-body">
-                                <button type="button" class="btn btn-block btn-success" data-toggle="modal"
-                                    data-target="#prodCat">
-                                    <i class="lni lni-plus"></i> &nbsp Add Product Category
-                                </button><br/>
-                                <div class="table-responsive">
-                                    <table id="example5" class="display" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Category ID</th>
-                                            <th>Cat Name</th>
-                                            <th>Cat Desc</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($allTypeProdCat as $value)
-                                            <tr>
-                                                <td style="text-align: center">{{ $value->id }}</td>
-                                                <td style="text-align: center">{{ $value->category }}</td>
-                                                <td style="text-align: center">{{ $value->desc }}</td>
-                                                <td><button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
-                                                    onclick="openModalEditProd(
-                                                        '{{ $value->id }}',
-                                                        '{{ $value->category }}',
-                                                        '{{ $value->desc }}'
-                                                        )"
-                                                    data-target="#editCategory" class="btn btn-success"><i
-                                                        class="lni lni-pencil-alt"></i></button> &nbsp;
-                                                    <button type="button" id="btnDelete" title="Delete" data-toggle="modal"
-                                                    onclick="window.location.href='/master.delete.prodCat/{{ $value->id }}'"
-                                                    class="btn btn-danger"><i class="lni lni-trash"></i></button>    
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <!-- <h3 class="card-title">View Employee</h3> -->
@@ -159,104 +111,6 @@
             </div>
         </div>
 
-         {{-- modal add admin cat --}}
-         <div class="modal fade" id="prodCat">
-            <div class="modal-dialog modal-md modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Product Category</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url('master.create.prodCat') }}" method="post" enctype="multipart/form-data">
-                            @csrf
-                           
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label> Category Name <span style="color:yellow">  *</span></label>
-                                        <input type="text" id="catName" class="form-control" name="catName"
-                                            placeholder="Category Name" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Description <span style="color:yellow">  *</span></label>
-                                        <textarea class="form-control" name="desc" id="desc" rows="3"
-                                            placeholder="Description"></textarea>
-                                    </div>
-                                </div>
-                                
-                            </div>
-
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Add Category</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        </div>
-
-        {{-- modal edit admin cat --}}
-        <div class="modal fade" id="editCategory">
-            <div class="modal-dialog modal-md modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Admin Category</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url('master.update.prodCat') }}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <input type="text" id="idEdit" class="form-control" name="idEdit"
-                            placeholder="Category Name" hidden/>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label> Category Name </label>
-                                        <input type="text" id="catNameEdit" class="form-control" name="catNameEdit"
-                                            placeholder="Category Name" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea class="form-control" name="descEdit" id="descEdit" rows="3"
-                                            placeholder="Description"></textarea>
-                                    </div>
-                                </div>
-                                
-                            </div>
-
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Update Category</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        </div>
             <div class="modal fade" id="modal-lg">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -375,7 +229,7 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Product Group <span style="color:yellow">  *</span></label>
+                                            <label> Admin Category <span style="color:yellow">  *</span></label>
                                             <select class="form-control" name="category">
                                                 @foreach($allAdminType as $value)
                                                     <option value="{{$value->id}}">{{$value->category}}</option>
@@ -526,7 +380,7 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Product Group <span style="color:yellow">  *</span></label>
+                                            <label> Admin Category <span style="color:yellow">  *</span></label>
                                             <select class="form-control" id="categoryEdit" name="categoryEdit" readonly>
                                                 @foreach($allAdminType as $value)
                                                     <option value="{{$value->id}}">{{$value->category}}</option>

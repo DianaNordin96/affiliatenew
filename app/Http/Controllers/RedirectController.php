@@ -37,6 +37,8 @@ class RedirectController extends Controller
             }
 
             return redirect($url);
+        } else if (Auth::user()->role == NULL) {
+            return redirect('/logout');
         } else {
             return redirect('/login');
         }

@@ -35,7 +35,7 @@ class ProductController extends Controller
     {
         $getAll = DB::table('products_category')->get();
         return $getAll;
-    } 
+    }
 
     public function update(Request $req)
     {
@@ -57,7 +57,7 @@ class ProductController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            return redirect('/master-manageProduct')->with('error','Please ensure all fields were filled and file uploaded is image files.');
+            return redirect('/master-manageProduct')->with('error', 'Please ensure all fields were filled and file uploaded is image files.');
         } else {
             $data = $req->input();
             try {
@@ -78,16 +78,16 @@ class ProductController extends Controller
                             'product_cat' => $data['prodcategoryEdit'],
                         ]);
 
-                   
-                    return redirect('/master-manageProduct')-> with('success','Product has been updated');
+
+                    return redirect('/master-manageProduct')->with('success', 'Product has been updated');
                 } else {
 
                     $image = $req->file('imageEdit');
                     $newFileName = $image->getClientOriginalName();
                     $filename = pathinfo($newFileName, PATHINFO_FILENAME);
                     $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
-    
-                    if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+
+                    if (file_exists(base_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
                         $newFileName = $filename . '1' . '.' . $extension;
                         $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
                     } else {
@@ -95,23 +95,23 @@ class ProductController extends Controller
                     }
 
                     DB::table('products')
-                    ->where('id', $data['productIDEdit'])
-                    ->update([
-                        'product_name' => $data['productNameEdit'],
-                        'product_price' => $data['productPriceEdit'],
-                        'product_description' => $data['productDescEdit'],
-                        'price_shogun' => $data['shogunPriceEdit'],
-                        'price_damio' => $data['damioPriceEdit'],
-                        'price_merchant' => $data['merchantPriceEdit'],
-                        'price_dropship' => $data['dropshipPriceEdit'],
-                        'price_hq' => $data['hqPriceEdit'],
-                        'product_link' => $data['productLinkEdit'],
-                        'belongToAdmin' => $data['categoryEdit'],
-                        'product_image' => $newFileName,
-                        'product_cat' => $data['prodcategoryEdit'],
-                    ]);
+                        ->where('id', $data['productIDEdit'])
+                        ->update([
+                            'product_name' => $data['productNameEdit'],
+                            'product_price' => $data['productPriceEdit'],
+                            'product_description' => $data['productDescEdit'],
+                            'price_shogun' => $data['shogunPriceEdit'],
+                            'price_damio' => $data['damioPriceEdit'],
+                            'price_merchant' => $data['merchantPriceEdit'],
+                            'price_dropship' => $data['dropshipPriceEdit'],
+                            'price_hq' => $data['hqPriceEdit'],
+                            'product_link' => $data['productLinkEdit'],
+                            'belongToAdmin' => $data['categoryEdit'],
+                            'product_image' => $newFileName,
+                            'product_cat' => $data['prodcategoryEdit'],
+                        ]);
 
-                return redirect('/master-manageProduct')->with('success', "Product has been updated");
+                    return redirect('/master-manageProduct')->with('success', "Product has been updated");
                 }
             } catch (Exception $e) {
                 return redirect('/master-manageProduct')->with('error', "Data cannot be updated");
@@ -138,7 +138,7 @@ class ProductController extends Controller
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            return redirect('/master-manageProduct')->with('error','Please ensure all fields were filled and file uploaded is image files.');
+            return redirect('/master-manageProduct')->with('error', 'Please ensure all fields were filled and file uploaded is image files.');
         } else {
             $data = $req->input();
             try {
@@ -148,7 +148,7 @@ class ProductController extends Controller
                 $filename = pathinfo($newFileName, PATHINFO_FILENAME);
                 $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
 
-                if (File::exists(public_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
+                if (file_exists(base_path('../public_html/imageUploaded/products/' . $image->getClientOriginalName() . ''))) {
                     $newFileName = $filename . '1' . '.' . $extension;
                     $image->move(base_path('../public_html/imageUploaded/products'), $newFileName);
                 } else {
@@ -170,8 +170,8 @@ class ProductController extends Controller
                     'product_cat' => $data['prod_category'],
                 ]);
 
-                
-                return redirect('/master-manageProduct')->with('success','Product has been created');
+
+                return redirect('/master-manageProduct')->with('success', 'Product has been created');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -183,36 +183,62 @@ class ProductController extends Controller
         DB::table('products')
             ->delete($id);
 
-        return redirect('/master-manageProduct')->with('success','Product has been removed.');
+        return redirect('/master-manageProduct')->with('success', 'Product has been removed.');
+    }
+
+    public function viewProdCategory()
+    {
+        $allTypeProdCat = DB::table('products_category')->get();
+
+        return view(
+            'masteradmin/productsCat',
+            [
+                'allTypeProdCat' => $allTypeProdCat
+            ]
+        );
     }
 
     public function deleteCategory($id)
     {
-        DB::table('products_category')->where('id',$id)->delete();
-        return redirect('/master-manageProduct')->with('success','Category has been deleted.');
+        DB::table('products_category')->where('id', $id)->delete();
+        return redirect('/master-manageProdCat')->with('success', 'Category has been deleted.');
     }
 
     public function addCategory(Request $req)
     {
         $validatedData = [
             'catName' => 'required',
-            'desc' => 'required'
+            'desc' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            return redirect('/master-manageProduct')->with('error','Please fill in all the box before creating new category');
+            return redirect('/master-manageProdCat')->with('error', 'Please fill in all the box before creating new category');
         } else {
             $data = $req->input();
             try {
 
+                $image = $req->file('image');
+                $newFileName = $image->getClientOriginalName();
+                $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
+
+                if (file_exists(base_path('../public_html/imageUploaded/productCat/' . $image->getClientOriginalName() . ''))) {
+                    $newFileName = $filename . '1' . '.' . $extension;
+                    $image->move(base_path('../public_html/imageUploaded/productCat'), $newFileName);
+                } else {
+                    $image->move(base_path('../public_html/imageUploaded/productCat'), $image->getClientOriginalName());
+                }
+
                 DB::table('products_category')->insert([
                     'category' => $data['catName'],
                     'desc' => $data['desc'],
-                    'created_at' => NOW()
+                    'created_at' => NOW(),
+                    'image' => $newFileName
                 ]);
 
-                return redirect('/master-manageProduct')->with('success','Category has been created');
+                return redirect('/master-manageProdCat')->with('success', 'Category has been created');
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }
@@ -223,25 +249,49 @@ class ProductController extends Controller
     {
         $validatedData = [
             'catNameEdit' => 'required',
-            'descEdit' => 'required'
+            'descEdit' => 'required',
+            'imageEdit' => 'image|mimes:jpeg,png,jpg,gif',
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
         if ($validator->fails()) {
-            return redirect('/master-manageProduct')->with('error','Please fill in all the box before updating category');
+            return redirect('/master-manageProdCat')->with('error', 'Please fill in all the box before updating category');
         } else {
             $data = $req->input();
             try {
+                if ($req->file('imageEdit') == null) {
+                    DB::table('products_category')
+                        ->where('id', $data['idEdit'])
+                        ->update([
+                            'category' => $data['catNameEdit'],
+                            'desc' => $data['descEdit'],
+                            'updated_at' => NOW()
+                        ]);
 
-                DB::table('products_category')
-                    ->where('id', $data['idEdit'])
-                    ->update([
-                        'category' => $data['catNameEdit'],
-                        'desc' => $data['descEdit'],
-                        'updated_at' => NOW()
-                    ]);
+                    return redirect('/master-manageProdCat')->with('success', 'Category has been updated');
+                } else {
+                    $image = $req->file('imageEdit');
+                    $newFileName = $image->getClientOriginalName();
+                    $filename = pathinfo($newFileName, PATHINFO_FILENAME);
+                    $extension = pathinfo($newFileName, PATHINFO_EXTENSION);
 
-                return redirect('/master-manageProduct')->with('success','Category has been updated');
+                    if (file_exists(base_path('../public_html/imageUploaded/productCat/' . $image->getClientOriginalName() . ''))) {
+                        $newFileName = $filename . '1' . '.' . $extension;
+                        $image->move(base_path('../public_html/imageUploaded/productCat'), $newFileName);
+                    } else {
+                        $image->move(base_path('../public_html/imageUploaded/productCat'), $image->getClientOriginalName());
+                    }
+                    DB::table('products_category')
+                        ->where('id', $data['idEdit'])
+                        ->update([
+                            'category' => $data['catNameEdit'],
+                            'desc' => $data['descEdit'],
+                            'updated_at' => NOW(),
+                            'image' => $newFileName
+                        ]);
+
+                    return redirect('/master-manageProdCat')->with('success', 'Category has been updated');
+                }
             } catch (Exception $e) {
                 return redirect('insert')->with('failed', "operation failed");
             }

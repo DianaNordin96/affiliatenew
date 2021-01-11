@@ -298,7 +298,6 @@
                             <span class="nav-text">Help</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/support-damio">Support</a></li>
                             <li><a href="/guideline-damio">User Guidelines</a></li>
                         </ul>
                     </li>

@@ -3,208 +3,310 @@
 @extends('layouts.damio')
 @section('content')
 
-    <div class="content-body">
-        <!-- row -->
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Small boxes (Stat box) -->
-                <div class="col-xl-3 col-lg-6 col-sm-6">
-                    <div class="widget-stat card">
-                        <div class="card-body  p-4">
-                            <div class="media ai-icon">
-                                <span class="mr-3">
-                                    <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
-                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
-                                        </path>
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
-                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
-                                    </svg>
-                                </span>
-                                <div class="media-body">
-                                    <p class="mb-1">Total Sales</p>
-                                    <h4 class="mb-0">{{ number_format($sales->getTotalSales(), 2) }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
 
-                <div class="col-xl-3 col-lg-6 col-sm-6">
-                    <div class="widget-stat card">
-                        <div class="card-body  p-4">
-                            <div class="media ai-icon">
-                                <span class="mr-3">
-                                    <svg id="icon-revenue2" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
-                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
-                                        </path>
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
-                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
-                                    </svg>
-                                </span>
-                                <div class="media-body">
-                                    <p class="mb-1">Total Purchases</p>
-                                    <h4 class="mb-0">{{ number_format($sales->getTotalPurchase(), 2) }}</h4>
-                                </div>
-                            </div>
-                        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Monthly Sales/Purchase/Profit</h4>
                     </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-6 col-sm-6">
-                    <div class="widget-stat card">
-                        <div class="card-body  p-4">
-                            <div class="media ai-icon">
-                                <span class="mr-3">
-                                    <svg id="icon-revenue3" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
-                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
-                                        </path>
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
-                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
-                                    </svg>
-                                </span>
-                                <div class="media-body">
-                                    <p class="mb-1">Total Profit</p>
-                                    <h4 class="mb-0">
-                                        {{ number_format($sales->getTotalSales() - $sales->getTotalPurchase(), 2) }}
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-6 col-sm-6">
-                    <div class="widget-stat card">
-                        <div class="card-body p-4">
-                            <div class="media ai-icon">
-                                <span class="mr-3">
-                                    <!-- <i class="ti-user"></i> -->
-                                    <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                                            style="stroke-dasharray: 25, 45; stroke-dashoffset: 0;"></path>
-                                        <path d="M8,7A4,4 0,1,1 16,7A4,4 0,1,1 8,7"
-                                            style="stroke-dasharray: 26, 46; stroke-dashoffset: 0;"></path>
-                                    </svg>
-                                </span>
-                                <div class="media-body">
-                                    <p class="mb-1">Agents</p>
-                                    <h4 class="mb-0">{{ $downline }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                
-            
-                <div class="col-xl-4 col-lg-12 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Monthly Sales</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="lineChart_2"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-12 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Monthly Purchases</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="lineChart_3"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-12 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Monthly Profit</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="lineChart_4"></canvas>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-
-            <div class="row">
-                <!-- Left col -->
-                <div class="col-xl-4 col-lg-12 col-sm-12">
-                    <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <div class="widget-stat card">
-                            <div class="card-body  p-4">
-                                <div class="media ai-icon">
-                                    <span class="mr-3">
-                                        <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
-                                            <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
-                                            </path>
-                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
-                                                style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
-                                        </svg>
-                                    </span>
-                                    <div class="media-body">
-                                        <p class="mb-1">Total Purchase Merchant</p>
-                                        <h4 class="mb-0">{{ number_format($merchant, 2) }}</h4>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Small boxes (Stat box) -->
+                            <div class="col-xl-4 col-lg-6 col-sm-6">
+                                <div style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                    <div class="card-body  p-4">
+                                        <div class="media ai-icon">
+                                            <span class="mr-3">
+                                                <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                    <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                    </path>
+                                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                        style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                </svg>
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="mb-1">Total Sales</p>
+                                                <h4 class="mb-0">{{ number_format($sales->getTotalSales(), 2) }}</h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <div class="widget-stat card">
-                            <div class="card-body  p-4">
-                                <div class="media ai-icon">
-                                    <span class="mr-3">
-                                        <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
-                                            <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
-                                            </path>
-                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
-                                                style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
-                                        </svg>
-                                    </span>
-                                    <div class="media-body">
-                                        <p class="mb-1">Total Purchase Dropship</p>
-                                        <h4 class="mb-0">{{ number_format($dropship, 2) }}</h4>
+
+                            <div class="col-xl-4 col-lg-6 col-sm-6">
+                                <div style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                    <div class="card-body  p-4">
+                                        <div class="media ai-icon">
+                                            <span class="mr-3">
+                                                <svg id="icon-revenue2" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                    <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                    </path>
+                                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                        style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                </svg>
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="mb-1">Total Purchases</p>
+                                                <h4 class="mb-0">{{ number_format($sales->getTotalPurchase(), 2) }}</h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-xl-6 col-lg-8 col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="loading" style="display: none;
-                            position: absolute;
-                            top: 10px;
-                            right: 10px;">loading...</div>
-
-                            <div style="max-width: 1100px;
-                            margin: 0 auto;" id="calendar"></div>
+                            <div class="col-xl-4 col-lg-6 col-sm-6">
+                                <div style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                    <div class="card-body  p-4">
+                                        <div class="media ai-icon">
+                                            <span class="mr-3">
+                                                <svg id="icon-revenue3" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                    <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                    </path>
+                                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                        style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                </svg>
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="mb-1">Total Profit</p>
+                                                <h4 class="mb-0">
+                                                    {{ number_format($sales->getTotalSales() - $sales->getTotalPurchase(), 2) }}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Monthly Own Sales/Purchase/Profit</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Left col -->
+                                <div class="col-xl-4 col-lg-12 col-sm-12">
+                                    <div style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                        <div class="card-body  p-4">
+                                            <div class="media ai-icon">
+                                                <span class="mr-3">
+                                                    <svg id="icon-revenue4" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                        </path>
+                                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                    </svg>
+                                                </span>
+                                                <div class="media-body">
+                                                    <p class="mb-1">Total Sales</p>
+                                                    <h4 class="mb-0">{{ number_format($sales->getOwnTotalSales(), 2) }}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-12 col-sm-12">
+                                    <div  style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                        <div class="card-body  p-4">
+                                            <div class="media ai-icon">
+                                                <span class="mr-3">
+                                                    <svg id="icon-revenue5" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                        </path>
+                                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                    </svg>
+                                                </span>
+                                                <div class="media-body">
+                                                    <p class="mb-1">Total Purchase</p>
+                                                    <h4 class="mb-0">{{ number_format($sales->getOwnTotalPurchase(), 2) }}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-12 col-sm-12">
+                                    <div  style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                        <div class="card-body  p-4">
+                                            <div class="media ai-icon">
+                                                <span class="mr-3">
+                                                    <svg id="icon-revenue6" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                        <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                        </path>
+                                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                            style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                    </svg>
+                                                </span>
+                                                <div class="media-body">
+                                                    <p class="mb-1">Total Profit</p>
+                                                    <h4 class="mb-0">{{ number_format($sales->getOwnTotalSales() - $sales->getOwnTotalPurchase(), 2) }}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Monthly Sales</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="lineChart_2"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Monthly Purchases</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="lineChart_3"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Monthly Profit</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="lineChart_4"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Downline</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-12 col-sm-12">
+                                <div style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                    <div class="card-body p-4">
+                                        <div class="media ai-icon">
+                                            <span class="mr-3">
+                                                <!-- <i class="ti-user"></i> -->
+                                                <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                                                        style="stroke-dasharray: 25, 45; stroke-dashoffset: 0;"></path>
+                                                    <path d="M8,7A4,4 0,1,1 16,7A4,4 0,1,1 8,7"
+                                                        style="stroke-dasharray: 26, 46; stroke-dashoffset: 0;"></path>
+                                                </svg>
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="mb-1">Agents</p>
+                                                <h4 class="mb-0">{{ $downline }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-12 col-sm-12">
+                                <div style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                    <div class="card-body  p-4">
+                                        <div class="media ai-icon">
+                                            <span class="mr-3">
+                                                <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                    <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                    </path>
+                                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                        style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                </svg>
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="mb-1">Total Purchase Merchant</p>
+                                                <h4 class="mb-0">{{ number_format($merchant, 2) }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-12 col-sm-12">
+                                <div style="border: 2px solid #c4c9d5;" class="widget-stat card">
+                                    <div class="card-body  p-4">
+                                        <div class="media ai-icon">
+                                            <span class="mr-3">
+                                                <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                                    <path d="M12,1L12,23" style="stroke-dasharray: 22, 42; stroke-dashoffset: 0;">
+                                                    </path>
+                                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                                                        style="stroke-dasharray: 43, 63; stroke-dashoffset: 0;"></path>
+                                                </svg>
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="mb-1">Total Purchase Dropship</p>
+                                                <h4 class="mb-0">{{ number_format($dropship, 2) }}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left col -->
+            <div class="col-xl-12 col-lg-8 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="loading" style="display: none;
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;">loading...</div>
+
+                        <div style="max-width: 1100px;
+                        margin: 0 auto;" id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
 
 @endsection
 

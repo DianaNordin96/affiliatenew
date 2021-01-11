@@ -73,7 +73,7 @@ class SalesController extends Controller
         $total = 0;
         $allDownline = $this->getDownline();
 
-        
+
         //totalPurchase all agent
         foreach ($allDownline as $dl) {
             $getRole = DB::table('users')
@@ -112,7 +112,7 @@ class SalesController extends Controller
             ->where('orders.user_id', Auth::user()->id)
             ->get();
 
-            
+
         foreach ($getTotalPurchase as $value) {
             $total += $value->total_purchase;
         }
@@ -153,7 +153,7 @@ class SalesController extends Controller
             }
         }
 
-        
+
         $getTotalSales = DB::table('orders_details')
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
@@ -163,7 +163,58 @@ class SalesController extends Controller
             ->where('orders.user_id', Auth::user()->id)
             ->get();
 
-        
+
+        foreach ($getTotalSales as $value) {
+            $total += $value->total_sales;
+        }
+
+        return $total;
+    }
+
+    public function getOwnTotalPurchase()
+    {
+        //get the date
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $month = date('m');
+        $year = date('Y');
+
+        $total = 0;
+
+        $getTotalPurchase = DB::table('orders_details')
+            ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
+            ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
+            ->selectRaw('orders_details.quantity * (products.price_hq + products.price_shogun + products.price_damio) AS total_purchase')
+            ->where('orders.created_at', '>=', $year . $month . '01')
+            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->where('orders.user_id', Auth::user()->id)
+            ->get();
+
+        foreach ($getTotalPurchase as $value) {
+            $total += $value->total_purchase;
+        }
+
+        return $total;
+    }
+
+    public function getOwnTotalSales()
+    {
+        //get the date
+        date_default_timezone_set("Asia/Kuala_Lumpur");
+        $month = date('m');
+        $year = date('Y');
+
+        $total = 0;
+
+        $getTotalSales = DB::table('orders_details')
+            ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
+            ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
+            ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
+            ->where('orders.created_at', '>=', $year . $month . '01')
+            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->where('orders.user_id', Auth::user()->id)
+            ->get();
+
+
         foreach ($getTotalSales as $value) {
             $total += $value->total_sales;
         }
@@ -188,7 +239,7 @@ class SalesController extends Controller
                 $getRole = DB::table('users')
                     ->where('id', $dl)
                     ->get();
-                
+
                 // dd($sales);
                 foreach ($getRole as $user) {
                     $getTotalSales = DB::table('orders_details')
@@ -199,14 +250,14 @@ class SalesController extends Controller
                         ->where('orders.created_at', '<=', $year . $mth . '31')
                         ->where('orders.user_id', $user->id)
                         ->get();
-                        
-                    
+
+
                     foreach ($getTotalSales as $value) {
                         $total += $value->total_sales;
                     }
                 }
             }
-            
+
             $getTotalSales = DB::table('orders_details')
                 ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                 ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
@@ -216,18 +267,18 @@ class SalesController extends Controller
                 ->where('orders.user_id', Auth::user()->id)
                 ->get();
 
-            
+
             foreach ($getTotalSales as $value) {
                 $total += $value->total_sales;
             }
-            
+
             if ($total != 0) {
                 array_push($monthlySales, $total);
             } else {
                 array_push($monthlySales, 0);
             }
         }
-        
+
         return $monthlySales;
     }
 
@@ -250,7 +301,7 @@ class SalesController extends Controller
                 // dd($sales);
                 foreach ($getRole as $user) {
                     switch ($user->role) {
-                       
+
                         case 'dropship':
                             $getTotalPurchase = DB::table('orders_details')
                                 ->JOIN('products', 'orders_details.product_id', '=', 'products.id')

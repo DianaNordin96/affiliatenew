@@ -38,8 +38,10 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6">
+         <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <a href="{{ url('product-dropship') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+                    Back to Category</a>
                 <button type="button" title="View" data-toggle="modal"  data-target="#modalCart" class="btn btn-success">Cart &nbsp;
                     <span class="badge badge-primary badge-pill">
                         @if (session('cart') != null)
@@ -50,18 +52,9 @@
                     </span>
                 </button>
                 <br><br>
-        
-            <?php $prodCat = $category->getProdCategory(); ?>
-            Sort By: <select onchange="location = this.value;" class="form-control">
-                    <option value="/product-dropship" selected>All Products</option>
-                    @foreach ($prodCat as $item)
-                    <option value="/product-dropship/{{$item->category}}/{{ $item->id }}" @if ($catID == $item->id){ selected } @endif>{{$item->category}}
-                    </option>
-                    @endforeach
-                </select>
-            <br/><br/>
             </div>
         </div>
+        
         <div class="row">
                 @foreach ($products as $product)
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
@@ -417,9 +410,9 @@
             "<div class='col-sm-6'>";
 
             @if($catID == 0)
-            string = string.concat("<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../imageUploaded/products/" + prodImage + "'/>");
+            string = string.concat("<img style='display: block; margin-left: auto; margin-right: auto;' width='250px' height='300px' src='../imageUploaded/products/" + prodImage + "'/>");
             @else
-            string = string.concat("<img style='display: block; margin-left: auto; margin-right: auto;' width='150px' height='150px' src='../../../imageUploaded/products/" + prodImage + "'/>");
+            string = string.concat("<img style='display: block; margin-left: auto; margin-right: auto;' width='250px' height='300px' src='../../../imageUploaded/products/" + prodImage + "'/>");
             @endif
 
             string = string.concat("</div>" +
