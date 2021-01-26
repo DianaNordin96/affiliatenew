@@ -50,12 +50,12 @@
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>
                                                     {{-- Actual Price: RM {{ number_format($product->product_price, 2) }}<br />
-                                                    HQ Price: RM {{ number_format($product->price_hq, 2) }}<br />
-                                                    Shogun Price: RM {{ number_format($product->price_shogun, 2) }}<br />
-                                                    Damio Price: RM {{ number_format($product->price_damio, 2) }}<br />
-                                                    Merchant Price: RM
+                                                    HQ Cost: RM {{ number_format($product->price_hq, 2) }}<br />
+                                                    Shogun Profit: RM {{ number_format($product->price_shogun, 2) }}<br />
+                                                    Damio Profit: RM {{ number_format($product->price_damio, 2) }}<br />
+                                                    Merchant Profit: RM
                                                     {{ number_format($product->price_merchant, 2) }}<br />
-                                                    Dropship Price: RM
+                                                    Dropship Profit: RM
                                                     {{ number_format($product->price_dropship, 2) }}<br /> --}}
 
                                                     <?php $links = explode(',',$product->product_link);  ?>
@@ -71,13 +71,18 @@
                                                                     '{{ $product->price_hq }}',
                                                                     '{{ $product->product_price }}',
                                                                     '{{ $product->product_description }}',
+                                                                    '{{ $product->product_cost }}',
                                                                     '{{ $product->price_shogun }}',
                                                                     '{{ $product->price_damio }}',
                                                                     '{{ $product->price_merchant }}',
                                                                     '{{ $product->price_dropship }}',
                                                                     '{{ $product->product_link }}',
                                                                     '{{ $product->belongToAdmin }}',
-                                                                    '{{ $product->product_cat }}'
+                                                                    '{{ $product->product_cat }}',
+                                                                    '{{ $product->shogun_cost }}',
+                                                                    '{{ $product->damio_cost }}',
+                                                                    '{{ $product->merchant_cost }}',
+                                                                    '{{ $product->dropship_cost }}'
                                                                     )" data-target="#modalEdit" class="btn btn-warning"><i
                                                             class="lni lni-pencil-alt"></i></button> &nbsp;
                                                     <button type="button" title="View" data-toggle="modal" onclick="openModalView(
@@ -86,13 +91,18 @@
                                                                     '{{ $product->price_hq }}',
                                                                     '{{ $product->product_price }}',
                                                                     '{{ $product->product_description }}',
+                                                                    '{{ $product->product_cost }}',
                                                                     '{{ $product->price_shogun }}',
                                                                     '{{ $product->price_damio }}',
                                                                     '{{ $product->price_merchant }}',
                                                                     '{{ $product->price_dropship }}',
                                                                     '{{ $product->product_link }}',
                                                                     '{{ $product->belongToAdmin }}',
-                                                                    '{{ $product->product_cat }}'
+                                                                    '{{ $product->product_cat }}',
+                                                                    '{{ $product->shogun_cost }}',
+                                                                    '{{ $product->damio_cost }}',
+                                                                    '{{ $product->merchant_cost }}',
+                                                                    '{{ $product->dropship_cost }}'
                                                                     )" data-target="#modalView" class="btn btn-success"><i
                                                             class="lni lni-eye"></i></button> &nbsp;
 
@@ -169,6 +179,15 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
+                                            <label>  Product Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="costPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="costPrice"
+                                                 />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
                                             <label> Actual Price <span style="color:yellow">  *</span></label>
                                             <input type="text" id="productPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
                                             class="form-control" name="productPrice"
@@ -178,25 +197,47 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> HQ Price <span style="color:yellow">  *</span></label>
+                                            <label> HQ Cost <span style="color:yellow">  *</span></label>
                                             <input type="text" id="hqPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
                                             class="form-control" name="hqPrice"
                                                  />
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Shogun Price <span style="color:yellow">  *</span></label>
-                                            <input type="text" id="shogunPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
-                                            class="form-control" name="shogunPrice"
+                                            <label> Shogun Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="shogunCost" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="shogunCost"
                                                 />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Damio Price <span style="color:yellow">  *</span></label>
+                                            <label> Shogun Profit <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="shogunPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="shogunPrice"
+                                                />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Damio Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="damioCost" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="damioCost"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Damio Profit <span style="color:yellow">  *</span></label>
                                             <input type="text" id="damioPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
                                             class="form-control" name="damioPrice"
                                                  />
@@ -205,7 +246,16 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Merchant Price <span style="color:yellow">  *</span></label>
+                                            <label> Merchant Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="merchantCost" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="merchantCost"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Merchant Profit <span style="color:yellow">  *</span></label>
                                             <input type="text" id="merchantPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
                                              class="form-control" name="merchantPrice"
                                                 />
@@ -214,18 +264,28 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Dropship Price <span style="color:yellow">  *</span></label>
+                                            <label> Dropship Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="dropshipCost" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="dropshipCost"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Dropship Profit <span style="color:yellow">  *</span></label>
                                             <input type="text" id="dropshipPrice" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
                                              class="form-control" name="dropshipPrice"
                                                  />
                                         </div>
                                     </div>
 
+                                </div>
                                     <?php 
                                     $allAdminType = $category->getAllAdminType(); 
                                     $allProdCategory = $product_cat->getAllProdCat();
                                     ?>
-
+                                <div class="row">
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
@@ -327,6 +387,14 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
+                                            <label>  Product Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="costPriceEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="costPriceEdit"
+                                                 />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
                                             <label> Actual Price <span style="color:yellow">  *</span></label>
                                             <input type="text" id="productPriceEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="productPriceEdit"
                                                  />
@@ -335,15 +403,27 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> HQ Price <span style="color:yellow">  *</span></label>
+                                            <label> HQ Cost <span style="color:yellow">  *</span></label>
                                             <input type="text" id="hqPriceEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="hqPriceEdit"
                                                  />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Shogun Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="shogunCostEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="shogunCostEdit"
+                                                />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Shogun Price <span style="color:yellow">  *</span></label>
+                                            <label> Shogun Profit <span style="color:yellow">  *</span></label>
                                             <input type="text" id="shogunPriceEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="shogunPriceEdit"
                                                  />
                                         </div>
@@ -351,7 +431,16 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Damio Price <span style="color:yellow">  *</span></label>
+                                            <label> Damio Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="damioCostEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="damioCostEdit"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Damio Profit <span style="color:yellow">  *</span></label>
                                             <input type="text" id="damioPriceEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="damioPriceEdit"
                                                  />
                                         </div>
@@ -359,7 +448,16 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Merchant Price <span style="color:yellow">  *</span></label>
+                                            <label> Merchant Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="merchantCostEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="merchantCostEdit"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Merchant Profit <span style="color:yellow">  *</span></label>
                                             <input type="text" id="merchantPriceEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="merchantPriceEdit"
                                                  />
                                         </div>
@@ -367,7 +465,16 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label> Dropship Price <span style="color:yellow">  *</span></label>
+                                            <label> Dropship Cost <span style="color:yellow">  *</span></label>
+                                            <input type="text" id="dropshipCostEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)"
+                                            class="form-control" name="dropshipCostEdit"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label> Dropship Profit <span style="color:yellow">  *</span></label>
                                             <input type="text" id="dropshipPriceEdit" onkeyup="price(event);" onkeypress="return isPriceKey(event)" class="form-control" name="dropshipPriceEdit"
                                                  />
                                         </div>
@@ -376,7 +483,9 @@
                                     <?php $allAdminType = $category->getAllAdminType(); 
                                     $allProdCategory = $product_cat->getAllProdCat();
                                     ?>
+                                </div>
 
+                                <div class="row">
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
@@ -446,13 +555,8 @@
 
 @section('script')
     <script>
-        function openModalEditProd(id, cat, desc) {
-            document.getElementById("idEdit").value = id;
-            document.getElementById("catNameEdit").value = cat;
-            document.getElementById("descEdit").value = desc;
-        }
 
-        function openModalEdit(prodID,name,hq,price, desc , shogun, damio, merchant, dropship , link, category,prod_cat) {
+        function openModalEdit(prodID,name,hq,price, desc , cost,  shogun, damio, merchant, dropship , link, category,prod_cat,shogun_cost,damio_cost,merchant_cost,dropship_cost) {
 
             document.getElementById("productIDEdit").value = prodID;
             document.getElementById("productNameEdit").value = name;
@@ -460,31 +564,41 @@
             document.getElementById("productPriceEdit").value = price;
             document.getElementById("productDescEdit").value = desc;
             document.getElementById("productLinkEdit").value = link;
+            document.getElementById("costPriceEdit").value = cost;
             document.getElementById("shogunPriceEdit").value = shogun;
             document.getElementById("damioPriceEdit").value = damio;
             document.getElementById("merchantPriceEdit").value = merchant;
             document.getElementById("dropshipPriceEdit").value = dropship;
+            document.getElementById("shogunCostEdit").value = shogun_cost;
+            document.getElementById("damioCostEdit").value = damio_cost;
+            document.getElementById("merchantCostEdit").value = merchant_cost;
+            document.getElementById("dropshipCostEdit").value = dropship_cost;
             $('#categoryEdit').val(category).change();
             $('#prodcategoryEdit').val(prod_cat).change();
         }
 
        
 
-        function openModalView(prodID,name, hq, price, desc , shogun, damio, merchant, dropship, link) {
+        function openModalView(prodID,name, hq, price, desc , cost, shogun, damio, merchant, dropship, link ,category,prod_cat,shogun_cost,damio_cost,merchant_cost,dropship_cost) {
             document.getElementById("viewName").innerHTML = name;
             document.getElementById("modal-body-view").innerHTML =
                 "<div class='row'>" +
                 "<br/>" +
                 "<div class='col-sm-6'>" +
                     "<b>Actual Price: RM  </b>" + price + "<br/>" +
-                    "<b>Product Name:  </b>" + name + "<br/>" +
+                    "<b>Product Name: RM </b>" + name + "<br/>" +
+                    "<b>Product Cost: RM </b>" + cost + "<br/>" +
+                    "<b>Shogun Cost: RM </b>" + shogun_cost + "<br/>" +
+                    "<b>Damio Cost: RM </b>" + damio_cost + "<br/>" +
+                    "<b>Merchant Cost: RM </b>" + merchant_cost + "<br/>" +
+                    "<b>Dropship Cost: RM </b>" + dropship_cost + "<br/>" +
                     "<b>Description: </b>" + desc + "<br/>" +
                     "</div><div class='col-sm-6'>" +
-                    "<b>Price HQ: </b> RM " + hq + "<br/>" +
-                    "<b>Price Shogun: </b> RM " + shogun + "<br/>" +
-                    "<b>Price Damio: </b> RM " + damio + "<br/>" +
-                    "<b>Price Merchant: </b> RM " + merchant + "<br/>" +
-                    "<b>Price Dropship: </b> RM " + dropship + "<br/>" +
+                    "<b>Cost HQ: </b> RM " + hq + "<br/>" +
+                    "<b>Cost Shogun: </b> RM " + shogun + "<br/>" +
+                    "<b>Cost Damio: </b> RM " + damio + "<br/>" +
+                    "<b>Cost Merchant: </b> RM " + merchant + "<br/>" +
+                    "<b>Cost Dropship: </b> RM " + dropship + "<br/>" +
                 "</div>";
             "</div>";
         }

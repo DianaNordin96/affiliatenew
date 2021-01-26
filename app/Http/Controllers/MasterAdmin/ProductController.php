@@ -45,6 +45,7 @@ class ProductController extends Controller
             'productPriceEdit' => 'required',
             'productDescEdit' => 'required',
             'hqPriceEdit' => 'required',
+            'costPriceEdit' => 'required',
             'shogunPriceEdit' => 'required',
             'dropshipPriceEdit' => 'required',
             'damioPriceEdit' => 'required',
@@ -52,7 +53,11 @@ class ProductController extends Controller
             'productLinkEdit' => '',
             'categoryEdit' => 'required',
             'prodcategoryEdit' => 'required',
-            'imageEdit' => 'image|mimes:jpeg,png,jpg'
+            'imageEdit' => 'image|mimes:jpeg,png,jpg',
+            'shogunCostEdit' => 'required',
+            'damioCostEdit' => 'required',
+            'merchantCostEdit' => 'required',
+            'dropshipCostEdit' => 'required'
         ];
 
         $validator = Validator::make($req->all(), $validatedData);
@@ -76,6 +81,11 @@ class ProductController extends Controller
                             'product_link' => $data['productLinkEdit'],
                             'belongToAdmin' => $data['categoryEdit'],
                             'product_cat' => $data['prodcategoryEdit'],
+                            'product_cost' => $data['costPriceEdit'],
+                            'shogun_cost' => $data['shogunCostEdit'],
+                            'damio_cost' => $data['damioCostEdit'],
+                            'merchant_cost' => $data['merchantCostEdit'],
+                            'dropship_cost' => $data['dropshipCostEdit'],
                         ]);
 
 
@@ -109,6 +119,11 @@ class ProductController extends Controller
                             'belongToAdmin' => $data['categoryEdit'],
                             'product_image' => $newFileName,
                             'product_cat' => $data['prodcategoryEdit'],
+                            'product_cost' => $data['costPriceEdit'],
+                            'shogun_cost' => $data['shogunCostEdit'],
+                            'damio_cost' => $data['damioCostEdit'],
+                            'merchant_cost' => $data['merchantCostEdit'],
+                            'dropship_cost' => $data['dropshipCostEdit'],
                         ]);
 
                     return redirect('/master-manageProduct')->with('success', "Product has been updated");
@@ -125,6 +140,11 @@ class ProductController extends Controller
             'productName' => 'required',
             'productPrice' => 'required',
             'productDesc' => 'required',
+            'costPrice' => 'required',
+            'shogunCost' => 'required',
+            'damioCost' => 'required',
+            'merchantCost' => 'required',
+            'dropshipCost' => 'required',
             'shogunPrice' => 'required',
             'dropshipPrice' => 'required',
             'damioPrice' => 'required',
@@ -168,6 +188,11 @@ class ProductController extends Controller
                     'product_link' => $data['productLink'],
                     'belongToAdmin' => $data['category'],
                     'product_cat' => $data['prod_category'],
+                    'product_cost' => $data['costPrice'],
+                    'shogun_cost' => $data['shogunCost'],
+                    'damio_cost' => $data['damioCost'],
+                    'merchant_cost' => $data['merchantCost'],
+                    'dropship_cost' => $data['dropshipCost'],
                 ]);
 
 

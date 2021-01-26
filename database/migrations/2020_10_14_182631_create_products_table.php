@@ -20,6 +20,11 @@ class CreateProductsTable extends Migration
             $table->string('product_price')->nullable();
             $table->string('product_image')->nullable();
             $table->text('product_link')->nullable();
+            $table->string('product_cost')->nullable();
+            $table->string('shogun_cost')->nullable();
+            $table->string('damio_cost')->nullable();
+            $table->string('merchant_cost')->nullable();
+            $table->string('dropship_cost')->nullable();
             $table->string('price_shogun')->nullable();
             $table->string('price_damio')->nullable();
             $table->string('price_merchant')->nullable();
