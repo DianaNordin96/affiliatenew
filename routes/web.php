@@ -216,6 +216,7 @@ Route::group(['middleware' => 'App\Http\Middleware\MasterAdminMiddleware'], func
     Route::POST('/master.update.prodCat', 'MasterAdmin\ProductController@updateCategory')->middleware('auth');
     Route::get('/master-delete-admin-cat/{id}', 'MasterAdmin\ManageAdminController@deleteCategory')->middleware('auth');
     Route::get('/master-manageProdCat', 'MasterAdmin\ProductController@viewProdCategory')->middleware('auth');
+    Route::get('/master-resetUser/{id}', 'MasterAdmin\ManageAgentController@resetPasswordUser')->middleware('auth');
     
 });
 

@@ -69,7 +69,7 @@
                                     <div class="new-arrival-content text-center mt-3">
                                         <h4>{{ $product->product_name }}</h4>
                                         <span class="price">RM
-                                            {{ number_format($product->price_hq + $product->price_shogun+ $product->price_damio, 2) }}</span>
+                                            {{ number_format($product->merchant_cost, 2) }}</span>
                                     </div>
                                     <div class="row">
                                         <div style="margin: auto">
@@ -83,8 +83,8 @@
                                                                 '{{ $product->product_image }}',
                                                                 '{{ $product->product_name }}',
                                                                 '{{ $product->product_description }}',
-                                                                '{{ number_format($product->price_hq + $product->price_shogun + $product->price_damio,  2) }}',
-                                                                '{{ number_format($product->product_price - $product->price_hq - $product->price_shogun - $product->price_damio, 2) }}',
+                                                                '{{ number_format($product->merchant_cost,  2) }}',
+                                                                '{{ number_format($product->product_price - $product->merchant_cost, 2) }}',
                                                                 '{{ $product->product_link }}'
                                                                 )"
                                                 data-target="#modalView" class="btn btn-warning"><i

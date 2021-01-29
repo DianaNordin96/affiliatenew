@@ -123,7 +123,29 @@
         </div>
         <div class="row">
             <!-- Left col -->
-            <div class="col-xl-12 col-lg-8 col-sm-12">
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card active_users">
+                    <div class="card-header bg-success border-0 pb-0">
+                        <h4 class="card-title text-white">Active Users</h4>
+                    </div>
+                    <div class="bg-success">
+                        <canvas id="activeUser" height="200"></canvas>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="list-group-flush mt-4">
+                            <div class="list-group-item bg-transparent d-flex justify-content-between px-0 py-1 font-weight-semi-bold border-top-0" style="border-color: rgba(255, 255, 255, 0.15)">
+                                <p class="mb-0">Agents</p>
+                                <p class="mb-0">Active Users</p>
+                            </div>
+                            <div class="list-group-item bg-transparent d-flex justify-content-between px-0 py-1" style="border-color: rgba(255, 255, 255, 0.05)">
+                                <p class="mb-0">Total Agents</p>
+                                <p class="mb-0">{{ $totalDS + 1000}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div id="loading" style="display: none;

@@ -86,9 +86,12 @@
                                                                                 '{{ $user->image }}'
                                                                                 )" data-target="#modalView"
                                                         class="btn btn-success"><i class="lni lni-eye"></i></button> &nbsp;
-                                                    <button type="button" id="buttonEdit" title="Edit" data-toggle="modal"
+                                                    <button type="button" id="buttonEdit" title="Delete" data-toggle="modal"
                                                         onclick="window.location.href='master-manageAgent/delete/{{ $user->id }}'"
-                                                        class="btn btn-danger"><i class="lni lni-trash"></i></button>
+                                                        class="btn btn-danger"><i class="lni lni-trash"></i></button> &nbsp;
+                                                    <button type="button" id="buttonReset" title="Reset User" data-toggle="modal"
+                                                    onclick="window.location.href='master-resetUser/{{ $user->id }}'"
+                                                    class="btn btn-info">Reset</button>
                                                 </td>
                                                 <td>
                                                     <a href="/master-viewAgent-one/{{ $user->id }}" class="btn btn-warning"> View

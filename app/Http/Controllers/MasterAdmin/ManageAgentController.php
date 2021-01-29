@@ -557,4 +557,16 @@ class ManageAgentController extends Controller
             }
         }
     }
+
+    public function resetPasswordUser($id){
+        $getIC = DB::table('users')->where('id',$id)->select('icnumber')->get();
+
+        DB::table('users')
+        ->where('id',$id)
+        ->update([
+            'password' => Hash::make($getIC[0]->icnumber)
+        ]);
+
+        return redirect('/master-viewAgent')->with('success', "User's password has been reset to their IC Number.");
+    }
 }

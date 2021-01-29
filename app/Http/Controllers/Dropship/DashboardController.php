@@ -43,8 +43,14 @@ class DashboardController extends Controller
             ->select('amount')
             ->sum('amount');
 
+        //count dropship
+        $getDS = DB::table('users')
+        ->where('role','dropship')
+        ->get();
+
         return view('dropship/dashboard')->with([
             'totalSale' => $totalSale,
+            'totalDS' => count($getDS)
         ]);
     }
 
