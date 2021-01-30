@@ -104,7 +104,7 @@
                                         @foreach ($products as $product)
                                             <tr>
                                                 <td><div class="col-sm-3 hidden-xs"><img
-                                                    src="../imageUploaded/products/{{ $product->product_image }}" width="100"
+                                                    src="{{asset('imageUploaded/products/'.$product->product_image.'')}}"  width="100"
                                                     height="100" class="img-responsive" /></div></td>
                                                 <td>{{ $product->product_name }}</td>
                                                 <td>{{ $product->price_hq + $product->price_shogun}}</td>

@@ -43,9 +43,9 @@ class DashboardController extends Controller
         //totalSales this month
         $totalSales = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
+            ->where('orders.belongToAdmin', '=', Auth::user()->admin_category)
             ->select('amount')
             ->sum('amount');
 
@@ -55,10 +55,10 @@ class DashboardController extends Controller
             ->join('orders_details', 'orders.orders_id', '=', 'orders_details.referenceNo')
             ->join('products', 'orders_details.product_id', '=', 'products.id')
             ->select('orders.amount', 'orders.orders_id')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->where('users.role', 'shogun')
-            ->where('products.belongToAdmin', '=', Auth::user()->admin_category)
+            ->where('orders.belongToAdmin', '=', Auth::user()->admin_category)
             ->groupBy('orders_details.referenceNo')
             ->get();
 
@@ -73,9 +73,9 @@ class DashboardController extends Controller
         //total sales downline today
         $damio = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
+            ->where('orders.belongToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'damio')
             ->select('amount')
             ->sum('amount');
@@ -83,9 +83,9 @@ class DashboardController extends Controller
         //total sales downline today
         $merchant = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
+            ->where('orders.belongToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'merchant')
             ->select('amount')
             ->sum('amount');
@@ -93,9 +93,9 @@ class DashboardController extends Controller
         //total sales downline today
         $dropship = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
-            ->where('users.belongsToAdmin', '=', Auth::user()->admin_category)
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
+            ->where('orders.belongToAdmin', '=', Auth::user()->admin_category)
             ->where('users.role', 'dropship')
             ->select('amount')
             ->sum('amount');

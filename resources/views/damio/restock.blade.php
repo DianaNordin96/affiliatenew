@@ -86,7 +86,8 @@
                                                                 '{{ $product->product_description }}',
                                                                 '{{ number_format($product->damio_cost,  2) }}',
                                                                 '{{ number_format($product->product_price - $product->damio_cost, 2) }}',
-                                                                '{{ $product->product_link }}'
+                                                                '{{ $product->product_link }}',
+                                                                '{{ $product->product_price }}'
                                                                 )"
                                                 data-target="#modalView" class="btn btn-warning"><i
                                                     class="lni lni-eye"></i>
@@ -115,7 +116,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="addToPaymentCart-damio" method="post" enctype="multipart/form-data">
+                    <form action="{{ url('addToPaymentCart-damio') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-12">
@@ -400,7 +401,7 @@
 
         document.getElementById("products").className = "nav-link active";
 
-        function openModalView(prodImage, prodName, prodDesc, prodActualPrice, prodComm, link) {
+        function openModalView(prodImage, prodName, prodDesc, prodActualPrice, prodComm, link , prodActPrice) {
 
             var links = link.split(",");
             document.getElementById("viewName").innerHTML = prodName;
@@ -419,6 +420,7 @@
                 "<div class='col-sm-6'>" +
                 "<b>Product Name  </b> : " + prodName + "<br/>" +
                 "<b>Description  </b> : " + prodDesc + "<br/>" +
+                "<b>Selling Price </b> : RM " + prodActPrice + "<br/>" +
                 "<b>Product Price  </b> : RM " + prodActualPrice + "<br/>" +
                 "<b>Commission </b> : RM " + prodComm + "<br/>" );
 

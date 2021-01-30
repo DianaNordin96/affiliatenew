@@ -46,7 +46,7 @@
                                 </svg>
                             </span>
                             <div class="media-body">
-                                <p class="mb-1">Gross Profit</p>
+                                <p class="mb-1">Total Purchase</p>
                                 <h4 class="mb-0">{{ number_format($sales->getTotalPurchase(), 2) }}</h4>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 </svg>
                             </span>
                             <div class="media-body">
-                                <p class="mb-1">Total Sales</p>
+                                <p class="mb-1">Gross Profit</p>
                                 <h4 class="mb-0">
                                     {{ number_format($sales->getTotalSales() - $sales->getTotalPurchase(), 2) }}
                                 </h4>

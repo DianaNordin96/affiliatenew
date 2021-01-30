@@ -87,9 +87,9 @@ class SalesController extends Controller
                         $getTotalPurchase = DB::table('orders_details')
                             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
-                            ->selectRaw('orders_details.quantity * (products.product_price-(products.product_price-(products.price_hq + products.price_shogun + products.price_damio + products.price_merchant ))) AS total_purchase')
-                            ->where('orders.created_at', '>=', $year . $month . '01')
-                            ->where('orders.created_at', '<=', $year . $month . '31')
+                            ->selectRaw('orders_details.quantity * (products.product_price-(products.product_price-products.dropship_cost)) AS total_purchase')
+                            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+                            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
                             ->where('orders.user_id', $user->id)
                             ->get();
                         foreach ($getTotalPurchase as $value) {
@@ -106,9 +106,9 @@ class SalesController extends Controller
         $getTotalPurchase = DB::table('orders_details')
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
-            ->selectRaw('orders_details.quantity * (products.price_hq + products.price_shogun + products.price_damio) AS total_purchase')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->selectRaw('orders_details.quantity * products.merchant_cost AS total_purchase')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->where('orders.user_id', Auth::user()->id)
             ->get();
 
@@ -142,8 +142,8 @@ class SalesController extends Controller
                     ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                     ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
                     ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
-                    ->where('orders.created_at', '>=', $year . $month . '01')
-                    ->where('orders.created_at', '<=', $year . $month . '31')
+                    ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+                    ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
                     ->where('orders.user_id', $user->id)
                     ->get();
 
@@ -158,8 +158,8 @@ class SalesController extends Controller
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
             ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->where('orders.user_id', Auth::user()->id)
             ->get();
 
@@ -183,9 +183,9 @@ class SalesController extends Controller
         $getTotalPurchase = DB::table('orders_details')
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
-            ->selectRaw('orders_details.quantity * (products.price_hq + products.price_shogun + products.price_damio) AS total_purchase')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->selectRaw('orders_details.quantity * (products.merchant_cost) AS total_purchase')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->where('orders.user_id', Auth::user()->id)
             ->get();
 
@@ -209,8 +209,8 @@ class SalesController extends Controller
             ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
             ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->where('orders.user_id', Auth::user()->id)
             ->get();
 
@@ -246,8 +246,8 @@ class SalesController extends Controller
                         ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                         ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
                         ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
-                        ->where('orders.created_at', '>=', $year . $mth . '01')
-                        ->where('orders.created_at', '<=', $year . $mth . '31')
+                        ->whereDate('orders.created_at', '>=', $year . '-' . $mth . '-01')
+                        ->whereDate('orders.created_at', '<=', $year . '-' . $mth . '-31')
                         ->where('orders.user_id', $user->id)
                         ->get();
 
@@ -262,8 +262,8 @@ class SalesController extends Controller
                 ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                 ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
                 ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
-                ->where('orders.created_at', '>=', $year . $mth . '01')
-                ->where('orders.created_at', '<=', $year . $mth . '31')
+                ->whereDate('orders.created_at', '>=', $year . '-' . $mth . '-01')
+                ->whereDate('orders.created_at', '<=', $year . '-' . $mth . '-31')
                 ->where('orders.user_id', Auth::user()->id)
                 ->get();
 
@@ -306,9 +306,9 @@ class SalesController extends Controller
                             $getTotalPurchase = DB::table('orders_details')
                                 ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                                 ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
-                                ->selectRaw('orders_details.quantity * (products.product_price-(products.product_price-(products.price_hq + products.price_shogun + products.price_damio + products.price_merchant ))) AS total_purchase')
-                                ->where('orders.created_at', '>=', $year . $mth . '01')
-                                ->where('orders.created_at', '<=', $year . $mth . '31')
+                                ->selectRaw('orders_details.quantity * (products.product_price-(products.product_price-(products.dropship_cost))) AS total_purchase')
+                                ->whereDate('orders.created_at', '>=', $year . '-' . $mth . '-01')
+                                ->whereDate('orders.created_at', '<=', $year . '-' . $mth . '-31')
                                 ->where('orders.user_id', $user->id)
                                 ->get();
 
@@ -326,9 +326,9 @@ class SalesController extends Controller
             $getTotalPurchase = DB::table('orders_details')
                 ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                 ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
-                ->selectRaw('orders_details.quantity * (products.price_hq + products.price_shogun + products.price_damio) AS total_purchase')
-                ->where('orders.created_at', '>=', $year . $mth . '01')
-                ->where('orders.created_at', '<=', $year . $mth . '31')
+                ->selectRaw('orders_details.quantity * (products.merchant_cost) AS total_purchase')
+                ->whereDate('orders.created_at', '>=', $year . '-' . $mth . '-01')
+                ->whereDate('orders.created_at', '<=', $year . '-' . $mth . '-31')
                 ->where('orders.user_id', Auth::user()->id)
                 ->get();
 

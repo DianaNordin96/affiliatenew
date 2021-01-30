@@ -29,13 +29,13 @@ class DashboardController extends Controller
 
                 $userDownlineL1 = DB::table('users')
                     ->where('downlineTo', $value)
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'decline');
+                            ->orWhere('statusDownline', '!=', 'decline');
                     })
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->whereNull('statusDownline')
-                            ->orWhere('statusDownline','!=', 'pending');
+                            ->orWhere('statusDownline', '!=', 'pending');
                     })
                     ->select('id')
                     ->get();
@@ -66,7 +66,7 @@ class DashboardController extends Controller
         $month = date('m');
         $year = date('Y');
 
-        
+
         $damio = 0;
         $merchant = 0;
         $dropship = 0;
@@ -75,16 +75,16 @@ class DashboardController extends Controller
         foreach ($allDownline as $dl) {
             $sales = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
-                ->where('orders.created_at', '>=', $year . $month . '01')
-                ->where('orders.created_at', '<=', $year . $month . '31')
+                ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+                ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
                 ->where('orders.user_id', '=', $dl)
                 ->get();
             // dd($sales);
             foreach ($sales as $sale) {
                 switch ($sale->role) {
-                    // case 'damio':
-                    //     $damio = $damio + $sale->amount;
-                    //     break;
+                        // case 'damio':
+                        //     $damio = $damio + $sale->amount;
+                        //     break;
                     case 'merchant':
                         $merchant = $merchant + $sale->amount;
                         break;
@@ -100,12 +100,12 @@ class DashboardController extends Controller
         //own sale
         $own =  DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->where('orders.user_id', Auth::user()->id)
             ->select('amount')
             ->sum('amount');
-        
+
         $totalSale = $own + $merchant + $dropship;
 
         return view('damio/dashboard')->with([

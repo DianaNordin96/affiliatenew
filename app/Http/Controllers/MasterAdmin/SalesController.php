@@ -21,8 +21,8 @@ class SalesController extends Controller
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
             ->JOIN('users', 'orders.user_id', '=', 'users.id')
             ->selectRaw('orders_details.quantity * products.price_hq AS total_purchase')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->get();
 
         $total = 0;
@@ -45,8 +45,8 @@ class SalesController extends Controller
             ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
             ->JOIN('users', 'orders.user_id', '=', 'users.id')
             ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->get();
 
         $total = 0;
@@ -71,8 +71,8 @@ class SalesController extends Controller
                 ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                 ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
                 ->selectRaw('orders_details.quantity * products.product_price AS total_sales')
-                ->where('orders.created_at', '>=', $year . $mth . '01')
-                ->where('orders.created_at', '<=', $year . $mth . '31')
+                ->whereDate('orders.created_at', '>=', $year . '-' . $mth . '-01')
+                ->whereDate('orders.created_at', '<=', $year . '-' . $mth . '-31')
                 ->get();
 
             $total = 0;
@@ -104,8 +104,8 @@ class SalesController extends Controller
                 ->JOIN('products', 'orders_details.product_id', '=', 'products.id')
                 ->JOIN('orders', 'orders_details.referenceNo', '=', 'orders.orders_id')
                 ->selectRaw('orders_details.quantity * products.price_hq AS total_purchase')
-                ->where('orders.created_at', '>=', $year . $mth . '01')
-                ->where('orders.created_at', '<=', $year . $mth . '31')
+                ->whereDate('orders.created_at', '>=', $year . '-' . $mth . '-01')
+                ->whereDate('orders.created_at', '<=', $year . '-' . $mth . '-31')
                 ->get();
 
             $total = 0;
@@ -139,8 +139,7 @@ class SalesController extends Controller
                 array_push($profitMonthly, 0);
             }
         }
-        
+
         return $profitMonthly;
     }
-
 }

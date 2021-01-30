@@ -85,7 +85,8 @@
                                                                 '{{ $product->product_description }}',
                                                                 '{{ number_format($product->dropship_cost,  2) }}',
                                                                 '{{ number_format($product->product_price - $product->dropship_cost, 2) }}',
-                                                                '{{ $product->product_link }}'
+                                                                '{{ $product->product_link }}',
+                                                                '{{ $product->product_price }}'
                                                                 )"
                                                 data-target="#modalView" class="btn btn-warning"><i
                                                     class="lni lni-eye"></i>
@@ -400,7 +401,7 @@
 
         document.getElementById("products").className = "nav-link active";
 
-        function openModalView(prodImage, prodName, prodDesc, prodActualPrice, prodComm, link) {
+        function openModalView(prodImage, prodName, prodDesc, prodActualPrice, prodComm, link , prodActPrice) {
 
         var links = link.split(",");
         document.getElementById("viewName").innerHTML = prodName;
@@ -419,6 +420,7 @@
             "<div class='col-sm-6'>" +
             "<b>Product Name  </b> : " + prodName + "<br/>" +
             "<b>Description  </b> : " + prodDesc + "<br/>" +
+            "<b>Selling Price </b> : RM " + prodActPrice + "<br/>" +
             "<b>Product Price  </b> : RM " + prodActualPrice + "<br/>" +
             "<b>Commission </b> : RM " + prodComm + "<br/>" );
 

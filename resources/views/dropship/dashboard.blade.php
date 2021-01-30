@@ -139,7 +139,7 @@
                             </div>
                             <div class="list-group-item bg-transparent d-flex justify-content-between px-0 py-1" style="border-color: rgba(255, 255, 255, 0.05)">
                                 <p class="mb-0">Total Agents</p>
-                                <p class="mb-0">{{ $totalDS + 1000}}</p>
+                                <p class="mb-0">{{ $totalDS + 1539}}</p>
                             </div>
                         </div>
                     </div>

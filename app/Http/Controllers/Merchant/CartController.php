@@ -207,53 +207,44 @@ class CartController extends Controller
                         ->where('id', $id)
                         ->get();
                     foreach ($prod as $product) {
-                        $commisionPerProduct = $product->price_merchant;
-                        $commisionPerProduct = $commisionPerProduct * $details['quantity'];
-                        $totalCommission = $totalCommission + $commisionPerProduct;
+                        
+                        
+                        //check upperLevel role
+                        $checkRole = DB::table('users')->where('id', Auth::user()->downlineTo)->get();
+                        // dd($checkRole);
+                        switch ($checkRole[0]->role) {
+                            case 'shogun':
+                                $this->addCommission($checkRole[0]->id, ($product->price_shogun + $product->price_damio) * $details['quantity']);
+                                break;
 
-                        //check downline
-                        $status = true;
-                        // $statusCheck = false;
-                        $id = Auth::user()->downlineTo;
-                        $commissionPoint = 0;
+                            case 'damio':
+                                $this->addCommission($checkRole[0]->id, ($product->price_damio) * $details['quantity']);
+                                //getShogun
+                                $getShogun = DB::table('users')->where('id', $checkRole[0]->downlineTo)->get();
 
-
-                        while ($status) {
-                            $check = DB::table('users')
-                                ->where('id', $id)
-                                ->get();
-                            // dd($check);
-                            foreach ($check as $checking) {
-                                if ($checking->id != '') {
-                                    $id = $checking->downlineTo;
-                                    $role = $checking->role;
-                                    switch ($role) {
-                                        case 'shogun':
-                                            $commissionPoint = ($product->price_shogun * $details['quantity']) + $checking->commissionPoint;
-                                            break;
-                                        case 'merchant':
-                                            $commissionPoint = ($product->price_merchant * $details['quantity']) + $checking->commissionPoint;
-                                            break;
-                                        case 'damio':
-                                            $commissionPoint = ($product->price_damio * $details['quantity']) + $checking->commissionPoint;
-                                            break;
-                                        case 'dropship':
-                                            $commissionPoint = ($product->price_dropship * $details['quantity']) + $checking->commissionPoint;
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    DB::table('users')
-                                        ->where('id', $checking->id)
-                                        ->update([
-                                            'commissionPoint' => $commissionPoint
-                                        ]);
-
-                                    if ($checking->downlineTo == null) {
-                                        $status = false;
-                                    }
+                                if ($getShogun[0]->role == 'shogun') {
+                                    $this->addCommission($getShogun[0]->id, ($product->price_shogun) * $details['quantity']);
                                 }
-                            }
+                                break;
+
+                            case 'merchant':
+                                // $tempID = $checkRole[0]->id;
+                                // $status = true;
+                                $this->addCommission($checkRole[0]->id, ($product->price_merchant) * $details['quantity']);
+
+                                //getUpperLevelRole
+                                $getUpperLvl = DB::table('users')->where('id', $checkRole[0]->downlineTo)->get();
+
+                                if ($getUpperLvl[0]->role == 'damio') {
+                                    $this->addCommission($checkRole[0]->id, ($product->price_damio) * $details['quantity']);
+                                    //addToShogun
+                                    $this->addCommission($checkRole[0]->downlineTo, ($product->price_shogun) * $details['quantity']);
+                                } else if ($getUpperLvl[0]->role == 'shogun') {
+                                    $this->addCommission($getUpperLvl[0]->id, ($product->price_shogun + $product->price_damio) * $details['quantity']);
+                                }
+                                break;
+                            default:
+                                break;
                         }
                     }
                 }
@@ -263,6 +254,17 @@ class CartController extends Controller
         } else { //if payment unsuccessful
             return redirect('purchase-history-merchant')->with('error','Payment Unsuccessful');
         }
+    }
+
+    public function addCommission($id, $amount)
+    {
+        $getLatestAmount = DB::table('users')->where('id', $id)->get();
+
+        DB::table('users')
+            ->where('id', $id)
+            ->update([
+                'commissionPoint' => $getLatestAmount[0]->commissionPoint + $amount
+            ]);
     }
 
     public function callback()

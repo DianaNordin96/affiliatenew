@@ -230,58 +230,45 @@ class CartController extends Controller
                     $prod = DB::table('products')
                         ->where('id', $id)
                         ->get();
-                    foreach ($prod as $product) {
-                        $commisionPerProduct = $product->product_price - $product->price_hq - $product->price_shogun;
-                        $commisionPerProduct = $commisionPerProduct * $details['quantity'];
-                        $totalCommission = $totalCommission + $commisionPerProduct;
+                    // foreach ($prod as $product) {
+                    //     //check upperLevel role
+                    //     $checkRole = DB::table('users')->where('id', Auth::user()->downlineTo)->get();
+                    //     // dd($checkRole);
+                    //     switch ($checkRole[0]->role) {
+                    //         case 'shogun':
+                    //             $this->addCommission($checkRole[0]->id, ($product->price_shogun + $product->price_damio + $product->price_merchant) * $details['quantity']);
+                    //             break;
 
-                        //check downline
-                        $status = true;
-                        // $statusCheck = false;
-                        $id = Auth::user()->downlineTo;
-                        $commissionPoint = 0;
+                    //         case 'damio':
+                    //             $this->addCommission($checkRole[0]->id, ($product->price_damio + $product->price_merchant) * $details['quantity']);
+                    //             //getShogun
+                    //             $getShogun = DB::table('users')->where('id', $checkRole[0]->downlineTo)->get();
 
-                        if (Auth::user()->downlineTo != '') {
-                            while ($status) {
-                                $check = DB::table('users')
-                                    ->where('id', $id)
-                                    ->get();
-                                // dd($check);
-                                foreach ($check as $checking) {
-                                    if ($checking->id != '') {
-                                        $id = $checking->downlineTo;
-                                        $role = $checking->role;
-                                        // dd($product->price_shogun);
-                                        switch ($role) {
-                                            case 'shogun':
-                                                $commissionPoint = ($product->price_shogun * $details['quantity']) + $checking->commissionPoint;
-                                                break;
-                                            case 'merchant':
-                                                $commissionPoint = ($product->price_merchant * $details['quantity']) + $checking->commissionPoint;
-                                                break;
-                                            case 'damio':
-                                                $commissionPoint = ($product->price_damio * $details['quantity']) + $checking->commissionPoint;
-                                                break;
-                                            case 'dropship':
-                                                $commissionPoint = ($product->price_dropship * $details['quantity']) + $checking->commissionPoint;
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        DB::table('users')
-                                            ->where('id', $checking->id)
-                                            ->update([
-                                                'commissionPoint' => $commissionPoint
-                                            ]);
+                    //             if ($getShogun[0]->role == 'shogun') {
+                    //                 $this->addCommission($getShogun[0]->id, ($product->price_shogun) * $details['quantity']);
+                    //             }
+                    //             break;
 
-                                        if ($checking->downlineTo == null) {
-                                            $status = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //         case 'merchant':
+                    //             // $tempID = $checkRole[0]->id;
+                    //             // $status = true;
+                    //             $this->addCommission($checkRole[0]->id, ($product->price_merchant) * $details['quantity']);
+
+                    //             //getUpperLevelRole
+                    //             $getUpperLvl = DB::table('users')->where('id', $checkRole[0]->downlineTo)->get();
+
+                    //             if ($getUpperLvl[0]->role == 'damio') {
+                    //                 $this->addCommission($checkRole[0]->id, ($product->price_damio) * $details['quantity']);
+                    //                 //addToShogun
+                    //                 $this->addCommission($checkRole[0]->downlineTo, ($product->price_shogun) * $details['quantity']);
+                    //             } else if ($getUpperLvl[0]->role == 'shogun') {
+                    //                 $this->addCommission($getUpperLvl[0]->id, ($product->price_shogun + $product->price_damio) * $details['quantity']);
+                    //             }
+                    //             break;
+                    //         default:
+                    //             break;
+                    //     }
+                    // }
                 }
 
                 // //addToCommision
@@ -306,13 +293,23 @@ class CartController extends Controller
                 // }
             }
             $request->session()->forget('cartPayment');
-
             return redirect('purchase-history-shogun')->with('success', 'Payment Successful');
         } else { //if payment unsuccessful
             return redirect('purchase-history-shogun')->with('error', 'Payment Unsuccessful');
         }
     }
 
+    public function addCommission($id, $amount)
+    {
+        $getLatestAmount = DB::table('users')->where('id', $id)->get();
+
+        DB::table('users')
+            ->where('id', $id)
+            ->update([
+                'commissionPoint' => $getLatestAmount[0]->commissionPoint + $amount
+            ]);
+    }
+    
     public function callback()
     {
         $response = request()->all(['refno', 'status', 'billcode', 'order_id', 'amount']);

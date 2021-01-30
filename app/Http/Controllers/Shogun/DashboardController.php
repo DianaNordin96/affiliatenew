@@ -75,8 +75,8 @@ class DashboardController extends Controller
         foreach ($allDownline as $dl) {
             $sales = DB::table('orders')
                 ->join('users', 'orders.user_id', '=', 'users.id')
-                ->where('orders.created_at', '>=', $year . $month . '01')
-                ->where('orders.created_at', '<=', $year . $month . '31')
+                ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+                ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
                 ->where('orders.user_id', '=', $dl)
                 ->get();
             // dd($sales);
@@ -100,42 +100,13 @@ class DashboardController extends Controller
         //own sale
         $own =  DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('orders.created_at', '>=', $year . $month . '01')
-            ->where('orders.created_at', '<=', $year . $month . '31')
+            ->whereDate('orders.created_at', '>=', $year . '-' . $month . '-01')
+            ->whereDate('orders.created_at', '<=', $year . '-' . $month . '-31')
             ->where('orders.user_id', Auth::user()->id)
             ->select('amount')
             ->sum('amount');
         
         $totalSale = $own + $damio + $merchant + $dropship;
-
-
-        //totalSale all agent
-        // $damio = DB::table('orders')
-        //     ->join('users', 'orders.user_id', '=', 'users.id')
-        //     ->where('orders.created_at', '>=', $year . $month . '01')
-        //     ->where('orders.created_at', '<=', $year . $month . '31')
-        //     ->where('users.role', 'damio')
-        //     ->where('users.downlineTo', '=', Auth::user()->id)
-        //     ->select('amount')
-        //     ->sum('amount');
-
-        // $merchant = DB::table('orders')
-        //     ->join('users', 'orders.user_id', '=', 'users.id')
-        //     ->where('orders.created_at', '>=', $year . $month . '01')
-        //     ->where('orders.created_at', '<=', $year . $month . '31')
-        //     ->where('users.role', 'merchant')
-        //     ->where('users.downlineTo', '=', Auth::user()->id)
-        //     ->select('amount')
-        //     ->sum('amount');
-
-        // $dropship = DB::table('orders')
-        //     ->join('users', 'orders.user_id', '=', 'users.id')
-        //     ->where('orders.created_at', '>=', $year . $month . '01')
-        //     ->where('orders.created_at', '<=', $year . $month . '31')
-        //     ->where('users.role', 'dropship')
-        //     ->where('users.downlineTo', '=', Auth::user()->id)
-        //     ->select('amount')
-        //     ->sum('amount');
 
         return view('shogun/dashboardShogun')->with([
             'totalSale' => $totalSale,
